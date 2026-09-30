@@ -26,6 +26,16 @@
 
 ### 1. 🏠 Accueil Guidé (Le Cockpit Quotidien)
 * **Zéro fatigue décisionnelle** : Chaque jour, l'application analyse tes points faibles et te recommande une seule action prioritaire (découvrir une nouvelle nuance ou consolider un point clé).
+* **🏮 Daily Hanzi (Caractère du Jour inspiré des meilleures apps)** :
+  - Un sinogramme HSK 3-4 authentique sélectionné automatiquement chaque jour de l'année.
+  - Grand sceau calligraphique interactif avec prononciation audio native en 1 clic.
+  - Mnémonique visuelle / décomposition étymologique (clé, nombre de traits).
+  - Mots composés essentiels formés avec ce caractère et phrase d'exemple en contexte.
+  - Détection automatique si le caractère fait déjà partie de tes paquets Anki.
+* **📲 Connexion iPhone & Écosystème Apple** :
+  - 📅 **Widget Lock Screen & Calendrier Apple** : Télécharge le fichier universel `.ics` pour intégrer le Hanzi du jour directement sur le widget de l'écran verrouillé de ton iPhone et sur Apple Watch.
+  - ⚡ **Raccourcis iOS (Siri Shortcuts)** : Automatisation matinale pour recevoir une notification avec le caractère et sa signification à l'heure exacte de ton réveil.
+  - 📲 **App Écran d'Accueil (PWA)** : Ajoute l'app sur ton iPhone via Safari (*Partager ➔ Sur l'écran d'accueil*) avec son icône de sceau impérial `语` et profites-en en plein écran comme une vraie application iOS.
 * **Ancrage cognitif SRS en 3 étapes** :
   - 🌱 **Découvert** : Tu as compris la logique de la règle et passé le test de discrimination active.
   - 🌿 **En assimilation** : Tu t'entraînes à l'oral au micro.
