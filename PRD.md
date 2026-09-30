@@ -11,6 +11,7 @@
   - Apprenant motivé de niveau **HSK 3 - HSK 4**, capable d'investir un temps d'étude sérieux, connaissant déjà les caractères de base mais cherchant à maîtriser les expressions complètes, les structures idiomatiques et l'aisance à l'oral.
 * **Contrainte Technique Majeure** : 
   - **100 % Gratuit & Zéro Abonnement** : Utilisation exclusive des technologies natives du navigateur (Web Speech API `zh-CN` pour le micro, Speech Synthesis pour l'écoute native, Web Storage local, webhooks MCP open-source).
+  le site doit absoluement pouvoir un systeme de sauvegarde de progression peut importe l'appareil ( systeme d'identifiaciton)
 
 ---
 
@@ -185,3 +186,5 @@ export interface VoiceEvaluationResult {
 * **Explications en français courant** : Bannir le jargon linguistique abstrait (remplacer *"aspect perfectif post-verbal"* par *"action terminée avec impact présent"*).
  ## 7.Verification personnelle
  tu dois toujours me presenter fonctionnalité par fonctionnalité et t'assurer qu'elle marcheet me la faire valider ( ca peut etre de prefenrece une grosse foncitonnalité pas juste un bouton)
+ ## 8 Sécurité
+ Le code sera diffusé sur Github Pages, aucune information personnelle ne doit fuiter, si des données sensibles ont en jeu arreter immédiatement, aucune personne ne doit voir mes activités sur le site et y interférer 

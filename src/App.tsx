@@ -8,6 +8,7 @@ import { CalendarReminderModal } from './components/CalendarReminderModal';
 import { AnkiLinkModal } from './components/AnkiLinkModal';
 import { ProfileSyncModal } from './components/ProfileSyncModal';
 import { AnkiWord } from './types/fluent';
+import { StoryReaderView } from './components/StoryReaderView';
 import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
 import { UserProfileBackup } from './utils/profileSyncUtils';
@@ -15,7 +16,7 @@ import { Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
   // Par défaut : l'Accueil Guidé pour une prise en main instantanée sans fatigue décisionnelle !
-  const [activeView, setActiveView] = useState<'home' | 'lab' | 'curriculum'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'stories' | 'lab' | 'curriculum'>('home');
   const [selectedCardId, setSelectedCardId] = useState<string>(NUANCE_CARDS[0].id);
 
   const [completedExercises, setCompletedExercises] = useState<string[]>(() => {
@@ -125,6 +126,15 @@ export const App: React.FC = () => {
               setSelectedCardId(cardId);
               setActiveView('lab');
             }}
+          />
+        )}
+
+        {/* VUE HISTOIRES : LECTEUR IMMERSIF (STYLE MAAYOT AVEC ANCRAGE ANKI) */}
+        {activeView === 'stories' && (
+          <StoryReaderView
+            syncedAnkiWords={syncedAnkiWords}
+            onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
+            onIncrementStreak={() => setStreakDays(prev => prev + 1)}
           />
         )}
 

@@ -81,3 +81,63 @@ export interface AnkiWord {
   deckName?: string;
   addedAt: string;
 }
+
+// ==========================================
+// TYPES POUR L'ONGLET HISTOIRES (STYLE MAAYOT)
+// ==========================================
+
+export interface StoryWordToken {
+  hanzi: string;
+  pinyin: string;
+  translation: string;
+  isTarget?: boolean;
+}
+
+export interface StorySentence {
+  hanzi: string;
+  pinyin: string;
+  translation: string;
+  words: StoryWordToken[];
+}
+
+export interface StoryParagraph {
+  sentences: StorySentence[];
+}
+
+export interface StoryQuizQuestion {
+  question: string;
+  questionPinyin?: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
+export interface StoryDiscussionPrompt {
+  question: string;
+  questionPinyin?: string;
+  questionTranslation: string;
+  suggestedWords?: string[];
+}
+
+export interface MaayotStory {
+  id: string;
+  title: string;
+  titlePinyin: string;
+  titleTranslation: string;
+  level: HskLevel | 'HSK 2' | 'HSK 5';
+  category: string;
+  readTime: string;
+  wordCount: number;
+  dateStr?: string;
+  isDaily?: boolean;
+  targetWords: {
+    hanzi: string;
+    pinyin: string;
+    translation: string;
+  }[];
+  paragraphs: StoryParagraph[];
+  audioText: string;
+  quiz: StoryQuizQuestion[];
+  discussionPrompt: StoryDiscussionPrompt;
+}
+

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Mic, Sparkles, Layers, Check, Home, Compass, Calendar, Cloud } from 'lucide-react';
+import { Mic, Sparkles, Layers, Check, Home, Compass, Calendar, Cloud, BookOpen } from 'lucide-react';
 
 interface HeaderProps {
-  currentView: 'home' | 'lab' | 'curriculum';
-  onNavigate: (view: 'home' | 'lab' | 'curriculum') => void;
+  currentView: 'home' | 'stories' | 'lab' | 'curriculum';
+  onNavigate: (view: 'home' | 'stories' | 'lab' | 'curriculum') => void;
   currentStreak: number;
   completedExercisesCount: number;
   syncedAnkiWordsCount: number;
@@ -64,7 +64,19 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <Home className="w-3.5 h-3.5" />
-              <span>Accueil Guidé</span>
+              <span>Accueil</span>
+            </button>
+
+            <button
+              onClick={() => onNavigate('stories')}
+              className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all ${
+                currentView === 'stories'
+                  ? 'bg-stone-900 text-white shadow-xs'
+                  : 'text-stone-600 hover:text-stone-900'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5 text-amber-500" />
+              <span>Histoires</span>
             </button>
 
             <button
