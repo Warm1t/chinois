@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { MaayotStory, StoryWordToken, AnkiWord } from '../types/fluent';
 import { BUILT_IN_STORIES, generateStoryFromAnkiWords } from '../data/storiesData';
-import { playChineseAudio, evaluatePronunciation, isSpeechRecognitionSupported } from '../utils/speechUtils';
+import { 
+  playChineseAudio, 
+  playChineseStoryAudio, 
+  stopChineseAudio, 
+  playNativeWordAudio, 
+  evaluatePronunciation, 
+  isSpeechRecognitionSupported 
+} from '../utils/speechUtils';
+import { VoiceSelector } from './VoiceSelector';
 import { 
   BookOpen, 
   Volume2, 
@@ -45,6 +53,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   const [showTranslation, setShowTranslation] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
   const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
+  const [activeSpeakerGender, setActiveSpeakerGender] = useState<'female' | 'male' | null>(null);
 
   // Mot actif sélectionné pour la pop-up de dictionnaire
   const [selectedWord, setSelectedWord] = useState<StoryWordToken | null>(null);
@@ -73,27 +82,43 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     setSelectedWord(null);
     setWrittenResponse('');
     setSpeechEvaluation(null);
-    window.speechSynthesis?.cancel();
+    stopChineseAudio();
     setIsPlayingAudio(false);
+    setActiveSpeakerGender(null);
   }, [selectedStoryId]);
 
-  // Lecture audio complète
+  // Nettoyage au démontage du composant
+  useEffect(() => {
+    return () => {
+      stopChineseAudio();
+    };
+  }, []);
+
+  // Lecture audio complète avec alternance intelligente des voix Homme / Femme
   const handlePlayFullAudio = async () => {
     if (isPlayingAudio) {
-      window.speechSynthesis?.cancel();
+      stopChineseAudio();
       setIsPlayingAudio(false);
+      setActiveSpeakerGender(null);
       return;
     }
 
     setIsPlayingAudio(true);
-    await playChineseAudio(activeStory.audioText, playbackSpeed);
+    await playChineseStoryAudio(
+      activeStory.audioText, 
+      playbackSpeed, 
+      (_idx, _text, gender) => {
+        setActiveSpeakerGender(gender);
+      }
+    );
     setIsPlayingAudio(false);
+    setActiveSpeakerGender(null);
   };
 
-  // Prononcer un mot précis au clic
+  // Prononcer un mot précis au clic (avec audio studio dictionnaire haute définition)
   const handlePronounceWord = (wordHanzi: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    playChineseAudio(wordHanzi, 0.85);
+    playNativeWordAudio(wordHanzi, 0.85);
   };
 
   // Valider une réponse au Quiz
@@ -305,8 +330,22 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
             </button>
           </div>
 
-          {/* Contrôles Audio : Lecture et Vitesse */}
-          <div className="flex items-center space-x-3 text-xs">
+          {/* Contrôles Audio : Voix, Vitesse et Lecture */}
+          <div className="flex flex-wrap items-center gap-2.5 text-xs">
+            {/* Indicateur de locuteur actif en alternance */}
+            {isPlayingAudio && activeSpeakerGender && (
+              <span className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-xl text-[11px] font-bold border animate-pulse ${
+                activeSpeakerGender === 'female'
+                  ? 'bg-rose-50 text-rose-800 border-rose-300'
+                  : 'bg-blue-50 text-blue-800 border-blue-300'
+              }`}>
+                <span>{activeSpeakerGender === 'female' ? '👩 Voix Féminine' : '👨 Voix Masculine'}</span>
+              </span>
+            )}
+
+            {/* Sélecteur de voix Homme / Femme / Alterné */}
+            <VoiceSelector compact />
+
             {/* Sélecteur de vitesse */}
             <div className="flex items-center bg-stone-100 rounded-xl p-0.5 border border-stone-200 text-[11px] font-bold">
               {[0.75, 1.0, 1.2].map(speed => (
@@ -452,7 +491,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
             {activeStory.targetWords.map((word, idx) => (
               <div
                 key={idx}
-                onClick={() => playChineseAudio(word.hanzi, 0.9)}
+                onClick={() => playNativeWordAudio(word.hanzi, 0.9)}
                 className="p-2.5 rounded-xl bg-white border border-stone-200 hover:border-amber-400 cursor-pointer flex items-center justify-between text-xs transition-all shadow-2xs group"
               >
                 <div>

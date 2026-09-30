@@ -1,5 +1,6 @@
 import React from 'react';
 import { Mic, Sparkles, Layers, Check, Home, Compass, Calendar, Cloud, BookOpen } from 'lucide-react';
+import { VoiceSelector } from './VoiceSelector';
 
 interface HeaderProps {
   currentView: 'home' | 'stories' | 'lab' | 'curriculum';
@@ -104,9 +105,12 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          {/* Controls : Calendrier, Anki & Statistiques */}
-          <div className="flex items-center space-x-2 text-xs self-end sm:self-center">
+          {/* Controls : Voix, Calendrier, Anki & Statistiques */}
+          <div className="flex flex-wrap items-center space-x-2 text-xs self-end sm:self-center">
             
+            {/* Sélecteur de Banque Vocale */}
+            <VoiceSelector />
+
             {/* Bouton Connexion Calendrier & Rappels */}
             <button
               onClick={onOpenCalendarModal}
