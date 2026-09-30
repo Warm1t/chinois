@@ -275,7 +275,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   );
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6">
       
       {/* 1. Barre de navigation & Déclencheurs Rapides */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-3xl border border-stone-200/90 shadow-xs text-xs">

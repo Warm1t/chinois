@@ -139,7 +139,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 animate-fadeIn">
+    <div className="max-w-6xl mx-auto space-y-8 animate-fadeIn">
       
       {/* 1. CARTE HERO STYLE PONPON MANIA / BD INTERACTIVE (Avec Sceau/Disque Vinyle animé) */}
       <div className="bg-[#1c1917] text-white rounded-3xl p-6 sm:p-9 border-2 border-stone-900 shadow-[6px_6px_0px_#c23b22] relative overflow-hidden group">

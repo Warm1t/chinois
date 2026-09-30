@@ -123,7 +123,7 @@ export const App: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <main className="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
         {/* VUE 1 : ACCUEIL GUIDÉ (Cockpit automatique du jour) */}
         {activeView === 'home' && (
