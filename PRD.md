@@ -88,15 +88,27 @@
 
 ---
 
+### 🎨 Module 7 : Système de Thèmes Visuels & Banque Vocale Naturelle
+- **Basculeur de Thème Dual (1 clic dans l'en-tête)** :
+  - 📜 **Mode Encre & Papier de Xuan (Jour)** : Palette traditionnelle d'estampe, fond papier de riz (`#fbf9f5`), caractères d'encre noire (`#1c1917`), bordures en pierre douce et sceaux vermillon (`#c23b22`).
+  - 🌙 **Mode Sombre & Pierre à Encre (Nuit / OLED)** : Palette sombre veloutée (`#0e0d0c` et `#181513`), typographie ivoire claire (`#f5f2eb`), repos oculaire absolu pour les sessions tardives.
+  - Persistance dans `localStorage` et synchronisation instantanée sur l'ensemble de l'interface via événement global.
+- **Banque Vocale Naturelle & Entraînement de l'Oreille** :
+  - Voix féminines haute clarté (`Xiaoxiao`, `Huihui`, `Tingting`) et voix masculines résonantes (`Yunxi`, `Kangkang`, `Zhiwei`).
+  - 🔄 **Mode Alternance Automatique** : Alterne systématiquement entre voix d'homme et de femme pour habituer l'oreille aux différences réelles d'intonation et de registre.
+  - Audio studio haute définition au clic sur les mots de vocabulaire.
+
+---
+
 ## 3. Stack Technique Choisie
 
 | Composant | Technologie | Justification |
 | :--- | :--- | :--- |
 | **Frontend** | React 18 + TypeScript | Composants typés, robustesse, réactivité maximale |
 | **Build & Bundler** | Vite 5 | Démarrage en 300ms, proxy dev, build optimisé |
-| **Styling & Thème** | Tailwind CSS | Design soigné style Encre & Papier, responsive mobile/PC |
+| **Styling & Thème** | Tailwind CSS + CSS Variables | Mode Encre (Papier) & Mode Sombre (Pierre à Encre), responsive |
 | **Reconnaissance Vocale** | Web Speech API (`SpeechRecognition` zh-CN) | 100% gratuit, natif, sans clé API payante |
-| **Synthèse Vocale** | Web Speech Synthesis (`SpeechSynthesisUtterance`) | Voix chinoise native avec contrôle de vitesse (0.75x à 1.2x) |
+| **Synthèse Vocale** | Multi-Voix Naturelles (SpeechSynthesis + Audio HD) | Voix Homme/Femme, mode alterné, contrôle de vitesse (0.75x à 1.2x) |
 | **Base de Données Cloud** | Supabase (PostgreSQL + RLS) | Gratuit à vie, synchronisation temps réel, sécurisé |
 | **Liaison Anki** | AnkiConnect RPC (Code 2055492159) | Standard mondial open-source pour connecter Anki |
 | **Hébergement** | GitHub Pages (Déploiement continu Actions) | Gratuit, sécurisé en HTTPS, zéro coût de serveur |
