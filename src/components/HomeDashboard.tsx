@@ -1,5 +1,6 @@
 import React from 'react';
-import { NuanceCard, CurriculumModule, AnchoringRecord, AnkiWord } from '../types/fluent';
+import { NuanceCard, CurriculumModule, AnchoringRecord, AnkiWord, DailyHanzi } from '../types/fluent';
+import { DailyHanziCard } from './DailyHanziCard';
 import { 
   Play, 
   Anchor, 
@@ -29,11 +30,15 @@ interface HomeDashboardProps {
   syncedAnkiWords: AnkiWord[];
   streakDays: number;
   dueCards: NuanceCard[];
+  todayHanzi: DailyHanzi;
+  onOpenAppleSyncModal: () => void;
   onStartGuidedAction: (cardId: string, actionType: 'card' | 'anchor') => void;
   onNavigateToView: (view: 'lab' | 'curriculum') => void;
   onOpenAnkiModal: () => void;
   onOpenCalendarModal: () => void;
   onSelectCard: (cardId: string) => void;
+  onSelectPreviousHanzi?: () => void;
+  onSelectNextHanzi?: () => void;
 }
 
 export const HomeDashboard: React.FC<HomeDashboardProps> = ({
@@ -43,11 +48,15 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   syncedAnkiWords,
   streakDays,
   dueCards,
+  todayHanzi,
+  onOpenAppleSyncModal,
   onStartGuidedAction,
   onNavigateToView,
   onOpenAnkiModal,
   onOpenCalendarModal,
   onSelectCard,
+  onSelectPreviousHanzi,
+  onSelectNextHanzi,
 }) => {
   const totalCards = cards.length;
   const anchoredCount = Object.values(anchoringRecords).filter(r => r.stage === 'ancre').length;
@@ -204,7 +213,17 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
       </div>
 
-      {/* 2. NOUVELLE CARTE BANNIÈRE : CONNEXION CALENDRIER & RAPPELS EN 1 CLIC */}
+      {/* 2. CARACTÈRE DU JOUR (DAILY HANZI) & CONNEXION IPHONE APPLE */}
+      <DailyHanziCard
+        hanzi={todayHanzi}
+        syncedAnkiWords={syncedAnkiWords}
+        onOpenAppleSyncModal={onOpenAppleSyncModal}
+        onOpenAnkiModal={onOpenAnkiModal}
+        onSelectPreviousHanzi={onSelectPreviousHanzi}
+        onSelectNextHanzi={onSelectNextHanzi}
+      />
+
+      {/* 3. NOUVELLE CARTE BANNIÈRE : CONNEXION CALENDRIER & RAPPELS EN 1 CLIC */}
       <div className="bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50 rounded-3xl p-5 sm:p-6 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         
         <div className="flex items-start space-x-3.5">

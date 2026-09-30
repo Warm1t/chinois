@@ -141,3 +141,34 @@ export interface MaayotStory {
   discussionPrompt: StoryDiscussionPrompt;
 }
 
+// ==========================================
+// TYPES POUR LE CARACTÈRE DU JOUR (DAILY HANZI)
+// ==========================================
+
+export interface HanziCompoundWord {
+  hanzi: string;
+  pinyin: string;
+  translation: string;
+  level?: string;
+}
+
+export interface DailyHanzi {
+  id: string;
+  character: string;             // ex: "悟"
+  pinyin: string;                // ex: "wù"
+  tone: number;                  // 1, 2, 3, 4, 5
+  meaning: string;               // ex: "Comprendre profondément, s'éveiller à"
+  radical: string;               // ex: "忄"
+  radicalMeaning: string;        // ex: "Cœur / Esprit / Sentiment"
+  strokeCount: number;           // ex: 10
+  level: HskLevel | 'HSK 2' | 'HSK 5';
+  mnemonic: string;              // Mnémonique visuelle / étymologie
+  culturalContext: string;       // Anecdote culturelle ou philosophique
+  compoundWords: HanziCompoundWord[]; // Mots courants formés avec ce caractère
+  exampleSentence: {
+    chinese: string;
+    pinyin: string;
+    translation: string;
+  };
+}
+

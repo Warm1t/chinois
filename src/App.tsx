@@ -13,6 +13,8 @@ import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
 import { UserProfileBackup } from './utils/profileSyncUtils';
 import { getAppTheme, applyThemeToDocument } from './utils/themeUtils';
+import { AppleSyncModal } from './components/AppleSyncModal';
+import { getTodayDailyHanzi } from './data/dailyHanziData';
 import { Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -39,6 +41,8 @@ export const App: React.FC = () => {
   const [isDailyAnchorModalOpen, setIsDailyAnchorModalOpen] = useState(false);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [isProfileSyncModalOpen, setIsProfileSyncModalOpen] = useState(false);
+  const [isAppleSyncModalOpen, setIsAppleSyncModalOpen] = useState(false);
+  const [hanziOffsetDays, setHanziOffsetDays] = useState<number>(0);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Enregistrements d'ancrage cognitif (SRS)
@@ -97,6 +101,11 @@ export const App: React.FC = () => {
   const dueCards = getCardsDueForReview(NUANCE_CARDS);
   const anchoredCount = Object.values(anchoringRecords).filter(r => r.stage === 'ancre').length;
 
+  // Calcul dynamique du Hanzi du Jour (avec navigation entre jours)
+  const targetDate = new Date();
+  targetDate.setDate(targetDate.getDate() + hanziOffsetDays);
+  const todayHanzi = getTodayDailyHanzi(targetDate);
+
   return (
     <div className="min-h-screen bg-[#fbf9f5] dark:bg-[#0e0d0c] text-stone-900 dark:text-stone-100 flex flex-col font-sans selection:bg-[#c23b22] selection:text-white transition-colors duration-200">
       
@@ -110,6 +119,7 @@ export const App: React.FC = () => {
         onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
         onOpenCalendarModal={() => setIsCalendarModalOpen(true)}
         onOpenProfileSyncModal={() => setIsProfileSyncModalOpen(true)}
+        onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -124,6 +134,10 @@ export const App: React.FC = () => {
             syncedAnkiWords={syncedAnkiWords}
             streakDays={streakDays}
             dueCards={dueCards}
+            todayHanzi={todayHanzi}
+            onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
+            onSelectPreviousHanzi={() => setHanziOffsetDays(prev => prev - 1)}
+            onSelectNextHanzi={() => setHanziOffsetDays(prev => prev + 1)}
             onStartGuidedAction={handleStartGuidedAction}
             onNavigateToView={(view) => setActiveView(view)}
             onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
@@ -208,6 +222,13 @@ export const App: React.FC = () => {
         syncedAnkiWords={syncedAnkiWords}
         anchoringRecords={anchoringRecords}
         onProfileRestored={handleProfileRestored}
+      />
+
+      {/* Apple iPhone Sync Modal (Daily Hanzi & Widget iOS) */}
+      <AppleSyncModal
+        isOpen={isAppleSyncModalOpen}
+        onClose={() => setIsAppleSyncModalOpen(false)}
+        todayHanzi={todayHanzi}
       />
 
       {/* Toast Notification */}

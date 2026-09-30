@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mic, Sparkles, Layers, Check, Home, Compass, Calendar, Cloud, BookOpen } from 'lucide-react';
+import { Mic, Sparkles, Layers, Check, Home, Compass, Calendar, Cloud, BookOpen, Smartphone } from 'lucide-react';
 import { VoiceSelector } from './VoiceSelector';
 import { ThemeToggle } from './ThemeToggle';
 import { getAppTheme, AppTheme } from '../utils/themeUtils';
@@ -13,6 +13,7 @@ interface HeaderProps {
   onOpenAnkiModal: () => void;
   onOpenCalendarModal: () => void;
   onOpenProfileSyncModal: () => void;
+  onOpenAppleSyncModal?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -24,6 +25,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAnkiModal,
   onOpenCalendarModal,
   onOpenProfileSyncModal,
+  onOpenAppleSyncModal,
 }) => {
   const [theme, setTheme] = useState<AppTheme>(getAppTheme());
 
@@ -129,6 +131,19 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Sélecteur de Banque Vocale */}
             <VoiceSelector />
+
+            {/* Bouton Connexion iPhone / Apple */}
+            {onOpenAppleSyncModal && (
+              <button
+                onClick={onOpenAppleSyncModal}
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 font-bold shadow-2xs hover:-translate-y-0.5 transition-all"
+                title="Connecter le Hanzi du jour et les rappels à ton iPhone (Widget & Calendrier Apple)"
+              >
+                <Smartphone className="w-3.5 h-3.5 text-amber-500" />
+                <span className="hidden lg:inline">iPhone & Apple</span>
+                <span className="lg:hidden">iPhone</span>
+              </button>
+            )}
 
             {/* Bouton Connexion Calendrier & Rappels */}
             <button
