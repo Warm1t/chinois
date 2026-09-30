@@ -80,11 +80,12 @@
 
 ### ☁️ Module 6 : Synchronisation de Profil & Sauvegarde Permanente
 - **Stockage initial local** : Sauvegarde dans le `localStorage` du navigateur.
-- **Sauvegarde manuelle 1-clic** : Fenêtre `ProfileSyncModal` permettant de télécharger et restaurer l'intégralité du profil (`fluent-progression.json`).
-- **Synchronisation Cloud Automatique (Supabase)** :
-  - Base de données Cloud PostgreSQL gratuite.
-  - Authentification GitHub OAuth pour un accès strictement personnel et sécurisé.
-  - Mise à jour en temps réel et automatique de la progression à chaque exercice validé ou histoire lue.
+- **Synchronisation Cloud Instantanée (Supabase)** :
+  - Connexion native au projet Cloud PostgreSQL via `@supabase/supabase-js`.
+  - Système de clé de profil privée personnalisable (ex: `warm1t`) permettant de lier instantanément un iPhone et plusieurs PC sans mot de passe complexe ni vérification d'email.
+  - Option d'auto-synchronisation silencieuse en tâche de fond dès qu'un exercice ou une nuance est validée.
+  - Boutons 1-clic : *« Sauvegarder vers le Cloud »* et *« Restaurer du Cloud »*.
+- **Sauvegarde de secours hors-ligne (Fichier JSON)** : Onglet dédié dans `ProfileSyncModal` permettant d'exporter ou importer manuellement le fichier `fluent-progression.json`.
 
 ---
 
