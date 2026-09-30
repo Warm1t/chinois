@@ -1,7 +1,18 @@
 # 🏮 Fluent — Mandarin Coach HSK 3-4
 
 > **Passe du vocabulaire Anki aux pensées complètes et naturelles en mandarin.**  
-> Application interactive 100% gratuite (zéro abonnement, zéro API payante), au design traditionnel « Encre & Papier », accessible en local ou en ligne sur n'importe quel appareil (PC, Mac, mobile et tablette).
+> Application interactive 100% gratuite (zéro abonnement, zéro API payante), proposant le **Mode Encre** 📜 (papier de Xuan traditionnel) et le **Mode Sombre** 🌙 (pierre à encre nocturne), accessible en local ou en ligne sur n'importe quel appareil (PC, Mac, mobile et tablette).
+
+---
+
+## 🎨 Les 2 Modes Visuels (Bascule en 1 clic dans l'en-tête)
+
+* 📜 **Mode Encre & Papier de Xuan (Jour)** :
+  - Palette chaleureuse inspirée des estampes chinoises, fond papier de riz (`#fbf9f5`), caractères d'encre noire (`#1c1917`), bordures en pierre douce et sceaux vermillon (`#c23b22`).
+  - Idéal pour une lecture lumineuse et apaisante en journée.
+* 🌙 **Mode Sombre & Pierre à Encre (Nuit / OLED)** :
+  - Palette nocturne inspirée de la pierre à encre chinoise (*Yantai* 砚台), fond noir profond velouté (`#0e0d0c`), cartes encre satinée (`#181513`), typographie ivoire claire (`#f5f2eb`) et accents or & jade lumineux.
+  - Confort visuel maximal pour les sessions tardives du soir, repos total pour les yeux et économie d'énergie.
 
 ---
 
