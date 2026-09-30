@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-[#fbf9f5] text-[#1c1917] selection:bg-[#c23b22] selection:text-white antialiased;
+  }
+}
+
+.chinese-text {
+  font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+
+/* Animations et micro-interactions inspirées de l'univers BD Interactive (Ponpon Mania) */
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes floatSlight {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(0.8deg);
+  }
+}
+
+@keyframes popScale {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 20s linear infinite;
+}
+
+.animate-float {
+  animation: floatSlight 4s ease-in-out infinite;
+}
+
+.animate-pop {
+  animation: popScale 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Style Bulles BD Interactive pour dialogues et situations */
+.speech-bubble {
+  position: relative;
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 32px;
+  border-width: 8px 8px 0;
+  border-style: solid;
+  border-color: #ffffff transparent;
+  display: block;
+  width: 0;
+}
+
+/* Boutons tactiles style Pop-BD */
+.btn-bd-pill {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-bd-pill:hover {
+  transform: translate(-1px, -2px) rotate(-0.5deg);
+  box-shadow: 4px 4px 0px #1c1917;
+}
+
+.btn-bd-pill:active {
+  transform: translate(1px, 1px) scale(0.98);
+  box-shadow: 1px 1px 0px #1c1917;
+}
