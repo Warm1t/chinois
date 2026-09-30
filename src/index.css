@@ -3,8 +3,22 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
   body {
-    @apply font-sans bg-[#fbf9f5] text-[#1c1917] selection:bg-[#c23b22] selection:text-white antialiased;
+    @apply font-sans antialiased selection:bg-[#c23b22] selection:text-white transition-colors duration-200;
+  }
+
+  html.dark body {
+    background-color: #0e0d0c;
+    color: #f5f2eb;
+  }
+
+  html:not(.dark) body {
+    background-color: #fbf9f5;
+    color: #1c1917;
   }
 }
 
@@ -84,4 +98,160 @@
 .btn-bd-pill:active {
   transform: translate(1px, 1px) scale(0.98);
   box-shadow: 1px 1px 0px #1c1917;
+}
+
+/* ==========================================================================
+   MODE SOMBRE — ESTHÉTIQUE PIERRE À ENCRE NOCTURNE (砚台 / 深墨)
+   ========================================================================== */
+html.dark {
+  color-scheme: dark;
+}
+
+/* Arrière-plans des conteneurs, cartes et panneaux */
+html.dark .bg-white {
+  background-color: #181513 !important;
+}
+
+html.dark .bg-\[\#fbf9f5\],
+html.dark .bg-\[\#fcfaf7\],
+html.dark .bg-\[\#fdfcf9\],
+html.dark .bg-\[\#fdfcf9\]\/90 {
+  background-color: #12100e !important;
+}
+
+html.dark .bg-stone-50,
+html.dark .bg-stone-50\/70,
+html.dark .bg-stone-50\/80 {
+  background-color: #1d1a17 !important;
+}
+
+html.dark .bg-stone-100,
+html.dark .bg-stone-100\/80,
+html.dark .bg-stone-100\/70 {
+  background-color: #24201c !important;
+}
+
+html.dark .bg-stone-200,
+html.dark .bg-stone-200\/50 {
+  background-color: #2e2823 !important;
+}
+
+/* Couleurs de textes */
+html.dark .text-stone-900 {
+  color: #f5f2eb !important;
+}
+
+html.dark .text-stone-800 {
+  color: #e6e0d5 !important;
+}
+
+html.dark .text-stone-700 {
+  color: #cfc8bd !important;
+}
+
+html.dark .text-stone-600 {
+  color: #aba294 !important;
+}
+
+html.dark .text-stone-500 {
+  color: #8c8376 !important;
+}
+
+html.dark .text-stone-400 {
+  color: #6e665c !important;
+}
+
+/* Bordures douces de nuit */
+html.dark .border-stone-100 {
+  border-color: #221d19 !important;
+}
+
+html.dark .border-stone-200,
+html.dark .border-stone-200\/90,
+html.dark .border-stone-200\/80,
+html.dark .border-stone-200\/70 {
+  border-color: #2b2520 !important;
+}
+
+html.dark .border-stone-300 {
+  border-color: #3b332c !important;
+}
+
+html.dark .border-stone-400 {
+  border-color: #4a4138 !important;
+}
+
+/* En-tête & Pied de page */
+html.dark header {
+  background-color: rgba(18, 16, 14, 0.92) !important;
+  border-bottom-color: #2b2520 !important;
+}
+
+html.dark footer {
+  border-top-color: #2b2520 !important;
+}
+
+/* Ombres BD encrées en mode sombre */
+html.dark .shadow-\[4px_4px_0px_\#1c1917\] {
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+html.dark .shadow-\[2px_2px_0px_\#1c1917\] {
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+html.dark .btn-bd-pill:hover {
+  box-shadow: 4px 4px 0px #000000;
+}
+
+html.dark .btn-bd-pill:active {
+  box-shadow: 1px 1px 0px #000000;
+}
+
+/* Bulles de dialogue en mode sombre */
+html.dark .speech-bubble::after {
+  border-color: #181513 transparent !important;
+}
+
+/* Boîtes et alertes colorées adaptées au contraste nocturne */
+html.dark .bg-amber-50,
+html.dark .bg-amber-50\/70,
+html.dark .bg-amber-50\/80 {
+  background-color: rgba(77, 45, 10, 0.28) !important;
+  border-color: rgba(180, 100, 20, 0.4) !important;
+}
+
+html.dark .bg-rose-50,
+html.dark .bg-rose-50\/70,
+html.dark .bg-rose-50\/80 {
+  background-color: rgba(77, 15, 20, 0.28) !important;
+  border-color: rgba(180, 30, 40, 0.4) !important;
+}
+
+html.dark .bg-blue-50,
+html.dark .bg-blue-50\/70,
+html.dark .bg-blue-50\/80 {
+  background-color: rgba(20, 45, 75, 0.28) !important;
+  border-color: rgba(30, 90, 160, 0.4) !important;
+}
+
+html.dark .bg-emerald-50,
+html.dark .bg-emerald-50\/70,
+html.dark .bg-emerald-50\/80 {
+  background-color: rgba(10, 60, 40, 0.28) !important;
+  border-color: rgba(20, 120, 80, 0.4) !important;
+}
+
+/* Inputs & Formulaires en mode sombre */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #1f1b18 !important;
+  color: #f5f2eb !important;
+  border-color: #3b332c !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #787064 !important;
 }

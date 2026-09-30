@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mic, Sparkles, Layers, Check, Home, Compass, Calendar, Cloud, BookOpen } from 'lucide-react';
 import { VoiceSelector } from './VoiceSelector';
+import { ThemeToggle } from './ThemeToggle';
+import { getAppTheme, AppTheme } from '../utils/themeUtils';
 
 interface HeaderProps {
   currentView: 'home' | 'stories' | 'lab' | 'curriculum';
@@ -23,8 +25,18 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCalendarModal,
   onOpenProfileSyncModal,
 }) => {
+  const [theme, setTheme] = useState<AppTheme>(getAppTheme());
+
+  useEffect(() => {
+    const handleTheme = (e: any) => {
+      setTheme(e.detail as AppTheme);
+    };
+    window.addEventListener('fluent_theme_changed', handleTheme);
+    return () => window.removeEventListener('fluent_theme_changed', handleTheme);
+  }, []);
+
   return (
-    <header className="bg-[#fdfcf9]/90 backdrop-blur-md border-b-2 border-stone-200/90 sticky top-0 z-40 shadow-xs">
+    <header className="bg-[#fdfcf9]/90 backdrop-blur-md border-b-2 border-stone-200/90 sticky top-0 z-40 shadow-xs transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           
@@ -44,8 +56,12 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-stone-100 text-stone-800 border border-stone-300">
                   HSK 3-4
                 </span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#c23b22]/10 text-[#c23b22] border border-[#c23b22]/30 hidden md:inline">
-                  Mode Encre & BD
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border hidden md:inline transition-colors ${
+                  theme === 'dark'
+                    ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                    : 'bg-[#c23b22]/10 text-[#c23b22] border-[#c23b22]/30'
+                }`}>
+                  {theme === 'dark' ? '🌙 Mode Sombre' : '📜 Mode Encre'}
                 </span>
               </div>
               <p className="text-[11px] text-stone-500 font-medium hidden sm:block">
@@ -105,9 +121,12 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          {/* Controls : Voix, Calendrier, Anki & Statistiques */}
+          {/* Controls : Thème, Voix, Calendrier, Anki & Statistiques */}
           <div className="flex flex-wrap items-center space-x-2 text-xs self-end sm:self-center">
             
+            {/* Basculeur de Mode Encre / Mode Sombre */}
+            <ThemeToggle />
+
             {/* Sélecteur de Banque Vocale */}
             <VoiceSelector />
 

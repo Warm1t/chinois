@@ -12,6 +12,7 @@ import { StoryReaderView } from './components/StoryReaderView';
 import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
 import { UserProfileBackup } from './utils/profileSyncUtils';
+import { getAppTheme, applyThemeToDocument } from './utils/themeUtils';
 import { Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -64,6 +65,11 @@ export const App: React.FC = () => {
     localStorage.setItem('fluent_anki_words', JSON.stringify(syncedAnkiWords));
   }, [syncedAnkiWords]);
 
+  // Initialisation du thème au premier chargement (Mode Encre ou Mode Sombre)
+  useEffect(() => {
+    applyThemeToDocument(getAppTheme());
+  }, []);
+
   const handleExerciseCompleted = (cardId: string) => {
     if (!completedExercises.includes(cardId)) {
       const updated = [...completedExercises, cardId];
@@ -92,7 +98,7 @@ export const App: React.FC = () => {
   const anchoredCount = Object.values(anchoringRecords).filter(r => r.stage === 'ancre').length;
 
   return (
-    <div className="min-h-screen bg-[#fbf9f5] text-stone-900 flex flex-col font-sans selection:bg-[#c23b22] selection:text-white">
+    <div className="min-h-screen bg-[#fbf9f5] dark:bg-[#0e0d0c] text-stone-900 dark:text-stone-100 flex flex-col font-sans selection:bg-[#c23b22] selection:text-white transition-colors duration-200">
       
       {/* Header Encre & Papier avec Navigation Rapide */}
       <Header
@@ -215,8 +221,8 @@ export const App: React.FC = () => {
       )}
 
       {/* Footer */}
-      <footer className="border-t border-stone-200/80 py-6 text-center text-xs text-stone-400">
-        <p>Fluent — Programme d'Expression Mandarin HSK 3-4 • Mode Encre & Papier • Cockpit Guidé 100% Gratuit & Local</p>
+      <footer className="border-t border-stone-200/80 dark:border-stone-800/80 py-6 text-center text-xs text-stone-400 dark:text-stone-500 transition-colors duration-200">
+        <p>Fluent — Programme d'Expression Mandarin HSK 3-4 • Mode Encre 📜 & Mode Sombre 🌙 • Cockpit Guidé 100% Gratuit & Local</p>
       </footer>
 
     </div>
