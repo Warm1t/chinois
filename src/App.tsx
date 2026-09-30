@@ -11,7 +11,8 @@ import { AnkiWord } from './types/fluent';
 import { StoryReaderView } from './components/StoryReaderView';
 import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
-import { UserProfileBackup } from './utils/profileSyncUtils';
+import { UserProfileBackup, createProfileBackup } from './utils/profileSyncUtils';
+import { pushProfileToCloud, isAutoSyncEnabled } from './utils/cloudSyncUtils';
 import { getAppTheme, applyThemeToDocument } from './utils/themeUtils';
 import { AppleSyncModal } from './components/AppleSyncModal';
 import { getTodayDailyHanzi } from './data/dailyHanziData';
@@ -75,13 +76,25 @@ export const App: React.FC = () => {
   }, []);
 
   const handleExerciseCompleted = (cardId: string) => {
+    let updatedExercises = completedExercises;
     if (!completedExercises.includes(cardId)) {
-      const updated = [...completedExercises, cardId];
-      setCompletedExercises(updated);
+      updatedExercises = [...completedExercises, cardId];
+      setCompletedExercises(updatedExercises);
       setToastMessage("🎉 太棒了 ! Nuance validée à l'oral (> 80%) et ancrée !");
       setTimeout(() => setToastMessage(null), 4000);
     }
     refreshAnchoring();
+
+    // Synchronisation automatique silencieuse avec Supabase Cloud
+    if (isAutoSyncEnabled()) {
+      const backup = createProfileBackup(
+        updatedExercises,
+        streakDays,
+        syncedAnkiWords,
+        getAnchoringRecords()
+      );
+      pushProfileToCloud(backup).catch((e) => console.warn('Auto-sync Supabase en attente:', e));
+    }
   };
 
   const handleSelectCardFromCurriculum = (cardId: string) => {

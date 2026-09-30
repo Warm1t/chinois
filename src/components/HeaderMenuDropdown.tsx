@@ -189,7 +189,7 @@ export const HeaderMenuDropdown: React.FC<HeaderMenuDropdownProps> = ({
               )}
             </div>
 
-            {/* Option 2 : Profil & Sauvegarde */}
+            {/* Option 2 : Profil & Sauvegarde Cloud */}
             <div
               onClick={() => {
                 onOpenProfileSyncModal();
@@ -198,15 +198,20 @@ export const HeaderMenuDropdown: React.FC<HeaderMenuDropdownProps> = ({
               className="p-2.5 rounded-2xl hover:bg-stone-50 dark:hover:bg-stone-800/80 cursor-pointer border border-transparent hover:border-stone-200 dark:border-transparent dark:hover:border-stone-700 transition-all flex items-center justify-between group"
             >
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950/40 text-[#c23b22] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
                   <Cloud className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] transition-colors">
-                    Profil & Sauvegarde Cloud
-                  </h4>
+                  <div className="flex items-center space-x-1.5">
+                    <h4 className="text-xs font-bold text-stone-900 dark:text-stone-100 group-hover:text-emerald-600 transition-colors">
+                      Synchro Cloud & Profil
+                    </h4>
+                    <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
+                      Supabase
+                    </span>
+                  </div>
                   <p className="text-[11px] text-stone-500 dark:text-stone-400">
-                    Exporter ou synchroniser entre PC et mobile
+                    Synchro automatique sans fichier & multi-appareils
                   </p>
                 </div>
               </div>
