@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Mic, Sparkles, Layers, Check, Home, Compass, Calendar, Cloud, BookOpen, Smartphone } from 'lucide-react';
-import { VoiceSelector } from './VoiceSelector';
+import { Mic, Sparkles, Layers, Check, Home, Compass, BookOpen } from 'lucide-react';
+import { HeaderMenuDropdown } from './HeaderMenuDropdown';
 import { ThemeToggle } from './ThemeToggle';
 import { getAppTheme, AppTheme } from '../utils/themeUtils';
 
@@ -123,81 +123,46 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          {/* Controls : Thème, Voix, Calendrier, Anki & Statistiques */}
-          <div className="flex flex-wrap items-center space-x-2 text-xs self-end sm:self-center">
+          {/* Controls : Statistiques, Thème & Menu Outils Déroulant */}
+          <div className="flex items-center space-x-2 text-xs self-end sm:self-center">
             
+            {/* Capsule Statistiques Quotidiennes Récapitulative */}
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 font-bold select-none shadow-2xs">
+              <span className="flex items-center space-x-1" title={`Série de ${currentStreak} jours consécutifs`}>
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                <span className="text-stone-900 dark:text-stone-100">{currentStreak}j</span>
+              </span>
+              <span className="text-stone-300 dark:text-stone-600">•</span>
+              <span className="flex items-center space-x-1" title={`${completedExercisesCount} nuances sur 18 maîtrisées à l'oral`}>
+                <Mic className="w-3.5 h-3.5 text-[#c23b22]" />
+                <span className="text-stone-900 dark:text-stone-100">{completedExercisesCount}/18</span>
+              </span>
+              {syncedAnkiWordsCount > 0 && (
+                <>
+                  <span className="text-stone-300 dark:text-stone-600">•</span>
+                  <span 
+                    onClick={onOpenAnkiModal}
+                    className="flex items-center space-x-1 cursor-pointer hover:text-[#c23b22] transition-colors" 
+                    title={`${syncedAnkiWordsCount} mots Anki liés (cliquer pour ouvrir)`}
+                  >
+                    <Layers className="w-3.5 h-3.5 text-amber-600" />
+                    <span className="text-stone-900 dark:text-stone-100 font-mono">{syncedAnkiWordsCount}</span>
+                  </span>
+                </>
+              )}
+            </div>
+
             {/* Basculeur de Mode Encre / Mode Sombre */}
             <ThemeToggle />
 
-            {/* Sélecteur de Banque Vocale */}
-            <VoiceSelector />
-
-            {/* Bouton Connexion iPhone / Apple */}
-            {onOpenAppleSyncModal && (
-              <button
-                onClick={onOpenAppleSyncModal}
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 font-bold shadow-2xs hover:-translate-y-0.5 transition-all"
-                title="Connecter le Hanzi du jour et les rappels à ton iPhone (Widget & Calendrier Apple)"
-              >
-                <Smartphone className="w-3.5 h-3.5 text-amber-500" />
-                <span className="hidden lg:inline">iPhone & Apple</span>
-                <span className="lg:hidden">iPhone</span>
-              </button>
-            )}
-
-            {/* Bouton Connexion Calendrier & Rappels */}
-            <button
-              onClick={onOpenCalendarModal}
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-stone-300 bg-white hover:bg-stone-50 text-stone-800 font-bold shadow-2xs hover:-translate-y-0.5 transition-all"
-              title="Connecter mon calendrier Google/Apple ou activer mes rappels"
-            >
-              <Calendar className="w-3.5 h-3.5 text-blue-600" />
-              <span className="hidden md:inline">Rappels & Calendrier</span>
-              <span className="md:hidden">Rappels</span>
-            </button>
-
-            {/* Anki Sync Button */}
-            <button
-              onClick={onOpenAnkiModal}
-              className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border transition-all ${
-                syncedAnkiWordsCount > 0
-                  ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100'
-                  : 'bg-white text-stone-700 border-stone-300 hover:bg-stone-50'
-              }`}
-              title="Lier ton application ou ton deck Anki"
-            >
-              <Layers className="w-3.5 h-3.5 text-amber-600" />
-              <span>Anki : </span>
-              {syncedAnkiWordsCount > 0 ? (
-                <span className="font-bold text-[#c23b22] flex items-center">
-                  {syncedAnkiWordsCount} <Check className="w-3 h-3 ml-0.5" />
-                </span>
-              ) : (
-                <span className="text-stone-400 font-medium">Lier</span>
-              )}
-            </button>
-
-            {/* Bouton Sauvegarde & Synchro Profil */}
-            <button
-              onClick={onOpenProfileSyncModal}
-              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-stone-300 bg-white hover:bg-stone-50 text-stone-800 font-bold shadow-2xs hover:-translate-y-0.5 transition-all"
-              title="Sauvegarder ou synchroniser ma progression sur tous mes appareils"
-            >
-              <Cloud className="w-3.5 h-3.5 text-[#c23b22]" />
-              <span className="hidden md:inline">Profil & Synchro</span>
-            </button>
-
-            {/* Streak */}
-            <div className="flex items-center space-x-1 px-2.5 py-1.5 rounded-xl bg-stone-100 border border-stone-200 text-stone-700">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span><strong className="text-stone-900">{currentStreak}j</strong></span>
-            </div>
-
-            {/* Mastered */}
-            <div className="flex items-center space-x-1 px-2.5 py-1.5 rounded-xl bg-stone-100 border border-stone-200 text-stone-700">
-              <Mic className="w-3.5 h-3.5 text-[#c23b22]" />
-              <span><strong className="text-stone-900">{completedExercisesCount}/18</strong></span>
-            </div>
+            {/* Menu Déroulant Unique pour tous les outils & synchronisations */}
+            <HeaderMenuDropdown
+              syncedAnkiWordsCount={syncedAnkiWordsCount}
+              onOpenAnkiModal={onOpenAnkiModal}
+              onOpenCalendarModal={onOpenCalendarModal}
+              onOpenProfileSyncModal={onOpenProfileSyncModal}
+              onOpenAppleSyncModal={onOpenAppleSyncModal}
+            />
 
           </div>
 
