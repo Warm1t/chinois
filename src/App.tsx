@@ -6,9 +6,11 @@ import { CurriculumOverview } from './components/CurriculumOverview';
 import { DailyAnchorModal } from './components/DailyAnchorModal';
 import { CalendarReminderModal } from './components/CalendarReminderModal';
 import { AnkiLinkModal } from './components/AnkiLinkModal';
+import { ProfileSyncModal } from './components/ProfileSyncModal';
 import { AnkiWord } from './types/fluent';
 import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
+import { UserProfileBackup } from './utils/profileSyncUtils';
 import { Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -34,6 +36,7 @@ export const App: React.FC = () => {
   const [isAnkiModalOpen, setIsAnkiModalOpen] = useState(false);
   const [isDailyAnchorModalOpen, setIsDailyAnchorModalOpen] = useState(false);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
+  const [isProfileSyncModalOpen, setIsProfileSyncModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Enregistrements d'ancrage cognitif (SRS)
@@ -41,6 +44,15 @@ export const App: React.FC = () => {
 
   const refreshAnchoring = () => {
     setAnchoringRecords(getAnchoringRecords());
+  };
+
+  const handleProfileRestored = (backup: UserProfileBackup) => {
+    setCompletedExercises(backup.completedExercises);
+    setStreakDays(backup.streakDays);
+    setSyncedAnkiWords(backup.syncedAnkiWords);
+    setAnchoringRecords(backup.anchoringRecords);
+    setToastMessage("🎉 Profil et progression restaurés avec succès sur cet appareil !");
+    setTimeout(() => setToastMessage(null), 4000);
   };
 
   useEffect(() => {
@@ -90,6 +102,7 @@ export const App: React.FC = () => {
         syncedAnkiWordsCount={syncedAnkiWords.length}
         onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
         onOpenCalendarModal={() => setIsCalendarModalOpen(true)}
+        onOpenProfileSyncModal={() => setIsProfileSyncModalOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -169,6 +182,17 @@ export const App: React.FC = () => {
           }}
         />
       )}
+
+      {/* Profile Sync & Progression Backup Modal */}
+      <ProfileSyncModal
+        isOpen={isProfileSyncModalOpen}
+        onClose={() => setIsProfileSyncModalOpen(false)}
+        completedExercises={completedExercises}
+        streakDays={streakDays}
+        syncedAnkiWords={syncedAnkiWords}
+        anchoringRecords={anchoringRecords}
+        onProfileRestored={handleProfileRestored}
+      />
 
       {/* Toast Notification */}
       {toastMessage && (

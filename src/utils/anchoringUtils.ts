@@ -1,6 +1,6 @@
 import { AnchoringRecord, NuanceCard, AnchoringStage } from '../types/fluent';
 
-const STORAGE_KEY = 'fluent_anchoring_records';
+export const STORAGE_KEY = 'fluent_anchoring_records';
 
 export const getAnchoringRecords = (): Record<string, AnchoringRecord> => {
   const saved = localStorage.getItem(STORAGE_KEY);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mic, Sparkles, Layers, Check, Home, Compass, Calendar } from 'lucide-react';
+import { Mic, Sparkles, Layers, Check, Home, Compass, Calendar, Cloud } from 'lucide-react';
 
 interface HeaderProps {
   currentView: 'home' | 'lab' | 'curriculum';
@@ -9,6 +9,7 @@ interface HeaderProps {
   syncedAnkiWordsCount: number;
   onOpenAnkiModal: () => void;
   onOpenCalendarModal: () => void;
+  onOpenProfileSyncModal: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -19,6 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
   syncedAnkiWordsCount,
   onOpenAnkiModal,
   onOpenCalendarModal,
+  onOpenProfileSyncModal,
 }) => {
   return (
     <header className="bg-[#fdfcf9]/90 backdrop-blur-md border-b-2 border-stone-200/90 sticky top-0 z-40 shadow-xs">
@@ -123,6 +125,16 @@ export const Header: React.FC<HeaderProps> = ({
               ) : (
                 <span className="text-stone-400 font-medium">Lier</span>
               )}
+            </button>
+
+            {/* Bouton Sauvegarde & Synchro Profil */}
+            <button
+              onClick={onOpenProfileSyncModal}
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-stone-300 bg-white hover:bg-stone-50 text-stone-800 font-bold shadow-2xs hover:-translate-y-0.5 transition-all"
+              title="Sauvegarder ou synchroniser ma progression sur tous mes appareils"
+            >
+              <Cloud className="w-3.5 h-3.5 text-[#c23b22]" />
+              <span className="hidden md:inline">Profil & Synchro</span>
             </button>
 
             {/* Streak */}
