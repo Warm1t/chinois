@@ -31,7 +31,12 @@
 * **Barre d'outils de lecture personnalisée** :
   - **Toggle Pinyin** : Affiche ou masque le Pinyin au-dessus des caractères en un clic pour t'entraîner à la vraie lecture.
   - **Toggle Traduction** : Révèle la traduction française phrase par phrase.
-  - **Lecteur Audio Natif** : Écoute l'histoire lue par une voix chinoise native à vitesse réglable (`0.75x` ralenti pour analyser les tons, `1.0x` vitesse normale, `1.2x` rapide).
+  - **Lecteur Audio Natif & Banque Vocale Naturelle** :
+    - 🔄 **Mode Alternance Automatique (Homme / Femme)** : Alterne les tessitures vocales à chaque phrase ou écoute pour habituer activement l'oreille aux différentes hauteurs de son et intonations de la vraie vie.
+    - 👩 **Voix Féminine Haute Fidélité** (Xiaoxiao, Huihui, Tingting) : Timbre clair, tonalité brillante et articulation limpide.
+    - 👨 **Voix Masculine Résonante** (Yunxi, Kangkang, Zhiwei) : Timbre grave et profondeur pectorale naturelle.
+    - ⚡ Vitesse réglable (`0.75x` ralenti pour analyser les tons, `1.0x` vitesse normale, `1.2x` rapide).
+    - 🔊 Audio studio HD au clic sur les mots du vocabulaire.
 * **🪄 Générateur d'Histoire Personnalisée Anki (Exclusivité)** :
   - Clique sur *« Créer une histoire avec mes mots Anki »* : l'application génère automatiquement une histoire originale et naturelle construite autour de tes propres cartes de vocabulaire !
 * **Quiz de Compréhension** : Vérifie ta compréhension avec 2 à 3 questions à choix multiples et explications pédagogiques immédiates.
@@ -41,6 +46,7 @@
 
 ### 3. 🎙️ Labo Vocal & Correcteur IA (Voice Coach Lab)
 * **Entraînement oral en conditions réelles** : Pas de répétition bête de mots isolés, mais des situations concrètes du quotidien où tu dois exprimer une pensée complète.
+* **Double Écoute Modèle (👩 Femme & 👨 Homme)** : Écoute la phrase prononcée par une femme puis par un homme en un clic pour calibrer ta propre voix.
 * **Reconnaissance vocale native en direct (`zh-CN`)** : Aucune API payante requise, utilise le moteur vocal haute précision intégré à ton navigateur.
 * **Analyse caractère par caractère** :
   - 🟢 **Vert** : Son et ton correctement prononcés et reconnus.
