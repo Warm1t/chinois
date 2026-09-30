@@ -1,10 +1,20 @@
 import { AnkiWord } from '../types/fluent';
 
-const ANKI_CONNECT_URL = 'http://127.0.0.1:8765';
+export const DEFAULT_ANKI_URL = 'http://127.0.0.1:8765';
+
+export const getAnkiConnectUrl = (): string => {
+  return localStorage.getItem('fluent_anki_server_url') || DEFAULT_ANKI_URL;
+};
+
+export const setAnkiConnectUrl = (url: string) => {
+  const cleanUrl = url.trim().replace(/\/+$/, '');
+  localStorage.setItem('fluent_anki_server_url', cleanUrl);
+};
 
 // 1. Appel RPC vers AnkiConnect (Tente d'abord le proxy Vite /anki-api pour contourner CORS, puis direct)
 export const invokeAnkiConnect = async (action: string, params: Record<string, any> = {}): Promise<any> => {
   const payload = JSON.stringify({ action, version: 6, params });
+  const directUrl = getAnkiConnectUrl();
 
   try {
     const res = await fetch('/anki-api', {
@@ -18,10 +28,10 @@ export const invokeAnkiConnect = async (action: string, params: Record<string, a
       return data.result;
     }
   } catch (err) {
-    // Si le proxy échoue, on tente en direct
+    // Si le proxy échoue ou qu'on est sur GitHub Pages (404), on tente en direct
   }
 
-  const directRes = await fetch('http://127.0.0.1:8765', {
+  const directRes = await fetch(directUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: payload,
@@ -150,8 +160,31 @@ export const fetchWordsFromDecks = async (deckNames: string[]): Promise<AnkiWord
   return uniqueWords;
 };
 
-// 7. Analyseur d'exportation de fichier texte/CSV Anki (Glisser-Déposer ou Copier-Coller)
+// 7. Analyseur d'exportation de fichier texte/CSV ou JSON Anki (Glisser-Déposer ou Copier-Coller)
 export const parseAnkiTextExport = (rawText: string, deckName: string = 'Export Anki'): AnkiWord[] => {
+  const trimmedText = rawText.trim();
+
+  // Détection si c'est un export JSON Fluent
+  if (trimmedText.startsWith('[') && trimmedText.endsWith(']')) {
+    try {
+      const parsed = JSON.parse(trimmedText);
+      if (Array.isArray(parsed)) {
+        return parsed
+          .filter((item: any) => item && item.hanzi && /[\u4e00-\u9fa5]/.test(item.hanzi))
+          .map((item: any, idx: number) => ({
+            id: item.id || `json-${Date.now()}-${idx}`,
+            hanzi: item.hanzi.trim(),
+            pinyin: item.pinyin?.trim() || '',
+            translation: item.translation?.trim() || '',
+            deckName: item.deckName || deckName,
+            addedAt: item.addedAt || new Date().toISOString(),
+          }));
+      }
+    } catch {
+      // Si ce n'est pas un JSON valide, continuer en format texte standard
+    }
+  }
+
   const lines = rawText.split('\n');
   const words: AnkiWord[] = [];
 
@@ -181,3 +214,18 @@ export const parseAnkiTextExport = (rawText: string, deckName: string = 'Export 
 
   return words;
 };
+
+// 8. Exporter tous les mots au format JSON (Sauvegarde universelle pour mobile, tablette ou autre PC)
+export const exportWordsToJson = (words: AnkiWord[]) => {
+  const jsonString = JSON.stringify(words, null, 2);
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `fluent-vocabulaire-anki-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+

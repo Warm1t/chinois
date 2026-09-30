@@ -4,7 +4,11 @@ import {
   checkAnkiConnection, 
   getDeckStats,
   fetchWordsFromDecks, 
-  parseAnkiTextExport 
+  parseAnkiTextExport,
+  getAnkiConnectUrl,
+  setAnkiConnectUrl,
+  DEFAULT_ANKI_URL,
+  exportWordsToJson
 } from '../utils/ankiConnect';
 import { 
   X, 
@@ -19,7 +23,11 @@ import {
   Check,
   Zap,
   Search,
-  Trash2
+  Trash2,
+  FileText,
+  Settings,
+  Smartphone,
+  DownloadCloud
 } from 'lucide-react';
 
 interface AnkiLinkModalProps {
@@ -42,6 +50,10 @@ export const AnkiLinkModal: React.FC<AnkiLinkModalProps> = ({
   const [statusMessage, setStatusMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [mergeWithExisting, setMergeWithExisting] = useState<boolean>(true);
+  const [ankiUrl, setAnkiUrlState] = useState<string>(getAnkiConnectUrl());
+  const [showSettings, setShowSettings] = useState<boolean>(false);
+
+  const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
 
   // Vérifier la connexion AnkiConnect à l'ouverture
   useEffect(() => {
@@ -136,6 +148,50 @@ export const AnkiLinkModal: React.FC<AnkiLinkModalProps> = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Enregistrer une URL AnkiConnect personnalisée (pour mobile ou autre PC sur le réseau)
+  const handleSaveAnkiUrl = (newUrl: string) => {
+    setAnkiConnectUrl(newUrl);
+    setAnkiUrlState(newUrl);
+    handleCheckConnection();
+  };
+
+  // Importer un fichier texte, TSV ou JSON
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target?.result as string;
+      if (content) {
+        setImportText(content);
+        const words = parseAnkiTextExport(content, file.name.replace(/\.[^/.]+$/, ''));
+        if (words.length > 0) {
+          let finalWords = words;
+          if (mergeWithExisting && syncedWords.length > 0) {
+            const seen = new Set<string>();
+            finalWords = [];
+            for (const w of [...syncedWords, ...words]) {
+              if (!seen.has(w.hanzi)) {
+                seen.add(w.hanzi);
+                finalWords.push(w);
+              }
+            }
+          }
+          onWordsUpdated(finalWords);
+          setStatusMessage({
+            text: `🎉 ${words.length} mots importés depuis "${file.name}" ! Total dans Fluent : ${finalWords.length} mots.`,
+            type: 'success',
+          });
+          setActiveTab('browse');
+        } else {
+          setStatusMessage({ text: "Aucun caractère chinois détecté dans ce fichier.", type: 'error' });
+        }
+      }
+    };
+    reader.readAsText(file);
   };
 
   // Importer du texte brut
@@ -419,35 +475,126 @@ export const AnkiLinkModal: React.FC<AnkiLinkModalProps> = ({
               </div>
             ) : (
               /* Instructions si Anki n'est pas encore lancé */
-              <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2 text-xs text-stone-600 leading-relaxed">
-                <p className="font-bold text-stone-800">
-                  Pour connecter ton Anki en direct :
-                </p>
-                <ol className="list-decimal pl-4 space-y-1">
-                  <li>Ouvre ton logiciel <strong>Anki</strong> sur ton ordinateur.</li>
-                  <li>Assure-toi que le greffon gratuit <strong>AnkiConnect</strong> est bien actif (Code : <code>2055492159</code>).</li>
-                  <li>Clique sur le bouton <strong>« Actualiser »</strong> ci-dessus !</li>
-                </ol>
+              <div className="space-y-3">
+                {isHttps && (
+                  <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-300 text-xs text-amber-900 space-y-1.5">
+                    <div className="flex items-center space-x-1.5 font-bold">
+                      <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+                      <span>Tu es sur la version en ligne (GitHub Pages en HTTPS)</span>
+                    </div>
+                    <p className="text-[11px] leading-relaxed text-amber-800">
+                      Par sécurité, les navigateurs bloquent les requêtes directes d'un site HTTPS vers un logiciel local HTTP sur ton ordinateur.
+                    </p>
+                    <div className="pt-1 flex flex-wrap gap-2 text-[11px]">
+                      <button
+                        onClick={() => setActiveTab('import')}
+                        className="px-3 py-1.5 rounded-xl bg-amber-200/80 hover:bg-amber-200 text-amber-950 font-bold transition-colors flex items-center space-x-1"
+                      >
+                        <Upload className="w-3 h-3" />
+                        <span>Utiliser l'onglet "Import Fichier" (100% universel)</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2 text-xs text-stone-600 leading-relaxed">
+                  <p className="font-bold text-stone-800">
+                    Pour connecter ton Anki en direct :
+                  </p>
+                  <ol className="list-decimal pl-4 space-y-1">
+                    <li>Ouvre ton logiciel <strong>Anki</strong> sur ton ordinateur.</li>
+                    <li>Assure-toi que le greffon gratuit <strong>AnkiConnect</strong> est bien actif (Code : <code>2055492159</code>).</li>
+                    <li>Clique sur le bouton <strong>« Actualiser »</strong> ci-dessus !</li>
+                  </ol>
+                </div>
+
+                {/* Paramètres d'adresse Anki personnalisée pour Mobile ou Autre PC */}
+                <div className="pt-1">
+                  <button
+                    onClick={() => setShowSettings(!showSettings)}
+                    className="text-[11px] font-bold text-stone-500 hover:text-stone-800 flex items-center space-x-1 transition-colors"
+                  >
+                    <Settings className="w-3 h-3" />
+                    <span>{showSettings ? 'Masquer les paramètres réseau' : 'Connexion depuis un téléphone ou autre PC (Wi-Fi)'}</span>
+                  </button>
+                  {showSettings && (
+                    <div className="mt-2 p-3.5 rounded-xl bg-stone-100 border border-stone-200 space-y-2 text-xs">
+                      <label className="font-bold text-stone-700 block">
+                        Adresse AnkiConnect (IP de ton ordinateur avec Anki) :
+                      </label>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={ankiUrl}
+                          onChange={(e) => setAnkiUrlState(e.target.value)}
+                          placeholder="http://192.168.1.66:8765"
+                          className="flex-1 px-3 py-1.5 rounded-lg border border-stone-300 bg-white font-mono text-xs focus:outline-none focus:ring-1 focus:ring-stone-900"
+                        />
+                        <button
+                          onClick={() => handleSaveAnkiUrl(ankiUrl)}
+                          className="px-3.5 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs transition-colors shrink-0"
+                        >
+                          Appliquer
+                        </button>
+                      </div>
+                      <p className="text-[10px] text-stone-500">
+                        Par défaut sur le même PC : <code>http://127.0.0.1:8765</code>
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
           </div>
         )}
 
-        {/* CONTENU DE L'ONGLET 2 : IMPORT TEXTE BRUT */}
+        {/* CONTENU DE L'ONGLET 2 : IMPORT TEXTE BRUT OU FICHIER */}
         {activeTab === 'import' && (
           <div className="space-y-4 animate-fadeIn">
+            {/* Bouton de sauvegarde nomade si des cartes existent déjà */}
+            {syncedWords.length > 0 && (
+              <div className="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 flex items-center justify-between gap-3">
+                <div className="text-xs text-emerald-900">
+                  <span className="font-bold block">Sauvegarde nomade ({syncedWords.length} mots déjà liés)</span>
+                  <span className="text-[10px] text-emerald-700">Emporte ton vocabulaire sur ton téléphone ou un autre PC sans Anki</span>
+                </div>
+                <button
+                  onClick={() => exportWordsToJson(syncedWords)}
+                  className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs flex items-center space-x-1.5 shadow-xs transition-colors shrink-0"
+                >
+                  <DownloadCloud className="w-3.5 h-3.5" />
+                  <span>Exporter (.json)</span>
+                </button>
+              </div>
+            )}
+
+            {/* Sélecteur de fichier d'exportation */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 bg-stone-100/80 rounded-2xl border border-dashed border-stone-300">
+              <div className="flex items-center space-x-2.5 text-xs text-stone-700">
+                <FileText className="w-4 h-4 text-stone-500 shrink-0" />
+                <div>
+                  <span className="font-bold block">Charger un fichier d'export Anki ou Sauvegarde Fluent</span>
+                  <span className="text-[10px] text-stone-500">Formats supportés : .txt, .tsv, .csv ou .json</span>
+                </div>
+              </div>
+              <label className="cursor-pointer px-4 py-2 rounded-xl bg-white border border-stone-300 hover:bg-stone-50 text-xs font-bold text-stone-800 shadow-xs transition-colors shrink-0">
+                <span>Choisir un fichier...</span>
+                <input type="file" accept=".txt,.tsv,.csv,.json" onChange={handleFileUpload} className="hidden" />
+              </label>
+            </div>
+
             <div className="space-y-1 text-xs">
               <label className="font-bold text-stone-800">
-                Colle tes cartes Anki exportées (Texte, TSV, CSV) :
+                Ou colle tes cartes directement ci-dessous :
               </label>
               <p className="text-stone-500">
-                Format attendu : <code>Hanzi [Tabulation ou ;] Pinyin [Tabulation ou ;] Traduction</code>
+                Format attendu : <code>Hanzi [Tabulation ou ;] Pinyin [Tabulation ou ;] Traduction</code> (ou JSON Fluent)
               </p>
             </div>
 
             <textarea
-              rows={6}
+              rows={5}
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
               placeholder="我要努力工作&#9;wǒ yào nǔlì gōngzuò&#9;Je vais persévérer au travail&#10;客厅&#9;kètīng&#9;Salon"
@@ -480,7 +627,7 @@ export const AnkiLinkModal: React.FC<AnkiLinkModalProps> = ({
           <div className="space-y-4 animate-fadeIn">
             
             {/* Barre de recherche et actions */}
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center justify-between gap-2">
               <div className="relative flex-1">
                 <Search className="w-4 h-4 text-stone-400 absolute left-3 top-3" />
                 <input
@@ -492,9 +639,20 @@ export const AnkiLinkModal: React.FC<AnkiLinkModalProps> = ({
                 />
               </div>
 
+              {syncedWords.length > 0 && (
+                <button
+                  onClick={() => exportWordsToJson(syncedWords)}
+                  className="px-3 py-2 rounded-xl text-stone-700 hover:bg-stone-100 border border-stone-200 text-xs font-bold flex items-center space-x-1.5 transition-colors shrink-0"
+                  title="Sauvegarder mes mots sous forme de fichier JSON"
+                >
+                  <DownloadCloud className="w-4 h-4 text-stone-600" />
+                  <span className="hidden sm:inline">Sauvegarder JSON</span>
+                </button>
+              )}
+
               <button
                 onClick={handleClearSyncedWords}
-                className="p-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-stone-200 transition-colors"
+                className="p-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-stone-200 transition-colors shrink-0"
                 title="Vider le vocabulaire lié"
               >
                 <Trash2 className="w-4 h-4" />
