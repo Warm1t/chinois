@@ -356,7 +356,7 @@ export const generateAppleCalendarIcsForHanzi = (
     'PRODID:-//Fluent//Daily Hanzi Apple Widget Series//FR',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    'X-WR-CALNAME:🇨🇳 Fluent - Hanzi du Jour',
+    'X-WR-CALNAME:Fluent',
     'X-WR-TIMEZONE:Europe/Paris'
   ];
 
@@ -393,6 +393,7 @@ export const generateAppleCalendarIcsForHanzi = (
     lines.push('BEGIN:VEVENT');
     lines.push(`UID:fluent-daily-hanzi-${dateYmd}@fluent.apple`);
     lines.push(`DTSTAMP:${nowStr}`);
+    lines.push('CATEGORIES:Fluent');
 
     if (mode === 'all_day') {
       // Mode Toute la journée : reste affiché sur le widget iOS

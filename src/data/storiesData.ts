@@ -949,7 +949,7 @@ export const generateAppleCalendarIcsForStories = (
     'PRODID:-//Fluent//Daily Stories Apple Widget Series//FR',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    'X-WR-CALNAME:🇨🇳 Fluent - Histoire du Jour',
+    'X-WR-CALNAME:Fluent',
     'X-WR-TIMEZONE:Europe/Paris'
   ];
 
@@ -974,6 +974,7 @@ export const generateAppleCalendarIcsForStories = (
     lines.push('BEGIN:VEVENT');
     lines.push(`UID:fluent-daily-story-${dateYmd}@fluent.apple`);
     lines.push(`DTSTAMP:${nowStr}`);
+    lines.push('CATEGORIES:Fluent');
 
     if (mode === 'all_day') {
       lines.push(`DTSTART;VALUE=DATE:${dateYmd}`);

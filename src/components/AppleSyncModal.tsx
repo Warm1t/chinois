@@ -43,7 +43,6 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
 
   const [packType, setPackType] = useState<'combo' | 'hanzi' | 'story'>('combo');
   const [calendarMode, setCalendarMode] = useState<'timed' | 'all_day'>('timed');
-  const [daysCount, setDaysCount] = useState<number>(14);
   const [morningTime, setMorningTime] = useState<string>('08:30');
   const [eveningTime, setEveningTime] = useState<string>('19:30');
   const [copiedShortcut, setCopiedShortcut] = useState(false);
@@ -54,10 +53,11 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Télécharger le fichier .ics multi-jours sélectionné
+  // Télécharger le fichier .ics quotidien continu
   const handleDownloadAppleCalendar = () => {
     let icsContent = '';
     let fileName = '';
+    const daysCount = 60; // 60 jours quotidiens continus
 
     if (packType === 'combo') {
       icsContent = generateAppleCalendarIcsCombined({
@@ -66,19 +66,19 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
         daysCount,
         mode: calendarMode,
       });
-      fileName = `fluent-combo-hanzi-histoires-${daysCount}jours.ics`;
+      fileName = 'fluent-quotidien-combo.ics';
     } else if (packType === 'hanzi') {
       icsContent = generateAppleCalendarIcsForHanzi(todayHanzi, morningTime, {
         daysCount,
         mode: calendarMode,
       });
-      fileName = `fluent-hanzi-du-jour-${daysCount}jours.ics`;
+      fileName = 'fluent-hanzi-quotidien.ics';
     } else {
       icsContent = generateAppleCalendarIcsForStories(eveningTime, {
         daysCount,
         mode: calendarMode,
       });
-      fileName = `fluent-histoire-du-jour-${daysCount}jours.ics`;
+      fileName = 'fluent-histoires-quotidien.ics';
     }
 
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
@@ -262,10 +262,10 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
                 <div className="p-3.5 pt-0 space-y-2.5 text-[11px] text-rose-950 dark:text-rose-200 border-t border-rose-200/60 dark:border-rose-800/60 mt-1 leading-relaxed">
                   <div className="p-2.5 rounded-xl bg-white dark:bg-stone-900 border border-rose-200 dark:border-rose-900/60 space-y-1">
                     <strong className="text-rose-700 dark:text-rose-300 block">
-                      ⚡ Option 1 (Si c'est dans un calendrier séparé) :
+                      ⚡ Option 1 (Si c'est dans le calendrier « Fluent ») :
                     </strong>
                     <p>
-                      Dans Calendrier sur iPhone ➔ touche <strong>« Calendriers »</strong> en bas au centre ➔ touche le <strong>(i)</strong> à côté du calendrier ➔ tout en bas : <strong>« Supprimer le calendrier »</strong>. Tous les événements sont effacés d'un seul coup !
+                      Dans Calendrier sur iPhone ➔ touche <strong>« Calendriers »</strong> en bas au centre ➔ touche le <strong>(i)</strong> à côté de <strong>Fluent</strong> ➔ tout en bas : <strong>« Supprimer le calendrier »</strong>. Tous les événements sont effacés d'un seul coup !
                     </p>
                   </div>
 
@@ -275,17 +275,17 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
                     </strong>
                     <p>
                       • <strong>Sur Mac</strong> : Ouvre Calendrier ➔ Recherche <code>Fluent</code> (en haut à droite) ➔ clique dans la liste ➔ <code>Cmd + A</code> (Tout sélectionner) ➔ Touche <code>Supprimer</code>.<br />
-                      • <strong>Sur iPhone</strong> : Ouvre Calendrier ➔ Touche la <strong>loupe 🔍</strong> ➔ Tape <code>Fluent</code> ➔ Les événements s'affichent en liste continue au lieu d'être dispersés sur 60 jours.
+                      • <strong>Sur iPhone</strong> : Ouvre Calendrier ➔ Touche la <strong>loupe 🔍</strong> ➔ Tape <code>Fluent</code> ➔ Les événements s'affichent en liste continue au lieu d'être dispersés sur les jours.
                     </p>
                   </div>
 
                   <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-amber-950 dark:text-amber-200 space-y-1">
                     <strong className="text-amber-800 dark:text-amber-300 block">
-                      🛡️ Règle d'or pour le prochain import :
+                      🛡️ Règle d'or pour le prochain import (Catégorie Fluent, pas Travail) :
                     </strong>
                     <p>
-                      Dans l'app Calendrier iPhone : touche <strong>« Calendriers »</strong> ➔ <strong>« Ajouter un calendrier »</strong> ➔ nomme-le <strong>« Chinois »</strong> (en rouge).<br />
-                      Quand tu ouvriras le nouveau fichier <code>.ics</code>, choisis d'ajouter dans le calendrier <strong>« Chinois »</strong>. Ainsi, pour changer l'heure à l'avenir, tu pourras supprimer ce calendrier en 1 clic sans toucher à ton agenda personnel !
+                      Dans l'app Calendrier iPhone : touche <strong>« Calendriers »</strong> ➔ <strong>« Ajouter un calendrier »</strong> ➔ nomme-le <strong>« Fluent »</strong> (en rouge).<br />
+                      Quand tu ouvriras le nouveau fichier <code>.ics</code>, choisis d'ajouter dans le calendrier <strong>« Fluent »</strong>. Ainsi, c'est bien classé dans <strong>Fluent</strong> (jamais dans Travail), et si tu veux changer tes heures à l'avenir, tu supprimes ce calendrier en 1 clic !
                     </p>
                   </div>
                 </div>
@@ -295,7 +295,7 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
             {/* Heures de rappel configurables avec raccourcis rapides */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
-                2. Choisis tes heures de rappel précises :
+                2. Choisis tes heures de rappel quotidiennes :
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
@@ -369,35 +369,27 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
               </div>
             </div>
 
-            {/* 3. Durée de synchronisation */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-stone-700 dark:text-stone-300 flex items-center justify-between">
-                <span>3. Durée de l'agenda généré :</span>
-                <span className="text-[10px] text-stone-400 font-normal">
-                  (7 ou 14 jours idéal pour tester sans encombrer)
+            {/* 3. Fréquence : Tous les jours & Catégorie : Fluent */}
+            <div className="p-3.5 rounded-2xl bg-stone-100 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+              <div className="flex items-center space-x-2.5">
+                <span className="text-xl">📅</span>
+                <div>
+                  <strong className="text-stone-900 dark:text-stone-100 font-bold block">
+                    Option active : Tous les jours (Quotidien)
+                  </strong>
+                  <span className="text-[11px] text-stone-500 dark:text-stone-400">
+                    Chaque matin et chaque soir sans interruption
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <span className="text-[11px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700">
+                  Catégorie : Fluent
                 </span>
-              </label>
-              <div className="grid grid-cols-4 gap-1.5 text-xs font-mono">
-                {[
-                  { count: 7, label: '7 jours', sub: 'Test rapide' },
-                  { count: 14, label: '14 jours', sub: '2 semaines' },
-                  { count: 30, label: '30 jours', sub: '1 mois' },
-                  { count: 60, label: '60 jours', sub: 'Pack complet' },
-                ].map((item) => (
-                  <button
-                    key={item.count}
-                    type="button"
-                    onClick={() => setDaysCount(item.count)}
-                    className={`p-2 rounded-xl border text-center transition-all ${
-                      daysCount === item.count
-                        ? 'bg-stone-900 text-white dark:bg-white dark:text-stone-900 font-bold border-stone-900 shadow-xs'
-                        : 'bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-400 border-stone-200 dark:border-stone-800 hover:border-stone-400'
-                    }`}
-                  >
-                    <span className="block font-bold text-xs">{item.label}</span>
-                    <span className="text-[9px] opacity-75 font-sans">{item.sub}</span>
-                  </button>
-                ))}
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
+                  ✓ Pas de catégorie Travail
+                </span>
               </div>
             </div>
 
@@ -453,7 +445,7 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
                   <span>Aperçu sur ton Widget iPhone :</span>
                 </span>
                 <span className="text-[10px] text-emerald-400 font-medium">
-                  ✓ Titre épuré (chinois + pinyin)
+                  ✓ Titre épuré • Catégorie Fluent
                 </span>
               </div>
 
@@ -498,15 +490,15 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
               {downloadedIcs ? (
                 <>
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Pack de {daysCount} Jours Téléchargé ! Ouvre-le sur ton iPhone</span>
+                  <span>Calendrier Quotidien Téléchargé ! Ouvre-le sur ton iPhone</span>
                 </>
               ) : (
                 <>
                   <Download className="w-4 h-4 text-amber-300" />
                   <span>
-                    {packType === 'combo' && `Télécharger le Pack Combo (${daysCount} Jours)`}
-                    {packType === 'hanzi' && `Télécharger les ${daysCount} Jours de Hanzi (.ics)`}
-                    {packType === 'story' && `Télécharger les ${daysCount} Jours d'Histoires (.ics)`}
+                    {packType === 'combo' && 'Télécharger mon Calendrier Quotidien (Matin & Soir)'}
+                    {packType === 'hanzi' && 'Télécharger mon Hanzi Quotidien (.ics)'}
+                    {packType === 'story' && 'Télécharger mes Histoires Quotidiennes (.ics)'}
                   </span>
                 </>
               )}
@@ -561,8 +553,8 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
             {/* Guide pas-à-pas installation */}
             <div className="p-3 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 text-[11px] text-amber-950 dark:text-amber-200 space-y-1">
               <strong className="block font-bold">📲 Comment l'installer en 10 secondes :</strong>
-              <p>1. Télécharge le fichier <code>.ics</code> depuis Safari sur ton iPhone ➔ Touche-le ➔ Choisis <em>« Tout ajouter »</em>.</p>
-              <p>2. Maintiens le fond de ton écran d'accueil ➔ Touche <strong>« + »</strong> en haut à gauche ➔ Ajoute le widget <strong>Calendrier</strong>.</p>
+              <p>1. Télécharge le fichier <code>.ics</code> depuis Safari sur ton iPhone ➔ Touche <em>« Tout ajouter »</em> ➔ Choisis le calendrier <strong>« Fluent »</strong> (jamais Travail).</p>
+              <p>2. Maintiens le fond de ton écran d'accueil ➔ Touche <strong>« + »</strong> en haut à gauche ➔ Ajoute le widget <strong>Calendrier</strong> (sélectionne le calendrier Fluent).</p>
             </div>
 
           </div>

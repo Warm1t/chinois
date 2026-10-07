@@ -32,7 +32,7 @@ export const generateAppleCalendarIcsCombined = (options: ComboCalendarOptions =
     'PRODID:-//Fluent//Daily Hanzi & Stories Dual Widget Series//FR',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    'X-WR-CALNAME:🇨🇳 Fluent - Hanzi & Histoires du Jour',
+    'X-WR-CALNAME:Fluent',
     'X-WR-TIMEZONE:Europe/Paris'
   ];
 
@@ -70,6 +70,7 @@ export const generateAppleCalendarIcsCombined = (options: ComboCalendarOptions =
     lines.push('BEGIN:VEVENT');
     lines.push(`UID:fluent-combo-hanzi-${dateYmd}@fluent.apple`);
     lines.push(`DTSTAMP:${nowStr}`);
+    lines.push('CATEGORIES:Fluent');
 
     if (mode === 'all_day') {
       lines.push(`DTSTART;VALUE=DATE:${dateYmd}`);
@@ -114,6 +115,7 @@ export const generateAppleCalendarIcsCombined = (options: ComboCalendarOptions =
     lines.push('BEGIN:VEVENT');
     lines.push(`UID:fluent-combo-story-${dateYmd}@fluent.apple`);
     lines.push(`DTSTAMP:${nowStr}`);
+    lines.push('CATEGORIES:Fluent');
 
     if (mode === 'all_day') {
       lines.push(`DTSTART;VALUE=DATE:${dateYmd}`);
