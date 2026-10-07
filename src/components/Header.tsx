@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Mic, Sparkles, Layers, Check, Home, Compass, BookOpen } from 'lucide-react';
+import { Mic, Sparkles, Layers, Check, Home, Compass, BookOpen, Bot } from 'lucide-react';
 import { HeaderMenuDropdown } from './HeaderMenuDropdown';
 import { ThemeToggle } from './ThemeToggle';
 import { getAppTheme, AppTheme } from '../utils/themeUtils';
 
 interface HeaderProps {
-  currentView: 'home' | 'stories' | 'lab' | 'curriculum';
-  onNavigate: (view: 'home' | 'stories' | 'lab' | 'curriculum') => void;
+  currentView: 'home' | 'stories' | 'lab' | 'chat' | 'curriculum';
+  onNavigate: (view: 'home' | 'stories' | 'lab' | 'chat' | 'curriculum') => void;
   currentStreak: number;
   completedExercisesCount: number;
   syncedAnkiWordsCount: number;
@@ -105,6 +105,18 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Mic className="w-3.5 h-3.5 text-rose-300" />
               <span>Labo Vocal</span>
+            </button>
+
+            <button
+              onClick={() => onNavigate('chat')}
+              className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all ${
+                currentView === 'chat'
+                  ? 'bg-stone-900 text-white shadow-xs'
+                  : 'text-stone-600 hover:text-stone-900'
+              }`}
+            >
+              <Bot className="w-3.5 h-3.5 text-purple-400" />
+              <span>Partenaire IA</span>
             </button>
 
             <button

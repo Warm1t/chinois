@@ -15,6 +15,7 @@ import {
 import { analyzePronunciationWithAi, AiPronunciationFeedback } from '../utils/aiPronunciationCoach';
 import { VoiceSelector } from './VoiceSelector';
 import { VoiceEvaluationResult } from '../types/fluent';
+import { saveWordToLocalAnki, isWordInLocalAnki } from '../utils/ankiConnect';
 import { 
   Mic, 
   Square, 
@@ -36,7 +37,9 @@ import {
   HelpCircle,
   Award,
   Zap,
-  Gauge
+  Gauge,
+  Plus,
+  BookmarkCheck
 } from 'lucide-react';
 
 interface VoiceCoachLabProps {
@@ -91,6 +94,13 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   const audioChunksRef = useRef<Blob[]>([]);
   const userAudioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
+  const isRecordingRef = useRef<boolean>(false);
+  const isStartingRef = useRef<boolean>(false);
+
+  // État Anki pour la phrase courante
+  const [isInAnki, setIsInAnki] = useState<boolean>(false);
+  const [ankiToast, setAnkiToast] = useState<string | null>(null);
+
   const isSupported = isSpeechRecognitionSupported();
 
   // Filtrage des phrases
@@ -111,6 +121,30 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   // Phrase courante
   const currentPhrase: EverydayPhrase = filteredPhrases[activePhraseIndex] || filteredPhrases[0] || EVERYDAY_PHRASES[0];
 
+  useEffect(() => {
+    setIsInAnki(isWordInLocalAnki(currentPhrase.hanzi));
+  }, [currentPhrase.hanzi]);
+
+  useEffect(() => {
+    const handleAnkiChange = () => {
+      setIsInAnki(isWordInLocalAnki(currentPhrase.hanzi));
+    };
+    window.addEventListener('fluent_anki_words_changed', handleAnkiChange);
+    return () => window.removeEventListener('fluent_anki_words_changed', handleAnkiChange);
+  }, [currentPhrase.hanzi]);
+
+  const handleSaveToAnki = () => {
+    const res = saveWordToLocalAnki({
+      hanzi: currentPhrase.hanzi,
+      pinyin: currentPhrase.pinyin,
+      translation: currentPhrase.french,
+      deckName: 'Labo Vocal (Terrain)',
+    });
+    setIsInAnki(true);
+    setAnkiToast(res.isNew ? `✨ Phrase ajoutée à Anki (${res.totalCount} cartes) !` : `✓ Déjà dans ton Anki !`);
+    setTimeout(() => setAnkiToast(null), 3000);
+  };
+
   // Nettoyage audio et micro
   const stopAllPlayback = () => {
     stopChineseAudio();
@@ -127,18 +161,24 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   };
 
   const cleanupRecording = () => {
+    isRecordingRef.current = false;
+    isStartingRef.current = false;
     if (silenceTimerRef.current) {
       clearTimeout(silenceTimerRef.current);
       silenceTimerRef.current = null;
     }
     if (recognitionRef.current) {
       try {
-        recognitionRef.current.stop();
+        recognitionRef.current.onresult = null;
+        recognitionRef.current.onerror = null;
+        recognitionRef.current.onend = null;
+        recognitionRef.current.abort();
       } catch (e) {}
       recognitionRef.current = null;
     }
     if (mediaRecorderRef.current) {
       try {
+        mediaRecorderRef.current.ondataavailable = null;
         if (mediaRecorderRef.current.state === 'recording') {
           mediaRecorderRef.current.stop();
         }
@@ -193,95 +233,115 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     setIsPlayingAudio(false);
   };
 
-  // Lancement de l'enregistrement micro
+  // Lancement de l'enregistrement micro avec protection anti-crash et verrouillage
   const startRecording = async () => {
     if (!isSupported) {
       alert("La reconnaissance vocale n'est pas supportée sur ce navigateur. Essaie sur Google Chrome, Edge ou Safari !");
       return;
     }
 
-    cleanupRecording();
-    stopAllPlayback();
-
-    if (recordedAudioUrl) {
-      URL.revokeObjectURL(recordedAudioUrl);
-      setRecordedAudioUrl(null);
+    if (isStartingRef.current || isRecordingRef.current) {
+      return;
     }
+    isStartingRef.current = true;
 
-    setLiveTranscript('');
-    setEvaluation(null);
-    accumulatedTranscriptRef.current = '';
-    audioChunksRef.current = [];
-
-    // MediaRecorder pour la capture audio brute
     try {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaStreamRef.current = stream;
+      cleanupRecording();
+      stopAllPlayback();
 
-        const recorder = new MediaRecorder(stream);
-        recorder.ondataavailable = (event: BlobEvent) => {
-          if (event.data && event.data.size > 0) {
-            audioChunksRef.current.push(event.data);
-          }
-        };
+      if (recordedAudioUrl) {
+        URL.revokeObjectURL(recordedAudioUrl);
+        setRecordedAudioUrl(null);
+      }
 
-        recorder.onstop = () => {
-          if (audioChunksRef.current.length > 0) {
-            const audioBlob = new Blob(audioChunksRef.current, { type: recorder.mimeType || 'audio/webm' });
-            if (audioBlob.size > 0) {
-              const url = URL.createObjectURL(audioBlob);
-              setRecordedAudioUrl(url);
+      setLiveTranscript('');
+      setEvaluation(null);
+      accumulatedTranscriptRef.current = '';
+      audioChunksRef.current = [];
+
+      // MediaRecorder pour la capture audio brute
+      try {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaStreamRef.current = stream;
+
+          const recorder = new MediaRecorder(stream);
+          recorder.ondataavailable = (event: BlobEvent) => {
+            if (event.data && event.data.size > 0) {
+              audioChunksRef.current.push(event.data);
             }
+          };
+
+          recorder.onstop = () => {
+            if (audioChunksRef.current.length > 0) {
+              const audioBlob = new Blob(audioChunksRef.current, { type: recorder.mimeType || 'audio/webm' });
+              if (audioBlob.size > 0) {
+                const url = URL.createObjectURL(audioBlob);
+                setRecordedAudioUrl(url);
+              }
+            }
+          };
+
+          mediaRecorderRef.current = recorder;
+          recorder.start(100);
+        }
+      } catch (err) {
+        console.warn("Capture audio MediaRecorder non disponible :", err);
+      }
+
+      // SpeechRecognition pour l'alignement textuel
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        throw new Error("SpeechRecognition non supporté");
+      }
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'zh-CN';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      recognition.onresult = (event: any) => {
+        let interim = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            accumulatedTranscriptRef.current += event.results[i][0].transcript;
+          } else {
+            interim += event.results[i][0].transcript;
           }
-        };
+        }
+        const combined = (accumulatedTranscriptRef.current + interim).trim();
+        setLiveTranscript(combined);
 
-        mediaRecorderRef.current = recorder;
-        recorder.start(100);
-      }
+        if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+        silenceTimerRef.current = setTimeout(() => {
+          finalizeRecording();
+        }, 3500);
+      };
+
+      recognition.onerror = (err: any) => {
+        console.warn("SpeechRecognition error:", err);
+        cleanupRecording();
+      };
+
+      recognition.onend = () => {
+        if (isRecordingRef.current) {
+          try {
+            recognition.start();
+          } catch (e) {
+            cleanupRecording();
+          }
+        }
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+      isRecordingRef.current = true;
+      setIsRecording(true);
     } catch (err) {
-      console.warn("Capture audio MediaRecorder non disponible :", err);
+      console.error("Erreur lancement enregistrement:", err);
+      cleanupRecording();
+    } finally {
+      isStartingRef.current = false;
     }
-
-    // SpeechRecognition pour l'alignement textuel
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'zh-CN';
-    recognition.continuous = true;
-    recognition.interimResults = true;
-
-    recognition.onresult = (event: any) => {
-      let interim = '';
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        if (event.results[i].isFinal) {
-          accumulatedTranscriptRef.current += event.results[i][0].transcript;
-        } else {
-          interim += event.results[i][0].transcript;
-        }
-      }
-      const combined = (accumulatedTranscriptRef.current + interim).trim();
-      setLiveTranscript(combined);
-
-      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
-      silenceTimerRef.current = setTimeout(() => {
-        finalizeRecording();
-      }, 3500);
-    };
-
-    recognition.onerror = () => cleanupRecording();
-    recognition.onend = () => {
-      if (isRecording) {
-        try {
-          recognition.start();
-        } catch (e) {
-          setIsRecording(false);
-        }
-      }
-    };
-
-    recognitionRef.current = recognition;
-    setIsRecording(true);
-    recognition.start();
   };
 
   // Évaluation de la prononciation avec le moteur IA d'alignement phonétique
@@ -340,7 +400,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   };
 
   const toggleRecording = () => {
-    if (isRecording) {
+    if (isRecordingRef.current || isRecording) {
       finalizeRecording();
     } else {
       startRecording();
@@ -457,7 +517,14 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-fadeIn pb-12">
-      
+      {/* Toast Notification Anki */}
+      {ankiToast && (
+        <div className="fixed top-20 right-6 z-50 bg-stone-900 text-white px-4 py-2.5 rounded-2xl shadow-xl border-2 border-amber-400 text-xs font-bold flex items-center space-x-2 animate-bounce">
+          <BookmarkCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>{ankiToast}</span>
+        </div>
+      )}
+
       {/* 1. HEADER DU LABO VOCAL */}
       <div className="bg-white rounded-3xl p-5 sm:p-7 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-4">
         
@@ -713,6 +780,20 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
             >
               <Snail className="w-3.5 h-3.5 text-amber-600" />
               <span>Ultra-lent (0.5x)</span>
+            </button>
+
+            {/* Ajouter à Anki */}
+            <button
+              onClick={handleSaveToAnki}
+              className={`inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all ${
+                isInAnki
+                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300 shadow-2xs'
+                  : 'bg-white hover:bg-emerald-50 text-stone-800 hover:text-emerald-900 border-stone-300 hover:border-emerald-300 shadow-2xs'
+              }`}
+              title="Ajouter cette phrase directement à Anki (Desktop AnkiConnect ou deck local)"
+            >
+              <BookmarkCheck className={`w-3.5 h-3.5 ${isInAnki ? 'text-emerald-600' : 'text-stone-400 group-hover:text-emerald-600'}`} />
+              <span>{isInAnki ? 'Dans ton Anki' : 'Ajouter à Anki'}</span>
             </button>
           </div>
 

@@ -20,7 +20,8 @@ import {
   Calendar,
   Bell,
   Smartphone,
-  Puzzle
+  Puzzle,
+  Bot
 } from 'lucide-react';
 
 interface HomeDashboardProps {
@@ -33,7 +34,7 @@ interface HomeDashboardProps {
   todayHanzi: DailyHanzi;
   onOpenAppleSyncModal: () => void;
   onStartGuidedAction: (cardId: string, actionType: 'card' | 'anchor') => void;
-  onNavigateToView: (view: 'lab' | 'curriculum') => void;
+  onNavigateToView: (view: 'home' | 'stories' | 'lab' | 'chat' | 'curriculum') => void;
   onOpenAnkiModal: () => void;
   onOpenCalendarModal: () => void;
   onSelectCard: (cardId: string) => void;
@@ -378,6 +379,51 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             </p>
           </div>
 
+        </div>
+
+        {/* Raccourcis vers les ateliers pratiques immersifs */}
+        <div className="pt-4 border-t border-stone-100 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div 
+            onClick={() => onNavigateToView('stories')}
+            className="p-3 rounded-2xl bg-amber-50/70 hover:bg-amber-100/80 border border-amber-300 cursor-pointer transition-all flex items-center space-x-3 group shadow-2xs"
+          >
+            <div className="w-9 h-9 rounded-xl bg-amber-200 text-amber-900 flex items-center justify-center font-bold shrink-0">
+              <BookOpen className="w-5 h-5 text-amber-800" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h5 className="text-xs font-black text-stone-900 group-hover:text-amber-950 truncate">Histoires du Jour</h5>
+              <p className="text-[10px] text-stone-500 truncate">Lecture immersive & quiz</p>
+            </div>
+            <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-0.5 transition-transform shrink-0" />
+          </div>
+
+          <div 
+            onClick={() => onNavigateToView('lab')}
+            className="p-3 rounded-2xl bg-rose-50/70 hover:bg-rose-100/80 border border-rose-300 cursor-pointer transition-all flex items-center space-x-3 group shadow-2xs"
+          >
+            <div className="w-9 h-9 rounded-xl bg-rose-200 text-rose-900 flex items-center justify-center font-bold shrink-0">
+              <Mic className="w-5 h-5 text-rose-800" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h5 className="text-xs font-black text-stone-900 group-hover:text-rose-950 truncate">Labo Vocal</h5>
+              <p className="text-[10px] text-stone-500 truncate">Phrases de terrain & écoute</p>
+            </div>
+            <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-0.5 transition-transform shrink-0" />
+          </div>
+
+          <div 
+            onClick={() => onNavigateToView('chat')}
+            className="p-3 rounded-2xl bg-purple-50/70 hover:bg-purple-100/80 border border-purple-300 cursor-pointer transition-all flex items-center space-x-3 group shadow-2xs"
+          >
+            <div className="w-9 h-9 rounded-xl bg-purple-200 text-purple-900 flex items-center justify-center font-bold shrink-0">
+              <Bot className="w-5 h-5 text-purple-800" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h5 className="text-xs font-black text-stone-900 group-hover:text-purple-950 truncate">Partenaire IA</h5>
+              <p className="text-[10px] text-stone-500 truncate">Dialogue libre & vocal</p>
+            </div>
+            <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-0.5 transition-transform shrink-0" />
+          </div>
         </div>
 
       </div>

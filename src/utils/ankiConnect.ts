@@ -229,3 +229,92 @@ export const exportWordsToJson = (words: AnkiWord[]) => {
   URL.revokeObjectURL(url);
 };
 
+// 9. Exporter directement au format fichier texte compatible Anki (.txt tab-separated)
+export const exportWordsToAnkiTextFile = (words: AnkiWord[]) => {
+  if (words.length === 0) return;
+  const lines = words.map(w => `${w.hanzi}\t${w.pinyin || ''}\t${w.translation || ''}`);
+  const content = `#separator:tab\n#html:false\n#tags column:4\n` + lines.join('\n');
+  const blob = new Blob([content], { type: 'text/tab-separated-values;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `fluent-cartes-anki-${new Date().toISOString().slice(0, 10)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+// 10. Enregistrer un mot ou une phrase directement dans la collection Anki locale
+export const saveWordToLocalAnki = (wordData: {
+  hanzi: string;
+  pinyin?: string;
+  translation?: string;
+  deckName?: string;
+}): { success: boolean; isNew: boolean; word: AnkiWord; totalCount: number } => {
+  const cleanHanzi = wordData.hanzi.trim();
+  if (!cleanHanzi) {
+    return { success: false, isNew: false, word: null as any, totalCount: 0 };
+  }
+
+  let words: AnkiWord[] = [];
+  try {
+    const raw = localStorage.getItem('fluent_anki_words');
+    words = raw ? JSON.parse(raw) : [];
+  } catch {
+    words = [];
+  }
+
+  const existingIndex = words.findIndex(w => w.hanzi === cleanHanzi);
+  if (existingIndex >= 0) {
+    return { success: true, isNew: false, word: words[existingIndex], totalCount: words.length };
+  }
+
+  const newWord: AnkiWord = {
+    id: `local-anki-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    hanzi: cleanHanzi,
+    pinyin: (wordData.pinyin || '').trim(),
+    translation: (wordData.translation || '').trim(),
+    deckName: wordData.deckName || 'Mes Mots Favoris',
+    addedAt: new Date().toISOString(),
+  };
+
+  words.unshift(newWord);
+
+  try {
+    localStorage.setItem('fluent_anki_words', JSON.stringify(words));
+    window.dispatchEvent(new CustomEvent('fluent_anki_words_changed', { detail: { words, newWord } }));
+  } catch (e) {
+    console.warn("Erreur sauvegarde locale Anki :", e);
+  }
+
+  // Tentative en arrière-plan d'injection automatique dans Anki Desktop si l'application tourne
+  try {
+    invokeAnkiConnect('addNote', {
+      note: {
+        deckName: newWord.deckName,
+        modelName: 'Basic',
+        fields: {
+          Front: `${newWord.hanzi}${newWord.pinyin ? `<br><small style="color:gray">${newWord.pinyin}</small>` : ''}`,
+          Back: newWord.translation || ''
+        },
+        tags: ['fluent-chinese']
+      }
+    }).catch(() => {});
+  } catch {}
+
+  return { success: true, isNew: true, word: newWord, totalCount: words.length };
+};
+
+// 11. Vérifier si un terme ou une phrase est déjà dans Anki
+export const isWordInLocalAnki = (hanzi: string): boolean => {
+  if (!hanzi) return false;
+  try {
+    const raw = localStorage.getItem('fluent_anki_words');
+    const words: AnkiWord[] = raw ? JSON.parse(raw) : [];
+    return words.some(w => w.hanzi === hanzi || w.hanzi.includes(hanzi) || hanzi.includes(w.hanzi));
+  } catch {
+    return false;
+  }
+};
+

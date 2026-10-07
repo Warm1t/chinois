@@ -14,6 +14,7 @@ import {
   playSentenceWithProsodicPauses, 
   stopSentenceRhythmAudio 
 } from '../utils/chineseRhythmEngine';
+import { saveWordToLocalAnki, isWordInLocalAnki } from '../utils/ankiConnect';
 import { VoiceSelector } from './VoiceSelector';
 import { 
   BookOpen, 
@@ -99,9 +100,13 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   // État du Quiz
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
   const [showQuizExplanations, setShowQuizExplanations] = useState<boolean>(false);
+  const [showQuizTranslations, setShowQuizTranslations] = useState<boolean>(false);
 
   // État du Défi Oral / Écrit
   const [writtenResponse, setWrittenResponse] = useState<string>('');
+  const [showPromptTranslation, setShowPromptTranslation] = useState<boolean>(false);
+  const [ankiToast, setAnkiToast] = useState<string | null>(null);
+  const [, setLocalAnkiVersion] = useState<number>(0);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [speechEvaluation, setSpeechEvaluation] = useState<any | null>(null);
 
@@ -161,6 +166,8 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     // Réinitialiser les états lors du changement d'histoire
     setSelectedAnswers({});
     setShowQuizExplanations(false);
+    setShowQuizTranslations(false);
+    setShowPromptTranslation(false);
     setSelectedWord(null);
     setWrittenResponse('');
     setSpeechEvaluation(null);
@@ -566,13 +573,40 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     audio.play().catch(() => setIsPlayingShadowUserAudio(false));
   };
 
+  useEffect(() => {
+    const handleAnkiChange = () => {
+      setLocalAnkiVersion(v => v + 1);
+    };
+    window.addEventListener('fluent_anki_words_changed', handleAnkiChange);
+    return () => window.removeEventListener('fluent_anki_words_changed', handleAnkiChange);
+  }, []);
+
   // Vérifier si un mot dans le dictionnaire fait partie des cartes Anki de l'utilisateur
   const isWordInUserAnki = (hanzi: string) => {
-    return syncedAnkiWords.some(w => w.hanzi.includes(hanzi) || hanzi.includes(w.hanzi));
+    if (!hanzi) return false;
+    return syncedAnkiWords.some(w => w.hanzi.includes(hanzi) || hanzi.includes(w.hanzi)) || isWordInLocalAnki(hanzi);
+  };
+
+  const handleSaveWordToAnki = (word: { hanzi: string; pinyin?: string; translation?: string }) => {
+    const res = saveWordToLocalAnki({
+      hanzi: word.hanzi,
+      pinyin: word.pinyin,
+      translation: word.translation,
+      deckName: 'Histoires Quotidiennes',
+    });
+    setAnkiToast(res.isNew ? `✨ "${word.hanzi}" ajouté à Anki (${res.totalCount} cartes) !` : `✓ "${word.hanzi}" est déjà dans ton Anki !`);
+    setTimeout(() => setAnkiToast(null), 3000);
   };
 
   return (
     <div className="space-y-6 animate-fadeIn pb-12">
+      {/* Toast Notification Anki */}
+      {ankiToast && (
+        <div className="fixed top-20 right-6 z-50 bg-stone-900 text-white px-4 py-2.5 rounded-2xl shadow-xl border-2 border-amber-400 text-xs font-bold flex items-center space-x-2 animate-bounce">
+          <BookmarkCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>{ankiToast}</span>
+        </div>
+      )}
       
       {/* 1. SÉLECTEUR D'HISTOIRES & CARROUSEL HAUT */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 bg-white border-2 border-stone-900 rounded-3xl shadow-[4px_4px_0px_#1c1917]">
@@ -1151,6 +1185,24 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                                 <span>3. Écouter mon enregistrement</span>
                               </button>
                             )}
+
+                            {/* Bouton Ajouter la phrase à Anki */}
+                            <button
+                              onClick={() => handleSaveWordToAnki({
+                                hanzi: sentence.hanzi,
+                                pinyin: sentence.pinyin,
+                                translation: sentence.translation
+                              })}
+                              className={`px-3 py-2 rounded-xl text-xs font-bold border flex items-center space-x-1.5 transition-all ${
+                                isWordInUserAnki(sentence.hanzi)
+                                  ? 'bg-emerald-950/80 text-emerald-300 border-emerald-700'
+                                  : 'bg-stone-800 hover:bg-stone-700 text-stone-300 border-stone-700'
+                              }`}
+                              title="Ajouter cette phrase d'histoire directement à Anki"
+                            >
+                              <BookmarkCheck className={`w-3.5 h-3.5 ${isWordInUserAnki(sentence.hanzi) ? 'text-emerald-400' : 'text-stone-400'}`} />
+                              <span>{isWordInUserAnki(sentence.hanzi) ? 'Dans Anki' : '+ Anki'}</span>
+                            </button>
                           </div>
 
                           {/* Statut pendant enregistrement */}
@@ -1238,8 +1290,8 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                     {selectedWord.pinyin}
                   </span>
                   {isWordInUserAnki(selectedWord.hanzi) && (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-[#c23b22] border border-rose-300 flex items-center space-x-0.5">
-                      <Sparkles className="w-3 h-3 mr-0.5" />
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center space-x-0.5">
+                      <BookmarkCheck className="w-3 h-3 mr-0.5 text-emerald-600" />
                       <span>Dans ton Anki</span>
                     </span>
                   )}
@@ -1250,12 +1302,27 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
               </div>
             </div>
 
-            <button
-              onClick={() => setSelectedWord(null)}
-              className="text-stone-400 hover:text-stone-800 text-xs font-bold underline self-end sm:self-center"
-            >
-              Fermer
-            </button>
+            <div className="flex items-center space-x-2 self-end sm:self-center">
+              <button
+                onClick={() => handleSaveWordToAnki(selectedWord)}
+                className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                  isWordInUserAnki(selectedWord.hanzi)
+                    ? 'bg-emerald-50 text-emerald-800 border-emerald-300 shadow-2xs'
+                    : 'bg-white hover:bg-emerald-50 text-stone-800 hover:text-emerald-900 border-stone-300 hover:border-emerald-300 shadow-2xs'
+                }`}
+                title="Ajouter ce mot directement à ton deck Anki"
+              >
+                <BookmarkCheck className={`w-3.5 h-3.5 ${isWordInUserAnki(selectedWord.hanzi) ? 'text-emerald-600' : 'text-stone-400'}`} />
+                <span>{isWordInUserAnki(selectedWord.hanzi) ? 'Dans ton Anki' : 'Ajouter à Anki'}</span>
+              </button>
+
+              <button
+                onClick={() => setSelectedWord(null)}
+                className="text-stone-400 hover:text-stone-800 text-xs font-bold underline px-1.5 py-1"
+              >
+                Fermer
+              </button>
+            </div>
           </div>
         )}
 
@@ -1265,35 +1332,54 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
             Vocabulaire clé à ancrer dans cette histoire :
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-            {activeStory.targetWords.map((word, idx) => (
-              <div
-                key={idx}
-                onClick={() => playNativeWordAudio(word.hanzi, 0.9)}
-                className="p-2.5 rounded-xl bg-white border border-stone-200 hover:border-amber-400 cursor-pointer flex items-center justify-between text-xs transition-all shadow-2xs group"
-              >
-                <div>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="font-bold text-base font-serif text-stone-900 group-hover:text-[#c23b22]">
-                      {word.hanzi}
-                    </span>
-                    <span className="text-stone-500 font-mono text-[11px]">
-                      {word.pinyin}
-                    </span>
+            {activeStory.targetWords.map((word, idx) => {
+              const inAnki = isWordInUserAnki(word.hanzi);
+              return (
+                <div
+                  key={idx}
+                  onClick={() => playNativeWordAudio(word.hanzi, 0.9)}
+                  className="p-2.5 rounded-xl bg-white border border-stone-200 hover:border-amber-400 cursor-pointer flex items-center justify-between text-xs transition-all shadow-2xs group"
+                >
+                  <div>
+                    <div className="flex items-center space-x-1.5">
+                      <span className="font-bold text-base font-serif text-stone-900 group-hover:text-[#c23b22]">
+                        {word.hanzi}
+                      </span>
+                      <span className="text-stone-500 font-mono text-[11px]">
+                        {word.pinyin}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-stone-600 truncate max-w-[140px]">
+                      {word.translation}
+                    </p>
                   </div>
-                  <p className="text-[11px] text-stone-600 truncate max-w-[140px]">
-                    {word.translation}
-                  </p>
+                  <div className="flex items-center space-x-1 shrink-0">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSaveWordToAnki(word);
+                      }}
+                      className={`p-1.5 rounded-lg border transition-all ${
+                        inAnki
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-300 shadow-2xs'
+                          : 'bg-stone-50 hover:bg-emerald-50 text-stone-400 hover:text-emerald-700 border-stone-200'
+                      }`}
+                      title={inAnki ? 'Déjà dans ton Anki' : 'Ajouter à Anki'}
+                    >
+                      <BookmarkCheck className={`w-3.5 h-3.5 ${inAnki ? 'text-emerald-600' : 'text-stone-400'}`} />
+                    </button>
+                    <Volume2 className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#c23b22]" />
+                  </div>
                 </div>
-                <Volume2 className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#c23b22] shrink-0" />
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        {/* 7. QUIZ DE COMPRÉHENSION MAAYOT */}
+        {/* 7. QUIZ DE COMPRÉHENSION MAAYOT (TRADUCTION FRANÇAISE MASQUÉE PAR DÉFAUT) */}
         {activeStory.quiz && activeStory.quiz.length > 0 && (
           <div className="p-5 rounded-2xl bg-white border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-4">
-            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-stone-200 pb-3 gap-2">
               <div className="flex items-center space-x-2">
                 <div className="p-1.5 rounded-lg bg-amber-400 text-stone-950 font-bold">
                   <HelpCircle className="w-4 h-4" />
@@ -1302,9 +1388,26 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                   Quiz de Compréhension
                 </h3>
               </div>
-              <span className="text-xs text-stone-500 font-bold">
-                {Object.keys(selectedAnswers).length}/{activeStory.quiz.length} répondu
-              </span>
+
+              <div className="flex items-center space-x-2 self-end sm:self-auto">
+                {/* Bouton pour afficher / masquer les traductions françaises des réponses */}
+                <button
+                  onClick={() => setShowQuizTranslations(!showQuizTranslations)}
+                  className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                    showQuizTranslations
+                      ? 'bg-amber-100 text-amber-900 border-amber-300 shadow-2xs'
+                      : 'bg-stone-100 hover:bg-stone-200 text-stone-700 border-stone-200 shadow-2xs'
+                  }`}
+                  title={showQuizTranslations ? "Masquer les traductions françaises" : "Afficher les traductions françaises pour vérifier"}
+                >
+                  {showQuizTranslations ? <EyeOff className="w-3.5 h-3.5 text-stone-500" /> : <Eye className="w-3.5 h-3.5 text-[#c23b22]" />}
+                  <span>{showQuizTranslations ? 'Masquer trad. FR' : 'Afficher trad. FR'}</span>
+                </button>
+
+                <span className="text-xs text-stone-500 font-bold">
+                  {Object.keys(selectedAnswers).length}/{activeStory.quiz.length} répondu
+                </span>
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -1328,6 +1431,10 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                         const isChosen = userAnswer === optIdx;
                         const isCorrect = optIdx === q.correctIndex;
 
+                        const match = opt.match(/^(.*?)\s*\((.*?)\)$/);
+                        const chineseText = match ? match[1].trim() : opt;
+                        const frenchTranslation = match ? match[2].trim() : null;
+
                         let style = 'bg-stone-50 border-stone-200 text-stone-700 hover:bg-stone-100';
                         if (hasAnswered) {
                           if (isCorrect) {
@@ -1343,7 +1450,16 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                             onClick={() => handleAnswerSelect(qIdx, optIdx)}
                             className={`p-3 rounded-xl border text-left transition-all ${style}`}
                           >
-                            <span>{opt}</span>
+                            <div className="flex flex-col items-start w-full">
+                              <span className="font-serif chinese-text text-sm font-bold text-stone-900 leading-snug">
+                                {chineseText}
+                              </span>
+                              {frenchTranslation && showQuizTranslations && (
+                                <span className="text-[11px] text-stone-500 italic mt-0.5 animate-fadeIn">
+                                  « {frenchTranslation} »
+                                </span>
+                              )}
+                            </div>
                           </button>
                         );
                       })}
@@ -1361,24 +1477,48 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
           </div>
         )}
 
-        {/* 8. DÉFI D'EXPRESSION ORALE / ÉCRITE (PROMPT MAAYOT) */}
+        {/* 8. DÉFI D'EXPRESSION ORALE / ÉCRITE (PROMPT MAAYOT AVEC TRADUCTION CACHÉE) */}
         {activeStory.discussionPrompt && (
           <div className="p-5 rounded-2xl bg-amber-50/70 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-3">
-            <div className="flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-amber-600" />
-              <h3 className="font-black text-sm text-stone-900 font-serif">
-                À toi de parler ! (Défi d'expression)
-              </h3>
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center space-x-2">
+                <Sparkles className="w-4 h-4 text-amber-600" />
+                <h3 className="font-black text-sm text-stone-900 font-serif">
+                  À toi de parler ! (Défi d'expression)
+                </h3>
+              </div>
+
+              {activeStory.discussionPrompt.questionTranslation && (
+                <button
+                  onClick={() => setShowPromptTranslation(!showPromptTranslation)}
+                  className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all ${
+                    showPromptTranslation
+                      ? 'bg-amber-200 text-amber-900 border-amber-400'
+                      : 'bg-white hover:bg-amber-100 text-stone-700 border-amber-300'
+                  }`}
+                  title={showPromptTranslation ? "Masquer la traduction française" : "Voir la traduction française"}
+                >
+                  {showPromptTranslation ? <EyeOff className="w-3.5 h-3.5 text-stone-600" /> : <Eye className="w-3.5 h-3.5 text-amber-700" />}
+                  <span>{showPromptTranslation ? 'Masquer FR' : '👁️ Traduction française'}</span>
+                </button>
+              )}
             </div>
 
-            <p className="text-xs font-bold text-stone-800">
-              {activeStory.discussionPrompt.question}
-            </p>
-            {activeStory.discussionPrompt.questionTranslation && (
-              <p className="text-[11px] text-stone-600 italic">
-                « {activeStory.discussionPrompt.questionTranslation} »
+            <div className="space-y-1">
+              <p className="text-sm font-bold text-stone-900 font-serif chinese-text leading-relaxed">
+                {activeStory.discussionPrompt.question}
               </p>
-            )}
+              {activeStory.discussionPrompt.questionPinyin && (
+                <p className="text-[11px] text-stone-500 font-mono">
+                  {activeStory.discussionPrompt.questionPinyin}
+                </p>
+              )}
+              {activeStory.discussionPrompt.questionTranslation && showPromptTranslation && (
+                <p className="text-xs text-stone-700 italic bg-white/80 p-2.5 rounded-xl border border-amber-200 mt-1 animate-fadeIn">
+                  « {activeStory.discussionPrompt.questionTranslation} »
+                </p>
+              )}
+            </div>
 
             <div className="flex items-center space-x-2 pt-1">
               <input

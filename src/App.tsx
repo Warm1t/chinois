@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HomeDashboard } from './components/HomeDashboard';
 import { VoiceCoachLab } from './components/VoiceCoachLab';
+import { ConversationChatBot } from './components/ConversationChatBot';
 import { CurriculumOverview } from './components/CurriculumOverview';
 import { DailyAnchorModal } from './components/DailyAnchorModal';
 import { CalendarReminderModal } from './components/CalendarReminderModal';
@@ -21,7 +22,7 @@ import { Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
   // Par défaut : l'Accueil Guidé pour une prise en main instantanée sans fatigue décisionnelle !
-  const [activeView, setActiveView] = useState<'home' | 'stories' | 'lab' | 'curriculum'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'stories' | 'lab' | 'chat' | 'curriculum'>('home');
   const [selectedCardId, setSelectedCardId] = useState<string>(NUANCE_CARDS[0].id);
 
   const [completedExercises, setCompletedExercises] = useState<string[]>(() => {
@@ -204,7 +205,17 @@ export const App: React.FC = () => {
           />
         )}
 
-        {/* VUE 3 : LES MODULES D'ÉLOCUTION & LEÇONS STRUCTURÉES */}
+        {/* VUE 3 : PARTENAIRE IA DE CONVERSATION (Dialogue spontané & oral) */}
+        {activeView === 'chat' && (
+          <ConversationChatBot
+            onWordAddedToAnki={() => {
+              setToastMessage("✨ Mot enregistré dans ton Anki local et prêt à être révisé !");
+              setTimeout(() => setToastMessage(null), 3000);
+            }}
+          />
+        )}
+
+        {/* VUE 4 : LES MODULES D'ÉLOCUTION & LEÇONS STRUCTURÉES */}
         {activeView === 'curriculum' && (
           <CurriculumOverview
             modules={CURRICULUM_MODULES}
