@@ -16,6 +16,7 @@ import { pushProfileToCloud, pullProfileFromCloud, isAutoSyncEnabled } from './u
 import { getAppTheme, applyThemeToDocument } from './utils/themeUtils';
 import { AppleSyncModal } from './components/AppleSyncModal';
 import { getTodayDailyHanzi } from './data/dailyHanziData';
+import { getTodayDailyStory } from './data/storiesData';
 import { Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -137,10 +138,11 @@ export const App: React.FC = () => {
   const dueCards = getCardsDueForReview(NUANCE_CARDS);
   const anchoredCount = Object.values(anchoringRecords).filter(r => r.stage === 'ancre').length;
 
-  // Calcul dynamique du Hanzi du Jour (avec navigation entre jours)
+  // Calcul dynamique du Hanzi et de l'Histoire du Jour (avec navigation entre jours)
   const targetDate = new Date();
   targetDate.setDate(targetDate.getDate() + hanziOffsetDays);
   const todayHanzi = getTodayDailyHanzi(targetDate);
+  const todayStory = getTodayDailyStory(targetDate);
 
   return (
     <div className="min-h-screen bg-[#fbf9f5] dark:bg-[#0e0d0c] text-stone-900 dark:text-stone-100 flex flex-col font-sans selection:bg-[#c23b22] selection:text-white transition-colors duration-200">
@@ -190,6 +192,7 @@ export const App: React.FC = () => {
           <StoryReaderView
             syncedAnkiWords={syncedAnkiWords}
             onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
+            onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
             onIncrementStreak={() => setStreakDays(prev => prev + 1)}
           />
         )}
@@ -281,6 +284,7 @@ export const App: React.FC = () => {
         isOpen={isAppleSyncModalOpen}
         onClose={() => setIsAppleSyncModalOpen(false)}
         todayHanzi={todayHanzi}
+        todayStory={todayStory}
       />
 
       {/* Toast Notification */}

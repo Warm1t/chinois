@@ -12,40 +12,76 @@ import {
   Zap, 
   Bell, 
   CheckCircle2,
-  Apple
+  Apple,
+  BookOpen,
+  Layers,
+  HelpCircle,
+  Clock,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
-import { DailyHanzi } from '../types/fluent';
+import { DailyHanzi, MaayotStory } from '../types/fluent';
 import { generateAppleCalendarIcsForHanzi } from '../data/dailyHanziData';
+import { generateAppleCalendarIcsForStories, getTodayDailyStory } from '../data/storiesData';
+import { generateAppleCalendarIcsCombined } from '../utils/calendarExport';
 
 interface AppleSyncModalProps {
   isOpen: boolean;
   onClose: () => void;
   todayHanzi: DailyHanzi;
+  todayStory?: MaayotStory;
 }
 
 export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
   isOpen,
   onClose,
-  todayHanzi
+  todayHanzi,
+  todayStory
 }) => {
+  const currentStory = todayStory || getTodayDailyStory();
+
+  const [packType, setPackType] = useState<'combo' | 'hanzi' | 'story'>('combo');
   const [calendarMode, setCalendarMode] = useState<'timed' | 'all_day'>('timed');
-  const [reminderTime, setReminderTime] = useState<string>('08:30');
+  const [morningTime, setMorningTime] = useState<string>('08:30');
+  const [eveningTime, setEveningTime] = useState<string>('19:30');
   const [copiedShortcut, setCopiedShortcut] = useState(false);
   const [downloadedIcs, setDownloadedIcs] = useState(false);
   const [activeTab, setActiveTab] = useState<'calendar' | 'shortcut' | 'homescreen'>('calendar');
+  const [showTwoWidgetsFaq, setShowTwoWidgetsFaq] = useState(true);
 
   if (!isOpen) return null;
 
-  // Télécharger le fichier .ics multi-jours directement compatible Apple Calendar / iOS
+  // Télécharger le fichier .ics multi-jours sélectionné
   const handleDownloadAppleCalendar = () => {
-    const icsContent = generateAppleCalendarIcsForHanzi(todayHanzi, reminderTime, {
-      daysCount: 60,
-      mode: calendarMode,
-    });
+    let icsContent = '';
+    let fileName = '';
+
+    if (packType === 'combo') {
+      icsContent = generateAppleCalendarIcsCombined({
+        morningTime,
+        eveningTime,
+        daysCount: 60,
+        mode: calendarMode,
+      });
+      fileName = 'fluent-combo-hanzi-histoires-60jours.ics';
+    } else if (packType === 'hanzi') {
+      icsContent = generateAppleCalendarIcsForHanzi(todayHanzi, morningTime, {
+        daysCount: 60,
+        mode: calendarMode,
+      });
+      fileName = 'fluent-hanzi-du-jour-60jours.ics';
+    } else {
+      icsContent = generateAppleCalendarIcsForStories(eveningTime, {
+        daysCount: 60,
+        mode: calendarMode,
+      });
+      fileName = 'fluent-histoire-du-jour-60jours.ics';
+    }
+
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', 'fluent-hanzi-du-jour-60jours.ics');
+    link.setAttribute('download', fileName);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -55,7 +91,9 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
   };
 
   // Copier le texte de la formule pour Raccourcis Apple
-  const shortcutAutomationText = `Hanzi du Jour : ${todayHanzi.character} (${todayHanzi.pinyin}) — ${todayHanzi.meaning}\nClé : ${todayHanzi.radical} (${todayHanzi.radicalMeaning})\nMots : ${todayHanzi.compoundWords.map(w => w.hanzi).join(', ')}`;
+  const shortcutAutomationText = packType === 'story'
+    ? `Histoire du Jour : ${currentStory.title} (${currentStory.titlePinyin})\nTraduction : ${currentStory.titleTranslation}\nNiveau : ${currentStory.level}\nMots cibles : ${currentStory.targetWords.map(w => w.hanzi).join(', ')}`
+    : `Hanzi du Jour : ${todayHanzi.character} (${todayHanzi.pinyin}) — ${todayHanzi.meaning}\nClé : ${todayHanzi.radical} (${todayHanzi.radicalMeaning})\nMots : ${todayHanzi.compoundWords.map(w => w.hanzi).join(', ')}`;
 
   const handleCopyShortcutText = () => {
     navigator.clipboard.writeText(shortcutAutomationText);
@@ -65,29 +103,28 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-stone-900/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
-      <div className="bg-[#fcfaf7] dark:bg-[#161311] border-2 border-stone-900 dark:border-stone-700 rounded-3xl max-w-xl w-full p-6 sm:p-7 shadow-[6px_6px_0px_#1c1917] dark:shadow-[6px_6px_0px_#000000] relative space-y-5">
+      <div className="bg-[#fcfaf7] dark:bg-[#161311] border-2 border-stone-900 dark:border-stone-700 rounded-3xl max-w-xl w-full p-5 sm:p-7 shadow-[6px_6px_0px_#1c1917] dark:shadow-[6px_6px_0px_#000000] relative space-y-4 max-h-[92vh] overflow-y-auto">
         
         {/* Bouton fermer */}
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 rounded-xl text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-200/50 dark:hover:bg-stone-800 transition-colors"
+          title="Fermer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* En-tête avec logo Apple */}
-        <div className="flex items-center space-x-3 border-b border-stone-200 dark:border-stone-800 pb-4">
-          <div className="w-12 h-12 rounded-2xl bg-stone-900 dark:bg-stone-800 text-white flex items-center justify-center shadow-sm shrink-0">
-            <Smartphone className="w-6 h-6 text-amber-300" />
+        <div className="flex items-center space-x-3 border-b border-stone-200 dark:border-stone-800 pb-3">
+          <div className="w-11 h-11 rounded-2xl bg-stone-900 dark:bg-stone-800 text-white flex items-center justify-center shadow-sm shrink-0">
+            <Smartphone className="w-5 h-5 text-amber-300" />
           </div>
-          <div>
-            <div className="flex items-center space-x-2">
-              <h2 className="text-lg font-black text-stone-900 dark:text-stone-100 font-serif">
-                Connecter à ton iPhone & Écosystème Apple
-              </h2>
-            </div>
+          <div className="pr-8">
+            <h2 className="text-lg font-black text-stone-900 dark:text-stone-100 font-serif leading-tight">
+              Widgets iPhone & Calendrier Apple
+            </h2>
             <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">
-              Affiche le caractère et son pinyin sur ton widget, avec explications complètes au clic.
+              Affiche le Hanzi et l'Histoire du jour directement sur ton écran d'accueil avec titre épuré.
             </p>
           </div>
         </div>
@@ -131,30 +168,122 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
           </button>
         </div>
 
-        {/* CONTENU ONGLET 1 : CALENDRIER APPLE & WIDGET LOCK SCREEN */}
+        {/* CONTENU ONGLET 1 : CALENDRIER APPLE & WIDGET */}
         {activeTab === 'calendar' && (
           <div className="space-y-4 animate-fadeIn">
-            {/* Bannière explicative 60 jours */}
-            <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs text-blue-950 dark:text-blue-200 space-y-2">
-              <div className="flex items-center space-x-1.5 font-bold text-blue-900 dark:text-blue-100">
-                <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-                <span>60 Jours Inclus • Affichage Minimaliste sur le Widget</span>
-              </div>
-              <p className="leading-relaxed">
-                Le widget affichera uniquement <strong>le caractère et son pinyin</strong> (ex: <code>悟 (wù)</code>). En touchant le widget sur ton iPhone, l'événement s'ouvrira avec tous les détails (sens, clé, mnémonique, mots composés).
-              </p>
-            </div>
-
-            {/* Choix du mode d'affichage pour le Widget iOS */}
+            
+            {/* Choix du Pack à Exporter */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
-                Format d'affichage pour l'iPhone :
+                1. Choisis ce que tu souhaites synchroniser :
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                
+                {/* Option Combo */}
+                <button
+                  type="button"
+                  onClick={() => setPackType('combo')}
+                  className={`p-3 rounded-2xl border text-left transition-all relative ${
+                    packType === 'combo'
+                      ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-400 text-amber-950 dark:text-amber-100 font-bold shadow-2xs'
+                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-stone-400'
+                  }`}
+                >
+                  <span className="absolute -top-2 right-2 px-1.5 py-0.2 rounded-md bg-amber-500 text-white text-[9px] font-black uppercase tracking-wider">
+                    Recommandé
+                  </span>
+                  <div className="flex items-center space-x-1.5 mb-1">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                    <span>⚡ Combo Matin & Soir</span>
+                  </div>
+                  <p className="text-[10px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
+                    Hanzi à {morningTime} + Histoire à {eveningTime} dans 1 seul calendrier !
+                  </p>
+                </button>
+
+                {/* Option Hanzi Seul */}
+                <button
+                  type="button"
+                  onClick={() => setPackType('hanzi')}
+                  className={`p-3 rounded-2xl border text-left transition-all ${
+                    packType === 'hanzi'
+                      ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-400 text-blue-950 dark:text-blue-100 font-bold shadow-2xs'
+                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-stone-400'
+                  }`}
+                >
+                  <div className="flex items-center space-x-1.5 mb-1">
+                    <span className="text-sm">🏮</span>
+                    <span>Hanzi du Jour Seul</span>
+                  </div>
+                  <p className="text-[10px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
+                    60 jours de caractères uniques le matin.
+                  </p>
+                </button>
+
+                {/* Option Histoire Seule */}
+                <button
+                  type="button"
+                  onClick={() => setPackType('story')}
+                  className={`p-3 rounded-2xl border text-left transition-all ${
+                    packType === 'story'
+                      ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-400 text-emerald-950 dark:text-emerald-100 font-bold shadow-2xs'
+                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-stone-400'
+                  }`}
+                >
+                  <div className="flex items-center space-x-1.5 mb-1">
+                    <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Histoire du Jour</span>
+                  </div>
+                  <p className="text-[10px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
+                    60 jours d'histoires complètes le soir.
+                  </p>
+                </button>
+              </div>
+            </div>
+
+            {/* Heures de rappel configurables */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              {(packType === 'combo' || packType === 'hanzi') && (
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
+                  <span className="font-bold text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
+                    <Bell className="w-3.5 h-3.5 text-amber-500" />
+                    <span>🌅 Hanzi (Matin) :</span>
+                  </span>
+                  <input
+                    type="time"
+                    value={morningTime}
+                    onChange={(e) => setMorningTime(e.target.value)}
+                    className="px-2 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 font-mono font-bold text-stone-900 dark:text-stone-100 text-xs focus:outline-none"
+                  />
+                </div>
+              )}
+
+              {(packType === 'combo' || packType === 'story') && (
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
+                  <span className="font-bold text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
+                    <Clock className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>🌙 Histoire (Soir) :</span>
+                  </span>
+                  <input
+                    type="time"
+                    value={eveningTime}
+                    onChange={(e) => setEveningTime(e.target.value)}
+                    className="px-2 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 font-mono font-bold text-stone-900 dark:text-stone-100 text-xs focus:outline-none"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Mode d'affichage pour les Widgets iOS */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
+                2. Mode pour ton widget iOS :
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 <button
                   type="button"
                   onClick={() => setCalendarMode('timed')}
-                  className={`p-3 rounded-2xl border text-left transition-all ${
+                  className={`p-2.5 rounded-2xl border text-left transition-all ${
                     calendarMode === 'timed'
                       ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-400 text-blue-950 dark:text-blue-100 font-bold shadow-2xs'
                       : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-stone-400'
@@ -164,15 +293,15 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
                     <span>⏰ Créneau Horaire (Recommandé)</span>
                     {calendarMode === 'timed' && <Check className="w-3.5 h-3.5 text-blue-600" />}
                   </div>
-                  <p className="text-[11px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
-                    Affiche <strong>悟 (wù)</strong> sur ton widget sans être masqué par l'option "Jour entier". Détails au clic.
+                  <p className="text-[10px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
+                    Visible sur le widget sans être masqué par l'option "Jour entier". Détails complets au clic.
                   </p>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setCalendarMode('all_day')}
-                  className={`p-3 rounded-2xl border text-left transition-all ${
+                  className={`p-2.5 rounded-2xl border text-left transition-all ${
                     calendarMode === 'all_day'
                       ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-400 text-amber-950 dark:text-amber-100 font-bold shadow-2xs'
                       : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-stone-400'
@@ -182,65 +311,133 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
                     <span>🌟 Mode Toute la Journée</span>
                     {calendarMode === 'all_day' && <Check className="w-3.5 h-3.5 text-amber-600" />}
                   </div>
-                  <p className="text-[11px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
+                  <p className="text-[10px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
                     Pour ceux qui activent "Afficher les événements toute la journée" sur leur widget.
                   </p>
                 </button>
               </div>
             </div>
 
-            {/* Heure de notification souhaitée */}
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-xs">
-              <span className="font-bold text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
-                <Bell className="w-4 h-4 text-amber-500" />
-                <span>Heure du rappel quotidien :</span>
-              </span>
-              <input
-                type="time"
-                value={reminderTime}
-                onChange={(e) => setReminderTime(e.target.value)}
-                className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 font-mono font-bold text-stone-900 dark:text-stone-100 text-sm focus:outline-none"
-              />
+            {/* Aperçu Visuel Live du Widget iPhone */}
+            <div className="p-3.5 rounded-2xl bg-stone-900 text-white space-y-2 border border-stone-700">
+              <div className="flex items-center justify-between text-[11px] font-bold text-stone-300">
+                <span className="flex items-center space-x-1.5">
+                  <Apple className="w-3.5 h-3.5 text-stone-300" />
+                  <span>Aperçu sur ton Widget iPhone :</span>
+                </span>
+                <span className="text-[10px] text-emerald-400 font-medium">
+                  ✓ Titre épuré (chinois + pinyin)
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                {(packType === 'combo' || packType === 'hanzi') && (
+                  <div className="p-2.5 rounded-xl bg-stone-800/90 border border-stone-700 space-y-1">
+                    <div className="flex items-center justify-between text-[10px] text-amber-400 font-mono">
+                      <span>🌅 Matin ({morningTime})</span>
+                      <span>Fluent</span>
+                    </div>
+                    <div className="text-base font-black text-white font-serif tracking-wide">
+                      {todayHanzi.character} <span className="text-xs font-mono font-normal text-amber-300">({todayHanzi.pinyin})</span>
+                    </div>
+                    <div className="text-[10px] text-stone-400 truncate">
+                      Au toucher : {todayHanzi.meaning}
+                    </div>
+                  </div>
+                )}
+
+                {(packType === 'combo' || packType === 'story') && (
+                  <div className="p-2.5 rounded-xl bg-stone-800/90 border border-stone-700 space-y-1">
+                    <div className="flex items-center justify-between text-[10px] text-emerald-400 font-mono">
+                      <span>🌙 Soir ({eveningTime})</span>
+                      <span>Fluent</span>
+                    </div>
+                    <div className="text-xs font-black text-white font-serif line-clamp-1">
+                      {currentStory.title}
+                    </div>
+                    <div className="text-[10px] font-mono text-emerald-300 truncate">
+                      ({currentStory.titlePinyin})
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Bouton d'action .ics */}
             <button
               onClick={handleDownloadAppleCalendar}
-              className="w-full py-3.5 px-4 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all shadow-md hover:-translate-y-0.5"
+              className="w-full py-3.5 px-4 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white font-black text-xs flex items-center justify-center space-x-2 transition-all shadow-md hover:-translate-y-0.5 border-2 border-stone-900 dark:border-stone-700"
             >
               {downloadedIcs ? (
                 <>
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Calendrier de 60 Jours Téléchargé ! Ouvre-le sur ton iPhone</span>
+                  <span>Pack de 60 Jours Téléchargé ! Ouvre-le sur ton iPhone</span>
                 </>
               ) : (
                 <>
-                  <Download className="w-4 h-4 text-blue-300" />
-                  <span>Télécharger les 60 Jours pour mon iPhone (.ics)</span>
+                  <Download className="w-4 h-4 text-amber-300" />
+                  <span>
+                    {packType === 'combo' && 'Télécharger le Pack Combo (Hanzi + Histoires 60 Jours)'}
+                    {packType === 'hanzi' && 'Télécharger les 60 Jours de Hanzi (.ics)'}
+                    {packType === 'story' && 'Télécharger les 60 Jours d\'Histoires (.ics)'}
+                  </span>
                 </>
               )}
             </button>
 
-            {/* Guide pas-à-pas pour le Widget et les Notifications iOS */}
-            <div className="p-3.5 rounded-2xl bg-stone-100/80 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 text-[11px] text-stone-600 dark:text-stone-300 space-y-2">
-              <p className="font-bold text-stone-900 dark:text-stone-100 text-xs">
-                📲 Comment l'installer sur ton iPhone pour voir le widget :
-              </p>
-              <div className="space-y-1.5 pl-1 leading-relaxed">
-                <p>
-                  <strong>1. Ajouter au calendrier :</strong> Télécharge le fichier depuis Safari sur ton iPhone (ou envoie-le par AirDrop / Mail) ➔ Touche le fichier ➔ Choisis <em>« Tout ajouter »</em>.
-                </p>
-                <p>
-                  <strong>2. Activer le Widget :</strong> Sur l'écran d'accueil de ton iPhone, fais un appui long sur le fond ➔ Touche le <strong>« + »</strong> en haut à gauche ➔ Cherche <strong>« Calendrier »</strong> et choisis la taille de widget souhaitée.
-                </p>
-                <p>
-                  <strong>3. Écran Verrouillé (Lock Screen) :</strong> Fais un appui long sur ton écran verrouillé ➔ <em>« Personnaliser »</em> ➔ Ajoute le widget Calendrier sous l'heure pour voir le caractère dès que tu prends ton téléphone !
-                </p>
-                <p className="text-amber-800 dark:text-amber-300 font-medium">
-                  🔔 <em>Note alertes :</em> Vérifie dans <code>Réglages iPhone &gt; Notifications &gt; Calendrier</code> que les alertes sont bien autorisées.
-                </p>
-              </div>
+            {/* FAQ SPÉCIALE : PEUT-ON METTRE 2 WIDGETS SUR IPHONE ? */}
+            <div className="rounded-2xl bg-stone-100/80 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setShowTwoWidgetsFaq(!showTwoWidgetsFaq)}
+                className="w-full p-3 flex items-center justify-between text-left text-xs font-bold text-stone-900 dark:text-stone-100"
+              >
+                <div className="flex items-center space-x-2">
+                  <Layers className="w-4 h-4 text-amber-500 shrink-0" />
+                  <span>💡 Est-il possible d'avoir 2 widgets sur mon iPhone ?</span>
+                </div>
+                {showTwoWidgetsFaq ? <ChevronUp className="w-4 h-4 text-stone-400" /> : <ChevronDown className="w-4 h-4 text-stone-400" />}
+              </button>
+
+              {showTwoWidgetsFaq && (
+                <div className="p-3.5 pt-0 space-y-2.5 text-[11px] text-stone-600 dark:text-stone-300 border-t border-stone-200/60 dark:border-stone-700/60 mt-1">
+                  <p className="font-semibold text-stone-800 dark:text-stone-200">
+                    Oui, absolument ! Voici les 3 meilleures méthodes selon tes préférences :
+                  </p>
+
+                  <div className="space-y-2 pl-1 leading-relaxed">
+                    <div className="p-2.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
+                      <strong className="text-stone-900 dark:text-stone-100">1. Deux widgets côte-à-côte :</strong>
+                      <p className="mt-0.5">
+                        Ajoute 2 petits widgets Calendrier sur ton écran d'accueil. Fais un appui long sur l'un d'eux ➔ <em>« Modifier le widget »</em> ➔ tu peux filtrer quel calendrier afficher pour avoir Hanzi à gauche et Histoire à droite.
+                      </p>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
+                      <strong className="text-stone-900 dark:text-stone-100">2. La Pile Intelligente (Smart Stack) :</strong>
+                      <p className="mt-0.5">
+                        Ajoute deux widgets carrés, puis glisse le second par-dessus le premier. Ils se superposent en une pile : fais simplement défiler de haut en bas pour alterner entre ton caractère et ton histoire !
+                      </p>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
+                      <strong className="text-amber-800 dark:text-amber-300">3. Le Combo 2-en-1 automatique (Le plus simple) :</strong>
+                      <p className="mt-0.5">
+                        Avec le <strong>Pack Combo</strong>, un seul widget suffit ! Il affichera ton Hanzi le matin (08:30), puis basculera automatiquement sur ton Histoire dès la fin de journée (19:30).
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
+
+            {/* Guide pas-à-pas installation */}
+            <div className="p-3 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 text-[11px] text-amber-950 dark:text-amber-200 space-y-1">
+              <strong className="block font-bold">📲 Comment l'installer en 10 secondes :</strong>
+              <p>1. Télécharge le fichier <code>.ics</code> depuis Safari sur ton iPhone ➔ Touche-le ➔ Choisis <em>« Tout ajouter »</em>.</p>
+              <p>2. Maintiens le fond de ton écran d'accueil ➔ Touche <strong>« + »</strong> en haut à gauche ➔ Ajoute le widget <strong>Calendrier</strong>.</p>
+            </div>
+
           </div>
         )}
 
@@ -253,7 +450,7 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
                 <span>Automatisation iOS chaque matin (Application Raccourcis)</span>
               </div>
               <p className="leading-relaxed">
-                Grâce à l'application native <strong>Raccourcis (Shortcuts)</strong> installée sur ton iPhone, tu peux créer une automatisation qui t'affiche une notification avec le caractère du jour à l'heure exacte de ton réveil.
+                Grâce à l'application native <strong>Raccourcis (Shortcuts)</strong> installée sur ton iPhone, tu peux créer une automatisation qui t'affiche une notification avec le contenu du jour à l'heure exacte de ton réveil.
               </p>
             </div>
 

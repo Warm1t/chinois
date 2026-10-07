@@ -30,6 +30,7 @@ import {
   Wand2, 
   ExternalLink,
   ChevronRight,
+  Smartphone,
   BookmarkCheck,
   Send
 } from 'lucide-react';
@@ -38,12 +39,14 @@ interface StoryReaderViewProps {
   syncedAnkiWords: AnkiWord[];
   onOpenAnkiModal: () => void;
   onIncrementStreak?: () => void;
+  onOpenAppleSyncModal?: () => void;
 }
 
 export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   syncedAnkiWords,
   onOpenAnkiModal,
   onIncrementStreak,
+  onOpenAppleSyncModal,
 }) => {
   const [stories, setStories] = useState<MaayotStory[]>(BUILT_IN_STORIES);
   const [selectedStoryId, setSelectedStoryId] = useState<string>(BUILT_IN_STORIES[0].id);
@@ -226,14 +229,27 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
           </p>
         </div>
 
-        {/* Bouton Générer avec mes mots Anki */}
-        <button
-          onClick={handleGenerateAnkiStory}
-          className="w-full sm:w-auto px-4 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-black text-xs shadow-md border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 shrink-0 hover:-translate-y-0.5"
-        >
-          <Wand2 className="w-4 h-4" />
-          <span>Créer une Histoire avec mes Mots Anki</span>
-        </button>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+          {onOpenAppleSyncModal && (
+            <button
+              onClick={onOpenAppleSyncModal}
+              className="px-3.5 py-3 rounded-2xl bg-white hover:bg-stone-100 text-stone-800 font-bold text-xs shadow-xs border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 shrink-0 hover:-translate-y-0.5"
+              title="Exporter les histoires vers le Calendrier / Widget Apple"
+            >
+              <Smartphone className="w-4 h-4 text-amber-500" />
+              <span>Widget iPhone</span>
+            </button>
+          )}
+
+          {/* Bouton Générer avec mes mots Anki */}
+          <button
+            onClick={handleGenerateAnkiStory}
+            className="px-4 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-black text-xs shadow-md border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 shrink-0 hover:-translate-y-0.5"
+          >
+            <Wand2 className="w-4 h-4" />
+            <span>Créer une Histoire avec mes Mots Anki</span>
+          </button>
+        </div>
       </div>
 
       {/* Onglets de sélection des histoires */}

@@ -417,8 +417,602 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
       questionTranslation: 'Dans ton travail ou ton apprentissage du chinois, quelle est la chose où tu as ressenti une grosse pression, mais que tu as persévérée et trouvée très valorisante ?',
       suggestedWords: ['坚持 (jiānchí)', '压力 (yālì)', '值得 (zhíde)', '成功 (chénggōng)']
     }
+  },
+  {
+    id: 'story-morning-park-taichi',
+    title: '公园晨光与太极剑',
+    titlePinyin: 'Gōngyuán chénguāng yǔ tàijíjiàn',
+    titleTranslation: 'Lueur matinale au parc et épée Tai Chi',
+    level: 'HSK 3',
+    category: 'Santé & Quotidien',
+    readTime: '2 min',
+    wordCount: 152,
+    targetWords: [
+      { hanzi: '锻炼', pinyin: 'duànliàn', translation: 's\'entraîner, faire de l\'exercice' },
+      { hanzi: '放松', pinyin: 'fàngsōng', translation: 'se détendre, se relaxer' },
+      { hanzi: '动作', pinyin: 'dòngzuò', translation: 'mouvement, geste' },
+      { hanzi: '习惯', pinyin: 'xíguàn', translation: 'habitude, s\'habituer à' }
+    ],
+    paragraphs: [
+      {
+        sentences: [
+          {
+            hanzi: '清晨六点半，城市刚刚苏醒，公园里就已经有很多老人在晨练了。',
+            pinyin: 'Qīngchén liù diǎn bàn, chéngshì gānggāng sūxǐng, gōngyuán lǐ jiù yǐjīng yǒu hěn duō lǎorén zài chénliàn le.',
+            translation: 'À six heures et demie du matin, alors que la ville s\'éveille à peine, de nombreuses personnes âgées font déjà de l\'exercice dans le parc.',
+            words: [
+              { hanzi: '清晨', pinyin: 'qīngchén', translation: 'petit matin' },
+              { hanzi: '六点半', pinyin: 'liù diǎn bàn', translation: 'six heures et demie' },
+              { hanzi: '城市', pinyin: 'chéngshì', translation: 'ville' },
+              { hanzi: '刚刚', pinyin: 'gānggāng', translation: 'à peine, tout juste' },
+              { hanzi: '苏醒', pinyin: 'sūxǐng', translation: 's\'éveiller' },
+              { hanzi: '公园里', pinyin: 'gōngyuán lǐ', translation: 'dans le parc' },
+              { hanzi: '就已经', pinyin: 'jiù yǐjīng', translation: 'il y a déjà' },
+              { hanzi: '有很多', pinyin: 'yǒu hěn duō', translation: 'beaucoup de' },
+              { hanzi: '老人', pinyin: 'lǎorén', translation: 'personnes âgées' },
+              { hanzi: '在', pinyin: 'zài', translation: 'en train de' },
+              { hanzi: '晨练了', pinyin: 'chénliàn le', translation: 'faire de la gym matinale' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          },
+          {
+            hanzi: '小王决定改变经常熬夜的坏毛病，养成每天早起锻炼的好习惯。',
+            pinyin: 'Xiǎo Wáng juédìng gǎibiàn jīngcháng áoyè de huài máobìng, yǎngchéng měitiān zǎoqǐ duànliàn de hǎo xíguàn.',
+            translation: 'Xiao Wang a décidé de changer sa mauvaise habitude de veiller tard et de prendre l\'habitude de se lever tôt pour faire de l\'exercice.',
+            words: [
+              { hanzi: '小王', pinyin: 'Xiǎo Wáng', translation: 'Xiao Wang' },
+              { hanzi: '决定', pinyin: 'juédìng', translation: 'décider' },
+              { hanzi: '改变', pinyin: 'gǎibiàn', translation: 'changer' },
+              { hanzi: '经常', pinyin: 'jīngcháng', translation: 'souvent' },
+              { hanzi: '熬夜的', pinyin: 'áoyè de', translation: 'veiller tard' },
+              { hanzi: '坏毛病', pinyin: 'huài máobìng', translation: 'mauvaise habitude' },
+              { hanzi: '养成', pinyin: 'yǎngchéng', translation: 'adopter, acquérir' },
+              { hanzi: '每天', pinyin: 'měitiān', translation: 'chaque jour' },
+              { hanzi: '早起', pinyin: 'zǎoqǐ', translation: 'se lever tôt' },
+              { hanzi: '锻炼', pinyin: 'duànliàn', translation: 's\'entraîner', isTarget: true },
+              { hanzi: '的', pinyin: 'de', translation: 'de' },
+              { hanzi: '好习惯', pinyin: 'hǎo xíguàn', translation: 'bonne habitude', isTarget: true },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          }
+        ]
+      },
+      {
+        sentences: [
+          {
+            hanzi: '湖边有一位穿唐装的老人正在练太极剑，他的动作缓慢而优雅。',
+            pinyin: 'Hú biān yǒu yí wèi chuān tángzhuāng de lǎorén zhèngzài liàn tàijíjiàn, tā de dòngzuò huǎnmàn ér yōuyǎ.',
+            translation: 'Près du lac, un monsieur âgé vêtu d\'une veste traditionnelle s\'entraîne à l\'épée Tai Chi, ses mouvements sont lents et élégants.',
+            words: [
+              { hanzi: '湖边', pinyin: 'hú biān', translation: 'au bord du lac' },
+              { hanzi: '有一位', pinyin: 'yǒu yí wèi', translation: 'il y a un' },
+              { hanzi: '穿', pinyin: 'chuān', translation: 'porter' },
+              { hanzi: '唐装', pinyin: 'tángzhuāng', translation: 'habit traditionnel' },
+              { hanzi: '的', pinyin: 'de', translation: 'de' },
+              { hanzi: '老人', pinyin: 'lǎorén', translation: 'vieil homme' },
+              { hanzi: '正在', pinyin: 'zhèngzài', translation: 'en train de' },
+              { hanzi: '练', pinyin: 'liàn', translation: 'pratiquer' },
+              { hanzi: '太极剑', pinyin: 'tàijíjiàn', translation: 'épée de Tai Chi' },
+              { hanzi: '他的', pinyin: 'tā de', translation: 'ses' },
+              { hanzi: '动作', pinyin: 'dòngzuò', translation: 'mouvements', isTarget: true },
+              { hanzi: '缓慢', pinyin: 'huǎnmàn', translation: 'lents' },
+              { hanzi: '而', pinyin: 'ér', translation: 'et' },
+              { hanzi: '优雅', pinyin: 'yōuyǎ', translation: 'élégants' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          },
+          {
+            hanzi: '看着湖水在微风中泛起波纹，小王深吸了一口气，整个人感到无比放松。',
+            pinyin: 'Kàn zhe húshuǐ zài wēifēng zhōng fàn qǐ bōwén, Xiǎo Wáng shēn xī le yì kǒu qì, zhěng gè rén gǎndào wúbǐ fàngsōng.',
+            translation: 'En observant les ondulations sur le lac sous la brise, Xiao Wang prit une profonde inspiration et se sentit infiniment détendu.',
+            words: [
+              { hanzi: '看着', pinyin: 'kàn zhe', translation: 'en regardant' },
+              { hanzi: '湖水', pinyin: 'húshuǐ', translation: 'l\'eau du lac' },
+              { hanzi: '在微风中', pinyin: 'zài wēifēng zhōng', translation: 'dans la brise' },
+              { hanzi: '泛起波纹', pinyin: 'fàn qǐ bōwén', translation: 'onduler' },
+              { hanzi: '小王', pinyin: 'Xiǎo Wáng', translation: 'Xiao Wang' },
+              { hanzi: '深吸了', pinyin: 'shēn xī le', translation: 'inspira profondément' },
+              { hanzi: '一口气', pinyin: 'yì kǒu qì', translation: 'une bouffée d\'air' },
+              { hanzi: '整个人', pinyin: 'zhěng gè rén', translation: 'tout son être' },
+              { hanzi: '感到', pinyin: 'gǎndào', translation: 'se sentit' },
+              { hanzi: '无比', pinyin: 'wúbǐ', translation: 'infiniment' },
+              { hanzi: '放松', pinyin: 'fàngsōng', translation: 'détendu', isTarget: true },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          }
+        ]
+      }
+    ],
+    audioText: '清晨六点半，城市刚刚苏醒，公园里就已经有很多老人在晨练了。小王决定改变经常熬夜的坏毛病，养成每天早起锻炼的好习惯。湖边有一位穿唐装的老人正在练太极剑，他的动作缓慢而优雅。看着湖水在微风中泛起波纹，小王深吸了一口气，整个人感到无比放松。',
+    quiz: [
+      {
+        question: '小王为什么决定清晨去公园？',
+        questionPinyin: 'Xiǎo Wáng wèishénme juédìng qīngchén qù gōngyuán?',
+        options: [
+          '为了去湖边钓鱼 (Pour pêcher au bord du lac)',
+          '为了改变熬夜坏毛病并养成锻炼的好习惯 (Pour changer sa mauvaise habitude et faire du sport)',
+          '为了去公园拍照 (Pour prendre des photos)',
+          '为了等朋友聚餐 (Pour attendre des amis pour déjeuner)'
+        ],
+        correctIndex: 1,
+        explanation: 'Dans le texte : "小王决定改变经常熬夜的坏毛病，养成每天早起锻炼的好习惯".'
+      }
+    ],
+    discussionPrompt: {
+      question: '你平时有早起锻炼的习惯吗？你觉得哪种放松方式最有效？',
+      questionPinyin: 'Nǐ píngshí yǒu zǎoqǐ duànliàn de xíguàn ma? Nǐ juéde nǎ zhǒng fàngsōng fāngshì zuì yǒuxiào?',
+      questionTranslation: 'As-tu l\'habitude de faire du sport le matin ? Quelle méthode de relaxation trouves-tu la plus efficace ?',
+      suggestedWords: ['锻炼 (duànliàn)', '放松 (fàngsōng)', '动作 (dòngzuò)', '习惯 (xíguàn)']
+    }
+  },
+  {
+    id: 'story-sichuan-hotpot',
+    title: '热气腾腾的四川火锅',
+    titlePinyin: 'Rèqì téngténg de Sìchuān huǒguō',
+    titleTranslation: 'La fondue fumante du Sichuan',
+    level: 'HSK 3',
+    category: 'Gastronomie & Partage',
+    readTime: '2 min',
+    wordCount: 160,
+    targetWords: [
+      { hanzi: '辣', pinyin: 'là', translation: 'pimenté, épicé' },
+      { hanzi: '聚会', pinyin: 'jùhuì', translation: 'se réunir, rassemblement' },
+      { hanzi: '尝', pinyin: 'cháng', translation: 'goûter, tester' },
+      { hanzi: '满足', pinyin: 'mǎnzú', translation: 'satisfait, comblé' }
+    ],
+    paragraphs: [
+      {
+        sentences: [
+          {
+            hanzi: '冬天的傍晚寒风刺骨，安娜和几位中国朋友约在火锅店聚会。',
+            pinyin: 'Dōngtiān de bàngwǎn hánfēng cìgǔ, Ānnà hé jǐ wèi Zhōngguó péngyou yuē zài huǒguōdiàn jùhuì.',
+            translation: 'Par une froide soirée d\'hiver, Anna et quelques amis chinois se sont donné rendez-vous dans un restaurant de fondue pour se réunir.',
+            words: [
+              { hanzi: '冬天的', pinyin: 'dōngtiān de', translation: 'd\'hiver' },
+              { hanzi: '傍晚', pinyin: 'bàngwǎn', translation: 'soirée' },
+              { hanzi: '寒风刺骨', pinyin: 'hánfēng cìgǔ', translation: 'vent glacial' },
+              { hanzi: '安娜', pinyin: 'Ānnà', translation: 'Anna' },
+              { hanzi: '和', pinyin: 'hé', translation: 'et' },
+              { hanzi: '几位', pinyin: 'jǐ wèi', translation: 'quelques' },
+              { hanzi: '中国朋友', pinyin: 'Zhōngguó péngyou', translation: 'amis chinois' },
+              { hanzi: '约在', pinyin: 'yuē zài', translation: 'donner RDV à' },
+              { hanzi: '火锅店', pinyin: 'huǒguōdiàn', translation: 'resto de fondue' },
+              { hanzi: '聚会', pinyin: 'jùhuì', translation: 'se réunir', isTarget: true },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          },
+          {
+            hanzi: '红彤彤的麻辣汤底在锅里咕嘟咕嘟冒泡，散发着诱人的花椒香味。',
+            pinyin: 'Hóngtóngtóng de málà tāngdǐ zài guō lǐ gūdū gūdū màopào, sànfā zhe yòurén de huājiāo xiāngwèi.',
+            translation: 'Le bouillon rouge et pimenté bouillonnait dans la marmite, dégageant un parfum irrésistible de poivre du Sichuan.',
+            words: [
+              { hanzi: '红彤彤的', pinyin: 'hóngtóngtóng de', translation: 'tout rouge' },
+              { hanzi: '麻辣', pinyin: 'málà', translation: 'pimenté et anesthésiant' },
+              { hanzi: '汤底', pinyin: 'tāngdǐ', translation: 'bouillon' },
+              { hanzi: '在锅里', pinyin: 'zài guō lǐ', translation: 'dans la marmite' },
+              { hanzi: '冒泡', pinyin: 'màopào', translation: 'bouillonner' },
+              { hanzi: '散发着', pinyin: 'sànfā zhe', translation: 'dégageant' },
+              { hanzi: '诱人的', pinyin: 'yòurén de', translation: 'alléchant' },
+              { hanzi: '花椒', pinyin: 'huājiāo', translation: 'poivre du Sichuan' },
+              { hanzi: '香味', pinyin: 'xiāngwèi', translation: 'parfum' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          }
+        ]
+      },
+      {
+        sentences: [
+          {
+            hanzi: '这是安娜第一次尝正宗的四川九宫格火锅，又麻又辣的味道让她直呼过瘾。',
+            pinyin: 'Zhè shì Ānnà dì yī cì cháng zhèngzōng de Sìchuān jiǔgōnggé huǒguō, yòu má yòu là de wèidao ràng tā zhí hū guòyǐn.',
+            translation: 'C\'était la première fois qu\'Anna goûtait à la véritable fondue du Sichuan en neuf cases ; la saveur à la fois anesthésiante et pimentée l\'a enchantée.',
+            words: [
+              { hanzi: '这是', pinyin: 'zhè shì', translation: 'c\'est' },
+              { hanzi: '安娜', pinyin: 'Ānnà', translation: 'Anna' },
+              { hanzi: '第一次', pinyin: 'dì yī cì', translation: 'première fois' },
+              { hanzi: '尝', pinyin: 'cháng', translation: 'goûter', isTarget: true },
+              { hanzi: '正宗的', pinyin: 'zhèngzōng de', translation: 'authentique' },
+              { hanzi: '四川', pinyin: 'Sìchuān', translation: 'Sichuan' },
+              { hanzi: '火锅', pinyin: 'huǒguō', translation: 'fondue' },
+              { hanzi: '又麻又辣', pinyin: 'yòu má yòu là', translation: 'anesthésiant et pimenté', isTarget: true },
+              { hanzi: '的味道', pinyin: 'de wèidao', translation: 'le goût' },
+              { hanzi: '让她', pinyin: 'ràng tā', translation: 'la fit' },
+              { hanzi: '直呼过瘾', pinyin: 'zhí hū guòyǐn', translation: 's\'exclamer de délice' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          },
+          {
+            hanzi: '大家一边涮着牛肉一边欢声笑语，每个人的脸上都写满了温暖与满足。',
+            pinyin: 'Dàjiā yìbiān shuàn zhe niúròu yìbiān huānshēng xiàoyǔ, měi gè rén de liǎn shang dōu xiě mǎn le wēnnuǎn yǔ mǎnzú.',
+            translation: 'Tout le monde trempait les lamelles de bœuf en riant et bavardant, chaque visage rayonnait de chaleur et de satisfaction.',
+            words: [
+              { hanzi: '大家', pinyin: 'dàjiā', translation: 'tout le monde' },
+              { hanzi: '一边', pinyin: 'yìbiān', translation: 'en même temps' },
+              { hanzi: '涮着牛肉', pinyin: 'shuàn zhe niúròu', translation: 'trempant le bœuf' },
+              { hanzi: '欢声笑语', pinyin: 'huānshēng xiàoyǔ', translation: 'rires joyeux' },
+              { hanzi: '每个人的', pinyin: 'měi gè rén de', translation: 'de chacun' },
+              { hanzi: '脸上', pinyin: 'liǎn shang', translation: 'sur le visage' },
+              { hanzi: '都写满了', pinyin: 'dōu xiě mǎn le', translation: 'était rempli de' },
+              { hanzi: '温暖', pinyin: 'wēnnuǎn', translation: 'chaleur' },
+              { hanzi: '与', pinyin: 'yǔ', translation: 'et' },
+              { hanzi: '满足', pinyin: 'mǎnzú', translation: 'satisfaction', isTarget: true },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          }
+        ]
+      }
+    ],
+    audioText: '冬天的傍晚寒风刺骨，安娜和几位中国朋友约在火锅店聚会。红彤彤的麻辣汤底在锅里咕嘟咕嘟冒泡，散发着诱人的花椒香味。这是安娜第一次尝正宗的四川九宫格火锅，又麻又辣的味道让她直呼过瘾。大家一边涮着牛肉一边欢声笑语，每个人的脸上都写满了温暖与满足。',
+    quiz: [
+      {
+        question: '安娜对四川火锅的感受如何？',
+        questionPinyin: 'Ānnà duì Sìchuān huǒguō de gǎnshòu rúhé?',
+        options: [
+          '觉得太淡没有任何味道 (Trop fade sans goût)',
+          '又麻又辣觉得非常过瘾 (Épicé et anesthésiant, un pur délice)',
+          '太辣了一口都没吃 (Trop fort, elle n\'a rien mangé)',
+          '觉得太甜了 (Trop sucré)'
+        ],
+        correctIndex: 1,
+        explanation: 'Dans le texte : "又麻又辣的味道让她直呼过瘾".'
+      }
+    ],
+    discussionPrompt: {
+      question: '你喜欢吃辣的中国菜吗？你最想和朋友去吃哪一种中国美食？',
+      questionPinyin: 'Nǐ xǐhuan chī là de Zhōngguó cài ma? Nǐ zuì xiǎng hé péngyou qù chī nǎ yì zhǒng Zhōngguó měishí?',
+      questionTranslation: 'Aimes-tu les plats chinois épicés ? Quel mets chinois aimerais-tu partager avec tes amis ?',
+      suggestedWords: ['辣 (là)', '聚会 (jùhuì)', '尝 (cháng)', '满足 (mǎnzú)']
+    }
+  },
+  {
+    id: 'story-high-speed-rail',
+    title: '飞驰的高铁与窗外风景',
+    titlePinyin: 'Fēichí de gāotiě yǔ chuāngwài fēngjǐng',
+    titleTranslation: 'Le train à grande vitesse et le paysage',
+    level: 'HSK 4',
+    category: 'Voyage & Modernité',
+    readTime: '3 min',
+    wordCount: 175,
+    targetWords: [
+      { hanzi: '速度', pinyin: 'sùdù', translation: 'vitesse' },
+      { hanzi: '变化', pinyin: 'biànhuà', translation: 'changement, évolution' },
+      { hanzi: '准时', pinyin: 'zhǔnshí', translation: 'à l\'heure, ponctuel' },
+      { hanzi: '感受', pinyin: 'gǎnshòu', translation: 'ressentir, perception' }
+    ],
+    paragraphs: [
+      {
+        sentences: [
+          {
+            hanzi: '早晨八点整，从北京开往上海的复兴号高铁准时平稳地驶出了站台。',
+            pinyin: 'Zǎochén bā diǎn zhěng, cóng Běijīng kāi wǎng Shànghǎi de Fùxīnghào gāotiě zhǔnshí píngwěn de shǐ chū le zhàntái.',
+            translation: 'À huit heures précises, le TGV Fuxing reliant Pékin à Shanghai a quitté le quai avec ponctualité et stabilité.',
+            words: [
+              { hanzi: '早晨', pinyin: 'zǎochén', translation: 'matin' },
+              { hanzi: '八点整', pinyin: 'bā diǎn zhěng', translation: 'huit heures pile' },
+              { hanzi: '从北京', pinyin: 'cóng Běijīng', translation: 'depuis Pékin' },
+              { hanzi: '开往上海', pinyin: 'kāi wǎng Shànghǎi', translation: 'vers Shanghai' },
+              { hanzi: '复兴号高铁', pinyin: 'Fùxīnghào gāotiě', translation: 'TGV Fuxing' },
+              { hanzi: '准时', pinyin: 'zhǔnshí', translation: 'à l\'heure', isTarget: true },
+              { hanzi: '平稳地', pinyin: 'píngwěn de', translation: 'avec stabilité' },
+              { hanzi: '驶出了', pinyin: 'shǐ chū le', translation: 'est sorti de' },
+              { hanzi: '站台', pinyin: 'zhàntái', translation: 'le quai' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          },
+          {
+            hanzi: '列车的显示屏上跳动着时速三百五十公里的数字，但车厢里极其安静，桌上的咖啡杯甚至没有一丝晃动。',
+            pinyin: 'Lièchē de xiǎnshìpíng shang tiàodòng zhe shí sù sān bǎi wǔshí gōnglǐ de shùzì, dàn chēxiāng lǐ jíqí ānjìng, zhuō shang de kāfēibēi shènzhì méiyǒu yì sī huàngdòng.',
+            translation: 'L\'écran affichait une vitesse de 350 km/h, pourtant le wagon était extrêmement calme, et la tasse de café sur la tablette n\'oscillait pas d\'un millimètre.',
+            words: [
+              { hanzi: '列车的', pinyin: 'lièchē de', translation: 'du train' },
+              { hanzi: '显示屏上', pinyin: 'xiǎnshìpíng shang', translation: 'sur l\'écran' },
+              { hanzi: '跳动着', pinyin: 'tiàodòng zhe', translation: 'oscillait' },
+              { hanzi: '时速', pinyin: 'shísù', translation: 'vitesse horaire', isTarget: true },
+              { hanzi: '车厢里', pinyin: 'chēxiāng lǐ', translation: 'dans le wagon' },
+              { hanzi: '极其安静', pinyin: 'jíqí ānjìng', translation: 'extrêmement calme' },
+              { hanzi: '咖啡杯', pinyin: 'kāfēibēi', translation: 'tasse de café' },
+              { hanzi: '甚至没有', pinyin: 'shènzhì méiyǒu', translation: 'même pas' },
+              { hanzi: '一丝晃动', pinyin: 'yì sī huàngdòng', translation: 'un tremblement' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          }
+        ]
+      },
+      {
+        sentences: [
+          {
+            hanzi: '望着窗外飞速后退的青山、绿水和现代化高楼，马克深刻感受到了中国这些年的巨大变化。',
+            pinyin: 'Wàng zhe chuāngwài fēisù hòutuì de qīngshān, lǜshuǐ hé xiàndàihuà gāolóu, Mǎkè shēnkè gǎnshòu dào le Zhōngguó zhèxiē nián de jùdà biànhuà.',
+            translation: 'En observant les collines verdoyantes, les rivières et les gratte-ciels défiler à toute allure, Marc a profondément ressenti l\'immense évolution de la Chine.',
+            words: [
+              { hanzi: '望着窗外', pinyin: 'wàng zhe chuāngwài', translation: 'en regardant dehors' },
+              { hanzi: '青山绿水', pinyin: 'qīngshān lǜshuǐ', translation: 'montagnes et rivières' },
+              { hanzi: '现代化高楼', pinyin: 'xiàndàihuà gāolóu', translation: 'immeubles modernes' },
+              { hanzi: '马克', pinyin: 'Mǎkè', translation: 'Marc' },
+              { hanzi: '深刻感受到了', pinyin: 'shēnkè gǎnshòu dào le', translation: 'a profondément ressenti', isTarget: true },
+              { hanzi: '巨大变化', pinyin: 'jùdà biànhuà', translation: 'immense changement', isTarget: true },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          },
+          {
+            hanzi: '短短四个多小时便横跨上千公里，这不仅是速度的飞跃，更是科技带来的生活便捷。',
+            pinyin: 'Duǎnduǎn sì gè duō xiǎoshí biàn héngkuà shàng qiān gōnglǐ, zhè bùjǐn shì sùdù de fēiyuè, gèng shì kējì dàilái de shēnghuó biànjié.',
+            translation: 'Parcourir plus d\'un millier de kilomètres en à peine quatre heures n\'est pas seulement un bond de vitesse, c\'est toute la commodité offerte par la technologie.',
+            words: [
+              { hanzi: '短短', pinyin: 'duǎnduǎn', translation: 'en à peine' },
+              { hanzi: '四个多小时', pinyin: 'sì gè duō xiǎoshí', translation: 'plus de 4 heures' },
+              { hanzi: '横跨', pinyin: 'héngkuà', translation: 'traverser' },
+              { hanzi: '上千公里', pinyin: 'shàng qiān gōnglǐ', translation: 'mille kilomètres' },
+              { hanzi: '速度', pinyin: 'sùdù', translation: 'vitesse', isTarget: true },
+              { hanzi: '飞跃', pinyin: 'fēiyuè', translation: 'bond en avant' },
+              { hanzi: '科技', pinyin: 'kējì', translation: 'technologie' },
+              { hanzi: '便捷', pinyin: 'biànjié', translation: 'commodité, facilité' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          }
+        ]
+      }
+    ],
+    audioText: '早晨八点整，从北京开往上海的复兴号高铁准时平稳地驶出了站台。列车的显示屏上跳动着时速三百五十公里的数字，但车厢里极其安静，桌上的咖啡杯甚至没有一丝晃动。望着窗外飞速后退的青山、绿水和现代化高楼，马克深刻感受到了中国这些年的巨大变化。短短四个多小时便横跨上千公里，这不仅是速度的飞跃，更是科技带来的生活便捷。',
+    quiz: [
+      {
+        question: '马克在乘坐中国高铁时最惊叹的是什么？',
+        questionPinyin: 'Mǎkè zài chéngzuò Zhōngguó gāotiě shí zuì jīngtàn de shì shénme?',
+        options: [
+          '车厢非常颠簸 (Le train vibrait beaucoup)',
+          '以350公里时速飞驰依然平稳安静 (Le train à 350 km/h reste très calme et stable)',
+          '车票价格太贵 (Le billet est trop cher)',
+          '沿途没有风景 (Aucun paysage)'
+        ],
+        correctIndex: 1,
+        explanation: 'Dans le texte : "列车时速三百五十公里...但车厢里极其安静，桌上的咖啡杯甚至没有一丝晃动".'
+      }
+    ],
+    discussionPrompt: {
+      question: '你体验过中国的高铁吗？如果让你乘高铁去旅行，你最想去哪个城市感受当地的变化？',
+      questionPinyin: 'Nǐ tǐyàn guò Zhōngguó de gāotiě ma? Rúguǒ ràng nǐ chéng gāotiě qù lǚxíng, nǐ zuì xiǎng qù nǎ gè chéngshì gǎnshòu dāngdì de biànhuà?',
+      questionTranslation: 'As-tu déjà testé le TGV en Chine ? Vers quelle ville aimerais-tu voyager pour observer son développement ?',
+      suggestedWords: ['速度 (sùdù)', '变化 (biànhuà)', '准时 (zhǔnshí)', '感受 (gǎnshòu)']
+    }
+  },
+  {
+    id: 'story-bookstore-rain',
+    title: '雨天拐角书店的咖啡香',
+    titlePinyin: 'Yǔtiān guǎijiǎo shūdiàn de kāfēixiāng',
+    titleTranslation: 'Le parfum du café dans la librairie au coin de la rue',
+    level: 'HSK 3',
+    category: 'Vie Quotidienne & Découverte',
+    readTime: '2 min',
+    wordCount: 155,
+    targetWords: [
+      { hanzi: '安静', pinyin: 'ānjìng', translation: 'calme, tranquille' },
+      { hanzi: '翻开', pinyin: 'fānkāi', translation: 'ouvrir (un livre)' },
+      { hanzi: '避雨', pinyin: 'bìyǔ', translation: 's\'abriter de la pluie' },
+      { hanzi: '灵感', pinyin: 'línggǎn', translation: 'inspiration' }
+    ],
+    paragraphs: [
+      {
+        sentences: [
+          {
+            hanzi: '夏天的午后突然下起了一场暴雨，街上的行人纷纷撑起雨伞寻找躲避的地方。',
+            pinyin: 'Xiàtiān de wǔhòu tūrán xià qǐ le yì chǎng bàoyǔ, jiē shang de xíngrén fēnfēn chēng qǐ yǔsǎn xúnzhǎo duǒbì de dìfang.',
+            translation: 'Un orage soudain s\'est abattu en plein après-midi d\'été, et les passants dans la rue ont ouvert leurs parapluies en quête d\'un abri.',
+            words: [
+              { hanzi: '夏天的午后', pinyin: 'xiàtiān de wǔhòu', translation: 'après-midi d\'été' },
+              { hanzi: '突然', pinyin: 'tūrán', translation: 'soudainement' },
+              { hanzi: '下起了暴雨', pinyin: 'xià qǐ le bàoyǔ', translation: 'une averse s\'est abattue' },
+              { hanzi: '撑起雨伞', pinyin: 'chēng qǐ yǔsǎn', translation: 'ouvrir le parapluie' },
+              { hanzi: '寻找', pinyin: 'xúnzhǎo', translation: 'chercher' },
+              { hanzi: '躲避的地方', pinyin: 'duǒbì de dìfang', translation: 'un endroit pour s\'abriter' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          },
+          {
+            hanzi: '陈雪推开转角那家木门书店的玻璃门，本想只是临时避雨，却立刻被一股浓郁的咖啡香吸引。',
+            pinyin: 'Chén Xuě tuī kāi zhuǎnjiǎo nà jiā mùmén shūdiàn de bōlimén, běn xiǎng zhǐshì línshí bìyǔ, què lìkè bèi yì gǔ nóngyù de kāfēixiāng xīyǐn.',
+            translation: 'Chen Xue poussa la porte vitrée de la librairie au coin de la rue ; elle pensait simplement s\'abriter de la pluie, mais fut aussitôt attirée par un riche parfum de café.',
+            words: [
+              { hanzi: '陈雪', pinyin: 'Chén Xuě', translation: 'Chen Xue' },
+              { hanzi: '推开', pinyin: 'tuī kāi', translation: 'pousser (porte)' },
+              { hanzi: '转角书店', pinyin: 'zhuǎnjiǎo shūdiàn', translation: 'librairie du coin' },
+              { hanzi: '临时', pinyin: 'línshí', translation: 'temporairement' },
+              { hanzi: '避雨', pinyin: 'bìyǔ', translation: 's\'abriter de la pluie', isTarget: true },
+              { hanzi: '浓郁的咖啡香', pinyin: 'nóngyù de kāfēixiāng', translation: 'parfum riche de café' },
+              { hanzi: '吸引', pinyin: 'xīyǐn', translation: 'attirée' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          }
+        ]
+      },
+      {
+        sentences: [
+          {
+            hanzi: '书店里非常安静，只有轻柔的音乐与雨滴敲打玻璃的沙沙声。',
+            pinyin: 'Shūdiàn lǐ fēicháng ānjìng, zhǐyǒu qīngróu de yīnyuè yǔ yǔdī qiāodǎ bōli de shāshā shēng.',
+            translation: 'La librairie était très calme, seul résonnait une musique douce mêlée au crépitement des gouttes de pluie contre la vitre.',
+            words: [
+              { hanzi: '书店里', pinyin: 'shūdiàn lǐ', translation: 'dans la librairie' },
+              { hanzi: '非常', pinyin: 'fēicháng', translation: 'très' },
+              { hanzi: '安静', pinyin: 'ānjìng', translation: 'calme', isTarget: true },
+              { hanzi: '轻柔的音乐', pinyin: 'qīngróu de yīnyuè', translation: 'musique douce' },
+              { hanzi: '雨滴', pinyin: 'yǔdī', translation: 'gouttes de pluie' },
+              { hanzi: '敲打玻璃', pinyin: 'qiāodǎ bōli', translation: 'frapper la vitre' },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          },
+          {
+            hanzi: '她点了一杯热拿铁，翻开一本关于中国传统书画的图册，内心涌现出无数写作的灵感。',
+            pinyin: 'Tā diǎn le yì bēi rè nátiě, fānkāi yì běn guānyú Zhōngguó chuántǒng shūhuà de túcè, nèixīn yǒngxiàn chū wúshù xiězuò de línggǎn.',
+            translation: 'Elle commanda un café latte chaud, ouvrit un album consacré à la calligraphie chinoise, et sentit naître en elle une foule d\'inspirations d\'écriture.',
+            words: [
+              { hanzi: '热拿铁', pinyin: 'rè nátiě', translation: 'latte chaud' },
+              { hanzi: '翻开', pinyin: 'fānkāi', translation: 'ouvrir (livre)', isTarget: true },
+              { hanzi: '中国传统书画', pinyin: 'Zhōngguó chuántǒng shūhuà', translation: 'peinture et calligraphie' },
+              { hanzi: '图册', pinyin: 'túcè', translation: 'album' },
+              { hanzi: '涌现出', pinyin: 'yǒngxiàn chū', translation: 'surgir' },
+              { hanzi: '灵感', pinyin: 'línggǎn', translation: 'inspiration', isTarget: true },
+              { hanzi: '。', pinyin: '', translation: '.' }
+            ]
+          }
+        ]
+      }
+    ],
+    audioText: '夏天的午后突然下起了一场暴雨，街上的行人纷纷撑起雨伞寻找躲避的地方。陈雪推开转角那家木门书店的玻璃门，本想只是临时避雨，却立刻被一股浓郁的咖啡香吸引。书店里非常安静，只有轻柔的音乐与雨滴敲打玻璃的沙沙声。她点了一杯热拿铁，翻开一本关于中国传统书画的图册，内心涌现出无数写作的灵感。',
+    quiz: [
+      {
+        question: '陈雪走进书店最初的原因是什么？',
+        questionPinyin: 'Chén Xuě zǒu jìn shūdiàn zuìchū de yuányīn shì shénme?',
+        options: [
+          '买专业字典 (Acheter un dictionnaire)',
+          '避雨 (S\'abriter de la pluie)',
+          '买生日礼物 (Acheter un cadeau)',
+          '找朋友 (Retrouver un ami)'
+        ],
+        correctIndex: 1,
+        explanation: 'Dans le texte : "本想只是临时避雨，却立刻被一股浓郁的咖啡香吸引".'
+      }
+    ],
+    discussionPrompt: {
+      question: '下雨天你喜欢去安静的地方看书喝咖啡吗？在什么环境下你最容易产生灵感？',
+      questionPinyin: 'Xiàyǔ tiān nǐ xǐhuan qù ānjìng de dìfang kànshū hē kāfēi ma? Zài shénme huánjìng xià nǐ zuì róngyì chǎnshēng línggǎn?',
+      questionTranslation: 'Aimes-tu aller dans un endroit calme pour lire et boire un café les jours de pluie ? Quel cadre t\'inspire le plus ?',
+      suggestedWords: ['安静 (ānjìng)', '翻开 (fānkāi)', '避雨 (bìyǔ)', '灵感 (línggǎn)']
+    }
   }
 ];
+
+// =========================================================================
+// SÉLECTION DÉTERMINISTE DE L'HISTOIRE DU JOUR (ROTATION QUOTIDIENNE)
+// =========================================================================
+
+export const getTodayDailyStory = (targetDate: Date = new Date()): MaayotStory => {
+  const year = targetDate.getFullYear();
+  const startOfYear = new Date(year, 0, 0);
+  const diff = targetDate.getTime() - startOfYear.getTime();
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.floor(diff / oneDay);
+  
+  const index = Math.abs(dayOfYear) % BUILT_IN_STORIES.length;
+  return BUILT_IN_STORIES[index];
+};
+
+/**
+ * Formate la description complète pour un événement iCalendar Histoire
+ * Affichée uniquement lorsque l'utilisateur tape sur le widget ou ouvre l'événement.
+ */
+export const formatStoryCalendarDescription = (story: MaayotStory): string => {
+  const targetWordsStr = story.targetWords
+    .map(w => `• ${w.hanzi} (${w.pinyin}) : ${w.translation}`)
+    .join('\\n');
+
+  const storyParagraphsStr = story.paragraphs
+    .map(p => p.sentences.map(s => `${s.hanzi}\\n(${s.pinyin})\\n→ ${s.translation}`).join('\\n\\n'))
+    .join('\\n\\n---\\n\\n');
+
+  const quizStr = story.quiz && story.quiz.length > 0
+    ? `\\n\\n❓ Question Réflexion : ${story.quiz[0].question}\\n💡 Réponse : ${story.quiz[0].options[story.quiz[0].correctIndex]} (${story.quiz[0].explanation})`
+    : '';
+
+  return [
+    `📚 Histoire du Jour : ${story.title} (${story.titlePinyin})`,
+    `🇫🇷 Traduction : ${story.titleTranslation}`,
+    `🏷️ Niveau : ${story.level} • ⏱️ Lecture : ${story.readTime} • 📊 ${story.wordCount} caractères`,
+    ``,
+    `🎯 Mots Clés Cibles :`,
+    targetWordsStr,
+    ``,
+    `📜 Texte Intégral :`,
+    storyParagraphsStr,
+    quizStr,
+    ``,
+    `🔗 Écouter l'audio sur Fluent : https://warm1t.github.io/chinois/`
+  ].join('\\n');
+};
+
+/**
+ * Générer le fichier .ics pour l'Histoire du Jour sur iPhone (60 jours)
+ * Titre épuré : caractère + pinyin uniquement !
+ */
+export const generateAppleCalendarIcsForStories = (
+  reminderTime: string = '19:30',
+  options: { daysCount?: number; mode?: 'all_day' | 'timed' } = {}
+): string => {
+  const daysCount = options.daysCount ?? 60;
+  const mode = options.mode ?? 'timed';
+  const [hours, minutes] = reminderTime.split(':');
+  const now = new Date();
+  const nowStr = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+  const lines: string[] = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Fluent//Daily Stories Apple Widget Series//FR',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'X-WR-CALNAME:🇨🇳 Fluent - Histoire du Jour',
+    'X-WR-TIMEZONE:Europe/Paris'
+  ];
+
+  for (let i = 0; i < daysCount; i++) {
+    const targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+    const nextDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i + 1);
+
+    const storyForDay = getTodayDailyStory(targetDate);
+
+    const yearStr = String(targetDate.getFullYear());
+    const monthStr = String(targetDate.getMonth() + 1).padStart(2, '0');
+    const dayStr = String(targetDate.getDate()).padStart(2, '0');
+    const dateYmd = `${yearStr}${monthStr}${dayStr}`;
+
+    const nextYearStr = String(nextDate.getFullYear());
+    const nextMonthStr = String(nextDate.getMonth() + 1).padStart(2, '0');
+    const nextDayStr = String(nextDate.getDate()).padStart(2, '0');
+    const nextDateYmd = `${nextYearStr}${nextMonthStr}${nextDayStr}`;
+
+    const descriptionText = formatStoryCalendarDescription(storyForDay);
+
+    lines.push('BEGIN:VEVENT');
+    lines.push(`UID:fluent-daily-story-${dateYmd}@fluent.apple`);
+    lines.push(`DTSTAMP:${nowStr}`);
+
+    if (mode === 'all_day') {
+      lines.push(`DTSTART;VALUE=DATE:${dateYmd}`);
+      lines.push(`DTEND;VALUE=DATE:${nextDateYmd}`);
+      lines.push('TRANSP:TRANSPARENT');
+      lines.push(`SUMMARY:${storyForDay.title} (${storyForDay.titlePinyin})`);
+      lines.push(`DESCRIPTION:${descriptionText}`);
+      lines.push('LOCATION:Fluent (https://warm1t.github.io/chinois/)');
+      lines.push('STATUS:CONFIRMED');
+
+      lines.push('BEGIN:VALARM');
+      lines.push(`TRIGGER:PT${hours}H${minutes}M`);
+      lines.push('ACTION:DISPLAY');
+      lines.push(`DESCRIPTION:📚 ${storyForDay.title} (${storyForDay.titlePinyin})`);
+      lines.push('END:VALARM');
+    } else {
+      const endHourInt = (parseInt(hours, 10) + 1) % 24;
+      const endHourStr = String(endHourInt).padStart(2, '0');
+
+      lines.push(`DTSTART:${dateYmd}T${hours}${minutes}00`);
+      lines.push(`DTEND:${dateYmd}T${endHourStr}${minutes}00`);
+      lines.push(`SUMMARY:${storyForDay.title} (${storyForDay.titlePinyin})`);
+      lines.push(`DESCRIPTION:${descriptionText}`);
+      lines.push('LOCATION:Fluent (https://warm1t.github.io/chinois/)');
+      lines.push('STATUS:CONFIRMED');
+
+      lines.push('BEGIN:VALARM');
+      lines.push('TRIGGER:-PT0M');
+      lines.push('ACTION:DISPLAY');
+      lines.push(`DESCRIPTION:📚 ${storyForDay.title} (${storyForDay.titlePinyin})`);
+      lines.push('END:VALARM');
+    }
+
+    lines.push('END:VEVENT');
+  }
+
+  lines.push('END:VCALENDAR');
+  return lines.join('\r\n');
+};
 
 // =========================================================================
 // GÉNÉRATEUR INTELLIGENT D'HISTOIRES À PARTIR DE MOTS ANKI DE L'UTILISATEUR
