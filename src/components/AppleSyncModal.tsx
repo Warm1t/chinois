@@ -18,7 +18,8 @@ import {
   HelpCircle,
   Clock,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Trash2
 } from 'lucide-react';
 import { DailyHanzi, MaayotStory } from '../types/fluent';
 import { generateAppleCalendarIcsForHanzi } from '../data/dailyHanziData';
@@ -42,12 +43,14 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
 
   const [packType, setPackType] = useState<'combo' | 'hanzi' | 'story'>('combo');
   const [calendarMode, setCalendarMode] = useState<'timed' | 'all_day'>('timed');
+  const [daysCount, setDaysCount] = useState<number>(14);
   const [morningTime, setMorningTime] = useState<string>('08:30');
   const [eveningTime, setEveningTime] = useState<string>('19:30');
   const [copiedShortcut, setCopiedShortcut] = useState(false);
   const [downloadedIcs, setDownloadedIcs] = useState(false);
   const [activeTab, setActiveTab] = useState<'calendar' | 'shortcut' | 'homescreen'>('calendar');
-  const [showTwoWidgetsFaq, setShowTwoWidgetsFaq] = useState(true);
+  const [showTwoWidgetsFaq, setShowTwoWidgetsFaq] = useState(false);
+  const [showDeleteHelp, setShowDeleteHelp] = useState(true);
 
   if (!isOpen) return null;
 
@@ -60,22 +63,22 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
       icsContent = generateAppleCalendarIcsCombined({
         morningTime,
         eveningTime,
-        daysCount: 60,
+        daysCount,
         mode: calendarMode,
       });
-      fileName = 'fluent-combo-hanzi-histoires-60jours.ics';
+      fileName = `fluent-combo-hanzi-histoires-${daysCount}jours.ics`;
     } else if (packType === 'hanzi') {
       icsContent = generateAppleCalendarIcsForHanzi(todayHanzi, morningTime, {
-        daysCount: 60,
+        daysCount,
         mode: calendarMode,
       });
-      fileName = 'fluent-hanzi-du-jour-60jours.ics';
+      fileName = `fluent-hanzi-du-jour-${daysCount}jours.ics`;
     } else {
       icsContent = generateAppleCalendarIcsForStories(eveningTime, {
-        daysCount: 60,
+        daysCount,
         mode: calendarMode,
       });
-      fileName = 'fluent-histoire-du-jour-60jours.ics';
+      fileName = `fluent-histoire-du-jour-${daysCount}jours.ics`;
     }
 
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
@@ -241,43 +244,167 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
               </div>
             </div>
 
-            {/* Heures de rappel configurables */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-              {(packType === 'combo' || packType === 'hanzi') && (
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
-                  <span className="font-bold text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
-                    <Bell className="w-3.5 h-3.5 text-amber-500" />
-                    <span>🌅 Hanzi (Matin) :</span>
-                  </span>
-                  <input
-                    type="time"
-                    value={morningTime}
-                    onChange={(e) => setMorningTime(e.target.value)}
-                    className="px-2 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 font-mono font-bold text-stone-900 dark:text-stone-100 text-xs focus:outline-none"
-                  />
+            {/* GUIDE DE NETTOYAGE & SUPPRESSION MASSE */}
+            <div className="rounded-2xl bg-rose-50/80 dark:bg-rose-950/30 border-2 border-rose-300 dark:border-rose-800 overflow-hidden text-xs">
+              <button
+                type="button"
+                onClick={() => setShowDeleteHelp(!showDeleteHelp)}
+                className="w-full p-3.5 flex items-center justify-between text-left font-bold text-rose-950 dark:text-rose-200"
+              >
+                <div className="flex items-center space-x-2">
+                  <Trash2 className="w-4 h-4 text-rose-600 shrink-0" />
+                  <span>🧹 Événements emmêlés ? Comment TOUT supprimer en 1 clic</span>
                 </div>
-              )}
+                {showDeleteHelp ? <ChevronUp className="w-4 h-4 text-rose-500" /> : <ChevronDown className="w-4 h-4 text-rose-500" />}
+              </button>
 
-              {(packType === 'combo' || packType === 'story') && (
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800">
-                  <span className="font-bold text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
-                    <Clock className="w-3.5 h-3.5 text-emerald-500" />
-                    <span>🌙 Histoire (Soir) :</span>
-                  </span>
-                  <input
-                    type="time"
-                    value={eveningTime}
-                    onChange={(e) => setEveningTime(e.target.value)}
-                    className="px-2 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 font-mono font-bold text-stone-900 dark:text-stone-100 text-xs focus:outline-none"
-                  />
+              {showDeleteHelp && (
+                <div className="p-3.5 pt-0 space-y-2.5 text-[11px] text-rose-950 dark:text-rose-200 border-t border-rose-200/60 dark:border-rose-800/60 mt-1 leading-relaxed">
+                  <div className="p-2.5 rounded-xl bg-white dark:bg-stone-900 border border-rose-200 dark:border-rose-900/60 space-y-1">
+                    <strong className="text-rose-700 dark:text-rose-300 block">
+                      ⚡ Option 1 (Si c'est dans un calendrier séparé) :
+                    </strong>
+                    <p>
+                      Dans Calendrier sur iPhone ➔ touche <strong>« Calendriers »</strong> en bas au centre ➔ touche le <strong>(i)</strong> à côté du calendrier ➔ tout en bas : <strong>« Supprimer le calendrier »</strong>. Tous les événements sont effacés d'un seul coup !
+                    </p>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-white dark:bg-stone-900 border border-rose-200 dark:border-rose-900/60 space-y-1">
+                    <strong className="text-stone-900 dark:text-stone-100 block">
+                      🔍 Option 2 (Si c'est mélangé dans ton calendrier perso) :
+                    </strong>
+                    <p>
+                      • <strong>Sur Mac</strong> : Ouvre Calendrier ➔ Recherche <code>Fluent</code> (en haut à droite) ➔ clique dans la liste ➔ <code>Cmd + A</code> (Tout sélectionner) ➔ Touche <code>Supprimer</code>.<br />
+                      • <strong>Sur iPhone</strong> : Ouvre Calendrier ➔ Touche la <strong>loupe 🔍</strong> ➔ Tape <code>Fluent</code> ➔ Les événements s'affichent en liste continue au lieu d'être dispersés sur 60 jours.
+                    </p>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-amber-950 dark:text-amber-200 space-y-1">
+                    <strong className="text-amber-800 dark:text-amber-300 block">
+                      🛡️ Règle d'or pour le prochain import :
+                    </strong>
+                    <p>
+                      Dans l'app Calendrier iPhone : touche <strong>« Calendriers »</strong> ➔ <strong>« Ajouter un calendrier »</strong> ➔ nomme-le <strong>« Chinois »</strong> (en rouge).<br />
+                      Quand tu ouvriras le nouveau fichier <code>.ics</code>, choisis d'ajouter dans le calendrier <strong>« Chinois »</strong>. Ainsi, pour changer l'heure à l'avenir, tu pourras supprimer ce calendrier en 1 clic sans toucher à ton agenda personnel !
+                    </p>
+                  </div>
                 </div>
               )}
+            </div>
+
+            {/* Heures de rappel configurables avec raccourcis rapides */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
+                2. Choisis tes heures de rappel précises :
+              </label>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                {(packType === 'combo' || packType === 'hanzi') && (
+                  <div className="p-3 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
+                        <Bell className="w-3.5 h-3.5 text-amber-500" />
+                        <span>🌅 Hanzi (Matin) :</span>
+                      </span>
+                      <input
+                        type="time"
+                        value={morningTime}
+                        onChange={(e) => setMorningTime(e.target.value)}
+                        className="px-2 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 font-mono font-bold text-stone-900 dark:text-stone-100 text-xs focus:outline-none"
+                      />
+                    </div>
+                    {/* Raccourcis matin */}
+                    <div className="flex flex-wrap items-center gap-1">
+                      {['07:00', '07:30', '08:00', '08:30', '09:00'].map((time) => (
+                        <button
+                          key={time}
+                          type="button"
+                          onClick={() => setMorningTime(time)}
+                          className={`px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold transition-all ${
+                            morningTime === time
+                              ? 'bg-amber-500 text-white'
+                              : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200'
+                          }`}
+                        >
+                          {time}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {(packType === 'combo' || packType === 'story') && (
+                  <div className="p-3 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
+                        <Clock className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>🌙 Histoire (Soir) :</span>
+                      </span>
+                      <input
+                        type="time"
+                        value={eveningTime}
+                        onChange={(e) => setEveningTime(e.target.value)}
+                        className="px-2 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 font-mono font-bold text-stone-900 dark:text-stone-100 text-xs focus:outline-none"
+                      />
+                    </div>
+                    {/* Raccourcis soir */}
+                    <div className="flex flex-wrap items-center gap-1">
+                      {['18:30', '19:00', '19:30', '20:00', '21:00'].map((time) => (
+                        <button
+                          key={time}
+                          type="button"
+                          onClick={() => setEveningTime(time)}
+                          className={`px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold transition-all ${
+                            eveningTime === time
+                              ? 'bg-emerald-600 text-white'
+                              : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200'
+                          }`}
+                        >
+                          {time}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* 3. Durée de synchronisation */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300 flex items-center justify-between">
+                <span>3. Durée de l'agenda généré :</span>
+                <span className="text-[10px] text-stone-400 font-normal">
+                  (7 ou 14 jours idéal pour tester sans encombrer)
+                </span>
+              </label>
+              <div className="grid grid-cols-4 gap-1.5 text-xs font-mono">
+                {[
+                  { count: 7, label: '7 jours', sub: 'Test rapide' },
+                  { count: 14, label: '14 jours', sub: '2 semaines' },
+                  { count: 30, label: '30 jours', sub: '1 mois' },
+                  { count: 60, label: '60 jours', sub: 'Pack complet' },
+                ].map((item) => (
+                  <button
+                    key={item.count}
+                    type="button"
+                    onClick={() => setDaysCount(item.count)}
+                    className={`p-2 rounded-xl border text-center transition-all ${
+                      daysCount === item.count
+                        ? 'bg-stone-900 text-white dark:bg-white dark:text-stone-900 font-bold border-stone-900 shadow-xs'
+                        : 'bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-400 border-stone-200 dark:border-stone-800 hover:border-stone-400'
+                    }`}
+                  >
+                    <span className="block font-bold text-xs">{item.label}</span>
+                    <span className="text-[9px] opacity-75 font-sans">{item.sub}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Mode d'affichage pour les Widgets iOS */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
-                2. Mode pour ton widget iOS :
+                4. Mode pour ton widget iOS :
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 <button
@@ -294,7 +421,7 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
                     {calendarMode === 'timed' && <Check className="w-3.5 h-3.5 text-blue-600" />}
                   </div>
                   <p className="text-[10px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
-                    Visible sur le widget sans être masqué par l'option "Jour entier". Détails complets au clic.
+                    Visible sur le widget à l'heure programmée. Détails complets au toucher.
                   </p>
                 </button>
 
@@ -371,15 +498,15 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
               {downloadedIcs ? (
                 <>
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Pack de 60 Jours Téléchargé ! Ouvre-le sur ton iPhone</span>
+                  <span>Pack de {daysCount} Jours Téléchargé ! Ouvre-le sur ton iPhone</span>
                 </>
               ) : (
                 <>
                   <Download className="w-4 h-4 text-amber-300" />
                   <span>
-                    {packType === 'combo' && 'Télécharger le Pack Combo (Hanzi + Histoires 60 Jours)'}
-                    {packType === 'hanzi' && 'Télécharger les 60 Jours de Hanzi (.ics)'}
-                    {packType === 'story' && 'Télécharger les 60 Jours d\'Histoires (.ics)'}
+                    {packType === 'combo' && `Télécharger le Pack Combo (${daysCount} Jours)`}
+                    {packType === 'hanzi' && `Télécharger les ${daysCount} Jours de Hanzi (.ics)`}
+                    {packType === 'story' && `Télécharger les ${daysCount} Jours d'Histoires (.ics)`}
                   </span>
                 </>
               )}
