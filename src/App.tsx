@@ -12,7 +12,7 @@ import { StoryReaderView } from './components/StoryReaderView';
 import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
 import { UserProfileBackup, createProfileBackup } from './utils/profileSyncUtils';
-import { pushProfileToCloud, isAutoSyncEnabled } from './utils/cloudSyncUtils';
+import { pushProfileToCloud, pullProfileFromCloud, isAutoSyncEnabled } from './utils/cloudSyncUtils';
 import { getAppTheme, applyThemeToDocument } from './utils/themeUtils';
 import { AppleSyncModal } from './components/AppleSyncModal';
 import { getTodayDailyHanzi } from './data/dailyHanziData';
@@ -70,9 +70,32 @@ export const App: React.FC = () => {
     localStorage.setItem('fluent_anki_words', JSON.stringify(syncedAnkiWords));
   }, [syncedAnkiWords]);
 
-  // Initialisation du thème au premier chargement (Mode Encre ou Mode Sombre)
+  // Initialisation du thème et synchronisation automatique Cloud au premier chargement (ex: sur iPhone)
   useEffect(() => {
     applyThemeToDocument(getAppTheme());
+
+    const autoSyncFromCloudOnStartup = async () => {
+      if (!isAutoSyncEnabled()) return;
+      try {
+        const res = await pullProfileFromCloud();
+        if (res.success && res.data) {
+          const cloudData = res.data;
+          const cloudWordsCount = cloudData.syncedAnkiWords?.length || 0;
+          const localWordsCount = syncedAnkiWords.length;
+
+          // Si cet appareil est vierge (ex: iPhone au 1er lancement) ou a moins de cartes :
+          if (cloudWordsCount > localWordsCount || (cloudData.completedExercises?.length || 0) > completedExercises.length) {
+            handleProfileRestored(cloudData);
+            setToastMessage(`☁️ Synchronisé avec le Cloud : ${cloudWordsCount} cartes Anki restaurées !`);
+            setTimeout(() => setToastMessage(null), 4000);
+          }
+        }
+      } catch (e) {
+        console.warn('Auto-pull Cloud silencieux:', e);
+      }
+    };
+
+    autoSyncFromCloudOnStartup();
   }, []);
 
   const handleExerciseCompleted = (cardId: string) => {
@@ -222,6 +245,22 @@ export const App: React.FC = () => {
           syncedWords={syncedAnkiWords}
           onWordsUpdated={(words) => {
             setSyncedAnkiWords(words);
+
+            // Auto-sync immédiat vers Supabase Cloud dès qu'Anki est mis à jour
+            if (isAutoSyncEnabled()) {
+              const backup = createProfileBackup(
+                completedExercises,
+                streakDays,
+                words,
+                getAnchoringRecords()
+              );
+              pushProfileToCloud(backup)
+                .then(() => {
+                  setToastMessage(`☁️ ${words.length} cartes Anki synchronisées sur le Cloud !`);
+                  setTimeout(() => setToastMessage(null), 3500);
+                })
+                .catch((e) => console.warn('Auto-sync Supabase Anki:', e));
+            }
           }}
         />
       )}
