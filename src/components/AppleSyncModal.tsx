@@ -28,6 +28,7 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
   onClose,
   todayHanzi
 }) => {
+  const [calendarMode, setCalendarMode] = useState<'all_day' | 'timed'>('all_day');
   const [reminderTime, setReminderTime] = useState<string>('08:30');
   const [copiedShortcut, setCopiedShortcut] = useState(false);
   const [downloadedIcs, setDownloadedIcs] = useState(false);
@@ -35,13 +36,16 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Télécharger le fichier .ics directement compatible Apple Calendar / iOS
+  // Télécharger le fichier .ics multi-jours directement compatible Apple Calendar / iOS
   const handleDownloadAppleCalendar = () => {
-    const icsContent = generateAppleCalendarIcsForHanzi(todayHanzi, reminderTime);
+    const icsContent = generateAppleCalendarIcsForHanzi(todayHanzi, reminderTime, {
+      daysCount: 60,
+      mode: calendarMode,
+    });
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', `daily-hanzi-${todayHanzi.character}.ics`);
+    link.setAttribute('download', 'fluent-hanzi-du-jour-60jours.ics');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -83,7 +87,7 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
               </h2>
             </div>
             <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">
-              Reçois le Hanzi du jour chaque matin sur ton écran de verrouillage et ton calendrier iOS.
+              Reçois un caractère différent chaque matin sur ton widget iOS et ton calendrier.
             </p>
           </div>
         </div>
@@ -130,21 +134,66 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
         {/* CONTENU ONGLET 1 : CALENDRIER APPLE & WIDGET LOCK SCREEN */}
         {activeTab === 'calendar' && (
           <div className="space-y-4 animate-fadeIn">
+            {/* Bannière explicative 60 jours */}
             <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs text-blue-950 dark:text-blue-200 space-y-2">
               <div className="flex items-center space-x-1.5 font-bold text-blue-900 dark:text-blue-100">
-                <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                <span>Apparaît sur le Widget iPhone Lock Screen & Apple Watch</span>
+                <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
+                <span>60 Jours Inclus • Un Caractère Différent Chaque Matin</span>
               </div>
               <p className="leading-relaxed">
-                En intégrant cet événement récurrent dans ton Calendrier Apple, le <strong>Hanzi du jour</strong> sera affiché automatiquement sur l'écran verrouillé de ton iPhone chaque matin, avec sa prononciation et ses mots composés.
+                Ce calendrier génère automatiquement les <strong>60 prochains jours</strong> d'étude. Chaque matin, le calendrier et le widget afficheront un nouveau sinogramme avec sa clé, son pinyin et ses mots composés.
               </p>
+            </div>
+
+            {/* Choix du mode d'affichage pour le Widget iOS */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
+                Format d'affichage pour l'iPhone :
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <button
+                  type="button"
+                  onClick={() => setCalendarMode('all_day')}
+                  className={`p-3 rounded-2xl border text-left transition-all ${
+                    calendarMode === 'all_day'
+                      ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-400 text-amber-950 dark:text-amber-100 font-bold shadow-2xs'
+                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-stone-400'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span>🌟 Mode Widget Toute la Journée</span>
+                    {calendarMode === 'all_day' && <Check className="w-3.5 h-3.5 text-amber-600" />}
+                  </div>
+                  <p className="text-[11px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
+                    Recommandé : reste visible en continu sur l'écran verrouillé et l'écran d'accueil du matin au soir.
+                  </p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setCalendarMode('timed')}
+                  className={`p-3 rounded-2xl border text-left transition-all ${
+                    calendarMode === 'timed'
+                      ? 'bg-blue-50 dark:bg-blue-950/40 border-blue-400 text-blue-950 dark:text-blue-100 font-bold shadow-2xs'
+                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-stone-400'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span>⏰ Créneau Horaire Précis</span>
+                    {calendarMode === 'timed' && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  </div>
+                  <p className="text-[11px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
+                    Session d'étude de 15 minutes à l'heure exacte avec alarme sonore immédiate.
+                  </p>
+                </button>
+              </div>
             </div>
 
             {/* Heure de notification souhaitée */}
             <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-xs">
               <span className="font-bold text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
                 <Bell className="w-4 h-4 text-amber-500" />
-                <span>Heure du rappel sur ton iPhone :</span>
+                <span>Heure du rappel quotidien :</span>
               </span>
               <input
                 type="time"
@@ -157,26 +206,40 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
             {/* Bouton d'action .ics */}
             <button
               onClick={handleDownloadAppleCalendar}
-              className="w-full py-3 px-4 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all shadow-md hover:-translate-y-0.5"
+              className="w-full py-3.5 px-4 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all shadow-md hover:-translate-y-0.5"
             >
               {downloadedIcs ? (
                 <>
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Événement Apple Calendar Généré ! Ouvre-le sur ton iPhone</span>
+                  <span>Calendrier de 60 Jours Téléchargé ! Ouvre-le sur ton iPhone</span>
                 </>
               ) : (
                 <>
                   <Download className="w-4 h-4 text-blue-300" />
-                  <span>Ajouter à mon Calendrier Apple (Fichier .ics)</span>
+                  <span>Télécharger les 60 Jours pour mon iPhone (.ics)</span>
                 </>
               )}
             </button>
 
-            <div className="text-[11px] text-stone-500 dark:text-stone-400 space-y-1 pl-1">
-              <p className="font-semibold">💡 Comment l'ouvrir sur ton iPhone :</p>
-              <p>1. Télécharge le fichier ou envoie-le toi par AirDrop / Messages / Mail.</p>
-              <p>2. Touche le fichier sur ton iPhone ➔ Apple Calendrier te propose : <strong>« Tout ajouter »</strong>.</p>
-              <p>3. Active le widget <strong>Calendrier</strong> sur ton écran d'accueil iOS !</p>
+            {/* Guide pas-à-pas pour le Widget et les Notifications iOS */}
+            <div className="p-3.5 rounded-2xl bg-stone-100/80 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 text-[11px] text-stone-600 dark:text-stone-300 space-y-2">
+              <p className="font-bold text-stone-900 dark:text-stone-100 text-xs">
+                📲 Comment l'installer sur ton iPhone pour voir le widget :
+              </p>
+              <div className="space-y-1.5 pl-1 leading-relaxed">
+                <p>
+                  <strong>1. Ajouter au calendrier :</strong> Télécharge le fichier depuis Safari sur ton iPhone (ou envoie-le par AirDrop / Mail) ➔ Touche le fichier ➔ Choisis <em>« Tout ajouter »</em>.
+                </p>
+                <p>
+                  <strong>2. Activer le Widget :</strong> Sur l'écran d'accueil de ton iPhone, fais un appui long sur le fond ➔ Touche le <strong>« + »</strong> en haut à gauche ➔ Cherche <strong>« Calendrier »</strong> et choisis la taille de widget souhaitée.
+                </p>
+                <p>
+                  <strong>3. Écran Verrouillé (Lock Screen) :</strong> Fais un appui long sur ton écran verrouillé ➔ <em>« Personnaliser »</em> ➔ Ajoute le widget Calendrier sous l'heure pour voir le caractère dès que tu prends ton téléphone !
+                </p>
+                <p className="text-amber-800 dark:text-amber-300 font-medium">
+                  🔔 <em>Note alertes :</em> Vérifie dans <code>Réglages iPhone &gt; Notifications &gt; Calendrier</code> que les alertes sont bien autorisées.
+                </p>
+              </div>
             </div>
           </div>
         )}

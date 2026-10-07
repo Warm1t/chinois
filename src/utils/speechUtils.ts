@@ -36,21 +36,165 @@ let currentAlternateGender: 'female' | 'male' = 'female';
 let isStoryAudioPlaying = false;
 let currentStoryAbortController: { abort: () => void } | null = null;
 
-// Mots-clés pour classer les voix chinoises
-const FEMALE_NAMES = [
+// Mots-clés pour classer les voix chinoises par genre
+const CHINESE_FEMALE_KEYWORDS = [
   'xiaoxiao', 'xiaoyi', 'huihui', 'yaoyao', 'tingting', 'meijia', 
   'sinji', 'hiugaai', 'hsiaochen', 'hanhan', 'female', 'wavenet-a', 
-  'wavenet-c', 'wavenet-d', '普通话', 'standard'
+  'wavenet-d', 'standard-a', 'standard-d', '普通话', 'yating', 
+  'xiaoyan', 'xiaomeng', 'xiaoshuang', 'tiantian', 'femme', '女'
 ];
 
-const MALE_NAMES = [
+const CHINESE_MALE_KEYWORDS = [
   'yunxi', 'yunjian', 'yunyang', 'kangkang', 'zhiwei', 'yushu', 
-  'limu', 'male', 'yunfan', 'yunze', 'wavenet-b', 'homme', 'daniel'
+  'yu-shu', 'limu', 'li-mu', 'male', 'yunfan', 'yunze', 'wavenet-b', 
+  'wavenet-c', 'standard-b', 'standard-c', 'wanlung', 'yunfeng', 
+  'yunhao', 'homme', '男', 'daniel'
 ];
 
-const NEURAL_KEYWORDS = [
-  'natural', 'neural', 'online', 'premium', 'multilingual', 'google', 'apple'
-];
+/**
+ * Vérifie si une voix est formellement exclue (Japonais, Coréen, ou autre langue non-chinoise).
+ * Empêche catégoriquement que des voix japonaises (ex: "Google 日本語", "Microsoft 七海") ou coréennes
+ * soient sélectionnées par erreur à cause des caractères Kanji / Hanja partagés en Unicode.
+ */
+export const isVoiceForbiddenNonChinese = (voice: SpeechSynthesisVoice): boolean => {
+  const lang = (voice.lang || '').toLowerCase().replace(/_/g, '-');
+  const name = (voice.name || '').toLowerCase();
+
+  // 1. Exclusion absolue du japonais
+  if (lang.startsWith('ja') || lang.startsWith('jp')) return true;
+  if (
+    name.includes('japan') || 
+    name.includes('japanese') || 
+    name.includes('nihon') || 
+    voice.name.includes('日本語') || 
+    voice.name.includes('日語')
+  ) {
+    return true;
+  }
+
+  // 2. Exclusion absolue du coréen
+  if (lang.startsWith('ko') || lang.startsWith('kr')) return true;
+  if (
+    name.includes('korea') || 
+    name.includes('korean') || 
+    name.includes('hangul') || 
+    voice.name.includes('한국') || 
+    voice.name.includes('韓国')
+  ) {
+    return true;
+  }
+
+  // 3. Exclusion des autres langues occidentales / courantes non-chinoises
+  if (
+    lang.startsWith('en') ||
+    lang.startsWith('fr') ||
+    lang.startsWith('de') ||
+    lang.startsWith('es') ||
+    lang.startsWith('it') ||
+    lang.startsWith('pt') ||
+    lang.startsWith('ru') ||
+    lang.startsWith('vi') ||
+    lang.startsWith('th') ||
+    lang.startsWith('hi') ||
+    lang.startsWith('ar') ||
+    lang.startsWith('nl') ||
+    lang.startsWith('pl') ||
+    lang.startsWith('tr')
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ * Vérifie si une voix est authentiquement chinoise (Mandarin, Taïwanais, Cantonais).
+ */
+export const isVoiceChinese = (voice: SpeechSynthesisVoice): boolean => {
+  if (isVoiceForbiddenNonChinese(voice)) return false;
+
+  const lang = (voice.lang || '').toLowerCase().replace(/_/g, '-');
+  const name = (voice.name || '').toLowerCase();
+
+  // 1. Code ISO chinois officiel
+  if (lang.startsWith('zh') || lang.startsWith('cmn') || lang.startsWith('yue')) {
+    return true;
+  }
+
+  // 2. Mots-clés explicites désignant la langue chinoise dans le nom
+  const CHINESE_KEYWORDS = [
+    'chinese', 'mandarin', 'putonghua', 'guoyu', 'huayu', 
+    'cantonese', 'zhongwen', 'hanyu'
+  ];
+  if (CHINESE_KEYWORDS.some(kw => name.includes(kw))) {
+    return true;
+  }
+
+  // 3. Noms en caractères chinois sans ambiguïté
+  if (
+    voice.name.includes('普通话') || 
+    voice.name.includes('普通話') || 
+    voice.name.includes('国语') || 
+    voice.name.includes('國語') || 
+    voice.name.includes('中文') || 
+    voice.name.includes('汉语') || 
+    voice.name.includes('漢語') || 
+    voice.name.includes('华语') || 
+    voice.name.includes('華語')
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ * Détermine si une voix chinoise est masculine
+ */
+export const isChineseMaleVoice = (voice: SpeechSynthesisVoice): boolean => {
+  const name = voice.name.toLowerCase();
+  return CHINESE_MALE_KEYWORDS.some(kw => name.includes(kw));
+};
+
+/**
+ * Détermine si une voix chinoise est féminine
+ */
+export const isChineseFemaleVoice = (voice: SpeechSynthesisVoice): boolean => {
+  if (isChineseMaleVoice(voice)) return false;
+  const name = voice.name.toLowerCase();
+  return CHINESE_FEMALE_KEYWORDS.some(kw => name.includes(kw));
+};
+
+/**
+ * Score de pertinence privilégiant le Mandarin Standard (Putonghua / HSK)
+ * et les voix neurales / naturelles haute fidélité.
+ */
+const getChineseVoiceScore = (voice: SpeechSynthesisVoice): number => {
+  const lang = (voice.lang || '').toLowerCase().replace(/_/g, '-');
+  const name = (voice.name || '').toLowerCase();
+  let score = 0;
+
+  // 1. Priorité Mandarin Standard (Putonghua / Chine continentale / Singapour)
+  if (lang.includes('zh-cn') || lang.includes('cmn-hans') || lang.includes('zh-sg')) {
+    score += 100;
+  } else if (lang.includes('zh-tw') || lang.includes('cmn-hant') || name.includes('taiwan')) {
+    score += 80; // Mandarin Taïwan (Guoyu)
+  } else if (lang.includes('zh-hk') || lang.includes('yue')) {
+    score += 40; // Cantonais (si aucun mandarin n'est disponible)
+  } else if (lang.startsWith('zh') || lang.startsWith('cmn')) {
+    score += 70;
+  }
+
+  // 2. Bonus qualité : Voix Neurales / Naturelles / Online
+  if (name.includes('natural') || name.includes('neural') || name.includes('online') || name.includes('premium')) {
+    score += 50;
+  }
+  if (name.includes('google') || name.includes('apple') || name.includes('wavenet')) {
+    score += 30;
+  }
+
+  return score;
+};
 
 /**
  * Récupérer la préférence utilisateur (par défaut 'alternate' pour habituer l'oreille)
@@ -100,7 +244,7 @@ export const loadBrowserVoices = (): Promise<SpeechSynthesisVoice[]> => {
     // Timeout de secours au cas où le navigateur ne déclenche pas l'événement
     setTimeout(() => {
       resolve(window.speechSynthesis.getVoices());
-    }, 350);
+    }, 400);
   });
 };
 
@@ -111,56 +255,51 @@ export const getChineseVoicesBank = async (): Promise<VoiceBankSummary> => {
   const allVoices = await loadBrowserVoices();
   const pref = getVoiceGenderPreference();
 
-  // Filtre des voix chinoises (mandarin, cantonais, taïwanais)
-  const chineseVoices = allVoices.filter(v => {
-    const lang = (v.lang || '').toLowerCase();
-    const name = (v.name || '').toLowerCase();
-    return (
-      lang.startsWith('zh') ||
-      lang.startsWith('cmn') ||
-      name.includes('chinese') ||
-      name.includes('mandarin') ||
-      /[\u4e00-\u9fa5]/.test(v.name)
-    );
-  });
+  // Filtrage STRICT des voix chinoises (élimine 100% des voix japonaises ou autres)
+  const chineseVoices = allVoices.filter(isVoiceChinese);
 
   const femaleList: SpeechSynthesisVoice[] = [];
   const maleList: SpeechSynthesisVoice[] = [];
 
   chineseVoices.forEach(voice => {
-    const nameLower = voice.name.toLowerCase();
-    const isMale = MALE_NAMES.some(kw => nameLower.includes(kw));
-    const isFemale = FEMALE_NAMES.some(kw => nameLower.includes(kw));
-
-    if (isMale) {
+    if (isChineseMaleVoice(voice)) {
       maleList.push(voice);
-    } else if (isFemale) {
+    } else if (isChineseFemaleVoice(voice)) {
       femaleList.push(voice);
     } else {
-      // Par défaut, la plupart des voix système chinoises standards (ex: Huihui) sont féminines
+      // Voix générique chinoise non identifiée spécifiquement comme masculine
       femaleList.push(voice);
     }
   });
 
-  // Fonction de tri privilégiant les voix neurales/naturelles
-  const sortQuality = (a: SpeechSynthesisVoice, b: SpeechSynthesisVoice) => {
-    const aName = a.name.toLowerCase();
-    const bName = b.name.toLowerCase();
-    const aIsNeural = NEURAL_KEYWORDS.some(kw => aName.includes(kw));
-    const bIsNeural = NEURAL_KEYWORDS.some(kw => bName.includes(kw));
-    if (aIsNeural && !bIsNeural) return -1;
-    if (!aIsNeural && bIsNeural) return 1;
-    return 0;
+  // Tri par pertinence Mandarin + qualité
+  femaleList.sort((a, b) => getChineseVoiceScore(b) - getChineseVoiceScore(a));
+  maleList.sort((a, b) => getChineseVoiceScore(b) - getChineseVoiceScore(a));
+
+  const formatVoiceName = (voice?: SpeechSynthesisVoice, fallbackLabel = ''): string => {
+    if (!voice) return fallbackLabel;
+    return voice.name
+      .replace(/^Microsoft\s+/i, '')
+      .replace(/\s+Online\s+\(Natural\)/i, ' (HD Naturelle)')
+      .replace(/\s+Desktop/i, '')
+      .replace(/\s*-\s*Chinese\s*\([^)]+\)/i, '');
   };
 
-  femaleList.sort(sortQuality);
-  maleList.sort(sortQuality);
+  const bestFemale = femaleList[0] 
+    ? formatVoiceName(femaleList[0])
+    : (chineseVoices[0] ? formatVoiceName(chineseVoices[0]) : 'Voix Chinoise Féminine (Mandarin)');
 
-  const bestFemale = femaleList[0]?.name || (chineseVoices[0]?.name || 'Voix Féminine (Synthèse HD)');
-  const bestMale = maleList[0]?.name || (chineseVoices[0] ? `${chineseVoices[0].name} (Modulation Timbre Homme)` : 'Voix Masculine (Timbre Résonant)');
-  
+  const bestMale = maleList[0] 
+    ? formatVoiceName(maleList[0])
+    : (femaleList[0] 
+        ? `${formatVoiceName(femaleList[0])} (Timbre Homme)` 
+        : 'Voix Chinoise Masculine (Mandarin)');
+
   const isNeuralAvailable = chineseVoices.some(v => 
-    NEURAL_KEYWORDS.some(kw => v.name.toLowerCase().includes(kw))
+    v.name.toLowerCase().includes('natural') || 
+    v.name.toLowerCase().includes('neural') ||
+    v.name.toLowerCase().includes('online') ||
+    v.name.toLowerCase().includes('google')
   );
 
   return {
@@ -176,8 +315,8 @@ export const getChineseVoicesBank = async (): Promise<VoiceBankSummary> => {
 };
 
 /**
- * 1. Synthèse vocale enrichie avec alternance Homme/Femme et timbres naturels
- * Entraîne l'oreille en variant les timbres et fréquences acoustiques.
+ * 1. Synthèse vocale enrichie avec alternance Homme/Femme et timbres naturels chinois
+ * Entraîne l'oreille en variant les timbres et fréquences acoustiques en mandarin standard.
  */
 export const playChineseAudio = async (
   text: string, 
@@ -215,30 +354,39 @@ export const playChineseAudio = async (
     }
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'zh-CN';
+    utterance.lang = 'zh-CN'; // Force standard Mandarin language tag
+
+    let voiceToUse: SpeechSynthesisVoice | undefined;
+    let pitch = 1.0;
+    let playbackRate = rate;
 
     if (genderToUse === 'female') {
-      // Profil Féminin : timbre clair, pitch légèrement rehaussé pour une clarté cristalline
-      const voice = bank.femaleVoices[0] || bank.maleVoices[0];
-      if (voice) utterance.voice = voice;
-      utterance.pitch = 1.08;
-      utterance.rate = rate * 1.0;
+      voiceToUse = bank.femaleVoices[0] || bank.maleVoices[0];
+      pitch = 1.06;
+      playbackRate = rate * 1.0;
     } else {
-      // Profil Masculin : timbre plus profond, résonance pectorale naturelle
-      const maleVoice = bank.maleVoices[0];
-      if (maleVoice) {
-        utterance.voice = maleVoice;
-        utterance.pitch = 0.92;
-        utterance.rate = rate * 0.96;
+      if (bank.maleVoices.length > 0) {
+        voiceToUse = bank.maleVoices[0];
+        pitch = 0.94;
+        playbackRate = rate * 0.98;
       } else {
-        // Si le système n'a pas de voix masculine dédiée installée,
-        // on applique une modulation acoustique de formants (pitch 0.80) qui crée
-        // un timbre masculin distinct et authentique à partir de la voix disponible.
-        if (bank.femaleVoices[0]) utterance.voice = bank.femaleVoices[0];
-        utterance.pitch = 0.80;
-        utterance.rate = rate * 0.92;
+        // Si aucune voix masculine native n'est installée, on utilise la voix chinoise disponible
+        // avec une modulation acoustique de formants (pitch plus grave) pour simuler un timbre masculin
+        voiceToUse = bank.femaleVoices[0];
+        pitch = 0.82;
+        playbackRate = rate * 0.94;
       }
     }
+
+    // Sécurité absolue : on n'assigne la voix QUE si elle est 100% chinoise vérifiée
+    if (voiceToUse && isVoiceChinese(voiceToUse)) {
+      utterance.voice = voiceToUse;
+    }
+    // Si aucune voix dans la liste ne correspond, utterance.voice reste undefined
+    // et le navigateur utilise son moteur natif zh-CN au lieu d'une voix japonaise/autre!
+
+    utterance.pitch = pitch;
+    utterance.rate = playbackRate;
 
     utterance.onend = () => resolve();
     utterance.onerror = () => resolve();

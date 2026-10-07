@@ -327,53 +327,113 @@ export const getTodayDailyHanzi = (targetDate: Date = new Date()): DailyHanzi =>
   return DAILY_HANZI_COLLECTION[index];
 };
 
+export interface AppleCalendarExportOptions {
+  reminderTime?: string;
+  daysCount?: number;
+  mode?: 'all_day' | 'timed';
+}
+
 /**
- * Générer le fichier de calendrier Apple universel (.ics) pour l'iPhone / Mac
- * Crée un événement récurrent qui apparaît dans le Calendrier Apple et le Widget iOS Lock Screen !
+ * Générer le fichier de calendrier Apple universel (.ics) pour l'iPhone / Mac.
+ * Crée une séquence complète de 60 jours avec UN CARACTÈRE DIFFÉRENT CHAQUE JOUR !
+ * Compatible 100% avec le Widget Calendrier iOS (Lock Screen + Écran d'accueil)
+ * et les notifications matinales d'Apple.
  */
 export const generateAppleCalendarIcsForHanzi = (
-  hanzi: DailyHanzi,
-  reminderTime: string = '08:30'
+  _currentHanzi: DailyHanzi,
+  reminderTime: string = '08:30',
+  options: { daysCount?: number; mode?: 'all_day' | 'timed' } = {}
 ): string => {
+  const daysCount = options.daysCount ?? 60;
+  const mode = options.mode ?? 'all_day';
   const [hours, minutes] = reminderTime.split(':');
   const now = new Date();
-  const todayStr = now.toISOString().split('T')[0].replace(/-/g, '');
-  
-  const compoundSummary = hanzi.compoundWords.map(w => `${w.hanzi} (${w.translation})`).join(', ');
+  const nowStr = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
-  const descriptionText = [
-    `🏮 Caractère du Jour : ${hanzi.character} (${hanzi.pinyin})`,
-    `📖 Signification : ${hanzi.meaning}`,
-    `🪓 Clé : ${hanzi.radical} (${hanzi.radicalMeaning}) • ${hanzi.strokeCount} traits • Niveau ${hanzi.level}`,
-    `💡 Mnémonique : ${hanzi.mnemonic}`,
-    `🧩 Mots clés : ${compoundSummary}`,
-    `🎯 Exemple : ${hanzi.exampleSentence.chinese} (${hanzi.exampleSentence.translation})`,
-    ``,
-    `🔗 Ouvre ton espace Fluent sur ton iPhone : http://localhost:5173`
-  ].join('\\n');
-
-  return [
+  const lines: string[] = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Fluent//Daily Hanzi Apple Widget//FR',
+    'PRODID:-//Fluent//Daily Hanzi Apple Widget Series//FR',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    'BEGIN:VEVENT',
-    `UID:fluent-daily-hanzi-${Date.now()}@fluent.apple`,
-    `DTSTAMP:${now.toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
-    `DTSTART;TZID=Europe/Paris:${todayStr}T${hours}${minutes}00`,
-    `DTEND;TZID=Europe/Paris:${todayStr}T${hours}${minutes}00`,
-    'RRULE:FREQ=DAILY',
-    `SUMMARY:🇨🇳 Hanzi du Jour : ${hanzi.character} (${hanzi.pinyin}) — ${hanzi.meaning}`,
-    `DESCRIPTION:${descriptionText}`,
-    'LOCATION:Fluent Mandarin App',
-    'STATUS:CONFIRMED',
-    'BEGIN:VALARM',
-    'TRIGGER:-PT0M',
-    'ACTION:DISPLAY',
-    `DESCRIPTION:🏮 Découvre le caractère chinois du jour : ${hanzi.character} (${hanzi.pinyin})`,
-    'END:VALARM',
-    'END:VEVENT',
-    'END:VCALENDAR'
-  ].join('\r\n');
+    'X-WR-CALNAME:🇨🇳 Fluent - Hanzi du Jour',
+    'X-WR-TIMEZONE:Europe/Paris'
+  ];
+
+  for (let i = 0; i < daysCount; i++) {
+    const targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+    const nextDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i + 1);
+
+    // Caractère unique calculé pour ce jour précis
+    const hanziForDay = getTodayDailyHanzi(targetDate);
+
+    const yearStr = String(targetDate.getFullYear());
+    const monthStr = String(targetDate.getMonth() + 1).padStart(2, '0');
+    const dayStr = String(targetDate.getDate()).padStart(2, '0');
+    const dateYmd = `${yearStr}${monthStr}${dayStr}`;
+
+    const nextYearStr = String(nextDate.getFullYear());
+    const nextMonthStr = String(nextDate.getMonth() + 1).padStart(2, '0');
+    const nextDayStr = String(nextDate.getDate()).padStart(2, '0');
+    const nextDateYmd = `${nextYearStr}${nextMonthStr}${nextDayStr}`;
+
+    const compoundSummary = hanziForDay.compoundWords.map(w => `${w.hanzi} (${w.translation})`).join(', ');
+
+    const descriptionText = [
+      `🏮 Caractère du Jour : ${hanziForDay.character} (${hanziForDay.pinyin})`,
+      `📖 Signification : ${hanziForDay.meaning}`,
+      `🪓 Clé : ${hanziForDay.radical} (${hanziForDay.radicalMeaning}) • ${hanziForDay.strokeCount} traits • Niveau ${hanziForDay.level}`,
+      `💡 Mnémonique : ${hanziForDay.mnemonic}`,
+      `🧩 Mots composés : ${compoundSummary}`,
+      `🎯 Exemple : ${hanziForDay.exampleSentence.chinese} (${hanziForDay.exampleSentence.translation})`,
+      ``,
+      `🔗 Ouvre Fluent sur ton iPhone : https://warm1t.github.io/chinois/`
+    ].join('\\n');
+
+    lines.push('BEGIN:VEVENT');
+    lines.push(`UID:fluent-daily-hanzi-${dateYmd}@fluent.apple`);
+    lines.push(`DTSTAMP:${nowStr}`);
+
+    if (mode === 'all_day') {
+      // Mode Toute la journée : reste affiché en permanence du matin au soir sur le widget iOS !
+      lines.push(`DTSTART;VALUE=DATE:${dateYmd}`);
+      lines.push(`DTEND;VALUE=DATE:${nextDateYmd}`);
+      lines.push('TRANSP:TRANSPARENT'); // Ne bloque pas l'agenda de l'utilisateur
+      lines.push(`SUMMARY:🇨🇳 ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
+      lines.push(`DESCRIPTION:${descriptionText}`);
+      lines.push('LOCATION:Fluent Mandarin App');
+      lines.push('STATUS:CONFIRMED');
+
+      // Alerte matinale à l'heure choisie (ex: 08:30)
+      lines.push('BEGIN:VALARM');
+      lines.push(`TRIGGER:PT${hours}H${minutes}M`);
+      lines.push('ACTION:DISPLAY');
+      lines.push(`DESCRIPTION:🏮 Hanzi du Jour : ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
+      lines.push('END:VALARM');
+    } else {
+      // Mode Créneau horaire planifié (ex: 08:30 - 08:45)
+      const endMinutesInt = parseInt(minutes, 10) + 15;
+      const endHourInt = parseInt(hours, 10) + Math.floor(endMinutesInt / 60);
+      const endHourStr = String(endHourInt % 24).padStart(2, '0');
+      const endMinuteStr = String(endMinutesInt % 60).padStart(2, '0');
+
+      lines.push(`DTSTART:${dateYmd}T${hours}${minutes}00`);
+      lines.push(`DTEND:${dateYmd}T${endHourStr}${endMinuteStr}00`);
+      lines.push(`SUMMARY:🇨🇳 Hanzi du Jour : ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
+      lines.push(`DESCRIPTION:${descriptionText}`);
+      lines.push('LOCATION:Fluent Mandarin App');
+      lines.push('STATUS:CONFIRMED');
+
+      lines.push('BEGIN:VALARM');
+      lines.push('TRIGGER:-PT0M');
+      lines.push('ACTION:DISPLAY');
+      lines.push(`DESCRIPTION:🏮 Hanzi du Jour : ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
+      lines.push('END:VALARM');
+    }
+
+    lines.push('END:VEVENT');
+  }
+
+  lines.push('END:VCALENDAR');
+  return lines.join('\r\n');
 };

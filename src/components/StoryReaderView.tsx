@@ -339,7 +339,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                   ? 'bg-rose-50 text-rose-800 border-rose-300'
                   : 'bg-blue-50 text-blue-800 border-blue-300'
               }`}>
-                <span>{activeSpeakerGender === 'female' ? '👩 Voix Féminine' : '👨 Voix Masculine'}</span>
+                <span>{activeSpeakerGender === 'female' ? '👩 Voix Chinoise (Femme)' : '👨 Voix Chinoise (Homme)'}</span>
               </span>
             )}
 
@@ -375,12 +375,12 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
               {isPlayingAudio ? (
                 <>
                   <VolumeX className="w-3.5 h-3.5" />
-                  <span>Arrêter</span>
+                  <span>Arrêter la lecture</span>
                 </>
               ) : (
                 <>
                   <Volume2 className="w-3.5 h-3.5" />
-                  <span>Écouter l'Histoire</span>
+                  <span>Raconter l'Histoire (Audio Chinois)</span>
                 </>
               )}
             </button>
