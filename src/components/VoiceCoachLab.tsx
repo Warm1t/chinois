@@ -36,7 +36,12 @@ import {
   Puzzle,
   MessageSquareQuote,
   Flame,
-  ArrowRight
+  ArrowRight,
+  Play,
+  Pause,
+  Headphones,
+  ArrowRightLeft,
+  Radio
 } from 'lucide-react';
 
 interface VoiceCoachLabProps {
@@ -84,6 +89,13 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   const [liveTranscript, setLiveTranscript] = useState('');
   const [evaluation, setEvaluation] = useState<VoiceEvaluationResult | null>(null);
 
+  // État de l'auto-écoute et du miroir phonétique
+  const [recordedAudioUrl, setRecordedAudioUrl] = useState<string | null>(null);
+  const [isPlayingUserAudio, setIsPlayingUserAudio] = useState(false);
+  const [isPlayingMirror, setIsPlayingMirror] = useState(false);
+  const [mirrorStage, setMirrorStage] = useState<'native' | 'pause' | 'user' | null>(null);
+  const [showPhoneticTips, setShowPhoneticTips] = useState(false);
+
   // État de validation des ateliers de la leçon
   const [sentenceBuilderCompleted, setSentenceBuilderCompleted] = useState<Record<string, boolean>>(() => {
     const saved = localStorage.getItem('fluent_builder_completed');
@@ -98,6 +110,12 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   const recognitionRef = useRef<any>(null);
   const silenceTimerRef = useRef<any>(null);
   const accumulatedTranscriptRef = useRef<string>('');
+
+  // Références matérielles audio (MediaRecorder)
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const userAudioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
   const currentCard = NUANCE_CARDS[currentIndex];
   const isSupported = isSpeechRecognitionSupported();
@@ -115,7 +133,22 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   const isVoicePassed = (currentRecord?.voiceBestScore || 0) >= 80;
   const isLessonFullyMastered = isTestPassed && isVoicePassed;
 
-  // Arrêter l'enregistrement et nettoyer le timer
+  // Arrêter toute lecture en cours (voix native ou audio utilisateur)
+  const stopAllPlayback = () => {
+    stopChineseAudio();
+    setIsPlayingAudio(false);
+    setIsPlayingMirror(false);
+    setMirrorStage(null);
+    if (userAudioPlayerRef.current) {
+      try {
+        userAudioPlayerRef.current.pause();
+        userAudioPlayerRef.current.currentTime = 0;
+      } catch (e) {}
+      setIsPlayingUserAudio(false);
+    }
+  };
+
+  // Arrêter l'enregistrement et nettoyer le micro
   const cleanupRecording = () => {
     if (silenceTimerRef.current) {
       clearTimeout(silenceTimerRef.current);
@@ -124,28 +157,52 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
-      } catch (e) {
-        // Ignorer les erreurs d'arrêt
-      }
+      } catch (e) {}
       recognitionRef.current = null;
+    }
+    if (mediaRecorderRef.current) {
+      try {
+        if (mediaRecorderRef.current.state === 'recording') {
+          mediaRecorderRef.current.stop();
+        }
+      } catch (e) {}
+      mediaRecorderRef.current = null;
+    }
+    if (mediaStreamRef.current) {
+      try {
+        mediaStreamRef.current.getTracks().forEach(track => track.stop());
+      } catch (e) {}
+      mediaStreamRef.current = null;
     }
     setIsRecording(false);
   };
 
+  const resetCardSession = () => {
+    cleanupRecording();
+    stopAllPlayback();
+    setEvaluation(null);
+    setLiveTranscript('');
+    setRecordedAudioUrl(prevUrl => {
+      if (prevUrl) URL.revokeObjectURL(prevUrl);
+      return null;
+    });
+  };
+
   useEffect(() => {
+    resetCardSession();
     return () => {
       cleanupRecording();
-      stopChineseAudio();
+      stopAllPlayback();
     };
-  }, []);
+  }, [currentIndex]);
 
   // Écouter l'audio Putonghua
   const handlePlayAudio = async (text: string, rate: number = 1.0, gender?: 'female' | 'male') => {
-    if (isPlayingAudio) {
-      stopChineseAudio();
-      setIsPlayingAudio(false);
+    if (isPlayingAudio || isPlayingMirror) {
+      stopAllPlayback();
       return;
     }
+    stopAllPlayback();
     setIsPlayingAudio(true);
     await playChineseAudio(text, rate, gender);
     setIsPlayingAudio(false);
@@ -167,18 +224,78 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     localStorage.setItem('fluent_builder_completed', JSON.stringify(updated));
   };
 
-  // Démarrer la capture vocale
-  const startRecording = () => {
+  // Détecter le format mime audio optimal supporté par le navigateur
+  const getSupportedAudioMimeType = (): string => {
+    if (typeof MediaRecorder === 'undefined') return '';
+    const candidates = [
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/mp4',
+      'audio/aac',
+      'audio/ogg'
+    ];
+    for (const t of candidates) {
+      if (MediaRecorder.isTypeSupported(t)) {
+        return t;
+      }
+    }
+    return '';
+  };
+
+  // Démarrer la capture vocale (Micro brut avec MediaRecorder + Détection textuelle SpeechRecognition)
+  const startRecording = async () => {
     if (!isSupported) {
       alert("La reconnaissance vocale n'est pas disponible sur ce navigateur. Essaie sur Google Chrome ou Edge !");
       return;
     }
 
     cleanupRecording();
+    stopAllPlayback();
+
+    if (recordedAudioUrl) {
+      URL.revokeObjectURL(recordedAudioUrl);
+      setRecordedAudioUrl(null);
+    }
+
     setLiveTranscript('');
     setEvaluation(null);
     accumulatedTranscriptRef.current = '';
+    audioChunksRef.current = [];
 
+    // 1. Initialiser MediaRecorder pour la réécoute et le miroir
+    try {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaStreamRef.current = stream;
+
+        const mimeType = getSupportedAudioMimeType();
+        const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+
+        recorder.ondataavailable = (event: BlobEvent) => {
+          if (event.data && event.data.size > 0) {
+            audioChunksRef.current.push(event.data);
+          }
+        };
+
+        recorder.onstop = () => {
+          if (audioChunksRef.current.length > 0) {
+            const blobType = recorder.mimeType || 'audio/webm';
+            const audioBlob = new Blob(audioChunksRef.current, { type: blobType });
+            if (audioBlob.size > 0) {
+              const url = URL.createObjectURL(audioBlob);
+              setRecordedAudioUrl(url);
+            }
+          }
+        };
+
+        mediaRecorderRef.current = recorder;
+        recorder.start(100);
+      }
+    } catch (err) {
+      console.warn("Capture audio MediaRecorder non disponible :", err);
+    }
+
+    // 2. Initialiser SpeechRecognition
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.lang = 'zh-CN';
@@ -258,11 +375,103 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     }
   };
 
+  // Écouter son propre enregistrement audio
+  const handleTogglePlayUserAudio = () => {
+    if (!recordedAudioUrl) return;
+
+    if (isPlayingUserAudio) {
+      if (userAudioPlayerRef.current) {
+        userAudioPlayerRef.current.pause();
+        userAudioPlayerRef.current.currentTime = 0;
+      }
+      setIsPlayingUserAudio(false);
+      return;
+    }
+
+    stopAllPlayback();
+    const audio = new Audio(recordedAudioUrl);
+    userAudioPlayerRef.current = audio;
+    setIsPlayingUserAudio(true);
+
+    audio.onended = () => {
+      setIsPlayingUserAudio(false);
+    };
+    audio.onerror = () => {
+      setIsPlayingUserAudio(false);
+    };
+
+    audio.play().catch(e => {
+      console.warn("Erreur lecture audio utilisateur :", e);
+      setIsPlayingUserAudio(false);
+    });
+  };
+
+  // Séquence Miroir Phonétique Comparatif (Natif ➔ Toi OU Toi ➔ Natif)
+  const handlePlayMirrorComparison = async (mode: 'native-then-user' | 'user-then-native' = 'native-then-user') => {
+    if (isPlayingMirror) {
+      stopAllPlayback();
+      return;
+    }
+    if (!recordedAudioUrl) return;
+
+    stopAllPlayback();
+    setIsPlayingMirror(true);
+
+    const playUserPiece = () => {
+      return new Promise<void>((resolve) => {
+        const audio = new Audio(recordedAudioUrl);
+        userAudioPlayerRef.current = audio;
+        setIsPlayingUserAudio(true);
+        audio.onended = () => {
+          setIsPlayingUserAudio(false);
+          resolve();
+        };
+        audio.onerror = () => {
+          setIsPlayingUserAudio(false);
+          resolve();
+        };
+        audio.play().catch(() => {
+          setIsPlayingUserAudio(false);
+          resolve();
+        });
+      });
+    };
+
+    const playNativePiece = async () => {
+      await playChineseAudio(currentCard.targetChinese, 1.0);
+    };
+
+    try {
+      if (mode === 'native-then-user') {
+        setMirrorStage('native');
+        await playNativePiece();
+
+        setMirrorStage('pause');
+        await new Promise(r => setTimeout(r, 600));
+
+        setMirrorStage('user');
+        await playUserPiece();
+      } else {
+        setMirrorStage('user');
+        await playUserPiece();
+
+        setMirrorStage('pause');
+        await new Promise(r => setTimeout(r, 600));
+
+        setMirrorStage('native');
+        await playNativePiece();
+      }
+    } catch (e) {
+      console.warn("Erreur miroir phonétique :", e);
+    } finally {
+      setIsPlayingMirror(false);
+      setMirrorStage(null);
+      setIsPlayingUserAudio(false);
+    }
+  };
+
   const nextCard = () => {
     if (currentIndex < NUANCE_CARDS.length - 1) {
-      cleanupRecording();
-      setEvaluation(null);
-      setLiveTranscript('');
       setCurrentIndex(prev => prev + 1);
       setActiveTab('theory');
     }
@@ -270,9 +479,6 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
   const prevCard = () => {
     if (currentIndex > 0) {
-      cleanupRecording();
-      setEvaluation(null);
-      setLiveTranscript('');
       setCurrentIndex(prev => prev - 1);
       setActiveTab('theory');
     }
@@ -912,6 +1118,146 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
                 </div>
               )}
             </div>
+
+            {/* Bannière Active pendant la lecture miroir */}
+            {isPlayingMirror && (
+              <div className="w-full max-w-lg mx-auto p-3.5 rounded-2xl border-2 border-stone-900 shadow-md animate-pulse flex items-center justify-center space-x-3 text-xs font-black transition-all bg-gradient-to-r from-amber-50 via-stone-50 to-amber-50">
+                {mirrorStage === 'native' && (
+                  <span className="flex items-center space-x-2 text-stone-900">
+                    <Volume2 className="w-4 h-4 text-amber-600 animate-bounce" />
+                    <span>Étape 1/2 : Modèle Natif en écoute... Assimile la courbe des tons !</span>
+                  </span>
+                )}
+                {mirrorStage === 'pause' && (
+                  <span className="flex items-center space-x-2 text-stone-500">
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping" />
+                    <span>Transition acoustique... Prépare ton oreille !</span>
+                  </span>
+                )}
+                {mirrorStage === 'user' && (
+                  <span className="flex items-center space-x-2 text-[#c23b22]">
+                    <Headphones className="w-4 h-4 text-[#c23b22] animate-bounce" />
+                    <span>Étape 2/2 : Ton Enregistrement réel... Repère le contraste !</span>
+                  </span>
+                )}
+              </div>
+            )}
+
+            {/* Miroir Phonétique & Réécoute de sa propre voix */}
+            {recordedAudioUrl && (
+              <div className="w-full max-w-2xl mx-auto rounded-3xl p-5 sm:p-6 bg-gradient-to-br from-stone-50 via-white to-amber-50/40 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-4 animate-fadeIn">
+                
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 pb-3">
+                  <div className="flex items-center space-x-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-stone-900 text-amber-300 flex items-center justify-center shadow-xs shrink-0">
+                      <Headphones className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-serif font-black text-sm sm:text-base text-stone-900 flex items-center space-x-2">
+                        <span>Miroir Phonétique & Auto-Écoute</span>
+                        <span className="text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          Prise de son prête
+                        </span>
+                      </h4>
+                      <p className="text-[11px] text-stone-600">
+                        Écoute ton timbre réel pour dépasser l'illusion osseuse et perfectionner tes tons.
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setShowPhoneticTips(!showPhoneticTips)}
+                    className="inline-flex items-center space-x-1.5 text-[11px] font-bold text-stone-600 hover:text-stone-900 transition-colors self-start sm:self-auto bg-stone-100 px-2.5 py-1 rounded-lg border border-stone-200"
+                  >
+                    <HelpCircle className="w-3.5 h-3.5 text-amber-600" />
+                    <span>{showPhoneticTips ? 'Masquer repères' : 'Repères des 4 tons'}</span>
+                  </button>
+                </div>
+
+                {/* 3 Actions Audio : Écouter sa voix / Comparer Miroir / Écouter Correction */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  
+                  {/* 1. Écouter son enregistrement réel */}
+                  <button
+                    onClick={handleTogglePlayUserAudio}
+                    className={`p-3 rounded-2xl border-2 border-stone-900 font-black text-xs transition-all shadow-xs flex items-center justify-center space-x-2 ${
+                      isPlayingUserAudio && !isPlayingMirror
+                        ? 'bg-[#c23b22] text-white shadow-[#c23b22]/30 scale-102'
+                        : 'bg-white hover:bg-stone-100 text-stone-900 hover:-translate-y-0.5'
+                    }`}
+                  >
+                    {isPlayingUserAudio && !isPlayingMirror ? (
+                      <>
+                        <Pause className="w-4 h-4 text-white" />
+                        <span>Mettre en pause</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-4 h-4 text-[#c23b22] fill-[#c23b22]" />
+                        <span>Écouter ma Voix</span>
+                      </>
+                    )}
+                  </button>
+
+                  {/* 2. Comparaison Miroir : Natif ➔ Toi */}
+                  <button
+                    onClick={() => handlePlayMirrorComparison('native-then-user')}
+                    className={`p-3 rounded-2xl border-2 border-stone-900 font-black text-xs transition-all shadow-md flex items-center justify-center space-x-2 ${
+                      isPlayingMirror
+                        ? 'bg-amber-400 text-stone-950 scale-102 ring-2 ring-amber-500'
+                        : 'bg-gradient-to-r from-stone-900 to-stone-800 hover:from-stone-800 hover:to-stone-700 text-white hover:-translate-y-0.5'
+                    }`}
+                    title="Joue le modèle natif puis ta voix pour percevoir le décalage"
+                  >
+                    <ArrowRightLeft className="w-4 h-4 text-amber-300" />
+                    <span>Miroir : Natif ➔ Toi</span>
+                  </button>
+
+                  {/* 3. Comparaison Correction : Toi ➔ Natif */}
+                  <button
+                    onClick={() => handlePlayMirrorComparison('user-then-native')}
+                    className="p-3 rounded-2xl border border-stone-300 bg-white hover:bg-stone-50 text-stone-800 font-bold text-xs transition-all shadow-2xs flex items-center justify-center space-x-2 hover:-translate-y-0.5"
+                    title="Joue ta voix puis immédiatement le modèle natif pour entendre la correction"
+                  >
+                    <Volume2 className="w-4 h-4 text-stone-600" />
+                    <span>Correction : Toi ➔ Natif</span>
+                  </button>
+
+                </div>
+
+                {/* Explication pédagogique sur l'illusion osseuse et repères de tons */}
+                {showPhoneticTips && (
+                  <div className="p-4 rounded-2xl bg-white border border-stone-200 text-xs space-y-2.5 animate-fadeIn">
+                    <div className="flex items-center space-x-1.5 text-stone-900 font-bold font-serif">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                      <span>Pourquoi a-t-on l'impression de bien prononcer quand on parle ?</span>
+                    </div>
+                    <p className="text-[11px] text-stone-600 leading-relaxed">
+                      Quand on parle, les vibrations se propagent par les os du crâne (<strong>conduction osseuse</strong>). Ce phénomène amplifie les basses et adoucit inconsciemment nos erreurs de tons. En réécoutant l'enregistrement (<strong>conduction aérienne</strong>), on entend exactement la mélodie que perçoit un natif chinois !
+                    </p>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
+                      <div className="p-2 rounded-xl bg-stone-50 border border-stone-200">
+                        <strong className="block text-stone-900 font-serif">1er Ton (55)</strong>
+                        <span className="text-stone-500 text-[10px]">Haut et plat comme une note tenue. Ne baisse pas !</span>
+                      </div>
+                      <div className="p-2 rounded-xl bg-stone-50 border border-stone-200">
+                        <strong className="block text-stone-900 font-serif">2ème Ton (35)</strong>
+                        <span className="text-stone-500 text-[10px]">Monte vite et franchement (« Hein ?! »).</span>
+                      </div>
+                      <div className="p-2 rounded-xl bg-stone-50 border border-stone-200">
+                        <strong className="block text-stone-900 font-serif">3ème Ton (214)</strong>
+                        <span className="text-stone-500 text-[10px]">Plonge dans les graves avant de remonter.</span>
+                      </div>
+                      <div className="p-2 rounded-xl bg-stone-50 border border-stone-200">
+                        <strong className="block text-stone-900 font-serif">4ème Ton (51)</strong>
+                        <span className="text-stone-500 text-[10px]">Chute sèche et nette comme un ordre.</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+              </div>
+            )}
 
           </div>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MaayotStory, StoryWordToken, AnkiWord } from '../types/fluent';
 import { BUILT_IN_STORIES, generateStoryFromAnkiWords } from '../data/storiesData';
 import { 
@@ -32,7 +32,9 @@ import {
   ChevronRight,
   Smartphone,
   BookmarkCheck,
-  Send
+  Send,
+  Play,
+  Pause
 } from 'lucide-react';
 
 interface StoryReaderViewProps {
@@ -70,6 +72,14 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [speechEvaluation, setSpeechEvaluation] = useState<any | null>(null);
 
+  // Audio capture et réécoute pour le défi oral de l'histoire
+  const storyMediaStreamRef = useRef<MediaStream | null>(null);
+  const storyMediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const storyAudioChunksRef = useRef<Blob[]>([]);
+  const storyUserAudioPlayerRef = useRef<HTMLAudioElement | null>(null);
+  const [storyRecordedAudioUrl, setStoryRecordedAudioUrl] = useState<string | null>(null);
+  const [isPlayingStoryUserAudio, setIsPlayingStoryUserAudio] = useState<boolean>(false);
+
   // Histoires terminées (sauvegardées en local)
   const [completedStoryIds, setCompletedStoryIds] = useState<string[]>(() => {
     const saved = localStorage.getItem('fluent_completed_stories');
@@ -77,6 +87,24 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   });
 
   const activeStory = stories.find(s => s.id === selectedStoryId) || stories[0];
+
+  const cleanupStoryRecording = () => {
+    if (storyMediaRecorderRef.current) {
+      try {
+        if (storyMediaRecorderRef.current.state === 'recording') {
+          storyMediaRecorderRef.current.stop();
+        }
+      } catch (e) {}
+      storyMediaRecorderRef.current = null;
+    }
+    if (storyMediaStreamRef.current) {
+      try {
+        storyMediaStreamRef.current.getTracks().forEach(t => t.stop());
+      } catch (e) {}
+      storyMediaStreamRef.current = null;
+    }
+    setIsRecording(false);
+  };
 
   useEffect(() => {
     // Réinitialiser les états lors du changement d'histoire
@@ -88,14 +116,35 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     stopChineseAudio();
     setIsPlayingAudio(false);
     setActiveSpeakerGender(null);
+
+    cleanupStoryRecording();
+    if (storyUserAudioPlayerRef.current) {
+      try {
+        storyUserAudioPlayerRef.current.pause();
+      } catch (e) {}
+      setIsPlayingStoryUserAudio(false);
+    }
+    if (storyRecordedAudioUrl) {
+      URL.revokeObjectURL(storyRecordedAudioUrl);
+      setStoryRecordedAudioUrl(null);
+    }
   }, [selectedStoryId]);
 
   // Nettoyage au démontage du composant
   useEffect(() => {
     return () => {
+      cleanupStoryRecording();
       stopChineseAudio();
+      if (storyRecordedAudioUrl) {
+        URL.revokeObjectURL(storyRecordedAudioUrl);
+      }
+      if (storyUserAudioPlayerRef.current) {
+        try {
+          storyUserAudioPlayerRef.current.pause();
+        } catch (e) {}
+      }
     };
-  }, []);
+  }, [storyRecordedAudioUrl]);
 
   // Lecture audio complète avec alternance intelligente des voix Homme / Femme
   const handlePlayFullAudio = async () => {
@@ -157,30 +206,86 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     setSelectedStoryId(newStory.id);
   };
 
-  // Enregistrement micro pour le défi d'expression
-  const handleToggleVoiceRecording = () => {
+  // Helper pour trouver un mimeType audio supporté par le navigateur
+  const getSupportedStoryMimeType = (): string => {
+    if (typeof MediaRecorder === 'undefined') return '';
+    const candidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/aac'];
+    for (const t of candidates) {
+      if (MediaRecorder.isTypeSupported(t)) return t;
+    }
+    return '';
+  };
+
+  // Enregistrement micro pour le défi d'expression (SpeechRecognition + MediaRecorder)
+  const handleToggleVoiceRecording = async () => {
     if (!isSpeechRecognitionSupported()) {
       alert("La reconnaissance vocale n'est pas supportée sur ce navigateur. Essaie sur Google Chrome ou Edge !");
       return;
     }
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (isRecording) {
+      cleanupStoryRecording();
+      return;
+    }
+
+    // Réinitialiser la lecture en cours et l'ancien blob audio
+    if (storyUserAudioPlayerRef.current) {
+      storyUserAudioPlayerRef.current.pause();
+      setIsPlayingStoryUserAudio(false);
+    }
+    if (storyRecordedAudioUrl) {
+      URL.revokeObjectURL(storyRecordedAudioUrl);
+      setStoryRecordedAudioUrl(null);
+    }
+
+    storyAudioChunksRef.current = [];
+
+    // 1. Démarrer MediaRecorder pour la réécoute vocale
+    try {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        storyMediaStreamRef.current = stream;
+
+        const mimeType = getSupportedStoryMimeType();
+        const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+
+        recorder.ondataavailable = (event: BlobEvent) => {
+          if (event.data && event.data.size > 0) {
+            storyAudioChunksRef.current.push(event.data);
+          }
+        };
+
+        recorder.onstop = () => {
+          if (storyAudioChunksRef.current.length > 0) {
+            const blobType = recorder.mimeType || 'audio/webm';
+            const audioBlob = new Blob(storyAudioChunksRef.current, { type: blobType });
+            if (audioBlob.size > 0) {
+              const url = URL.createObjectURL(audioBlob);
+              setStoryRecordedAudioUrl(url);
+            }
+          }
+        };
+
+        storyMediaRecorderRef.current = recorder;
+        recorder.start(100);
+      }
+    } catch (err) {
+      console.warn("Capture MediaRecorder non disponible dans StoryReaderView:", err);
+    }
+
+    // 2. Démarrer SpeechRecognition
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.lang = 'zh-CN';
     recognition.continuous = false;
     recognition.interimResults = false;
-
-    if (isRecording) {
-      setIsRecording(false);
-      return;
-    }
 
     setIsRecording(true);
 
     recognition.onresult = (event: any) => {
       const spokenText = event.results[0][0].transcript;
       setWrittenResponse(spokenText);
-      setIsRecording(false);
+      cleanupStoryRecording();
 
       // Évaluer si la phrase contient l'un des mots suggérés
       const targetList = activeStory.discussionPrompt.suggestedWords || [];
@@ -192,14 +297,36 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     };
 
     recognition.onerror = () => {
-      setIsRecording(false);
+      cleanupStoryRecording();
     };
 
     recognition.onend = () => {
-      setIsRecording(false);
+      cleanupStoryRecording();
     };
 
     recognition.start();
+  };
+
+  // Jouer ou mettre en pause l'audio enregistré de l'utilisateur
+  const handleTogglePlayStoryUserAudio = () => {
+    if (!storyRecordedAudioUrl) return;
+
+    if (isPlayingStoryUserAudio) {
+      if (storyUserAudioPlayerRef.current) {
+        storyUserAudioPlayerRef.current.pause();
+        storyUserAudioPlayerRef.current.currentTime = 0;
+      }
+      setIsPlayingStoryUserAudio(false);
+      return;
+    }
+
+    const audio = new Audio(storyRecordedAudioUrl);
+    storyUserAudioPlayerRef.current = audio;
+    setIsPlayingStoryUserAudio(true);
+
+    audio.onended = () => setIsPlayingStoryUserAudio(false);
+    audio.onerror = () => setIsPlayingStoryUserAudio(false);
+    audio.play().catch(() => setIsPlayingStoryUserAudio(false));
   };
 
   // Vérifier si un mot dans le dictionnaire fait partie des cartes Anki de l'utilisateur
@@ -640,6 +767,33 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                 <Mic className="w-4 h-4" />
               </button>
             </div>
+
+            {storyRecordedAudioUrl && (
+              <div className="flex flex-wrap items-center gap-2 p-2.5 rounded-xl bg-white border border-stone-200 shadow-2xs animate-fadeIn">
+                <button
+                  onClick={handleTogglePlayStoryUserAudio}
+                  className={`px-3 py-1.5 rounded-lg border-2 border-stone-900 font-black text-xs flex items-center space-x-1.5 transition-all shadow-xs ${
+                    isPlayingStoryUserAudio
+                      ? 'bg-[#c23b22] text-white'
+                      : 'bg-white hover:bg-stone-100 text-stone-900'
+                  }`}
+                >
+                  {isPlayingStoryUserAudio ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-[#c23b22] fill-[#c23b22]" />}
+                  <span>{isPlayingStoryUserAudio ? 'Pause' : 'Écouter ma Réponse'}</span>
+                </button>
+
+                {writtenResponse && (
+                  <button
+                    onClick={() => playChineseAudio(writtenResponse, 1.0)}
+                    className="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs flex items-center space-x-1.5 border border-stone-300 transition-colors"
+                    title="Écouter le modèle natif pour comparer ta prononciation"
+                  >
+                    <Volume2 className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Modèle Natif</span>
+                  </button>
+                )}
+              </div>
+            )}
 
             {speechEvaluation && (
               <div className="p-3 rounded-xl bg-white border border-stone-200 text-xs space-y-1">
