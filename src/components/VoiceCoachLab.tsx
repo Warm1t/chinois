@@ -12,6 +12,7 @@ import {
   getVoiceGenderPreference,
   VoiceGenderPreference
 } from '../utils/speechUtils';
+import { analyzePronunciationWithAi, AiPronunciationFeedback } from '../utils/aiPronunciationCoach';
 import { VoiceSelector } from './VoiceSelector';
 import { VoiceEvaluationResult } from '../types/fluent';
 import { 
@@ -64,6 +65,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   const [isRecording, setIsRecording] = useState(false);
   const [liveTranscript, setLiveTranscript] = useState('');
   const [evaluation, setEvaluation] = useState<VoiceEvaluationResult | null>(null);
+  const [aiFeedback, setAiFeedback] = useState<AiPronunciationFeedback | null>(null);
 
   // Auto-écoute (MediaRecorder)
   const [recordedAudioUrl, setRecordedAudioUrl] = useState<string | null>(null);
@@ -282,12 +284,13 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     recognition.start();
   };
 
-  // Évaluation de la prononciation
+  // Évaluation de la prononciation avec le moteur IA d'alignement phonétique
   const finalizeRecording = () => {
     const spoken = accumulatedTranscriptRef.current || liveTranscript;
     cleanupRecording();
 
     if (!spoken.trim()) {
+      setAiFeedback(null);
       setEvaluation({
         spokenText: '',
         accuracyScore: 0,
@@ -298,24 +301,41 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
       return;
     }
 
-    const evalResult = evaluatePronunciation(spoken, currentPhrase.hanzi);
+    // Analyse IA de la prononciation (Needleman-Wunsch + détection des tons & confusions)
+    const feedback = analyzePronunciationWithAi(spoken, currentPhrase.hanzi);
+    setAiFeedback(feedback);
+
+    const evalResult: VoiceEvaluationResult = {
+      spokenText: feedback.spokenText,
+      accuracyScore: feedback.accuracyScore,
+      matchedCharacters: feedback.characterBreakdown
+        .filter(b => b.targetChar || b.spokenChar)
+        .map(b => ({
+          char: b.targetChar || b.spokenChar || '',
+          status: b.status === 'exact' ? 'correct' : 'incorrect',
+        })),
+      feedbackMessage: feedback.aiDiagnosis,
+      isPerfect: feedback.isPassed,
+    };
     setEvaluation(evalResult);
 
-    // Enregistrer le meilleur score pour cette phrase
-    const currentBest = phraseScores[currentPhrase.id] || 0;
-    if (evalResult.accuracyScore > currentBest) {
-      const updatedScores = {
-        ...phraseScores,
-        [currentPhrase.id]: evalResult.accuracyScore
-      };
-      setPhraseScores(updatedScores);
-      try {
-        localStorage.setItem('fluent_voice_lab_scores', JSON.stringify(updatedScores));
-      } catch {}
-    }
+    // Enregistrer la réussite uniquement si le test IA est validé sans complaisance
+    if (feedback.isPassed) {
+      const currentBest = phraseScores[currentPhrase.id] || 0;
+      if (feedback.accuracyScore > currentBest) {
+        const updatedScores = {
+          ...phraseScores,
+          [currentPhrase.id]: feedback.accuracyScore
+        };
+        setPhraseScores(updatedScores);
+        try {
+          localStorage.setItem('fluent_voice_lab_scores', JSON.stringify(updatedScores));
+        } catch {}
+      }
 
-    if (onPracticeCompleted) {
-      onPracticeCompleted(currentPhrase.id, evalResult.accuracyScore);
+      if (onPracticeCompleted) {
+        onPracticeCompleted(currentPhrase.id, feedback.accuracyScore);
+      }
     }
   };
 
@@ -899,80 +919,155 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
         </div>
 
-        {/* 7. ANALYSE ET CORRECTION CARACTÈRE PAR CARACTÈRE */}
-        {evaluation && (
+        {/* 7. DIAGNOSTIC IA & CORRECTION PHONÉTIQUE INTELLIGENTE */}
+        {(aiFeedback || evaluation) && (
           <div className="mt-4 pt-4 border-t border-stone-200 space-y-4 animate-fadeIn">
             
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl bg-stone-50 border border-stone-200 gap-3">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">
-                  Résultat de ton élocution :
-                </span>
-                <p className="text-sm font-semibold text-stone-900 mt-0.5">
-                  {evaluation.feedbackMessage}
-                </p>
-                {evaluation.spokenText && (
-                  <p className="text-xs text-stone-500 mt-1 font-mono">
-                    Prononcé : « {evaluation.spokenText} »
+            {/* Carte Diagnostic Coach IA */}
+            <div className={`p-5 rounded-3xl border-2 transition-all space-y-3 ${
+              (aiFeedback?.isPassed ?? evaluation!.accuracyScore >= 80)
+                ? 'bg-emerald-50/70 border-emerald-400 text-emerald-950'
+                : (evaluation!.accuracyScore >= 50)
+                ? 'bg-amber-50/70 border-amber-300 text-amber-950'
+                : 'bg-rose-50/70 border-rose-300 text-rose-950'
+            }`}>
+              
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200/60 pb-3">
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="p-1 rounded-lg bg-stone-900 text-white text-[10px] font-bold font-mono uppercase">
+                      🤖 Diagnostic IA
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-wider">
+                      {aiFeedback?.summaryTitle || "Analyse de la prononciation"}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-medium leading-relaxed">
+                    {aiFeedback?.aiDiagnosis || evaluation!.feedbackMessage}
                   </p>
-                )}
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <div className="text-right">
-                  <span className="text-2xl sm:text-3xl font-black text-[#c23b22]">
-                    {evaluation.accuracyScore}%
-                  </span>
-                  <span className="text-[10px] text-stone-500 block">Précision</span>
                 </div>
 
-                <button
-                  onClick={startRecording}
-                  className="p-2.5 rounded-xl bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors shadow-xs"
-                  title="Réessayer immédiatement"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                </button>
+                <div className="flex items-center space-x-3 shrink-0 self-end sm:self-auto">
+                  <div className="text-right">
+                    <span className={`text-2xl sm:text-3xl font-black ${
+                      (aiFeedback?.isPassed ?? evaluation!.accuracyScore >= 80)
+                        ? 'text-emerald-700'
+                        : (evaluation!.accuracyScore >= 50)
+                        ? 'text-amber-700'
+                        : 'text-rose-700'
+                    }`}>
+                      {evaluation!.accuracyScore}%
+                    </span>
+                    <span className="text-[10px] text-stone-500 block font-bold uppercase">
+                      {(aiFeedback?.isPassed ?? evaluation!.accuracyScore >= 80) ? 'Validé ✓' : 'Précision'}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={startRecording}
+                    className="p-2.5 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 transition-colors shadow-2xs"
+                    title="Réessayer immédiatement"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
+
+              {/* Conseil ciblé du Coach IA */}
+              {aiFeedback?.actionableTip && (
+                <div className="flex items-start space-x-2 text-xs font-medium bg-white/80 p-3 rounded-2xl border border-stone-200/80">
+                  <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-stone-900 block font-bold">Conseil du Coach IA pour progresser :</strong>
+                    <span className="text-stone-700">{aiFeedback.actionableTip}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Comparatif Cible vs Capté */}
+              {evaluation?.spokenText && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+                  <div className="p-2.5 rounded-xl bg-white/70 border border-stone-200/70">
+                    <span className="text-[10px] text-stone-400 block font-bold uppercase">Phrase Cible Attendue :</span>
+                    <strong className="text-stone-900 font-serif chinese-text text-sm">{currentPhrase.hanzi}</strong>
+                    <span className="text-stone-500 font-mono text-[11px] ml-1.5">({currentPhrase.pinyin})</span>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-white/70 border border-stone-200/70">
+                    <span className="text-[10px] text-stone-400 block font-bold uppercase">Capté par le micro :</span>
+                    <strong className="text-stone-900 font-serif chinese-text text-sm">« {evaluation.spokenText} »</strong>
+                  </div>
+                </div>
+              )}
+
             </div>
 
-            {/* Badges de décomposition des caractères */}
+            {/* Décomposition Phonétique Détaillée */}
             <div className="space-y-2">
-              <span className="text-xs font-semibold text-stone-600 flex items-center space-x-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Correction phonétique (Vert = bien prononcé / Rouge = à clarifier) :</span>
-              </span>
+              <div className="flex items-center justify-between text-xs font-semibold text-stone-600">
+                <span className="flex items-center space-x-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Alignement phonétique caractère par caractère :</span>
+                </span>
+                <span className="text-[11px] text-stone-400">
+                  Vert = Exact • Orange = Confusion de ton • Rouge = Omis
+                </span>
+              </div>
 
-              <div className="flex flex-wrap gap-1.5 p-3 rounded-2xl bg-stone-50 border border-stone-200">
-                {evaluation.matchedCharacters.map((mc, idx) => (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                {(aiFeedback?.characterBreakdown || evaluation!.matchedCharacters.map(m => ({
+                  targetChar: m.char,
+                  status: m.status === 'correct' ? ('exact' as const) : ('substituted' as const),
+                  explanation: undefined as string | undefined,
+                }))).map((charItem, idx) => (
                   <div
                     key={idx}
-                    className={`w-9 h-11 rounded-xl flex flex-col items-center justify-center font-bold chinese-text text-base border transition-all ${
-                      mc.status === 'correct'
-                        ? 'bg-emerald-50 text-emerald-800 border-emerald-300 shadow-2xs'
-                        : 'bg-rose-50 text-rose-800 border-rose-300'
+                    className={`p-2.5 rounded-2xl border text-xs flex flex-col justify-between transition-all ${
+                      charItem.status === 'exact'
+                        ? 'bg-emerald-50 text-emerald-950 border-emerald-300'
+                        : charItem.status === 'substituted'
+                        ? 'bg-amber-50 text-amber-950 border-amber-300 shadow-2xs'
+                        : charItem.status === 'omitted'
+                        ? 'bg-rose-50 text-rose-950 border-rose-300'
+                        : 'bg-stone-50 text-stone-600 border-stone-200'
                     }`}
                   >
-                    <span>{mc.char}</span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-black font-serif chinese-text">
+                        {charItem.targetChar || '—'}
+                      </span>
+                      <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-md font-mono">
+                        {charItem.status === 'exact' && '✓ Exact'}
+                        {charItem.status === 'substituted' && '⚠️ Confondu'}
+                        {charItem.status === 'omitted' && '❌ Omis'}
+                        {charItem.status === 'extra' && '+ Ajout'}
+                      </span>
+                    </div>
+
+                    {'explanation' in charItem && charItem.explanation && (
+                      <p className="text-[10px] mt-1 text-stone-600 leading-tight">
+                        {charItem.explanation}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Célébration si score >= 80% */}
-            {evaluation.accuracyScore >= 80 && (
-              <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-400 text-emerald-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fadeIn">
+            {/* Célébration si score >= 80% ET validé par l'IA */}
+            {(aiFeedback?.isPassed ?? evaluation!.accuracyScore >= 80) && (
+              <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-400 text-emerald-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fadeIn shadow-xs">
                 <div className="flex items-center space-x-2.5">
                   <Award className="w-6 h-6 text-emerald-600 shrink-0" />
                   <div>
-                    <strong className="text-sm font-black block font-serif">太棒了 ! Phrase Validée !</strong>
-                    <span className="text-xs text-emerald-800">Rythme et sons authentiques, tu te ferais parfaitement comprendre.</span>
+                    <strong className="text-sm font-black block font-serif">太棒了 ! Phrase Validée sans Complaisance !</strong>
+                    <span className="text-xs text-emerald-800">Rythme, articulation et tons conformes au mandarin authentique.</span>
                   </div>
                 </div>
 
                 <button
                   onClick={nextPhrase}
-                  className="px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-black text-xs shadow-md transition-all flex items-center justify-center space-x-1.5 shrink-0"
+                  className="px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-black text-xs shadow-md transition-all flex items-center justify-center space-x-1.5 shrink-0 hover:translate-x-0.5"
                 >
                   <span>Phrase suivante</span>
                   <ChevronRight className="w-4 h-4" />

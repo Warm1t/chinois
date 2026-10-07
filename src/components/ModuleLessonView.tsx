@@ -1018,27 +1018,48 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           {/* Évaluation */}
           {evaluation && (
             <div className="mt-4 pt-4 border-t border-stone-200 space-y-4 animate-fadeIn">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl bg-stone-50 border border-stone-200 gap-3">
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">
-                    Résultat de ton élocution :
-                  </span>
-                  <p className="text-sm font-semibold text-stone-900 mt-0.5">
-                    {evaluation.feedbackMessage}
+              <div className={`p-4 rounded-2xl border-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                evaluation.accuracyScore >= 80 
+                  ? 'bg-emerald-50/70 border-emerald-300 text-emerald-950' 
+                  : 'bg-amber-50/60 border-amber-300 text-stone-900'
+              }`}>
+                <div className="space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-stone-900 text-white font-mono">
+                      🤖 Diagnostic IA
+                    </span>
+                    <span className="text-xs font-bold text-stone-700">
+                      {evaluation.aiFeedback?.summaryTitle || (evaluation.accuracyScore >= 80 ? 'Prononciation Conforme' : 'Ajustement Requis')}
+                    </span>
+                  </div>
+
+                  <p className="text-xs sm:text-sm font-semibold text-stone-800 leading-snug">
+                    {evaluation.aiFeedback?.aiDiagnosis || evaluation.feedbackMessage}
                   </p>
+
+                  {evaluation.aiFeedback?.actionableTip && (
+                    <p className="text-xs text-amber-900 bg-amber-100/70 px-2.5 py-1 rounded-lg font-medium inline-block">
+                      💡 <strong>Conseil :</strong> {evaluation.aiFeedback.actionableTip}
+                    </p>
+                  )}
+
                   {evaluation.spokenText && (
-                    <p className="text-xs text-stone-500 mt-1 font-mono">
-                      Prononcé : « {evaluation.spokenText} »
+                    <p className="text-xs text-stone-500 font-mono">
+                      Capté par le micro : « {evaluation.spokenText} »
                     </p>
                   )}
                 </div>
 
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 shrink-0">
                   <div className="text-right">
-                    <span className="text-2xl sm:text-3xl font-black text-[#c23b22]">
+                    <span className={`text-2xl sm:text-3xl font-black ${
+                      evaluation.accuracyScore >= 80 ? 'text-emerald-700' : 'text-[#c23b22]'
+                    }`}>
                       {evaluation.accuracyScore}%
                     </span>
-                    <span className="text-[10px] text-stone-500 block">Précision</span>
+                    <span className="text-[10px] text-stone-500 block font-bold">
+                      {evaluation.accuracyScore >= 80 ? 'Objectif Validé' : 'Seuil : ≥80%'}
+                    </span>
                   </div>
 
                   <button
@@ -1051,17 +1072,28 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-1.5 p-3 rounded-2xl bg-stone-50 border border-stone-200">
-                {evaluation.matchedCharacters.map((mc, idx) => (
+              {/* Alignement des caractères */}
+              <div className="flex flex-wrap gap-2 p-3 rounded-2xl bg-stone-50 border border-stone-200">
+                {(evaluation.aiFeedback?.characterBreakdown || evaluation.matchedCharacters.map((mc: any) => ({
+                  targetChar: mc.char,
+                  status: mc.status === 'correct' ? 'exact' : 'substituted'
+                }))).map((charItem: any, idx: number) => (
                   <div
                     key={idx}
-                    className={`w-9 h-11 rounded-xl flex flex-col items-center justify-center font-bold chinese-text text-base border transition-all ${
-                      mc.status === 'correct'
-                        ? 'bg-emerald-50 text-emerald-800 border-emerald-300 shadow-2xs'
-                        : 'bg-rose-50 text-rose-800 border-rose-300'
+                    className={`px-3 py-1.5 rounded-xl flex items-center space-x-1.5 border font-mono text-xs transition-all ${
+                      charItem.status === 'exact'
+                        ? 'bg-emerald-100/70 text-emerald-900 border-emerald-300 font-bold'
+                        : charItem.status === 'substituted'
+                        ? 'bg-amber-100/70 text-amber-900 border-amber-300 font-bold'
+                        : charItem.status === 'omitted'
+                        ? 'bg-rose-100 text-rose-900 border-rose-300'
+                        : 'bg-stone-100 text-stone-700 border-stone-300'
                     }`}
                   >
-                    <span>{mc.char}</span>
+                    <span className="chinese-text font-serif text-sm font-black">{charItem.targetChar || '—'}</span>
+                    <span className="text-[10px]">
+                      {charItem.status === 'exact' ? '✓' : charItem.status === 'substituted' ? '⚠️' : '❌'}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -1123,3 +1155,4 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
     </div>
   );
 };
+

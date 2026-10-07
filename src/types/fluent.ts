@@ -82,6 +82,7 @@ export interface VoiceEvaluationResult {
   matchedCharacters: MatchedChar[];
   feedbackMessage: string;
   isPerfect: boolean;
+  aiFeedback?: any;
 }
 
 export type AnchoringStage = 'decouvert' | 'assimilation' | 'ancre';

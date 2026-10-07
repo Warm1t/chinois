@@ -1,6 +1,9 @@
 import { VoiceEvaluationResult, MatchedChar } from '../types/fluent';
+import { playEdgeTtsAudio, stopEdgeAudio } from './edgeTtsPlayer';
+import { analyzePronunciationWithAi, AiPronunciationFeedback } from './aiPronunciationCoach';
 
-// Déclaration pour TypeScript du SpeechRecognition du navigateur
+export { analyzePronunciationWithAi };
+export type { AiPronunciationFeedback };
 declare global {
   interface Window {
     SpeechRecognition: any;
@@ -360,6 +363,19 @@ export const playChineseAudio = async (
       genderToUse = pref;
     }
 
+    // 1. VOIX NEURALES MICROSOFT HD : Yunxi (Homme) et Xiaoxiao (Femme)
+    // Voix natives studio de très haute fidélité avec intonations réalistes, évitant les voix robotiques locales
+    try {
+      const neuralVoice = genderToUse === 'male' ? 'zh-CN-YunxiNeural' : 'zh-CN-XiaoxiaoNeural';
+      const edgeSuccess = await playEdgeTtsAudio(cleanText, neuralVoice, rate);
+      if (edgeSuccess) {
+        resolve();
+        return;
+      }
+    } catch (err) {
+      console.warn("Repli Edge TTS sur synthèse vocale locale :", err);
+    }
+
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = 'zh-CN'; // Force standard Mandarin language tag
 
@@ -374,10 +390,9 @@ export const playChineseAudio = async (
     } else {
       if (bank.maleVoices.length > 0) {
         voiceToUse = bank.maleVoices[0];
-        pitch = 1.0; // Voix masculine native (Yunxi, Yunjian, Liang) : pitch naturel sans aucune distorsion
+        pitch = 1.0; // Voix masculine native
         playbackRate = rate;
       } else {
-        // Repli élégant : léger abaissement non déformant (jamais d'effet robot métallique)
         voiceToUse = bank.femaleVoices[0];
         pitch = 0.95;
         playbackRate = rate;
@@ -388,8 +403,6 @@ export const playChineseAudio = async (
     if (voiceToUse && isVoiceChinese(voiceToUse)) {
       utterance.voice = voiceToUse;
     }
-    // Si aucune voix dans la liste ne correspond, utterance.voice reste undefined
-    // et le navigateur utilise son moteur natif zh-CN au lieu d'une voix japonaise/autre!
 
     utterance.pitch = pitch;
     utterance.rate = playbackRate;
@@ -405,6 +418,7 @@ export const playChineseAudio = async (
  * Arrêter immédiatement la synthèse vocale en cours
  */
 export const stopChineseAudio = (): void => {
+  stopEdgeAudio();
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
     window.speechSynthesis.cancel();
   }
@@ -505,70 +519,22 @@ export const isSpeechRecognitionSupported = (): boolean => {
   return typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window);
 };
 
-/**
- * 3. Algorithme d'alignement et de correction vocale caractère par caractère
- */
 export const evaluatePronunciation = (spokenRaw: string, targetRaw: string): VoiceEvaluationResult => {
-  // Nettoyage : retirer espaces et ponctuation
-  const cleanTarget = targetRaw.replace(/[^\u4e00-\u9fa5]/g, '');
-  const cleanSpoken = spokenRaw.replace(/[^\u4e00-\u9fa5]/g, '');
+  const aiResult = analyzePronunciationWithAi(spokenRaw, targetRaw);
 
-  if (!cleanSpoken) {
-    return {
-      spokenText: '',
-      accuracyScore: 0,
-      matchedCharacters: cleanTarget.split('').map(char => ({ char, status: 'missing' })),
-      feedbackMessage: "Aucun son chinois détecté. Parle bien en face de ton micro en articulant.",
-      isPerfect: false,
-    };
-  }
-
-  const matchedCharacters: MatchedChar[] = [];
-  let correctCount = 0;
-  const spokenChars = cleanSpoken.split('');
-  const targetChars = cleanTarget.split('');
-
-  // Comparaison par alignement
-  for (let i = 0; i < targetChars.length; i++) {
-    const targetChar = targetChars[i];
-    
-    // Exact match à la même position
-    if (spokenChars[i] === targetChar) {
-      matchedCharacters.push({ char: targetChar, status: 'correct' });
-      correctCount++;
-    } 
-    // Présent dans la phrase prononcée à proximité
-    else if (spokenChars.includes(targetChar)) {
-      matchedCharacters.push({ char: targetChar, status: 'correct' });
-      correctCount++;
-    } 
-    // Caractère manqué ou mal prononcé
-    else {
-      matchedCharacters.push({ char: targetChar, status: 'incorrect' });
-    }
-  }
-
-  // Calcul du score en pourcentage
-  const rawScore = Math.round((correctCount / targetChars.length) * 100);
-  const accuracyScore = Math.min(100, Math.max(0, rawScore));
-  const isPerfect = accuracyScore >= 95;
-
-  let feedbackMessage = "";
-  if (isPerfect) {
-    feedbackMessage = "太棒了 ! Prononciation et rythme parfaits, phrase 100% naturelle !";
-  } else if (accuracyScore >= 75) {
-    feedbackMessage = "Très bon essai ! Presque parfait, fais attention aux caractères surlignés en rouge.";
-  } else if (accuracyScore >= 50) {
-    feedbackMessage = "Compréhensible, mais certains sons ou tons ont été escamotés. Écoute la voix ralentie et réessaie !";
-  } else {
-    feedbackMessage = "La reconnaissance a eu du mal à capter tes sons. Réécoute attentivement à 0.8x et insiste sur les consonnes et les tons.";
-  }
+  const matchedCharacters: MatchedChar[] = aiResult.characterBreakdown
+    .filter(b => b.targetChar || b.spokenChar)
+    .map(b => ({
+      char: b.targetChar || b.spokenChar || '',
+      status: b.status === 'exact' ? 'correct' : 'incorrect',
+    }));
 
   return {
-    spokenText: cleanSpoken,
-    accuracyScore,
+    spokenText: aiResult.spokenText,
+    accuracyScore: aiResult.accuracyScore,
     matchedCharacters,
-    feedbackMessage,
-    isPerfect,
+    feedbackMessage: `${aiResult.summaryTitle} — ${aiResult.aiDiagnosis} (${aiResult.actionableTip})`,
+    isPerfect: aiResult.isPassed,
+    aiFeedback: aiResult,
   };
 };
