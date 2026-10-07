@@ -943,6 +943,8 @@ export const generateAppleCalendarIcsForStories = (
   const now = new Date();
   const nowStr = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
+  const batchUid = Math.random().toString(36).substring(2, 7);
+
   const lines: string[] = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -972,7 +974,7 @@ export const generateAppleCalendarIcsForStories = (
     const descriptionText = formatStoryCalendarDescription(storyForDay);
 
     lines.push('BEGIN:VEVENT');
-    lines.push(`UID:fluent-daily-story-${dateYmd}@fluent.apple`);
+    lines.push(`UID:fluent-daily-story-${dateYmd}-${batchUid}@fluent.apple`);
     lines.push(`DTSTAMP:${nowStr}`);
     lines.push('CATEGORIES:Fluent');
 
@@ -991,11 +993,8 @@ export const generateAppleCalendarIcsForStories = (
       lines.push(`DESCRIPTION:📚 ${storyForDay.title} (${storyForDay.titlePinyin})`);
       lines.push('END:VALARM');
     } else {
-      const endHourInt = (parseInt(hours, 10) + 1) % 24;
-      const endHourStr = String(endHourInt).padStart(2, '0');
-
       lines.push(`DTSTART:${dateYmd}T${hours}${minutes}00`);
-      lines.push(`DTEND:${dateYmd}T${endHourStr}${minutes}00`);
+      lines.push(`DTEND:${dateYmd}T235900`);
       lines.push(`SUMMARY:${storyForDay.title} (${storyForDay.titlePinyin})`);
       lines.push(`DESCRIPTION:${descriptionText}`);
       lines.push('LOCATION:Fluent (https://warm1t.github.io/chinois/)');

@@ -58,6 +58,7 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
     let icsContent = '';
     let fileName = '';
     const daysCount = 60; // 60 jours quotidiens continus
+    const fileId = Date.now().toString().slice(-4);
 
     if (packType === 'combo') {
       icsContent = generateAppleCalendarIcsCombined({
@@ -66,19 +67,19 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
         daysCount,
         mode: calendarMode,
       });
-      fileName = 'fluent-quotidien-combo.ics';
+      fileName = `fluent-combo-${fileId}.ics`;
     } else if (packType === 'hanzi') {
       icsContent = generateAppleCalendarIcsForHanzi(todayHanzi, morningTime, {
         daysCount,
         mode: calendarMode,
       });
-      fileName = 'fluent-hanzi-quotidien.ics';
+      fileName = `fluent-hanzi-${fileId}.ics`;
     } else {
       icsContent = generateAppleCalendarIcsForStories(eveningTime, {
         daysCount,
         mode: calendarMode,
       });
-      fileName = 'fluent-histoires-quotidien.ics';
+      fileName = `fluent-histoire-${fileId}.ics`;
     }
 
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
@@ -480,6 +481,16 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* AVERTISSEMENT CRUCIAL IPHONE */}
+            <div className="p-3.5 rounded-2xl bg-amber-500/10 border-2 border-amber-500/40 text-xs space-y-1.5">
+              <strong className="text-amber-900 dark:text-amber-200 flex items-center space-x-1.5 font-bold">
+                <span>⚠️ Pour que ça n'aille PAS dans Travail :</span>
+              </strong>
+              <p className="text-[11px] text-stone-700 dark:text-stone-300 leading-relaxed">
+                Quand Safari ouvre le fichier sur ton iPhone, <strong>avant d'appuyer sur « Tout ajouter »</strong>, regarde la ligne <em>« Calendrier : ... »</em> juste au-dessus et touche-la pour sélectionner <strong>Fluent</strong>. Sinon, ton iPhone l'enregistre dans ton calendrier pro Travail par défaut !
+              </p>
             </div>
 
             {/* Bouton d'action .ics */}

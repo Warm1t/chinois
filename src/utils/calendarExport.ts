@@ -25,6 +25,7 @@ export const generateAppleCalendarIcsCombined = (options: ComboCalendarOptions =
 
   const now = new Date();
   const nowStr = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  const batchUid = Math.random().toString(36).substring(2, 7);
 
   const lines: string[] = [
     'BEGIN:VCALENDAR',
@@ -68,7 +69,7 @@ export const generateAppleCalendarIcsCombined = (options: ComboCalendarOptions =
     ].join('\\n');
 
     lines.push('BEGIN:VEVENT');
-    lines.push(`UID:fluent-combo-hanzi-${dateYmd}@fluent.apple`);
+    lines.push(`UID:fluent-combo-hanzi-${dateYmd}-${batchUid}@fluent.apple`);
     lines.push(`DTSTAMP:${nowStr}`);
     lines.push('CATEGORIES:Fluent');
 
@@ -87,11 +88,9 @@ export const generateAppleCalendarIcsCombined = (options: ComboCalendarOptions =
       lines.push(`DESCRIPTION:🏮 ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
       lines.push('END:VALARM');
     } else {
-      const endMHourInt = (parseInt(mHours, 10) + 1) % 24;
-      const endMHourStr = String(endMHourInt).padStart(2, '0');
-
+      // Le mot du matin reste actif sur le widget jusqu'au soir (ne disparaît pas au bout d'une heure !)
       lines.push(`DTSTART:${dateYmd}T${mHours}${mMinutes}00`);
-      lines.push(`DTEND:${dateYmd}T${endMHourStr}${mMinutes}00`);
+      lines.push(`DTEND:${dateYmd}T${eHours}${eMinutes}00`);
       lines.push(`SUMMARY:${hanziForDay.character} (${hanziForDay.pinyin})`);
       lines.push(`DESCRIPTION:${hanziDescription}`);
       lines.push('LOCATION:Fluent (https://warm1t.github.io/chinois/)');
@@ -113,7 +112,7 @@ export const generateAppleCalendarIcsCombined = (options: ComboCalendarOptions =
     const storyDescription = formatStoryCalendarDescription(storyForDay);
 
     lines.push('BEGIN:VEVENT');
-    lines.push(`UID:fluent-combo-story-${dateYmd}@fluent.apple`);
+    lines.push(`UID:fluent-combo-story-${dateYmd}-${batchUid}@fluent.apple`);
     lines.push(`DTSTAMP:${nowStr}`);
     lines.push('CATEGORIES:Fluent');
 
@@ -132,11 +131,9 @@ export const generateAppleCalendarIcsCombined = (options: ComboCalendarOptions =
       lines.push(`DESCRIPTION:📚 ${storyForDay.title} (${storyForDay.titlePinyin})`);
       lines.push('END:VALARM');
     } else {
-      const endEHourInt = (parseInt(eHours, 10) + 1) % 24;
-      const endEHourStr = String(endEHourInt).padStart(2, '0');
-
+      // L'histoire du soir prend le relais sur le widget jusqu'à la fin de soirée
       lines.push(`DTSTART:${dateYmd}T${eHours}${eMinutes}00`);
-      lines.push(`DTEND:${dateYmd}T${endEHourStr}${eMinutes}00`);
+      lines.push(`DTEND:${dateYmd}T235900`);
       lines.push(`SUMMARY:${storyForDay.title} (${storyForDay.titlePinyin})`);
       lines.push(`DESCRIPTION:${storyDescription}`);
       lines.push('LOCATION:Fluent (https://warm1t.github.io/chinois/)');

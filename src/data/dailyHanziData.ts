@@ -350,6 +350,8 @@ export const generateAppleCalendarIcsForHanzi = (
   const now = new Date();
   const nowStr = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
+  const batchUid = Math.random().toString(36).substring(2, 7);
+
   const lines: string[] = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -391,7 +393,7 @@ export const generateAppleCalendarIcsForHanzi = (
     ].join('\\n');
 
     lines.push('BEGIN:VEVENT');
-    lines.push(`UID:fluent-daily-hanzi-${dateYmd}@fluent.apple`);
+    lines.push(`UID:fluent-daily-hanzi-${dateYmd}-${batchUid}@fluent.apple`);
     lines.push(`DTSTAMP:${nowStr}`);
     lines.push('CATEGORIES:Fluent');
 
@@ -412,12 +414,9 @@ export const generateAppleCalendarIcsForHanzi = (
       lines.push(`DESCRIPTION:🏮 ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
       lines.push('END:VALARM');
     } else {
-      // Mode Créneau horaire (ex: 08:30 - 09:30) : affiche uniquement le caractère et son pinyin
-      const endHourInt = (parseInt(hours, 10) + 1) % 24;
-      const endHourStr = String(endHourInt).padStart(2, '0');
-
+      // Reste affiché sur le widget jusqu'à 22h00
       lines.push(`DTSTART:${dateYmd}T${hours}${minutes}00`);
-      lines.push(`DTEND:${dateYmd}T${endHourStr}${minutes}00`);
+      lines.push(`DTEND:${dateYmd}T220000`);
       lines.push(`SUMMARY:${hanziForDay.character} (${hanziForDay.pinyin})`);
       lines.push(`DESCRIPTION:${descriptionText}`);
       lines.push('LOCATION:Fluent (https://warm1t.github.io/chinois/)');
