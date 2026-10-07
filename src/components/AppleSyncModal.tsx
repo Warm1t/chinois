@@ -28,7 +28,7 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
   onClose,
   todayHanzi
 }) => {
-  const [calendarMode, setCalendarMode] = useState<'all_day' | 'timed'>('all_day');
+  const [calendarMode, setCalendarMode] = useState<'timed' | 'all_day'>('timed');
   const [reminderTime, setReminderTime] = useState<string>('08:30');
   const [copiedShortcut, setCopiedShortcut] = useState(false);
   const [downloadedIcs, setDownloadedIcs] = useState(false);
@@ -87,7 +87,7 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
               </h2>
             </div>
             <p className="text-xs text-stone-500 dark:text-stone-400 font-medium">
-              Reçois un caractère différent chaque matin sur ton widget iOS et ton calendrier.
+              Affiche le caractère et son pinyin sur ton widget, avec explications complètes au clic.
             </p>
           </div>
         </div>
@@ -138,10 +138,10 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
             <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs text-blue-950 dark:text-blue-200 space-y-2">
               <div className="flex items-center space-x-1.5 font-bold text-blue-900 dark:text-blue-100">
                 <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-                <span>60 Jours Inclus • Un Caractère Différent Chaque Matin</span>
+                <span>60 Jours Inclus • Affichage Minimaliste sur le Widget</span>
               </div>
               <p className="leading-relaxed">
-                Ce calendrier génère automatiquement les <strong>60 prochains jours</strong> d'étude. Chaque matin, le calendrier et le widget afficheront un nouveau sinogramme avec sa clé, son pinyin et ses mots composés.
+                Le widget affichera uniquement <strong>le caractère et son pinyin</strong> (ex: <code>悟 (wù)</code>). En touchant le widget sur ton iPhone, l'événement s'ouvrira avec tous les détails (sens, clé, mnémonique, mots composés).
               </p>
             </div>
 
@@ -153,24 +153,6 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 <button
                   type="button"
-                  onClick={() => setCalendarMode('all_day')}
-                  className={`p-3 rounded-2xl border text-left transition-all ${
-                    calendarMode === 'all_day'
-                      ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-400 text-amber-950 dark:text-amber-100 font-bold shadow-2xs'
-                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-stone-400'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span>🌟 Mode Widget Toute la Journée</span>
-                    {calendarMode === 'all_day' && <Check className="w-3.5 h-3.5 text-amber-600" />}
-                  </div>
-                  <p className="text-[11px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
-                    Recommandé : reste visible en continu sur l'écran verrouillé et l'écran d'accueil du matin au soir.
-                  </p>
-                </button>
-
-                <button
-                  type="button"
                   onClick={() => setCalendarMode('timed')}
                   className={`p-3 rounded-2xl border text-left transition-all ${
                     calendarMode === 'timed'
@@ -179,11 +161,29 @@ export const AppleSyncModal: React.FC<AppleSyncModalProps> = ({
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span>⏰ Créneau Horaire Précis</span>
+                    <span>⏰ Créneau Horaire (Recommandé)</span>
                     {calendarMode === 'timed' && <Check className="w-3.5 h-3.5 text-blue-600" />}
                   </div>
                   <p className="text-[11px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
-                    Session d'étude de 15 minutes à l'heure exacte avec alarme sonore immédiate.
+                    Affiche <strong>悟 (wù)</strong> sur ton widget sans être masqué par l'option "Jour entier". Détails au clic.
+                  </p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setCalendarMode('all_day')}
+                  className={`p-3 rounded-2xl border text-left transition-all ${
+                    calendarMode === 'all_day'
+                      ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-400 text-amber-950 dark:text-amber-100 font-bold shadow-2xs'
+                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 hover:border-stone-400'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span>🌟 Mode Toute la Journée</span>
+                    {calendarMode === 'all_day' && <Check className="w-3.5 h-3.5 text-amber-600" />}
+                  </div>
+                  <p className="text-[11px] font-normal text-stone-500 dark:text-stone-400 leading-snug">
+                    Pour ceux qui activent "Afficher les événements toute la journée" sur leur widget.
                   </p>
                 </button>
               </div>

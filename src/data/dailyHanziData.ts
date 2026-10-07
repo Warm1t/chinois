@@ -395,39 +395,37 @@ export const generateAppleCalendarIcsForHanzi = (
     lines.push(`DTSTAMP:${nowStr}`);
 
     if (mode === 'all_day') {
-      // Mode Toute la journée : reste affiché en permanence du matin au soir sur le widget iOS !
+      // Mode Toute la journée : reste affiché sur le widget iOS
       lines.push(`DTSTART;VALUE=DATE:${dateYmd}`);
       lines.push(`DTEND;VALUE=DATE:${nextDateYmd}`);
       lines.push('TRANSP:TRANSPARENT'); // Ne bloque pas l'agenda de l'utilisateur
-      lines.push(`SUMMARY:🇨🇳 ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
+      lines.push(`SUMMARY:${hanziForDay.character} (${hanziForDay.pinyin})`);
       lines.push(`DESCRIPTION:${descriptionText}`);
-      lines.push('LOCATION:Fluent Mandarin App');
+      lines.push('LOCATION:Fluent (https://warm1t.github.io/chinois/)');
       lines.push('STATUS:CONFIRMED');
 
       // Alerte matinale à l'heure choisie (ex: 08:30)
       lines.push('BEGIN:VALARM');
       lines.push(`TRIGGER:PT${hours}H${minutes}M`);
       lines.push('ACTION:DISPLAY');
-      lines.push(`DESCRIPTION:🏮 Hanzi du Jour : ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
+      lines.push(`DESCRIPTION:🏮 ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
       lines.push('END:VALARM');
     } else {
-      // Mode Créneau horaire planifié (ex: 08:30 - 08:45)
-      const endMinutesInt = parseInt(minutes, 10) + 15;
-      const endHourInt = parseInt(hours, 10) + Math.floor(endMinutesInt / 60);
-      const endHourStr = String(endHourInt % 24).padStart(2, '0');
-      const endMinuteStr = String(endMinutesInt % 60).padStart(2, '0');
+      // Mode Créneau horaire (ex: 08:30 - 09:30) : affiche uniquement le caractère et son pinyin
+      const endHourInt = (parseInt(hours, 10) + 1) % 24;
+      const endHourStr = String(endHourInt).padStart(2, '0');
 
       lines.push(`DTSTART:${dateYmd}T${hours}${minutes}00`);
-      lines.push(`DTEND:${dateYmd}T${endHourStr}${endMinuteStr}00`);
-      lines.push(`SUMMARY:🇨🇳 Hanzi du Jour : ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
+      lines.push(`DTEND:${dateYmd}T${endHourStr}${minutes}00`);
+      lines.push(`SUMMARY:${hanziForDay.character} (${hanziForDay.pinyin})`);
       lines.push(`DESCRIPTION:${descriptionText}`);
-      lines.push('LOCATION:Fluent Mandarin App');
+      lines.push('LOCATION:Fluent (https://warm1t.github.io/chinois/)');
       lines.push('STATUS:CONFIRMED');
 
       lines.push('BEGIN:VALARM');
       lines.push('TRIGGER:-PT0M');
       lines.push('ACTION:DISPLAY');
-      lines.push(`DESCRIPTION:🏮 Hanzi du Jour : ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
+      lines.push(`DESCRIPTION:🏮 ${hanziForDay.character} (${hanziForDay.pinyin}) — ${hanziForDay.meaning}`);
       lines.push('END:VALARM');
     }
 
