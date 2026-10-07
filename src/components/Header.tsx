@@ -55,9 +55,6 @@ export const Header: React.FC<HeaderProps> = ({
                 <h1 className="text-xl font-black tracking-tight text-stone-900 font-serif">
                   Fluent
                 </h1>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-stone-100 text-stone-800 border border-stone-300">
-                  HSK 3-4
-                </span>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border hidden md:inline transition-colors ${
                   theme === 'dark'
                     ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
@@ -119,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <Compass className="w-3.5 h-3.5" />
-              <span>5 Modules</span>
+              <span>Modules</span>
             </button>
           </div>
 

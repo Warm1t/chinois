@@ -56,7 +56,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   // Préférences du lecteur (Style Maayot)
   const [showPinyin, setShowPinyin] = useState<boolean>(true);
   const [showTranslation, setShowTranslation] = useState<boolean>(false);
-  const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(0.85);
   const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
   const [activeSpeakerGender, setActiveSpeakerGender] = useState<'female' | 'male' | null>(null);
 
@@ -342,7 +342,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
         <div className="space-y-1">
           <div className="flex items-center space-x-2">
             <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
-              Lectures Immersives HSK 3-4 (Concept Maayot)
+              Lectures Immersives (Concept Maayot)
             </span>
             <span className="text-xs font-bold text-stone-500">
               {completedStoryIds.length} histoires lues
@@ -491,7 +491,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
 
             {/* Sélecteur de vitesse */}
             <div className="flex items-center bg-stone-100 rounded-xl p-0.5 border border-stone-200 text-[11px] font-bold">
-              {[0.75, 1.0, 1.2].map(speed => (
+              {[0.5, 0.75, 0.85, 1.0].map(speed => (
                 <button
                   key={speed}
                   onClick={() => setPlaybackSpeed(speed)}
@@ -500,8 +500,9 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                       ? 'bg-white text-stone-900 shadow-2xs'
                       : 'text-stone-500 hover:text-stone-900'
                   }`}
+                  title={speed === 0.5 ? 'Ultra-lent (0.5x)' : speed === 0.85 ? 'Vitesse de base ralentie' : `${speed}x`}
                 >
-                  {speed}x
+                  {speed === 0.5 ? '🐢 0.5x' : `${speed}x`}
                 </button>
               ))}
             </div>

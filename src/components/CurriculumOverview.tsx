@@ -1,16 +1,15 @@
-import React from 'react';
-import { CurriculumModule, NuanceCard, AnchoringRecord } from '../types/fluent';
+import React, { useState } from 'react';
+import { CurriculumModule, NuanceCard, AnchoringRecord, AnkiWord } from '../types/fluent';
+import { ModuleLessonView } from './ModuleLessonView';
 import { 
   Compass, 
   CheckCircle2, 
   ChevronRight, 
-  Layers, 
   Clock, 
   Repeat, 
   Boxes, 
   Volume2, 
   Link2,
-  Sparkles,
   Award
 } from 'lucide-react';
 
@@ -18,9 +17,12 @@ interface CurriculumOverviewProps {
   modules: CurriculumModule[];
   cards: NuanceCard[];
   anchoringRecords: Record<string, AnchoringRecord>;
-  currentCardId: string;
-  onSelectCard: (cardId: string) => void;
+  currentCardId?: string;
+  onSelectCard?: (cardId: string) => void;
   onClose?: () => void;
+  syncedAnkiWords?: AnkiWord[];
+  onExerciseCompleted?: (cardId: string) => void;
+  onOpenAnchorSession?: () => void;
 }
 
 export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
@@ -30,7 +32,30 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
   currentCardId,
   onSelectCard,
   onClose,
+  syncedAnkiWords = [],
+  onExerciseCompleted = () => {},
+  onOpenAnchorSession,
 }) => {
+  // État local : si une fiche est ouverte en détail pour la leçon dans l'onglet Modules
+  const [activeLessonId, setActiveLessonId] = useState<string | null>(null);
+
+  // Si une leçon est sélectionnée, on affiche la leçon complète ici dans Modules
+  if (activeLessonId) {
+    return (
+      <ModuleLessonView
+        cardId={activeLessonId}
+        onSelectCard={(id) => {
+          setActiveLessonId(id);
+          if (onSelectCard) onSelectCard(id);
+        }}
+        onBackToModules={() => setActiveLessonId(null)}
+        onExerciseCompleted={onExerciseCompleted}
+        syncedAnkiWords={syncedAnkiWords}
+        onOpenAnchorSession={onOpenAnchorSession}
+      />
+    );
+  }
+
   // Calcul des statistiques globales
   const totalCards = cards.length;
   const masteredCount = Object.values(anchoringRecords).filter(r => r.stage === 'ancre').length;
@@ -53,7 +78,7 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200/90 shadow-sm space-y-6">
+    <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200/90 shadow-sm space-y-6 animate-fadeIn">
       
       {/* En-tête de la trame pédagogique */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-100 pb-5">
@@ -63,11 +88,11 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
               <Compass className="w-4 h-4" />
             </span>
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#c23b22]">
-              Trame Pédagogique HSK 3-4 (Syllabus Complet)
+              Trame Pédagogique (Syllabus Complet)
             </span>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-stone-900 mt-1 font-serif">
-            Le Parcours d'Élocution en 5 Modules
+            Les Modules d'Élocution & Nuances Clés
           </h2>
           <p className="text-xs text-stone-500 mt-0.5">
             18 nuances stratégiques pour transformer tes mots isolés en pensées natives structurées.
@@ -110,13 +135,13 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
               <span>{masteredCount} / {totalCards} ancrées</span>
             </div>
             <div className="text-stone-500 text-[11px]">
-              {learningCount} en assimilation
+              {learningCount} en cours d'assimilation
             </div>
           </div>
         </div>
       </div>
 
-      {/* Grille des 5 Modules */}
+      {/* Grille des Modules */}
       <div className="space-y-6">
         {modules.map((module) => {
           const moduleCards = cards.filter(c => c.moduleId === module.id);
@@ -187,20 +212,18 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
                     <button
                       key={card.id}
                       onClick={() => {
-                        onSelectCard(card.id);
+                        setActiveLessonId(card.id);
+                        if (onSelectCard) onSelectCard(card.id);
                         if (onClose) onClose();
                       }}
-                      className={`text-left p-3.5 rounded-xl border transition-all flex items-center justify-between group ${
+                      className={`text-left p-3.5 rounded-xl border transition-all flex items-center justify-between group cursor-pointer ${
                         isCurrent
                           ? 'bg-white border-[#c23b22] shadow-sm ring-2 ring-[#c23b22]/20'
-                          : 'bg-white border-stone-200 hover:border-stone-300 hover:shadow-2xs'
+                          : 'bg-white border-stone-200 hover:border-stone-400 hover:shadow-2xs'
                       }`}
                     >
                       <div className="space-y-1 pr-2 min-w-0 flex-1">
                         <div className="flex items-center space-x-2">
-                          <span className="text-[10px] font-mono font-bold text-[#c23b22] px-1.5 py-0.2 bg-[#c23b22]/10 rounded">
-                            {card.level}
-                          </span>
                           <span className="text-xs font-bold text-stone-900 truncate block">
                             {card.title}
                           </span>

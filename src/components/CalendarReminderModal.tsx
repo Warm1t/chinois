@@ -74,7 +74,7 @@ export const CalendarReminderModal: React.FC<CalendarReminderModalProps> = ({ on
     }
 
     new Notification("🎯 Fluent : Ta mission chinoise du jour t'attend !", {
-      body: "3 minutes d'ancrage cognitif et pratique vocale pour consolider tes réflexes HSK 3-4.",
+      body: "3 minutes d'ancrage cognitif et pratique vocale pour consolider tes réflexes d'élocution.",
       icon: '/favicon.ico',
     });
     setTestStatus("Notification de test envoyée sur ton écran !");
@@ -95,7 +95,7 @@ export const CalendarReminderModal: React.FC<CalendarReminderModalProps> = ({ on
     const startDateTime = `${dateStr}T${startHour}${minutes}00`;
     const endDateTime = `${dateStr}T${endHour}${minutes}00`;
 
-    const title = encodeURIComponent("Fluent — Session Quotidienne Chinois (HSK 3-4)");
+    const title = encodeURIComponent("Fluent — Session Quotidienne d'Élocution Chinois");
     const details = encodeURIComponent(
       "15 minutes d'ancrage cognitif et de pratique vocale avec tolérance aux pauses.\n\nLien de l'application locale : http://localhost:5173"
     );
@@ -121,7 +121,7 @@ export const CalendarReminderModal: React.FC<CalendarReminderModalProps> = ({ on
       `DTSTART;TZID=Europe/Paris:20261001T${hours}${minutes}00`,
       `DTEND;TZID=Europe/Paris:20261001T${hours}${minutes}00`,
       'RRULE:FREQ=DAILY',
-      'SUMMARY:🇨🇳 Fluent — 15 min de Chinois HSK 3-4',
+      'SUMMARY:🇨🇳 Fluent — 15 min de Chinois',
       'DESCRIPTION:Session quotidienne de révision espacée et pratique vocale sur http://localhost:5173',
       'LOCATION:http://localhost:5173',
       'STATUS:CONFIRMED',
@@ -158,7 +158,7 @@ export const CalendarReminderModal: React.FC<CalendarReminderModalProps> = ({ on
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          content: `🇨🇳 **Fluent — Rappel Quotidien HSK 3-4**\nTa mission du jour t'attend ! 15 minutes d'ancrage et de pratique vocale sur http://localhost:5173`,
+          content: `🇨🇳 **Fluent — Rappel Quotidien**\nTa mission du jour t'attend ! 15 minutes d'ancrage et de pratique vocale sur http://localhost:5173`,
           username: "Fluent Mandarin Coach",
         }),
       });

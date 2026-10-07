@@ -48,7 +48,10 @@ const CHINESE_MALE_KEYWORDS = [
   'yunxi', 'yunjian', 'yunyang', 'kangkang', 'zhiwei', 'yushu', 
   'yu-shu', 'limu', 'li-mu', 'male', 'yunfan', 'yunze', 'wavenet-b', 
   'wavenet-c', 'standard-b', 'standard-c', 'wanlung', 'yunfeng', 
-  'yunhao', 'homme', '男', 'daniel'
+  'yunhao', 'homme', '男', 'daniel', 'liang', 'qiang', 'dalu', 'bo',
+  'bowen', 'lisheng', 'guoliang', 'xiaowei', 'xiaoqiang', 'haohao',
+  'dawei', 'david', 'zh-cn-x-cce', 'zh-cn-x-ccd', 'zh-cn-x-ccc',
+  'cmn-hans-cn-x-ccc', 'siri voice 2', 'siri 2'
 ];
 
 /**
@@ -189,6 +192,10 @@ const getChineseVoiceScore = (voice: SpeechSynthesisVoice): number => {
   if (name.includes('natural') || name.includes('neural') || name.includes('online') || name.includes('premium')) {
     score += 50;
   }
+  // Bonus prioritaire pour les voix masculines naturelles haute fidélité (Edge Yunxi/Yunjian, Apple Liang)
+  if (name.includes('yunxi') || name.includes('yunjian') || name.includes('yunyang') || name.includes('liang')) {
+    score += 100;
+  }
   if (name.includes('google') || name.includes('apple') || name.includes('wavenet')) {
     score += 30;
   }
@@ -320,7 +327,7 @@ export const getChineseVoicesBank = async (): Promise<VoiceBankSummary> => {
  */
 export const playChineseAudio = async (
   text: string, 
-  rate: number = 1.0, 
+  rate: number = 0.85, 
   forcedGender?: 'female' | 'male'
 ): Promise<void> => {
   return new Promise(async (resolve) => {
@@ -362,19 +369,18 @@ export const playChineseAudio = async (
 
     if (genderToUse === 'female') {
       voiceToUse = bank.femaleVoices[0] || bank.maleVoices[0];
-      pitch = 1.06;
-      playbackRate = rate * 1.0;
+      pitch = 1.02;
+      playbackRate = rate;
     } else {
       if (bank.maleVoices.length > 0) {
         voiceToUse = bank.maleVoices[0];
-        pitch = 0.94;
-        playbackRate = rate * 0.98;
+        pitch = 1.0; // Voix masculine native (Yunxi, Yunjian, Liang) : pitch naturel sans aucune distorsion
+        playbackRate = rate;
       } else {
-        // Si aucune voix masculine native n'est installée, on utilise la voix chinoise disponible
-        // avec une modulation acoustique de formants (pitch plus grave) pour simuler un timbre masculin
+        // Repli élégant : léger abaissement non déformant (jamais d'effet robot métallique)
         voiceToUse = bank.femaleVoices[0];
-        pitch = 0.82;
-        playbackRate = rate * 0.94;
+        pitch = 0.95;
+        playbackRate = rate;
       }
     }
 
@@ -415,7 +421,7 @@ export const stopChineseAudio = (): void => {
  */
 export const playChineseStoryAudio = async (
   storyText: string,
-  rate: number = 1.0,
+  rate: number = 0.85,
   onSentenceProgress?: (currentSentenceIndex: number, sentenceText: string, gender: 'female' | 'male') => void
 ): Promise<void> => {
   stopChineseAudio();

@@ -121,7 +121,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           card: cards[0],
           badge: "🎉 Félicitations !",
           title: "Toutes les 18 notions sont ancrées en mémoire durable !",
-          description: "Tu as terminé la totalité du cursus HSK 3-4 ! Tu peux revisiter n'importe quel cours ou faire une session de perfectionnement oral.",
+          description: "Tu as terminé la totalité du parcours d'élocution ! Tu peux revisiter n'importe quel cours ou faire une session de perfectionnement oral.",
           buttonText: "Session libre de perfectionnement",
           timeEstimate: "Libre",
         };
@@ -159,7 +159,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-[#c23b22] text-white text-[11px] font-black uppercase tracking-wider shadow-xs">
               <Zap className="w-3.5 h-3.5 fill-white mr-1" />
-              Cursus HSK 3-4 • Cours Recommandé
+              Parcours d'Élocution • Cours Recommandé
             </span>
 
             <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-white/10 text-stone-300 text-[11px] font-mono border border-white/10">
@@ -217,7 +217,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                 <Compass className="w-4 h-4" />
               </span>
               <h3 className="text-base sm:text-lg font-black text-stone-900 font-serif">
-                Le Cursus d'Élocution HSK 3-4 (5 Modules)
+                Les Modules d'Élocution
               </h3>
             </div>
             <p className="text-xs text-stone-500 mt-0.5">

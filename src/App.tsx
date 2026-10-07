@@ -121,17 +121,12 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleSelectCardFromCurriculum = (cardId: string) => {
-    setSelectedCardId(cardId);
-    setActiveView('lab');
-  };
-
   const handleStartGuidedAction = (cardId: string, actionType: 'card' | 'anchor') => {
     if (actionType === 'anchor') {
       setIsDailyAnchorModalOpen(true);
     } else {
       setSelectedCardId(cardId);
-      setActiveView('lab');
+      setActiveView('curriculum');
     }
   };
 
@@ -182,7 +177,7 @@ export const App: React.FC = () => {
             onOpenCalendarModal={() => setIsCalendarModalOpen(true)}
             onSelectCard={(cardId) => {
               setSelectedCardId(cardId);
-              setActiveView('lab');
+              setActiveView('curriculum');
             }}
           />
         )}
@@ -197,25 +192,29 @@ export const App: React.FC = () => {
           />
         )}
 
-        {/* VUE 2 : LABO VOCAL & FICHE ACTIVE */}
+        {/* VUE 2 : LABO VOCAL (Phrases courantes du quotidien & Auto-écoute) */}
         {activeView === 'lab' && (
           <VoiceCoachLab
-            onExerciseCompleted={handleExerciseCompleted}
-            syncedAnkiWords={syncedAnkiWords}
-            selectedCardId={selectedCardId}
-            onOpenCurriculum={() => setActiveView('curriculum')}
-            onOpenAnchorSession={() => setIsDailyAnchorModalOpen(true)}
+            onPracticeCompleted={(phraseId, score) => {
+              if (score >= 80) {
+                setToastMessage(`🎉 太棒了 ! Phrase validée à l'oral (${score}%) !`);
+                setTimeout(() => setToastMessage(null), 3500);
+              }
+            }}
           />
         )}
 
-        {/* VUE 3 : TRAME PÉDAGOGIQUE GLOBALE (5 Modules & 18 Fiches) */}
+        {/* VUE 3 : LES MODULES D'ÉLOCUTION & LEÇONS STRUCTURÉES */}
         {activeView === 'curriculum' && (
           <CurriculumOverview
             modules={CURRICULUM_MODULES}
             cards={NUANCE_CARDS}
             anchoringRecords={anchoringRecords}
             currentCardId={selectedCardId}
-            onSelectCard={handleSelectCardFromCurriculum}
+            onSelectCard={(cardId) => setSelectedCardId(cardId)}
+            syncedAnkiWords={syncedAnkiWords}
+            onExerciseCompleted={handleExerciseCompleted}
+            onOpenAnchorSession={() => setIsDailyAnchorModalOpen(true)}
           />
         )}
 
@@ -236,7 +235,7 @@ export const App: React.FC = () => {
           onRefreshRecords={refreshAnchoring}
           onSelectCardForDeepPractice={(cardId) => {
             setSelectedCardId(cardId);
-            setActiveView('lab');
+            setActiveView('curriculum');
           }}
         />
       )}
@@ -299,7 +298,7 @@ export const App: React.FC = () => {
 
       {/* Footer */}
       <footer className="border-t border-stone-200/80 dark:border-stone-800/80 py-6 text-center text-xs text-stone-400 dark:text-stone-500 transition-colors duration-200">
-        <p>Fluent — Programme d'Expression Mandarin HSK 3-4 • Mode Encre 📜 & Mode Sombre 🌙 • Cockpit Guidé 100% Gratuit & Local</p>
+        <p>Fluent — Programme d'Expression Mandarin • Mode Encre 📜 & Mode Sombre 🌙 • Cockpit Guidé 100% Gratuit & Local</p>
       </footer>
 
     </div>
