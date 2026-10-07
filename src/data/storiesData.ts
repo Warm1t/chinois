@@ -24,6 +24,74 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
             hanzi: '在成都的一条安静老街上，有一家开了三十年的老茶馆。',
             pinyin: 'Zài Chéngdū de yì tiáo ānjìng lǎojiē shang, yǒu yì jiā kāi le sānshí nián de lǎo cháguǎn.',
             translation: 'Dans une vieille rue paisible de Chengdu, il y a une ancienne maison de thé ouverte depuis trente ans.',
+            rhythmAdvice: "Enchaîne '在成都的一条' sans marquer d'arrêt, fais une micro-respiration avant '安静老街上' et marque bien la virgule. Fais glisser '开了三十年的' avant d'atterrir sur '老茶馆' !",
+            rhythmChunks: [
+              {
+                id: 'chunk-1-1',
+                text: '在成都的一条',
+                pinyin: 'Zài Chéngdū de yì tiáo',
+                translation: 'Dans une',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                sandhiHint: 'yì tiáo : 4e ton sur 一 devant le 2e ton',
+                words: [
+                  { hanzi: '在', pinyin: 'zài', translation: 'à, dans' },
+                  { hanzi: '成都', pinyin: 'Chéngdū', translation: 'Chengdu' },
+                  { hanzi: '的', pinyin: 'de', translation: 'de' },
+                  { hanzi: '一条', pinyin: 'yì tiáo', translation: 'une' }
+                ]
+              },
+              {
+                id: 'chunk-1-2',
+                text: '安静老街上，',
+                pinyin: 'ānjìng lǎojiē shang,',
+                translation: 'vieille rue paisible,',
+                pauseType: 'comma',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '安静', pinyin: 'ānjìng', translation: 'calme, paisible' },
+                  { hanzi: '老街', pinyin: 'lǎojiē', translation: 'vieille rue' },
+                  { hanzi: '上', pinyin: 'shang', translation: 'sur, dans' }
+                ]
+              },
+              {
+                id: 'chunk-1-3',
+                text: '有一家',
+                pinyin: 'yǒu yì jiā',
+                translation: 'il y a une',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '有一家', pinyin: 'yǒu yì jiā', translation: 'il y a une' }
+                ]
+              },
+              {
+                id: 'chunk-1-4',
+                text: '开了三十年的',
+                pinyin: 'kāi le sānshí nián de',
+                translation: 'ouverte depuis trente ans',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '开了', pinyin: 'kāi le', translation: 'ouverte depuis' },
+                  { hanzi: '三十年', pinyin: 'sānshí nián', translation: 'trente ans' },
+                  { hanzi: '的', pinyin: 'de', translation: 'de' }
+                ]
+              },
+              {
+                id: 'chunk-1-5',
+                text: '老茶馆。',
+                pinyin: 'lǎo cháguǎn.',
+                translation: 'vieille maison de thé.',
+                pauseType: 'period',
+                stressLevel: 'prominent',
+                sandhiHint: 'Sandhi 3+3 : lǎo cháguǎn -> lǎo est creusé, guǎn est au 3e ton',
+                words: [
+                  { hanzi: '老茶馆', pinyin: 'lǎo cháguǎn', translation: 'vieille maison de thé' },
+                  { hanzi: '。', pinyin: '', translation: '.' }
+                ]
+              }
+            ],
             words: [
               { hanzi: '在', pinyin: 'zài', translation: 'à, dans' },
               { hanzi: '成都', pinyin: 'Chéngdū', translation: 'Chengdu (ville du Sichuan)' },
@@ -44,6 +112,74 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
             hanzi: '小林平时工作非常忙，只有周末才会偶尔来这里喝茶看书。',
             pinyin: 'Xiǎo Lín píngshí gōngzuò fēicháng máng, zhǐyǒu zhōumò cái huì ǒu\'ěr lái zhèlǐ hēchá kànshū.',
             translation: 'Xiao Lin est d\'ordinaire très occupé par son travail, et ne vient ici que de temps en temps le week-end pour boire le thé et lire.',
+            rhythmAdvice: "Accroche '小林平时工作' d'une traite, appuie franchement sur '非常' (intensif) avant la virgule, puis lie '只有周末' avec '才会偶尔来这里' avant le bloc final '喝茶看书' !",
+            rhythmChunks: [
+              {
+                id: 'chunk-2-1',
+                text: '小林平时工作',
+                pinyin: 'Xiǎo Lín píngshí gōngzuò',
+                translation: 'Xiao Lin d\'ordinaire au travail',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '小林', pinyin: 'Xiǎo Lín', translation: 'Xiao Lin' },
+                  { hanzi: '平时', pinyin: 'píngshí', translation: 'd\'ordinaire' },
+                  { hanzi: '工作', pinyin: 'gōngzuò', translation: 'travail' }
+                ]
+              },
+              {
+                id: 'chunk-2-2',
+                text: '非常忙，',
+                pinyin: 'fēicháng máng,',
+                translation: 'très occupé,',
+                pauseType: 'comma',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '非常', pinyin: 'fēicháng', translation: 'très' },
+                  { hanzi: '忙', pinyin: 'máng', translation: 'occupé' }
+                ]
+              },
+              {
+                id: 'chunk-2-3',
+                text: '只有周末',
+                pinyin: 'zhǐyǒu zhōumò',
+                translation: 'seulement le week-end',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '只有', pinyin: 'zhǐyǒu', translation: 'seulement si' },
+                  { hanzi: '周末', pinyin: 'zhōumò', translation: 'week-end' }
+                ]
+              },
+              {
+                id: 'chunk-2-4',
+                text: '才会偶尔来这里',
+                pinyin: 'cái huì ǒu\'ěr lái zhèlǐ',
+                translation: 'vient de temps en temps ici',
+                pauseType: 'breath',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '才', pinyin: 'cái', translation: 'alors' },
+                  { hanzi: '会', pinyin: 'huì', translation: 'arriver de' },
+                  { hanzi: '偶尔', pinyin: 'ǒu\'ěr', translation: 'occasionnellement', isTarget: true },
+                  { hanzi: '来', pinyin: 'lái', translation: 'venir' },
+                  { hanzi: '这里', pinyin: 'zhèlǐ', translation: 'ici' }
+                ]
+              },
+              {
+                id: 'chunk-2-5',
+                text: '喝茶看书。',
+                pinyin: 'hēchá kànshū.',
+                translation: 'boire le thé et lire.',
+                pauseType: 'period',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '喝茶', pinyin: 'hēchá', translation: 'boire du thé' },
+                  { hanzi: '看书', pinyin: 'kànshū', translation: 'lire un livre' },
+                  { hanzi: '。', pinyin: '', translation: '.' }
+                ]
+              }
+            ],
             words: [
               { hanzi: '小林', pinyin: 'Xiǎo Lín', translation: 'Xiao Lin (nom de personne)' },
               { hanzi: '平时', pinyin: 'píngshí', translation: 'd\'ordinaire, d\'habitude' },
@@ -70,6 +206,88 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
             hanzi: '今天，旁边坐着一位穿白衬衫的老爷爷，他的笑声听起来非常熟悉。',
             pinyin: 'Jīntiān, pángbiān zuò zhe yí wèi chuān bái chènshān de lǎo yéye, tā de xiàoshēng tīng qǐlái fēicháng shúxī.',
             translation: 'Aujourd\'hui, à côté de lui était assis un grand-père en chemise blanche, dont le rire semblait très familier.',
+            rhythmAdvice: "Fais une pause nette après '今天，', enchaîne '旁边坐着一位穿白衬衫的' sans t'arrêter sur '的', souffle à la virgule après '老爷爷，' puis pose '他的笑声听起来' avant de faire résonner '非常熟悉' !",
+            rhythmChunks: [
+              {
+                id: 'chunk-3-1',
+                text: '今天，',
+                pinyin: 'Jīntiān,',
+                translation: 'Aujourd\'hui,',
+                pauseType: 'comma',
+                stressLevel: 'standard',
+                words: [{ hanzi: '今天', pinyin: 'jīntiān', translation: 'aujourd\'hui' }]
+              },
+              {
+                id: 'chunk-3-2',
+                text: '旁边坐着',
+                pinyin: 'pángbiān zuò zhe',
+                translation: 'à côté était assis',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '旁边', pinyin: 'pángbiān', translation: 'à côté' },
+                  { hanzi: '坐着', pinyin: 'zuò zhe', translation: 'assis' }
+                ]
+              },
+              {
+                id: 'chunk-3-3',
+                text: '一位穿白衬衫的',
+                pinyin: 'yí wèi chuān bái chènshān de',
+                translation: 'un monsieur en chemise blanche',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                sandhiHint: 'yí wèi : se prononce yí (2e ton) devant le 4e ton wèi',
+                words: [
+                  { hanzi: '一位', pinyin: 'yí wèi', translation: 'une personne' },
+                  { hanzi: '穿', pinyin: 'chuān', translation: 'porter' },
+                  { hanzi: '白衬衫', pinyin: 'bái chènshān', translation: 'chemise blanche' },
+                  { hanzi: '的', pinyin: 'de', translation: 'qui' }
+                ]
+              },
+              {
+                id: 'chunk-3-4',
+                text: '老爷爷，',
+                pinyin: 'lǎo yéye,',
+                translation: 'grand-père,',
+                pauseType: 'comma',
+                stressLevel: 'prominent',
+                words: [{ hanzi: '老爷爷', pinyin: 'lǎo yéye', translation: 'grand-père' }]
+              },
+              {
+                id: 'chunk-3-5',
+                text: '他的笑声',
+                pinyin: 'tā de xiàoshēng',
+                translation: 'son rire',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '他的', pinyin: 'tā de', translation: 'son' },
+                  { hanzi: '笑声', pinyin: 'xiàoshēng', translation: 'rire' }
+                ]
+              },
+              {
+                id: 'chunk-3-6',
+                text: '听起来',
+                pinyin: 'tīng qǐlái',
+                translation: 'semblait à l\'oreille',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [{ hanzi: '听起来', pinyin: 'tīng qǐlái', translation: 'sembler' }]
+              },
+              {
+                id: 'chunk-3-7',
+                text: '非常熟悉。',
+                pinyin: 'fēicháng shúxī.',
+                translation: 'très familier.',
+                pauseType: 'period',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '非常', pinyin: 'fēicháng', translation: 'très' },
+                  { hanzi: '熟悉', pinyin: 'shúxī', translation: 'familier', isTarget: true },
+                  { hanzi: '。', pinyin: '', translation: '.' }
+                ]
+              }
+            ],
             words: [
               { hanzi: '今天', pinyin: 'jīntiān', translation: 'aujourd\'hui' },
               { hanzi: '旁边', pinyin: 'pángbiān', translation: 'à côté' },
@@ -91,6 +309,71 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
             hanzi: '小林抬头一看，竟然是他小学时最尊敬的数学老师！',
             pinyin: 'Xiǎo Lín táitóu yí kàn, jìngrán shì tā xiǎoxué shí zuì zūnjìng de shùxué lǎoshī!',
             translation: 'Xiao Lin leva la tête et regarda : c\'était, contre toute attente, son professeur de maths préféré de l\'école primaire !',
+            rhythmAdvice: "La surprise s'exprime dans le rythme : marque la virgule après '小林抬头一看，', appuie avec dynamisme sur '竟然' (surprise !), lie '小学时' et '最尊敬的', et conclus sur '数学老师' !",
+            rhythmChunks: [
+              {
+                id: 'chunk-4-1',
+                text: '小林抬头一看，',
+                pinyin: 'Xiǎo Lín táitóu yí kàn,',
+                translation: 'Xiao Lin leva la tête et regarda,',
+                pauseType: 'comma',
+                stressLevel: 'standard',
+                sandhiHint: 'yí kàn : se prononce yí (2e ton) devant le 4e ton kàn',
+                words: [
+                  { hanzi: '小林', pinyin: 'Xiǎo Lín', translation: 'Xiao Lin' },
+                  { hanzi: '抬头', pinyin: 'táitóu', translation: 'lever la tête' },
+                  { hanzi: '一看', pinyin: 'yí kàn', translation: 'regarda' }
+                ]
+              },
+              {
+                id: 'chunk-4-2',
+                text: '竟然是他',
+                pinyin: 'jìngrán shì tā',
+                translation: 'c\'était contre toute attente son',
+                pauseType: 'breath',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '竟然', pinyin: 'jìngrán', translation: 'contre toute attente', isTarget: true },
+                  { hanzi: '是', pinyin: 'shì', translation: 'être' },
+                  { hanzi: '他', pinyin: 'tā', translation: 'son' }
+                ]
+              },
+              {
+                id: 'chunk-4-3',
+                text: '小学时',
+                pinyin: 'xiǎoxué shí',
+                translation: 'à l\'école primaire',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [{ hanzi: '小学时', pinyin: 'xiǎoxué shí', translation: 'à l\'époque primaire' }]
+              },
+              {
+                id: 'chunk-4-4',
+                text: '最尊敬的',
+                pinyin: 'zuì zūnjìng de',
+                translation: 'le plus respecté',
+                pauseType: 'breath',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '最', pinyin: 'zuì', translation: 'le plus' },
+                  { hanzi: '尊敬', pinyin: 'zūnjìng', translation: 'respecté' },
+                  { hanzi: '的', pinyin: 'de', translation: 'qui' }
+                ]
+              },
+              {
+                id: 'chunk-4-5',
+                text: '数学老师！',
+                pinyin: 'shùxué lǎoshī!',
+                translation: 'professeur de maths !',
+                pauseType: 'period',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '数学', pinyin: 'shùxué', translation: 'mathématiques' },
+                  { hanzi: '老师', pinyin: 'lǎoshī', translation: 'professeur' },
+                  { hanzi: '！', pinyin: '', translation: '!' }
+                ]
+              }
+            ],
             words: [
               { hanzi: '小林', pinyin: 'Xiǎo Lín', translation: 'Xiao Lin' },
               { hanzi: '抬头', pinyin: 'táitóu', translation: 'lever la tête' },
@@ -111,6 +394,73 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
             hanzi: '当年遇到不会的难题，都是这位老师耐心帮他解决的。',
             pinyin: 'Dāngnián yù dào bú huì de nántí, dōu shì zhè wèi lǎoshī nàixīn bāng tā jiějué de.',
             translation: 'À l\'époque, quand il tombait sur des problèmes difficiles qu\'il ne savait pas faire, c\'est toujours ce professeur qui l\'aidait patiemment à les résoudre.',
+            rhythmAdvice: "Sandhi essentiel : '不会' se dit 'bú huì' (2e ton devant 4e ton). Glisse sur '都是这位老师', lie '耐心帮他' et termine sans saccade sur '解决的' !",
+            rhythmChunks: [
+              {
+                id: 'chunk-5-1',
+                text: '当年遇到',
+                pinyin: 'Dāngnián yù dào',
+                translation: 'À l\'époque rencontrant',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '当年', pinyin: 'dāngnián', translation: 'en ces années' },
+                  { hanzi: '遇到', pinyin: 'yù dào', translation: 'rencontrer' }
+                ]
+              },
+              {
+                id: 'chunk-5-2',
+                text: '不会的难题，',
+                pinyin: 'bú huì de nántí,',
+                translation: 'des problèmes insolubles,',
+                pauseType: 'comma',
+                stressLevel: 'prominent',
+                sandhiHint: 'bú huì : se prononce bú (2e ton) devant huì (4e ton)',
+                words: [
+                  { hanzi: '不会的', pinyin: 'bú huì de', translation: 'insolubles' },
+                  { hanzi: '难题', pinyin: 'nántí', translation: 'problèmes' }
+                ]
+              },
+              {
+                id: 'chunk-5-3',
+                text: '都是这位老师',
+                pinyin: 'dōu shì zhè wèi lǎoshī',
+                translation: 'c\'était ce professeur',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                sandhiHint: 'zhè wèi : liaison fluide',
+                words: [
+                  { hanzi: '都是', pinyin: 'dōu shì', translation: 'c\'était' },
+                  { hanzi: '这位', pinyin: 'zhè wèi', translation: 'ce' },
+                  { hanzi: '老师', pinyin: 'lǎoshī', translation: 'professeur' }
+                ]
+              },
+              {
+                id: 'chunk-5-4',
+                text: '耐心帮他',
+                pinyin: 'nàixīn bāng tā',
+                translation: 'qui l\'aidait patiemment',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '耐心', pinyin: 'nàixīn', translation: 'patiemment' },
+                  { hanzi: '帮他', pinyin: 'bāng tā', translation: 'aider lui' }
+                ]
+              },
+              {
+                id: 'chunk-5-5',
+                text: '解决的。',
+                pinyin: 'jiějué de.',
+                translation: 'à résoudre.',
+                pauseType: 'period',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '解决', pinyin: 'jiějué', translation: 'résoudre', isTarget: true },
+                  { hanzi: '的', pinyin: 'de', translation: 'qui l\'a fait' },
+                  { hanzi: '。', pinyin: '', translation: '.' }
+                ]
+              }
+            ],
             words: [
               { hanzi: '当年', pinyin: 'dāngnián', translation: 'en ces années-là' },
               { hanzi: '遇到', pinyin: 'yù dào', translation: 'rencontrer, tomber sur' },

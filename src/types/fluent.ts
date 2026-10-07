@@ -128,11 +128,32 @@ export interface StoryWordToken {
   isTarget?: boolean;
 }
 
+export interface StoryRhythmChunk {
+  id: string;
+  text: string;
+  pinyin: string;
+  translation?: string;
+  words: StoryWordToken[];
+  pauseType: 'breath' | 'comma' | 'period' | 'none'; // '/' = souffle micro-pause, '//' = virgule, '///' = fin de phrase
+  stressLevel: 'prominent' | 'standard' | 'light';   // prominent = accent d'insistance, light = particule/pronom rapide
+  sandhiHint?: string;                               // ex: "bú devant ton 4" ou "yí wèi" ou "3e+3e -> 2e+3e"
+}
+
+export interface SentenceRhythmAnalysis {
+  sentenceHanzi: string;
+  sentencePinyin: string;
+  translation: string;
+  chunks: StoryRhythmChunk[];
+  rhythmAdvice: string;
+}
+
 export interface StorySentence {
   hanzi: string;
   pinyin: string;
   translation: string;
   words: StoryWordToken[];
+  rhythmChunks?: StoryRhythmChunk[];
+  rhythmAdvice?: string;
 }
 
 export interface StoryParagraph {
