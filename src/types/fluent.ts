@@ -16,6 +16,35 @@ export interface ActiveTestQuestion {
   distractorExplanations?: string[]; // Explication pour chaque option erronée
 }
 
+export interface ExampleSentence {
+  chinese: string;
+  pinyin: string;
+  translation: string;
+  contextNote?: string;
+}
+
+export interface DialogueLine {
+  speaker: string;                   // ex: "A", "B", "Xiao Li"
+  chinese: string;
+  pinyin: string;
+  translation: string;
+}
+
+export interface SentenceBuilderExercise {
+  promptFrench: string;              // "Remets les mots dans l'ordre pour dire : 'J'ai fini de nettoyer ma chambre avec la structure 把'"
+  tokens: string[];                  // Blocs mélangés : ["我", "把", "房间", "打扫", "干净", "了"]
+  correctTokens: string[];           // Ordre correct attendu
+  explanation: string;               // Explication syntaxique
+}
+
+export interface LessonRulePoint {
+  pointTitle: string;                // "1. L'objet doit être spécifique et connu"
+  explanation: string;               // "On ne peut pas utiliser 把 avec un objet indéfini comme 'un livre quelconque'."
+  exampleChinese?: string;
+  examplePinyin?: string;
+  exampleFrench?: string;
+}
+
 export interface NuanceCard {
   id: string;
   moduleId: string;
@@ -32,6 +61,11 @@ export interface NuanceCard {
   targetPinyin: string;            // Pinyin avec accents
   translationFrench: string;       // Traduction française fidèle
   activeTest: ActiveTestQuestion;   // Test de discrimination active
+  // Éléments du cours complet & dynamique :
+  rulePoints?: LessonRulePoint[];
+  additionalExamples?: ExampleSentence[];
+  dialogue?: DialogueLine[];
+  sentenceBuilder?: SentenceBuilderExercise;
 }
 
 // Rétrocompatibilité avec l'ancien nom de type si nécessaire

@@ -19,8 +19,8 @@ import {
   Zap,
   Calendar,
   Bell,
-  MessageSquareQuote,
-  Smile
+  Smartphone,
+  Puzzle
 } from 'lucide-react';
 
 interface HomeDashboardProps {
@@ -60,10 +60,9 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 }) => {
   const totalCards = cards.length;
   const anchoredCount = Object.values(anchoringRecords).filter(r => r.stage === 'ancre').length;
-  const learningCount = Object.values(anchoringRecords).filter(r => r.stage === 'assimilation').length;
   const progressPercent = Math.round((anchoredCount / totalCards) * 100);
 
-  // Détermination intelligente de l'action recommandée du jour
+  // Détermination intelligente de l'action de cours recommandée
   let nextAction: {
     type: 'anchor' | 'finish_oral' | 'new_card' | 'all_done';
     card?: NuanceCard;
@@ -80,8 +79,8 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
       type: 'anchor',
       badge: `Répétition Espacée (${dueCards.length} à rafraîchir)`,
       title: "Consolidation Mémoire : Session d'Ancrage du Jour",
-      description: "Tes neurones sont prêts pour consolider les nuances précédentes selon la courbe de l'oubli. Un rappel express pour ne rien perdre !",
-      buttonText: `Lancer l'Ancrage (${dueCards.length} nuances)`,
+      description: "Tes neurones sont prêts pour consolider les notions précédentes selon la courbe de l'oubli. Un rappel express pour ne rien perdre !",
+      buttonText: `Lancer l'Ancrage (${dueCards.length} notions)`,
       timeEstimate: `${Math.max(3, dueCards.length * 2)} min`,
     };
   } else {
@@ -96,7 +95,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
         badge: `${inProgressCard.moduleTitle} • Étape Orale`,
         title: `Pratique Vocale : ${inProgressCard.title}`,
         formula: inProgressCard.structuralFormula,
-        description: "Tu as validé le test de discrimination écrit ! Passe maintenant au micro pour sceller la prononciation et valider l'ancrage définitif.",
+        description: "Tu as validé les ateliers écrits ! Passe maintenant au micro pour sceller la prononciation et valider l'ancrage définitif.",
         buttonText: "Continuer vers le micro",
         timeEstimate: "3-4 min",
       };
@@ -110,10 +109,10 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           type: 'new_card',
           card: nextUndiscovered,
           badge: `${nextUndiscovered.moduleTitle} • ${nextUndiscovered.level}`,
-          title: `Nouvelle Nuance : ${nextUndiscovered.title}`,
+          title: `Nouveau Cours : ${nextUndiscovered.title}`,
           formula: nextUndiscovered.structuralFormula,
-          description: `Découvre la formule clé et teste ta compréhension avec le test de discrimination avant la pratique orale.`,
-          buttonText: "Commencer cette nuance",
+          description: `Découvre la formule clé, analyse le dialogue et teste tes réflexes avec l'atelier d'architecture syntaxique.`,
+          buttonText: "Démarrer ce cours",
           timeEstimate: "5-6 min",
         };
       } else {
@@ -121,8 +120,8 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           type: 'all_done',
           card: cards[0],
           badge: "🎉 Félicitations !",
-          title: "Toutes les 18 nuances sont ancrées en mémoire durable !",
-          description: "Tu as terminé la totalité du cursus HSK 3-4 ! Tu peux revisiter n'importe quel module ou faire une session de perfectionnement oral.",
+          title: "Toutes les 18 notions sont ancrées en mémoire durable !",
+          description: "Tu as terminé la totalité du cursus HSK 3-4 ! Tu peux revisiter n'importe quel cours ou faire une session de perfectionnement oral.",
           buttonText: "Session libre de perfectionnement",
           timeEstimate: "Libre",
         };
@@ -139,19 +138,17 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fadeIn">
+    <div className="max-w-6xl mx-auto space-y-8 animate-fadeIn pb-12">
       
-      {/* 1. CARTE HERO STYLE PONPON MANIA / BD INTERACTIVE (Avec Sceau/Disque Vinyle animé) */}
+      {/* 1. CARTE HERO : PILOTE AUTOMATIQUE DU COURS DU JOUR */}
       <div className="bg-[#1c1917] text-white rounded-3xl p-6 sm:p-9 border-2 border-stone-900 shadow-[6px_6px_0px_#c23b22] relative overflow-hidden group">
         
-        {/* Disque Calligraphique Vinyle Flottant (Inspiration Ponpon Mania Vinyl) */}
+        {/* Sceau Vinyle Flottant */}
         <div className="absolute -right-12 -top-12 sm:right-6 sm:top-6 w-36 h-36 sm:w-48 sm:h-48 rounded-full border-4 border-stone-800 bg-[#252220] flex items-center justify-center pointer-events-none select-none animate-float shadow-2xl opacity-40 sm:opacity-90">
-          {/* Sillons du vinyle */}
           <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full border border-stone-700/60 flex items-center justify-center">
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-stone-700/80 flex items-center justify-center">
-              {/* Centre rouge sceau cinnabre qui tourne lentement */}
               <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#c23b22] border-2 border-amber-300 flex items-center justify-center animate-spin-slow">
-                <span className="font-serif font-black text-sm text-white chinese-text">悟</span>
+                <span className="font-serif font-black text-sm text-white chinese-text">语</span>
               </div>
             </div>
           </div>
@@ -159,11 +156,10 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
         <div className="relative z-10 space-y-6 max-w-2xl">
           
-          {/* Header de la carte d'action */}
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-[#c23b22] text-white text-[11px] font-black uppercase tracking-wider shadow-xs">
               <Zap className="w-3.5 h-3.5 fill-white mr-1" />
-              Mission du Jour • Pilote Automatique
+              Cursus HSK 3-4 • Cours Recommandé
             </span>
 
             <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-white/10 text-stone-300 text-[11px] font-mono border border-white/10">
@@ -172,7 +168,6 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             </span>
           </div>
 
-          {/* Corps de l'Action Recommandée */}
           <div className="space-y-3">
             <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[10px] font-mono font-bold uppercase">
               {nextAction.badge}
@@ -193,7 +188,6 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             </p>
           </div>
 
-          {/* Gros Bouton d'Action Pop BD 1-Clic */}
           <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
             <button
               onClick={handleLaunchMainAction}
@@ -205,7 +199,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             </button>
 
             <span className="text-xs text-stone-400 text-center sm:text-left font-medium">
-              💡 Zéro hésitation : clique pour démarrer ta progression optimale.
+              💡 Progression logique guidée : clique pour ouvrir directement la leçon du jour.
             </span>
           </div>
 
@@ -213,192 +207,21 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
       </div>
 
-      {/* 2. CARACTÈRE DU JOUR (DAILY HANZI) & CONNEXION IPHONE APPLE */}
-      <DailyHanziCard
-        hanzi={todayHanzi}
-        syncedAnkiWords={syncedAnkiWords}
-        onOpenAppleSyncModal={onOpenAppleSyncModal}
-        onOpenAnkiModal={onOpenAnkiModal}
-        onSelectPreviousHanzi={onSelectPreviousHanzi}
-        onSelectNextHanzi={onSelectNextHanzi}
-      />
-
-      {/* 3. NOUVELLE CARTE BANNIÈRE : CONNEXION CALENDRIER & RAPPELS EN 1 CLIC */}
-      <div className="bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50 rounded-3xl p-5 sm:p-6 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        
-        <div className="flex items-start space-x-3.5">
-          <div className="p-3 rounded-2xl bg-white border-2 border-stone-900 text-blue-600 shadow-[2px_2px_0px_#1c1917] shrink-0">
-            <Calendar className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-blue-900 border border-blue-300">
-                Ne manque aucune session
-              </span>
-              <span className="text-xs font-bold text-stone-500">15 min / jour</span>
-            </div>
-            <h3 className="text-sm sm:text-base font-black text-stone-900 mt-1 font-serif">
-              Connecte ton Calendrier (Google, Apple, Outlook) & active tes alertes
-            </h3>
-            <p className="text-xs text-stone-600 mt-0.5">
-              Reçois un rappel quotidien à l'heure de ton choix et synchronise ton emploi du temps en un clic.
-            </p>
-          </div>
-        </div>
-
-        <button
-          onClick={onOpenCalendarModal}
-          className="self-start sm:self-center inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs shadow-[2px_2px_0px_#1c1917] border border-stone-900 hover:-translate-y-0.5 active:translate-y-0 transition-all shrink-0"
-        >
-          <Bell className="w-4 h-4 text-amber-300" />
-          <span>Configurer mes Rappels</span>
-        </button>
-
-      </div>
-
-      {/* 3. LES 3 ÉTAPES DU PROGRAMME (Style Vignettes BD / Manhua) */}
-      <div className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-4">
-        
-        <div className="flex items-center justify-between border-b-2 border-stone-100 pb-3">
-          <div className="flex items-center space-x-2">
-            <span className="p-1 rounded-md bg-stone-100 text-stone-900">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            </span>
-            <h3 className="text-sm font-black text-stone-900 uppercase tracking-wider font-serif">
-              La Trame Quotidienne en 3 Chapitres
-            </h3>
-          </div>
-          <span className="text-xs font-mono text-stone-400">10-15 min par jour</span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
-          
-          {/* Chapitre 1 : Ancrage */}
-          <div className={`p-4 rounded-2xl border-2 transition-all flex flex-col justify-between ${
-            dueCards.length > 0 
-              ? 'bg-amber-50 border-stone-900 shadow-[3px_3px_0px_#1c1917]' 
-              : 'bg-stone-50 border-stone-200'
-          }`}>
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono font-black text-stone-500 uppercase">Chapitre 01</span>
-                <Anchor className={`w-4 h-4 ${dueCards.length > 0 ? 'text-amber-700' : 'text-emerald-600'}`} />
-              </div>
-              <h4 className="text-sm font-black text-stone-900 mb-1">Répétition Espacée</h4>
-              <p className="text-xs text-stone-600 leading-relaxed mb-3">
-                {dueCards.length > 0 
-                  ? `${dueCards.length} nuance(s) arrivées à échéance cognitive aujourd'hui.` 
-                  : "Toutes les révisions d'aujourd'hui sont à jour !"}
-              </p>
-            </div>
-            {dueCards.length > 0 ? (
-              <button
-                onClick={() => onStartGuidedAction(dueCards[0].id, 'anchor')}
-                className="w-full py-2 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-black text-xs border border-stone-900 shadow-2xs transition-all"
-              >
-                Lancer ({dueCards.length})
-              </button>
-            ) : (
-              <span className="inline-flex items-center text-[11px] font-bold text-emerald-700">
-                <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Consolidé pour aujourd'hui
-              </span>
-            )}
-          </div>
-
-          {/* Chapitre 2 : Découverte & Test */}
-          <div className="p-4 rounded-2xl border-2 bg-stone-50 border-stone-200 space-y-1">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-mono font-black text-stone-500 uppercase">Chapitre 02</span>
-              <BookOpen className="w-4 h-4 text-[#c23b22]" />
-            </div>
-            <h4 className="text-sm font-black text-stone-900 mb-1">Leçon & Test Actif</h4>
-            <p className="text-xs text-stone-600 leading-relaxed">
-              Formule de pensée, décryptage des pièges et test actif de discrimination par choix ciblé.
-            </p>
-          </div>
-
-          {/* Chapitre 3 : Entraînement Vocal */}
-          <div className="p-4 rounded-2xl border-2 bg-stone-50 border-stone-200 space-y-1">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-mono font-black text-stone-500 uppercase">Chapitre 03</span>
-              <Mic className="w-4 h-4 text-rose-600" />
-            </div>
-            <h4 className="text-sm font-black text-stone-900 mb-1">Pratique Vocale</h4>
-            <p className="text-xs text-stone-600 leading-relaxed">
-              Prononciation au micro sans coupure brutale, écoute 0.8x et validation de l'élocution native (≥ 80%).
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-      {/* 4. STATISTIQUES TACTILES STYLE STICKERS */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        
-        {/* Streak */}
-        <div className="bg-white p-5 rounded-2xl border-2 border-stone-900 shadow-[3px_3px_0px_#1c1917] flex items-center space-x-4">
-          <div className="p-3 rounded-2xl bg-amber-100 text-amber-800 border border-stone-900">
-            <Flame className="w-6 h-6 fill-amber-500" />
-          </div>
-          <div>
-            <div className="text-2xl font-black text-stone-900 font-serif">
-              {streakDays} jours
-            </div>
-            <div className="text-xs text-stone-500 font-medium">
-              Série d'assiduité active
-            </div>
-          </div>
-        </div>
-
-        {/* Nuances Ancrées */}
-        <div className="bg-white p-5 rounded-2xl border-2 border-stone-900 shadow-[3px_3px_0px_#1c1917] flex items-center space-x-4">
-          <div className="p-3 rounded-2xl bg-emerald-100 text-emerald-800 border border-stone-900">
-            <Award className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="text-2xl font-black text-stone-900 font-serif">
-              {anchoredCount} / {totalCards}
-            </div>
-            <div className="text-xs text-stone-500 font-medium">
-              Nuances ancrées ({progressPercent}%)
-            </div>
-          </div>
-        </div>
-
-        {/* Cartes Anki */}
-        <div 
-          onClick={onOpenAnkiModal}
-          className="bg-white p-5 rounded-2xl border-2 border-stone-900 shadow-[3px_3px_0px_#1c1917] flex items-center justify-between cursor-pointer hover:bg-amber-50/50 transition-colors group"
-        >
-          <div className="flex items-center space-x-4">
-            <div className="p-3 rounded-2xl bg-stone-100 text-stone-800 border border-stone-900 group-hover:bg-amber-100 transition-colors">
-              <Layers className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-2xl font-black text-stone-900 font-serif">
-                {syncedAnkiWords.length}
-              </div>
-              <div className="text-xs text-stone-500 font-medium">
-                Cartes Anki synchronisées
-              </div>
-            </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-stone-900 group-hover:translate-x-0.5 transition-all" />
-        </div>
-
-      </div>
-
-      {/* 5. VUE SUR LES 5 MODULES (Feuilleton) */}
+      {/* 2. PROGRESSION DANS LES 5 MODULES DU CURSUS */}
       <div className="bg-[#fcfaf7] rounded-3xl p-6 sm:p-8 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-4">
         
         <div className="flex items-center justify-between border-b-2 border-stone-200 pb-3">
           <div>
-            <h3 className="text-base font-black text-stone-900 font-serif">
-              Progression dans les 5 Modules
-            </h3>
-            <p className="text-xs text-stone-500">
-              Chaque module t'apporte un réflexe de pensée automatique.
+            <div className="flex items-center space-x-2">
+              <span className="p-1 rounded-md bg-[#c23b22] text-white">
+                <Compass className="w-4 h-4" />
+              </span>
+              <h3 className="text-base sm:text-lg font-black text-stone-900 font-serif">
+                Le Cursus d'Élocution HSK 3-4 (5 Modules)
+              </h3>
+            </div>
+            <p className="text-xs text-stone-500 mt-0.5">
+              Une progression rigoureuse pour passer de mots isolés à une pensée chinoise fluide.
             </p>
           </div>
 
@@ -478,6 +301,203 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               </div>
             );
           })}
+        </div>
+
+      </div>
+
+      {/* 3. LES 3 CHAPITRES DU COURS (MÉTHODE PÉDAGOGIQUE) */}
+      <div className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-4">
+        
+        <div className="flex items-center justify-between border-b-2 border-stone-100 pb-3">
+          <div className="flex items-center space-x-2">
+            <span className="p-1 rounded-md bg-stone-100 text-stone-900">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            </span>
+            <h3 className="text-sm font-black text-stone-900 uppercase tracking-wider font-serif">
+              Méthode d'Apprentissage en 3 Piliers
+            </h3>
+          </div>
+          <span className="text-xs font-mono text-stone-400">10-15 min par jour</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+          
+          {/* Pilier 1 : Ancrage */}
+          <div className={`p-4 rounded-2xl border-2 transition-all flex flex-col justify-between ${
+            dueCards.length > 0 
+              ? 'bg-amber-50 border-stone-900 shadow-[3px_3px_0px_#1c1917]' 
+              : 'bg-stone-50 border-stone-200'
+          }`}>
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-mono font-black text-stone-500 uppercase">Pilier 01</span>
+                <Anchor className={`w-4 h-4 ${dueCards.length > 0 ? 'text-amber-700' : 'text-emerald-600'}`} />
+              </div>
+              <h4 className="text-sm font-black text-stone-900 mb-1">Répétition Espacée</h4>
+              <p className="text-xs text-stone-600 leading-relaxed mb-3">
+                {dueCards.length > 0 
+                  ? `${dueCards.length} notion(s) à rafraîchir aujourd'hui.` 
+                  : "Toutes les révisions d'aujourd'hui sont à jour !"}
+              </p>
+            </div>
+            {dueCards.length > 0 ? (
+              <button
+                onClick={() => onStartGuidedAction(dueCards[0].id, 'anchor')}
+                className="w-full py-2 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-black text-xs border border-stone-900 shadow-2xs transition-all"
+              >
+                Lancer ({dueCards.length})
+              </button>
+            ) : (
+              <span className="inline-flex items-center text-[11px] font-bold text-emerald-700">
+                <CheckCircle2 className="w-3.5 h-3.5 mr-1" /> Consolidé pour aujourd'hui
+              </span>
+            )}
+          </div>
+
+          {/* Pilier 2 : Théorie & Ateliers */}
+          <div className="p-4 rounded-2xl border-2 bg-stone-50 border-stone-200 space-y-1">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-mono font-black text-stone-500 uppercase">Pilier 02</span>
+              <BookOpen className="w-4 h-4 text-[#c23b22]" />
+            </div>
+            <h4 className="text-sm font-black text-stone-900 mb-1">Théorie & Ateliers</h4>
+            <p className="text-xs text-stone-600 leading-relaxed">
+              Formule de pensée, décryptage des pièges, mini-dialogues réels et puzzle d'assemblage de phrases.
+            </p>
+          </div>
+
+          {/* Pilier 3 : Entraînement Vocal */}
+          <div className="p-4 rounded-2xl border-2 bg-stone-50 border-stone-200 space-y-1">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-mono font-black text-stone-500 uppercase">Pilier 03</span>
+              <Mic className="w-4 h-4 text-rose-600" />
+            </div>
+            <h4 className="text-sm font-black text-stone-900 mb-1">Pratique Vocale</h4>
+            <p className="text-xs text-stone-600 leading-relaxed">
+              Prononciation au micro sans coupure brutale, écoute 0.8x et validation de l'élocution native (≥ 80%).
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* 4. STATISTIQUES TACTILES */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        
+        {/* Streak */}
+        <div className="bg-white p-5 rounded-2xl border-2 border-stone-900 shadow-[3px_3px_0px_#1c1917] flex items-center space-x-4">
+          <div className="p-3 rounded-2xl bg-amber-100 text-amber-800 border border-stone-900">
+            <Flame className="w-6 h-6 fill-amber-500" />
+          </div>
+          <div>
+            <div className="text-2xl font-black text-stone-900 font-serif">
+              {streakDays} jours
+            </div>
+            <div className="text-xs text-stone-500 font-medium">
+              Série d'assiduité active
+            </div>
+          </div>
+        </div>
+
+        {/* Notions Ancrées */}
+        <div className="bg-white p-5 rounded-2xl border-2 border-stone-900 shadow-[3px_3px_0px_#1c1917] flex items-center space-x-4">
+          <div className="p-3 rounded-2xl bg-emerald-100 text-emerald-800 border border-stone-900">
+            <Award className="w-6 h-6" />
+          </div>
+          <div>
+            <div className="text-2xl font-black text-stone-900 font-serif">
+              {anchoredCount} / {totalCards}
+            </div>
+            <div className="text-xs text-stone-500 font-medium">
+              Notions ancrées ({progressPercent}%)
+            </div>
+          </div>
+        </div>
+
+        {/* Cartes Anki */}
+        <div 
+          onClick={onOpenAnkiModal}
+          className="bg-white p-5 rounded-2xl border-2 border-stone-900 shadow-[3px_3px_0px_#1c1917] flex items-center justify-between cursor-pointer hover:bg-amber-50/50 transition-colors group"
+        >
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-stone-100 text-stone-800 border border-stone-900 group-hover:bg-amber-100 transition-colors">
+              <Layers className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-2xl font-black text-stone-900 font-serif">
+                {syncedAnkiWords.length}
+              </div>
+              <div className="text-xs text-stone-500 font-medium">
+                Cartes Anki synchronisées
+              </div>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-stone-900 group-hover:translate-x-0.5 transition-all" />
+        </div>
+
+      </div>
+
+      {/* 5. ZONE SATELLITE DÉDIÉE : WIDGETS IPHONE & MICRO-APPRENTISSAGE (EN DEHORS DU CURSUS) */}
+      <div className="border-t-2 border-stone-200 pt-8 space-y-4">
+        
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-stone-900 text-white">
+                <Smartphone className="w-4 h-4 text-amber-300" />
+              </span>
+              <h3 className="text-base font-black text-stone-900 font-serif">
+                Outils Satellites & Widgets iPhone (En dehors du cours)
+              </h3>
+            </div>
+            <p className="text-xs text-stone-500 mt-0.5">
+              Ces éléments fonctionnent en autonomie sur tes widgets iOS pour alimenter ton bain linguistique quotidien.
+            </p>
+          </div>
+
+          <button
+            onClick={onOpenAppleSyncModal}
+            className="self-start sm:self-center inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border-2 border-stone-900 text-xs font-bold shadow-2xs transition-all"
+          >
+            <Smartphone className="w-3.5 h-3.5 text-amber-500" />
+            <span>Gérer mes Widgets iOS</span>
+          </button>
+        </div>
+
+        {/* Carte Hanzi autonome */}
+        <DailyHanziCard
+          hanzi={todayHanzi}
+          syncedAnkiWords={syncedAnkiWords}
+          onOpenAppleSyncModal={onOpenAppleSyncModal}
+          onOpenAnkiModal={onOpenAnkiModal}
+          onSelectPreviousHanzi={onSelectPreviousHanzi}
+          onSelectNextHanzi={onSelectNextHanzi}
+        />
+
+        {/* Rappels de calendrier */}
+        <div className="bg-gradient-to-r from-stone-100 via-amber-50/50 to-stone-100 rounded-3xl p-5 border-2 border-stone-900 shadow-[3px_3px_0px_#1c1917] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start space-x-3.5">
+            <div className="p-2.5 rounded-2xl bg-white border border-stone-300 text-blue-600 shadow-2xs shrink-0">
+              <Calendar className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs sm:text-sm font-black text-stone-900 font-serif">
+                Rappels Calendrier & Notifications Quotidiennes
+              </h4>
+              <p className="text-xs text-stone-600 mt-0.5">
+                Reçois une alerte discrète pour ne jamais manquer ta session de 15 minutes.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={onOpenCalendarModal}
+            className="self-start sm:self-center inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs shadow-2xs transition-all shrink-0"
+          >
+            <Bell className="w-3.5 h-3.5 text-amber-300" />
+            <span>Configurer mes Alertes</span>
+          </button>
         </div>
 
       </div>
