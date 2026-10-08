@@ -1,4 +1,5 @@
 import { AnkiWord } from '../types/fluent';
+import { triggerAutoSyncToCloud } from './cloudSyncUtils';
 
 export const DEFAULT_ANKI_URL = 'http://127.0.0.1:8765';
 
@@ -319,6 +320,7 @@ export const deleteWordFromLocalAnki = (wordIdOrHanzi: string): boolean => {
     const filtered = words.filter(w => w.id !== wordIdOrHanzi && w.hanzi !== wordIdOrHanzi);
     localStorage.setItem('fluent_anki_words', JSON.stringify(filtered));
     window.dispatchEvent(new CustomEvent('fluent_anki_words_changed', { detail: { words: filtered } }));
+    triggerAutoSyncToCloud();
     return true;
   } catch (e) {
     console.warn("Erreur suppression mot Anki :", e);
@@ -335,6 +337,7 @@ export const updateWordInLocalAnki = (updated: AnkiWord): boolean => {
       words[idx] = { ...words[idx], ...updated };
       localStorage.setItem('fluent_anki_words', JSON.stringify(words));
       window.dispatchEvent(new CustomEvent('fluent_anki_words_changed', { detail: { words } }));
+      triggerAutoSyncToCloud();
       return true;
     }
     return false;
@@ -349,6 +352,7 @@ export const clearAllLocalAnkiWords = (): void => {
   try {
     localStorage.removeItem('fluent_anki_words');
     window.dispatchEvent(new CustomEvent('fluent_anki_words_changed', { detail: { words: [] } }));
+    triggerAutoSyncToCloud();
   } catch (e) {
     console.warn("Erreur nettoyage Anki :", e);
   }
@@ -382,6 +386,7 @@ export const saveWordToLocalAnki = (wordData: {
       try {
         localStorage.setItem('fluent_anki_words', JSON.stringify(words));
         window.dispatchEvent(new CustomEvent('fluent_anki_words_changed', { detail: { words, newWord: words[existingIndex] } }));
+        triggerAutoSyncToCloud();
       } catch {}
     }
     return { success: true, isNew: false, word: words[existingIndex], totalCount: words.length };
@@ -409,6 +414,7 @@ export const saveWordToLocalAnki = (wordData: {
   try {
     localStorage.setItem('fluent_anki_words', JSON.stringify(words));
     window.dispatchEvent(new CustomEvent('fluent_anki_words_changed', { detail: { words, newWord } }));
+    triggerAutoSyncToCloud();
   } catch (e) {
     console.warn("Erreur sauvegarde locale Anki :", e);
   }
@@ -440,6 +446,7 @@ export const saveWordToLocalAnki = (wordData: {
           currentWords[idx].syncedToAnkiDesktop = true;
           localStorage.setItem('fluent_anki_words', JSON.stringify(currentWords));
           window.dispatchEvent(new CustomEvent('fluent_anki_words_changed', { detail: { words: currentWords } }));
+          triggerAutoSyncToCloud();
         }
       }
     })
@@ -540,6 +547,7 @@ export const syncAllFluentWordsToAnkiDesktop = async (): Promise<{ success: numb
   if (successCount > 0) {
     localStorage.setItem('fluent_anki_words', JSON.stringify(updatedWords));
     window.dispatchEvent(new CustomEvent('fluent_anki_words_changed', { detail: { words: updatedWords } }));
+    triggerAutoSyncToCloud();
   }
 
   return { success: successCount, failed: failedCount };

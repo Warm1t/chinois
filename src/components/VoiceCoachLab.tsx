@@ -16,6 +16,7 @@ import { analyzePronunciationWithAi, AiPronunciationFeedback } from '../utils/ai
 import { VoiceSelector } from './VoiceSelector';
 import { VoiceEvaluationResult } from '../types/fluent';
 import { saveWordToLocalAnki, isWordInLocalAnki } from '../utils/ankiConnect';
+import { triggerAutoSyncToCloud } from '../utils/cloudSyncUtils';
 import { 
   Mic, 
   Square, 
@@ -136,6 +137,24 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     window.addEventListener('fluent_anki_words_changed', handleAnkiChange);
     return () => window.removeEventListener('fluent_anki_words_changed', handleAnkiChange);
   }, [currentPhrase.hanzi]);
+
+  useEffect(() => {
+    const handleScoresChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ scores?: Record<string, number> }>;
+      if (customEvent.detail && customEvent.detail.scores) {
+        setPhraseScores(customEvent.detail.scores);
+      } else {
+        const saved = localStorage.getItem('fluent_voice_lab_scores');
+        if (saved) {
+          try {
+            setPhraseScores(JSON.parse(saved));
+          } catch {}
+        }
+      }
+    };
+    window.addEventListener('fluent_voice_lab_scores_changed', handleScoresChange);
+    return () => window.removeEventListener('fluent_voice_lab_scores_changed', handleScoresChange);
+  }, []);
 
   const handleSaveToAnki = () => {
     const res = saveWordToLocalAnki({
@@ -416,6 +435,8 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
         setPhraseScores(updatedScores);
         try {
           localStorage.setItem('fluent_voice_lab_scores', JSON.stringify(updatedScores));
+          window.dispatchEvent(new CustomEvent('fluent_voice_lab_scores_changed', { detail: { scores: updatedScores } }));
+          triggerAutoSyncToCloud();
         } catch {}
       }
 

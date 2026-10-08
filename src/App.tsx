@@ -14,7 +14,7 @@ import { StoryReaderView } from './components/StoryReaderView';
 import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
 import { UserProfileBackup, createProfileBackup } from './utils/profileSyncUtils';
-import { pushProfileToCloud, pullProfileFromCloud, isAutoSyncEnabled, getAuthUser } from './utils/cloudSyncUtils';
+import { pushProfileToCloud, pullProfileFromCloud, isAutoSyncEnabled, getAuthUser, triggerAutoSyncToCloud } from './utils/cloudSyncUtils';
 import { supabase } from './utils/supabaseClient';
 import { User } from '@supabase/supabase-js';
 import { getAppTheme, applyThemeToDocument } from './utils/themeUtils';
@@ -135,11 +135,21 @@ export const App: React.FC = () => {
           const cloudData = res.data;
           const cloudWordsCount = cloudData.syncedAnkiWords?.length || 0;
           const localWordsCount = syncedAnkiWords.length;
+          const cloudStoriesCount = cloudData.completedStories?.length || 0;
+          const localStoriesCount = (JSON.parse(localStorage.getItem('fluent_completed_stories') || '[]') as string[]).length;
+          const cloudVoiceCount = Object.keys(cloudData.voiceLabScores || {}).length;
+          const localVoiceCount = Object.keys(JSON.parse(localStorage.getItem('fluent_voice_lab_scores') || '{}')).length;
+          const cloudExercisesCount = cloudData.completedExercises?.length || 0;
 
-          // Si le cloud a des cartes ou des exercices que ce navigateur n'a pas encore :
-          if (cloudWordsCount > localWordsCount || (cloudData.completedExercises?.length || 0) > completedExercises.length) {
+          // Si le cloud a des cartes, des histoires, du labo vocal ou des exercices plus riches :
+          if (
+            cloudWordsCount > localWordsCount ||
+            cloudStoriesCount > localStoriesCount ||
+            cloudVoiceCount > localVoiceCount ||
+            cloudExercisesCount > completedExercises.length
+          ) {
             handleProfileRestored(cloudData);
-            setToastMessage(`☁️ Synchronisé avec le Cloud : ${cloudWordsCount} cartes Anki restaurées !`);
+            setToastMessage(`☁️ Synchronisé avec le Cloud : progression restaurée !`);
             setTimeout(() => setToastMessage(null), 4000);
           }
         }
@@ -164,17 +174,7 @@ export const App: React.FC = () => {
       setTimeout(() => setToastMessage(null), 4000);
     }
     refreshAnchoring();
-
-    // Synchronisation automatique silencieuse avec Supabase Cloud
-    if (isAutoSyncEnabled()) {
-      const backup = createProfileBackup(
-        updatedExercises,
-        streakDays,
-        syncedAnkiWords,
-        getAnchoringRecords()
-      );
-      pushProfileToCloud(backup).catch((e) => console.warn('Auto-sync Supabase en attente:', e));
-    }
+    triggerAutoSyncToCloud();
   };
 
   const handleStartGuidedAction = (cardId: string, actionType: 'card' | 'anchor') => {
@@ -242,13 +242,16 @@ export const App: React.FC = () => {
           />
         )}
 
-        {/* VUE HISTOIRES : LECTEUR IMMERSIF (STYLE MAAYOT AVEC ANCRAGE ANKI) */}
+        {/* VUE HISTOIRES : LECTEUR IMMERSIF AVEC ANCRAGE ANKI */}
         {activeView === 'stories' && (
           <StoryReaderView
             syncedAnkiWords={syncedAnkiWords}
             onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
             onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
-            onIncrementStreak={() => setStreakDays(prev => prev + 1)}
+            onIncrementStreak={() => {
+              setStreakDays(prev => prev + 1);
+              triggerAutoSyncToCloud();
+            }}
           />
         )}
 
@@ -262,6 +265,7 @@ export const App: React.FC = () => {
                 setToastMessage(`🎉 太棒了 ! Phrase validée à l'oral (${score}%) !`);
                 setTimeout(() => setToastMessage(null), 3500);
               }
+              triggerAutoSyncToCloud();
             }}
           />
         )}

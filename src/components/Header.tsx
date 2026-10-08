@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           
-          {/* Logo & Calligraphy Seal (Style Ponpon Mania BD Sceau interactif) */}
+          {/* Logo & Calligraphy Seal (Sceau interactif) */}
           <div 
             onClick={() => onNavigate('home')}
             className="flex items-center space-x-3 cursor-pointer group select-none"
@@ -76,7 +76,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Navigation Pill Capsule (Inspiration Ponpon Mania) */}
+          {/* Navigation Pill Capsule */}
           <div className="flex items-center space-x-1 bg-stone-100 p-1 rounded-full border border-stone-300 text-xs font-bold self-start sm:self-center shadow-inner">
             <button
               onClick={() => onNavigate('home')}

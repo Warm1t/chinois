@@ -15,6 +15,7 @@ import {
   stopSentenceRhythmAudio 
 } from '../utils/chineseRhythmEngine';
 import { saveWordToLocalAnki, isWordInLocalAnki } from '../utils/ankiConnect';
+import { triggerAutoSyncToCloud } from '../utils/cloudSyncUtils';
 import { VoiceSelector } from './VoiceSelector';
 import { WordDefinitionBanner } from './WordDefinitionBanner';
 import { 
@@ -64,7 +65,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   const [stories, setStories] = useState<MaayotStory[]>(BUILT_IN_STORIES);
   const [selectedStoryId, setSelectedStoryId] = useState<string>(BUILT_IN_STORIES[0].id);
 
-  // Préférences du lecteur (Style Maayot)
+  // Préférences du lecteur immersif
   const [showPinyin, setShowPinyin] = useState<boolean>(true);
   const [showTranslation, setShowTranslation] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(0.85);
@@ -329,6 +330,8 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
       const updated = [...completedStoryIds, activeStory.id];
       setCompletedStoryIds(updated);
       localStorage.setItem('fluent_completed_stories', JSON.stringify(updated));
+      window.dispatchEvent(new CustomEvent('fluent_completed_stories_changed', { detail: { completedStoryIds: updated } }));
+      triggerAutoSyncToCloud();
       if (onIncrementStreak) onIncrementStreak();
     }
   };
@@ -583,6 +586,24 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     return () => window.removeEventListener('fluent_anki_words_changed', handleAnkiChange);
   }, []);
 
+  useEffect(() => {
+    const handleStoriesChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ completedStoryIds?: string[] }>;
+      if (customEvent.detail && Array.isArray(customEvent.detail.completedStoryIds)) {
+        setCompletedStoryIds(customEvent.detail.completedStoryIds);
+      } else {
+        const saved = localStorage.getItem('fluent_completed_stories');
+        if (saved) {
+          try {
+            setCompletedStoryIds(JSON.parse(saved));
+          } catch {}
+        }
+      }
+    };
+    window.addEventListener('fluent_completed_stories_changed', handleStoriesChange);
+    return () => window.removeEventListener('fluent_completed_stories_changed', handleStoriesChange);
+  }, []);
+
   // Vérifier si un mot dans le dictionnaire fait partie des cartes Anki de l'utilisateur
   const isWordInUserAnki = (hanzi: string) => {
     if (!hanzi) return false;
@@ -628,7 +649,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
         <div className="space-y-1">
           <div className="flex items-center space-x-2">
             <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
-              Lectures Immersives (Concept Maayot)
+              Lectures Immersives
             </span>
             <span className="text-xs font-bold text-stone-500">
               {completedStoryIds.length} histoires lues
@@ -695,7 +716,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
         })}
       </div>
 
-      {/* 2. LE LECTEUR IMMERSIF MAAYOT */}
+      {/* 2. LE LECTEUR IMMERSIF */}
       <div className="bg-[#fcfaf7] border-2 border-stone-900 rounded-3xl p-6 sm:p-8 shadow-[6px_6px_0px_#1c1917] space-y-6 relative">
         
         {/* En-tête de l'histoire */}
@@ -729,7 +750,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
           </p>
         </div>
 
-        {/* 3. BARRE D'OUTILS DE LECTURE MAAYOT (PINYIN, TRADUCTION, RYTHME & FLUX, AUDIO, VITESSE) */}
+        {/* 3. BARRE D'OUTILS DE LECTURE (PINYIN, TRADUCTION, RYTHME & FLUX, AUDIO, VITESSE) */}
         <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white border border-stone-200 rounded-2xl">
           
           {/* Toggles Pinyin, Traduction & Mode Rythme */}
@@ -1147,7 +1168,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                         </p>
                       )}
 
-                      {/* POP-UP DICTIONNAIRE & PHRASES D'EXEMPLE DIRECTEMENT SOUS LA PHRASE (STYLE MAAYOT INLINE) */}
+                      {/* POP-UP DICTIONNAIRE & PHRASES D'EXEMPLE DIRECTEMENT SOUS LA PHRASE */}
                       {selectedWord && selectedWordSentenceIdx === globalIdx && (
                         <WordDefinitionBanner
                           selectedWord={selectedWord}
@@ -1367,7 +1388,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
           </div>
         </div>
 
-        {/* 7. QUIZ DE COMPRÉHENSION MAAYOT (TRADUCTION FRANÇAISE MASQUÉE PAR DÉFAUT) */}
+        {/* 7. QUIZ DE COMPRÉHENSION (TRADUCTION FRANÇAISE MASQUÉE PAR DÉFAUT) */}
         {activeStory.quiz && activeStory.quiz.length > 0 && (
           <div className="p-5 rounded-2xl bg-white border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-stone-200 pb-3 gap-2">
@@ -1468,7 +1489,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
           </div>
         )}
 
-        {/* 8. DÉFI D'EXPRESSION ORALE / ÉCRITE (PROMPT MAAYOT AVEC TRADUCTION CACHÉE) */}
+        {/* 8. DÉFI D'EXPRESSION ORALE / ÉCRITE (TRADUCTION CACHÉE PAR DÉFAUT) */}
         {activeStory.discussionPrompt && (
           <div className="p-5 rounded-2xl bg-amber-50/70 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-3">
             <div className="flex items-center justify-between gap-2">

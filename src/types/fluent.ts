@@ -123,7 +123,7 @@ export interface AnkiWord {
 }
 
 // ==========================================
-// TYPES POUR L'ONGLET HISTOIRES (STYLE MAAYOT)
+// TYPES POUR L'ONGLET HISTOIRES IMMERSIVES
 // ==========================================
 
 export interface StoryWordToken {

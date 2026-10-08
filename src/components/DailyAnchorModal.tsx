@@ -71,7 +71,7 @@ export const DailyAnchorModal: React.FC<DailyAnchorModalProps> = ({
               Session d'Ancrage Quotidien (Répétition Espacée)
             </h2>
             <p className="text-xs text-stone-500 font-medium">
-              Inspiré de la courbe de l'oubli d'Ebbinghaus : consolide les automatismes avant qu'ils ne s'effacent.
+              Système de répétition espacée (SRS) : consolide les automatismes avant qu'ils ne s'effacent.
             </p>
           </div>
         </div>

@@ -3,7 +3,8 @@ import { supabase } from './supabaseClient';
 import { 
   UserProfileBackup, 
   applyProfileBackupToStorage, 
-  mergeProfileBackups 
+  mergeProfileBackups,
+  createProfileBackup
 } from './profileSyncUtils';
 
 const SYNC_USER_ID_KEY = 'fluent_sync_user_id';
@@ -190,35 +191,47 @@ export const setLastSyncTime = (timestamp: string) => {
 };
 
 /**
- * Lire le profil local actuel depuis localStorage
+ * Lire le profil local actuel depuis localStorage (comprend exercices, streak, mots Anki, ancrage, histoires et labo vocal)
  */
 export const getCurrentLocalProfile = (): UserProfileBackup => {
-  try {
-    const completedRaw = localStorage.getItem('fluent_completed_exercises');
-    const streakRaw = localStorage.getItem('fluent_streak_days');
-    const ankiRaw = localStorage.getItem('fluent_anki_words');
-    const anchorRaw = localStorage.getItem('fluent_anchoring_records');
+  return createProfileBackup();
+};
 
-    return {
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      completedExercises: completedRaw ? JSON.parse(completedRaw) : [],
-      streakDays: streakRaw ? parseInt(streakRaw, 10) : 1,
-      syncedAnkiWords: ankiRaw ? JSON.parse(ankiRaw) : [],
-      anchoringRecords: anchorRaw ? JSON.parse(anchorRaw) : {},
-      reminderTime: localStorage.getItem('fluent_reminder_time') || '09:00',
-      webhookUrl: localStorage.getItem('fluent_webhook_url') || '',
-    };
-  } catch {
-    return {
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      completedExercises: [],
-      streakDays: 1,
-      syncedAnkiWords: [],
-      anchoringRecords: {},
-    };
+let autoSyncTimeout: any = null;
+
+/**
+ * Déclenche une synchronisation automatique transparente vers Supabase Cloud
+ * (immédiate ou debouncée pour grouper les ajouts rapides de cartes Anki ou d'exercices)
+ */
+export const triggerAutoSyncToCloud = (immediate = false): Promise<void> => {
+  if (autoSyncTimeout) {
+    clearTimeout(autoSyncTimeout);
+    autoSyncTimeout = null;
   }
+
+  if (immediate) {
+    if (!isAutoSyncEnabled()) return Promise.resolve();
+    const profile = getCurrentLocalProfile();
+    return pushProfileToCloud(profile).then(() => {}).catch(err => {
+      console.warn('Auto-sync cloud immédiat :', err);
+    });
+  }
+
+  return new Promise((resolve) => {
+    autoSyncTimeout = setTimeout(async () => {
+      if (!isAutoSyncEnabled()) {
+        resolve();
+        return;
+      }
+      try {
+        const profile = getCurrentLocalProfile();
+        await pushProfileToCloud(profile);
+      } catch (err) {
+        console.warn('Auto-sync cloud débouncé :', err);
+      }
+      resolve();
+    }, 600);
+  });
 };
 
 // ==========================================
@@ -301,10 +314,22 @@ export const pullProfileFromCloud = async (
     applyProfileBackupToStorage(mergedProfile);
     setLastSyncTime(data.updated_at || new Date().toISOString());
 
-    // Si le local avait du contenu nouveau qui a enrichi le profil, le renvoyer silencieusement vers Supabase
+    // Si le local avait du contenu nouveau qui a enrichi le profil (cartes Anki, histoires, labo vocal ou exercices), le renvoyer silencieusement vers Supabase
+    const cloudWords = cloudProfile.syncedAnkiWords?.length || 0;
+    const cloudExercises = cloudProfile.completedExercises?.length || 0;
+    const cloudStories = cloudProfile.completedStories?.length || 0;
+    const cloudVoice = Object.keys(cloudProfile.voiceLabScores || {}).length;
+
+    const mergedWords = mergedProfile.syncedAnkiWords.length;
+    const mergedExercises = mergedProfile.completedExercises.length;
+    const mergedStories = (mergedProfile.completedStories || []).length;
+    const mergedVoice = Object.keys(mergedProfile.voiceLabScores || {}).length;
+
     if (
-      mergedProfile.syncedAnkiWords.length > cloudProfile.syncedAnkiWords.length || 
-      mergedProfile.completedExercises.length > cloudProfile.completedExercises.length
+      mergedWords > cloudWords || 
+      mergedExercises > cloudExercises ||
+      mergedStories > cloudStories ||
+      mergedVoice > cloudVoice
     ) {
       pushProfileToCloud(mergedProfile, userId).catch(() => {});
     }

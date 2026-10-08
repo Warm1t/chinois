@@ -20,13 +20,13 @@
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────┐
-│   🏠 Accueil Guidé   │   📖 Histoires (Maayot)   │   🎙️ Labo Vocal   │   🧭 5 Modules  │
+│   🏠 Accueil Guidé   │   📖 Histoires            │   🎙️ Labo Vocal   │   🧭 Modules    │
 └───────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 1. 🏠 Accueil Guidé (Le Cockpit Quotidien)
 * **Zéro fatigue décisionnelle** : Chaque jour, l'application analyse tes points faibles et te recommande une seule action prioritaire (découvrir une nouvelle nuance ou consolider un point clé).
-* **🏮 Daily Hanzi (Caractère du Jour inspiré des meilleures apps)** :
+* **🏮 Daily Hanzi (Caractère du Jour)** :
   - Un sinogramme HSK 3-4 authentique sélectionné automatiquement chaque jour de l'année.
   - Grand sceau calligraphique interactif avec prononciation audio native en 1 clic.
   - Mnémonique visuelle / décomposition étymologique (clé, nombre de traits).
@@ -44,7 +44,7 @@
 
 ---
 
-### 2. 📖 Espace Histoires Quotidiennes (Inspiré de l'App Maayot)
+### 2. 📖 Espace Histoires Quotidiennes
 * **Lecteur immersif en sinogrammes** : Des histoires courtes et vivantes spécialement rédigées pour le niveau HSK 3-4 (anecdotes culturelles, vie quotidienne en Chine, travail, voyages).
 * **Dictionnaire instantané au clic (*One-Click Dictionary*)** :
   - Clique sur **n'importe quel mot ou caractère** pour ouvrir sa fiche : Hanzi géant, Pinyin accentué, traduction française et bouton audio pour écouter sa prononciation isolée.

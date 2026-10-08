@@ -8,27 +8,53 @@ export interface UserProfileBackup {
   streakDays: number;
   syncedAnkiWords: AnkiWord[];
   anchoringRecords: Record<string, AnchoringRecord>;
+  completedStories?: string[];
+  voiceLabScores?: Record<string, number>;
+  builderCompleted?: Record<string, boolean>;
   reminderTime?: string;
   webhookUrl?: string;
 }
 
-// 1. Générer l'objet de sauvegarde complet
+// 1. Générer l'objet de sauvegarde complet (avec repli automatique sur localStorage si non passé)
 export const createProfileBackup = (
-  completedExercises: string[],
-  streakDays: number,
-  syncedAnkiWords: AnkiWord[],
-  anchoringRecords: Record<string, AnchoringRecord>
+  completedExercises?: string[],
+  streakDays?: number,
+  syncedAnkiWords?: AnkiWord[],
+  anchoringRecords?: Record<string, AnchoringRecord>,
+  completedStories?: string[],
+  voiceLabScores?: Record<string, number>,
+  builderCompleted?: Record<string, boolean>
 ): UserProfileBackup => {
+  const getStoredJson = <T>(key: string, fallback: T): T => {
+    try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : fallback;
+    } catch {
+      return fallback;
+    }
+  };
+
+  const finalCompletedExercises = completedExercises ?? getStoredJson<string[]>('fluent_completed_exercises', []);
+  const finalStreakDays = streakDays ?? parseInt(localStorage.getItem('fluent_streak_days') || '1', 10);
+  const finalSyncedAnkiWords = syncedAnkiWords ?? getStoredJson<AnkiWord[]>('fluent_anki_words', []);
+  const finalAnchoringRecords = anchoringRecords ?? getStoredJson<Record<string, AnchoringRecord>>(ANCHOR_STORAGE_KEY, {});
+  const finalCompletedStories = completedStories ?? getStoredJson<string[]>('fluent_completed_stories', []);
+  const finalVoiceLabScores = voiceLabScores ?? getStoredJson<Record<string, number>>('fluent_voice_lab_scores', {});
+  const finalBuilderCompleted = builderCompleted ?? getStoredJson<Record<string, boolean>>('fluent_builder_completed', {});
+
   const reminderTime = localStorage.getItem('fluent_reminder_time') || '09:00';
   const webhookUrl = localStorage.getItem('fluent_webhook_url') || '';
 
   return {
     version: 1,
     exportedAt: new Date().toISOString(),
-    completedExercises,
-    streakDays,
-    syncedAnkiWords,
-    anchoringRecords,
+    completedExercises: finalCompletedExercises,
+    streakDays: finalStreakDays,
+    syncedAnkiWords: finalSyncedAnkiWords,
+    anchoringRecords: finalAnchoringRecords,
+    completedStories: finalCompletedStories,
+    voiceLabScores: finalVoiceLabScores,
+    builderCompleted: finalBuilderCompleted,
     reminderTime,
     webhookUrl,
   };
@@ -62,6 +88,9 @@ export const parseProfileBackup = (rawContent: string): UserProfileBackup | null
       streakDays: typeof data.streakDays === 'number' ? data.streakDays : 1,
       syncedAnkiWords: Array.isArray(data.syncedAnkiWords) ? data.syncedAnkiWords : [],
       anchoringRecords: typeof data.anchoringRecords === 'object' && data.anchoringRecords !== null ? data.anchoringRecords : {},
+      completedStories: Array.isArray(data.completedStories) ? data.completedStories : [],
+      voiceLabScores: typeof data.voiceLabScores === 'object' && data.voiceLabScores !== null ? data.voiceLabScores : {},
+      builderCompleted: typeof data.builderCompleted === 'object' && data.builderCompleted !== null ? data.builderCompleted : {},
       reminderTime: data.reminderTime || '09:00',
       webhookUrl: data.webhookUrl || '',
     };
@@ -71,12 +100,29 @@ export const parseProfileBackup = (rawContent: string): UserProfileBackup | null
   }
 };
 
-// 4. Appliquer la sauvegarde dans le stockage local
+// 4. Appliquer la sauvegarde dans le stockage local et notifier tous les modules actifs
 export const applyProfileBackupToStorage = (backup: UserProfileBackup) => {
-  localStorage.setItem('fluent_completed_exercises', JSON.stringify(backup.completedExercises || []));
-  localStorage.setItem('fluent_streak_days', (backup.streakDays || 1).toString());
-  localStorage.setItem('fluent_anki_words', JSON.stringify(backup.syncedAnkiWords || []));
-  localStorage.setItem(ANCHOR_STORAGE_KEY, JSON.stringify(backup.anchoringRecords || {}));
+  if (Array.isArray(backup.completedExercises)) {
+    localStorage.setItem('fluent_completed_exercises', JSON.stringify(backup.completedExercises));
+  }
+  if (typeof backup.streakDays === 'number') {
+    localStorage.setItem('fluent_streak_days', (backup.streakDays || 1).toString());
+  }
+  if (Array.isArray(backup.syncedAnkiWords)) {
+    localStorage.setItem('fluent_anki_words', JSON.stringify(backup.syncedAnkiWords));
+  }
+  if (backup.anchoringRecords) {
+    localStorage.setItem(ANCHOR_STORAGE_KEY, JSON.stringify(backup.anchoringRecords));
+  }
+  if (Array.isArray(backup.completedStories)) {
+    localStorage.setItem('fluent_completed_stories', JSON.stringify(backup.completedStories));
+  }
+  if (backup.voiceLabScores) {
+    localStorage.setItem('fluent_voice_lab_scores', JSON.stringify(backup.voiceLabScores));
+  }
+  if (backup.builderCompleted) {
+    localStorage.setItem('fluent_builder_completed', JSON.stringify(backup.builderCompleted));
+  }
   if (backup.reminderTime) localStorage.setItem('fluent_reminder_time', backup.reminderTime);
   if (backup.webhookUrl) localStorage.setItem('fluent_webhook_url', backup.webhookUrl);
 
@@ -84,6 +130,21 @@ export const applyProfileBackupToStorage = (backup: UserProfileBackup) => {
     window.dispatchEvent(
       new CustomEvent('fluent_anki_words_changed', { 
         detail: { words: backup.syncedAnkiWords || [] } 
+      })
+    );
+    window.dispatchEvent(
+      new CustomEvent('fluent_completed_stories_changed', { 
+        detail: { completedStoryIds: backup.completedStories || [] } 
+      })
+    );
+    window.dispatchEvent(
+      new CustomEvent('fluent_voice_lab_scores_changed', { 
+        detail: { scores: backup.voiceLabScores || {} } 
+      })
+    );
+    window.dispatchEvent(
+      new CustomEvent('fluent_profile_updated', { 
+        detail: backup 
       })
     );
   }
@@ -102,6 +163,23 @@ export const mergeProfileBackups = (
   // Conserver le meilleur streak
   const streakDays = Math.max(local.streakDays || 1, cloud.streakDays || 1);
 
+  // Fusionner les histoires complétées
+  const completedStories = Array.from(
+    new Set([...(local.completedStories || []), ...(cloud.completedStories || [])])
+  );
+
+  // Fusionner les scores du labo vocal (meilleur score conservé par phrase)
+  const voiceLabScores: Record<string, number> = { ...(cloud.voiceLabScores || {}) };
+  Object.entries(local.voiceLabScores || {}).forEach(([id, score]) => {
+    voiceLabScores[id] = Math.max(voiceLabScores[id] || 0, score);
+  });
+
+  // Fusionner les exercices de construction de phrases
+  const builderCompleted: Record<string, boolean> = {
+    ...(cloud.builderCompleted || {}),
+    ...(local.builderCompleted || {})
+  };
+
   // Fusionner les mots Anki par Hanzi
   const wordsMap = new Map<string, AnkiWord>();
   (cloud.syncedAnkiWords || []).forEach(w => {
@@ -118,6 +196,7 @@ export const mergeProfileBackups = (
           exampleSentence: w.exampleSentence || existing.exampleSentence,
           examplePinyin: w.examplePinyin || existing.examplePinyin,
           exampleTranslation: w.exampleTranslation || existing.exampleTranslation,
+          syncedToAnkiDesktop: existing.syncedToAnkiDesktop || w.syncedToAnkiDesktop,
         });
       } else {
         wordsMap.set(cleanH, w);
@@ -125,11 +204,22 @@ export const mergeProfileBackups = (
     }
   });
 
-  // Fusionner les enregistrements d'ancrage
-  const anchoringRecords: Record<string, AnchoringRecord> = {
-    ...(cloud.anchoringRecords || {}),
-    ...(local.anchoringRecords || {}),
-  };
+  // Fusionner les enregistrements d'ancrage SRS (conserver l'avancement maximal)
+  const anchoringRecords: Record<string, AnchoringRecord> = { ...(cloud.anchoringRecords || {}) };
+  Object.entries(local.anchoringRecords || {}).forEach(([cardId, localRecord]) => {
+    const cloudRecord = anchoringRecords[cardId];
+    if (!cloudRecord) {
+      anchoringRecords[cardId] = localRecord;
+    } else {
+      anchoringRecords[cardId] = {
+        ...cloudRecord,
+        ...localRecord,
+        consecutiveSuccesses: Math.max(localRecord.consecutiveSuccesses || 0, cloudRecord.consecutiveSuccesses || 0),
+        voiceBestScore: Math.max(localRecord.voiceBestScore || 0, cloudRecord.voiceBestScore || 0),
+        stage: (localRecord.consecutiveSuccesses || 0) >= (cloudRecord.consecutiveSuccesses || 0) ? localRecord.stage : cloudRecord.stage,
+      };
+    }
+  });
 
   return {
     version: 1,
@@ -138,7 +228,10 @@ export const mergeProfileBackups = (
     streakDays,
     syncedAnkiWords: Array.from(wordsMap.values()),
     anchoringRecords,
-    reminderTime: local.reminderTime || cloud.reminderTime || '09:00',
-    webhookUrl: local.webhookUrl || cloud.webhookUrl || '',
+    completedStories,
+    voiceLabScores,
+    builderCompleted,
+    reminderTime: cloud.reminderTime || local.reminderTime || '09:00',
+    webhookUrl: cloud.webhookUrl || local.webhookUrl || '',
   };
 };

@@ -1,13 +1,13 @@
 # 📑 PRD : Fluent — Le Cockpit d'Expression & Nuances en Mandarin (HSK 3-4)
 
-> Application web interactive 100% gratuite (sans abonnement payant) pour passer du vocabulaire mémorisé (Anki) à l'expression fluide de pensées et d'expressions complètes en chinois, avec synchronisation multi-appareils, histoires immersives inspirées de Maayot et correction vocale native.
+> Application web interactive 100% gratuite (sans abonnement payant) pour passer du vocabulaire mémorisé (Anki) à l'expression fluide de pensées et d'expressions complètes en chinois, avec synchronisation multi-appareils, histoires immersives et correction vocale native.
 
 ---
 
 ## 1. Vue d'ensemble du Projet
 
 * **Nom du Projet** : Fluent — Mandarin Coach HSK 3-4
-* **Pitch en 1 phrase** : L'outil tout-en-un qui transforme tes cartes de vocabulaire Anki en pensées naturelles grâce à l'exploration exhaustive des nuances grammaticales, des histoires quotidiennes immersives (style Maayot) et un entraîneur vocal avec correction en direct.
+* **Pitch en 1 phrase** : L'outil tout-en-un qui transforme tes cartes de vocabulaire Anki en pensées naturelles grâce à l'exploration exhaustive des nuances grammaticales, des histoires quotidiennes immersives et un entraîneur vocal avec correction en direct.
 * **Public Cible** : 
   - Apprenant motivé de niveau **HSK 3 - HSK 4**, capable d'investir un temps d'étude sérieux, connaissant les caractères de base mais cherchant à maîtriser les expressions complètes, les structures idiomatiques et l'aisance à l'oral.
 * **Contraintes Techniques Majeures** : 
@@ -27,12 +27,12 @@
 
 ---
 
-### 📖 Module 2 : L'Espace Histoires Immersives (Inspiré à 100% de l'App Maayot)
+### 📖 Module 2 : L'Espace Histoires Immersives
 - **Lecteur immersif en sinogrammes** : Textes calibrés HSK 3-4 authentiques sur fond parchemin/encre.
 - **Dictionnaire instantané au clic (One-Click Dictionary)** :
   - Clic sur n'importe quel mot ➔ Popup avec Hanzi géant, Pinyin accentué, traduction française, prononciation audio du mot.
   - Détection automatique et badge *"⭐ Dans ton Anki"* si le mot fait partie des paquets de l'utilisateur.
-- **Barre d'outils Maayot** :
+- **Barre d'outils de lecture immersive** :
   - **Toggle Pinyin** : Afficher ou masquer le Pinyin en un clic pour forcer la lecture en caractères.
   - **Toggle Traduction** : Affichage phrase par phrase sous le texte.
   - **Lecteur Audio Intégré & Vitesse réglable** : Synthèse vocale native à `0.75x` (ralenti pour les tons), `1.0x` (normal) et `1.2x` (accéléré).
