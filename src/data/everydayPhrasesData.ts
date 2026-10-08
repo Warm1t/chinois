@@ -14,6 +14,8 @@ export interface EverydayPhrase {
 
 export const EVERYDAY_CATEGORIES = [
   { id: 'all', label: 'Toutes les phrases', icon: '✨' },
+  { id: 'mastered', label: 'Phrases Validées', icon: '✅' },
+  { id: 'to_practice', label: 'À Valider', icon: '🎯' },
   { id: 'custom', label: 'Mes ajouts', icon: '✍️' },
   { id: 'anki', label: 'Mes cartes Anki', icon: '⭐' },
   { id: 'restaurant', label: 'Restaurant & Café', icon: '🍜' },

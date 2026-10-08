@@ -151,6 +151,13 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
   // Liste source selon la catégorie sélectionnée
   const sourcePhrases = React.useMemo(() => {
+    const allList = [...customPhrases, ...EVERYDAY_PHRASES];
+    if (selectedCategory === 'mastered') {
+      return allList.filter(phrase => (phraseScores[phrase.id] || 0) >= 80);
+    }
+    if (selectedCategory === 'to_practice') {
+      return allList.filter(phrase => (phraseScores[phrase.id] || 0) < 80);
+    }
     if (selectedCategory === 'custom') {
       return customPhrases;
     }
@@ -158,10 +165,10 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
       return ankiPhrases;
     }
     if (selectedCategory === 'all') {
-      return [...customPhrases, ...EVERYDAY_PHRASES];
+      return allList;
     }
-    return [...customPhrases, ...EVERYDAY_PHRASES].filter(phrase => phrase.category === selectedCategory);
-  }, [selectedCategory, customPhrases, ankiPhrases]);
+    return allList.filter(phrase => phrase.category === selectedCategory);
+  }, [selectedCategory, customPhrases, ankiPhrases, phraseScores]);
 
   // Filtrage des phrases avec recherche
   const filteredPhrases = React.useMemo(() => {
@@ -582,6 +589,9 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
         } catch {}
       }
 
+      setAnkiToast(`🎉 Phrase validée à l'oral (${feedback.accuracyScore}%) ! 太棒了 !`);
+      setTimeout(() => setAnkiToast(null), 3500);
+
       if (onPracticeCompleted) {
         onPracticeCompleted(currentPhrase.id, feedback.accuracyScore);
       }
@@ -699,6 +709,22 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     }
     setActivePhraseIndex(randomIndex);
   };
+
+  const jumpToNextUnmastered = () => {
+    if (filteredPhrases.length <= 1) return;
+    const nextIdx = filteredPhrases.findIndex((p, idx) => idx > activePhraseIndex && (phraseScores[p.id] || 0) < 80);
+    if (nextIdx !== -1) {
+      setActivePhraseIndex(nextIdx);
+      return;
+    }
+    const fromStartIdx = filteredPhrases.findIndex((p, idx) => idx < activePhraseIndex && (phraseScores[p.id] || 0) < 80);
+    if (fromStartIdx !== -1) {
+      setActivePhraseIndex(fromStartIdx);
+      return;
+    }
+  };
+
+  const hasUnmasteredRemaining = filteredPhrases.some(p => (phraseScores[p.id] || 0) < 80);
 
   // Statistiques du Labo Vocal
   const masteredCount = Object.values(phraseScores).filter(s => s >= 80).length;
@@ -821,10 +847,14 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
         <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1 text-xs font-bold scrollbar-none">
           <div className="flex items-center space-x-1.5 shrink-0">
             {EVERYDAY_CATEGORIES.map(cat => {
+              const allList = [...customPhrases, ...EVERYDAY_PHRASES];
               let count: number | null = null;
-              if (cat.id === 'all') count = EVERYDAY_PHRASES.length + customPhrases.length;
+              if (cat.id === 'all') count = allList.length;
+              else if (cat.id === 'mastered') count = allList.filter(p => (phraseScores[p.id] || 0) >= 80).length;
+              else if (cat.id === 'to_practice') count = allList.filter(p => (phraseScores[p.id] || 0) < 80).length;
               else if (cat.id === 'custom') count = customPhrases.length;
               else if (cat.id === 'anki') count = ankiPhrases.length;
+              else count = allList.filter(p => p.category === cat.id).length;
 
               return (
                 <button
@@ -973,6 +1003,23 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
               {currentPhrase.situation}
             </span>
 
+            {/* Statut de validation orale */}
+            {currentBestScore >= 80 ? (
+              <span className="text-[11px] bg-emerald-100 text-emerald-800 font-black px-2.5 py-0.5 rounded-full border border-emerald-300 flex items-center space-x-1 shadow-2xs">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Validée ({currentBestScore}%)</span>
+              </span>
+            ) : currentBestScore > 0 ? (
+              <span className="text-[11px] bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-full border border-amber-300 flex items-center space-x-1">
+                <Award className="w-3.5 h-3.5 text-amber-600" />
+                <span>En cours ({currentBestScore}%)</span>
+              </span>
+            ) : (
+              <span className="text-[10px] bg-stone-100 text-stone-600 font-semibold px-2 py-0.5 rounded-full border border-stone-200">
+                🎯 À valider
+              </span>
+            )}
+
             {/* Badges d'état personnalisé / Anki */}
             {currentPhrase.isCustom && (
               <span className="text-[10px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full border border-purple-200">
@@ -986,7 +1033,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
             )}
           </div>
 
-          <div className="flex items-center space-x-2 self-end sm:self-auto">
+          <div className="flex items-center space-x-2 self-end sm:self-auto flex-wrap">
             {currentPhrase.isCustom && (
               <button
                 onClick={handleDeleteCurrentPhrase}
@@ -1000,6 +1047,17 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
             {!customPracticePhrase ? (
               <>
+                {hasUnmasteredRemaining && (
+                  <button
+                    onClick={jumpToNextUnmastered}
+                    className="px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-500 text-stone-950 font-black text-xs transition-colors flex items-center space-x-1 shadow-2xs mr-1"
+                    title="Sauter directement à la prochaine phrase non validée"
+                  >
+                    <span>🎯 Suivante à valider</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
+
                 <span className="text-xs font-mono font-bold text-stone-400">
                   {activePhraseIndex + 1} / {filteredPhrases.length}
                 </span>
@@ -1031,6 +1089,26 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
         {/* Phrase Chinoise (Pinyin + Hanzi + Français) */}
         <div className="space-y-4 py-2 text-center">
+          
+          {/* Bannière de validation si score >= 80% */}
+          {currentBestScore >= 80 && (
+            <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-300 text-emerald-950 flex flex-col sm:flex-row items-center justify-between gap-2 max-w-xl mx-auto text-xs animate-fadeIn">
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span className="font-bold">
+                  Phrase validée à l'oral avec un score de {currentBestScore}% !
+                </span>
+              </div>
+              {hasUnmasteredRemaining && (
+                <button
+                  onClick={jumpToNextUnmastered}
+                  className="font-black text-emerald-800 hover:text-emerald-950 underline text-xs shrink-0"
+                >
+                  Suivante non validée ➔
+                </button>
+              )}
+            </div>
+          )}
           
           {/* Pinyin (Optionnel / Masquable) */}
           <div className="min-h-[28px] flex items-center justify-center">
@@ -1552,13 +1630,24 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
                   </div>
                 </div>
 
-                <button
-                  onClick={nextPhrase}
-                  className="px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-black text-xs shadow-md transition-all flex items-center justify-center space-x-1.5 shrink-0 hover:translate-x-0.5"
-                >
-                  <span>Phrase suivante</span>
-                  <ChevronRight className="w-4 h-4" />
-                </button>
+                <div className="flex items-center space-x-2 shrink-0">
+                  {hasUnmasteredRemaining && (
+                    <button
+                      onClick={jumpToNextUnmastered}
+                      className="px-3.5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-stone-950 font-black text-xs shadow-sm transition-all flex items-center justify-center space-x-1"
+                    >
+                      <span>🎯 Suivante à valider</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  )}
+                  <button
+                    onClick={nextPhrase}
+                    className="px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-black text-xs shadow-md transition-all flex items-center justify-center space-x-1.5 hover:translate-x-0.5"
+                  >
+                    <span>Phrase suivante</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             )}
 
@@ -1570,7 +1659,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
       {/* 8. NAVIGATION BASSE */}
       {filteredPhrases.length > 0 && currentPhrase && (
-        <div className="flex items-center justify-between text-xs text-stone-500 pt-2">
+        <div className="flex items-center justify-between text-xs text-stone-500 pt-2 flex-wrap gap-2">
           <button
             onClick={prevPhrase}
             className="inline-flex items-center space-x-1 hover:text-stone-900 transition-colors font-bold"
@@ -1579,9 +1668,20 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
             <span>Phrase précédente</span>
           </button>
 
-          <span className="text-[11px] text-stone-400 hidden sm:inline">
-            💡 Écoute à 0.5x pour décomposer les tons ➔ Répète au micro ➔ Compare dans le miroir
-          </span>
+          {hasUnmasteredRemaining ? (
+            <button
+              onClick={jumpToNextUnmastered}
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-950 font-black text-xs transition-colors border border-amber-300"
+            >
+              <span>🎯 Aller à la prochaine phrase à valider</span>
+              <ChevronRight className="w-3.5 h-3.5 text-amber-800" />
+            </button>
+          ) : (
+            <span className="text-[11px] text-emerald-700 font-bold flex items-center space-x-1">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Toutes les phrases de cette section sont validées !</span>
+            </span>
+          )}
 
           <button
             onClick={nextPhrase}
