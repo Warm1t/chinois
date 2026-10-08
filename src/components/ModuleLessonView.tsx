@@ -74,12 +74,18 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
   const [showPhoneticTips, setShowPhoneticTips] = useState(false);
 
   const [sentenceBuilderCompleted, setSentenceBuilderCompleted] = useState<Record<string, boolean>>(() => {
-    const saved = localStorage.getItem('fluent_builder_completed');
-    return saved ? JSON.parse(saved) : {};
+    try {
+      const saved = localStorage.getItem('fluent_builder_completed');
+      if (!saved) return {};
+      const parsed = JSON.parse(saved);
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+    } catch {
+      return {};
+    }
   });
 
   const [anchoringRecords, setAnchoringRecords] = useState<Record<string, AnchoringRecord>>(() => {
-    return getAnchoringRecords();
+    return getAnchoringRecords() || {};
   });
 
   const recognitionRef = useRef<any>(null);
@@ -91,11 +97,11 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
   const userAudioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
   const isSupported = isSpeechRecognitionSupported();
-  const currentRecord = anchoringRecords[currentCard.id];
-  const dueCards = getCardsDueForReview(NUANCE_CARDS);
+  const currentRecord = (anchoringRecords || {})[currentCard?.id];
+  const dueCards = getCardsDueForReview(NUANCE_CARDS) || [];
 
   const isTestPassed = !!currentRecord?.testPassed;
-  const isBuilderPassed = !!sentenceBuilderCompleted[currentCard.id];
+  const isBuilderPassed = !!(sentenceBuilderCompleted || {})[currentCard?.id];
   const isVoicePassed = (currentRecord?.voiceBestScore || 0) >= 80;
   const isLessonFullyMastered = isTestPassed && isVoicePassed;
 
@@ -406,7 +412,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
       <div className="flex items-center justify-between">
         <button
           onClick={onBackToModules}
-          className="inline-flex items-center space-x-2 px-4 py-2 rounded-2xl bg-white hover:bg-stone-100 text-stone-800 border-2 border-stone-900 text-xs font-bold shadow-[2px_2px_0px_#1c1917] transition-all hover:-translate-x-0.5"
+          className="inline-flex items-center space-x-2 px-4 py-2 rounded-2xl bg-white dark:bg-stone-900 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 border-2 border-stone-900 dark:border-stone-700 text-xs font-bold shadow-[2px_2px_0px_#1c1917] dark:shadow-[2px_2px_0px_#000] transition-all hover:-translate-x-0.5 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>← Tous les Modules</span>
@@ -416,13 +422,13 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           {onOpenAnchorSession && (
             <button
               onClick={onOpenAnchorSession}
-              className={`inline-flex items-center space-x-1 px-3 py-2 rounded-xl text-xs font-bold border-2 border-stone-900 transition-all shadow-[2px_2px_0px_#1c1917] ${
+              className={`inline-flex items-center space-x-1 px-3 py-2 rounded-xl text-xs font-bold border-2 border-stone-900 dark:border-stone-700 transition-all shadow-[2px_2px_0px_#1c1917] dark:shadow-[2px_2px_0px_#000] cursor-pointer ${
                 dueCards.length > 0
                   ? 'bg-amber-400 text-stone-950 hover:bg-amber-300'
-                  : 'bg-white text-stone-700 hover:bg-stone-50'
+                  : 'bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-200 hover:bg-stone-50 dark:hover:bg-stone-800'
               }`}
             >
-              <Anchor className="w-3.5 h-3.5 text-stone-900" />
+              <Anchor className="w-3.5 h-3.5 text-stone-900 dark:text-amber-400" />
               <span>Ancrage</span>
               {dueCards.length > 0 && (
                 <span className="bg-stone-900 text-white text-[10px] px-1.5 py-0.2 rounded-full font-mono">
@@ -436,7 +442,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
             <button
               onClick={prevCard}
               disabled={currentIndex === 0}
-              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="p-2 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 border border-stone-300 dark:border-stone-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               title="Leçon précédente"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -444,7 +450,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
             <button
               onClick={nextCard}
               disabled={currentIndex === NUANCE_CARDS.length - 1}
-              className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="p-2 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 border border-stone-300 dark:border-stone-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               title="Leçon suivante"
             >
               <ChevronRight className="w-4 h-4" />
@@ -454,58 +460,58 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
       </div>
 
       {/* 1. HEADER DE LA LEÇON */}
-      <div className="bg-white rounded-3xl p-5 sm:p-7 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-stone-900 rounded-3xl p-5 sm:p-7 border-2 border-stone-900 dark:border-stone-700 shadow-[4px_4px_0px_#1c1917] dark:shadow-[4px_4px_0px_#000] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center space-x-2">
-            <span className="font-mono text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-stone-100 text-stone-800 border border-stone-300">
+            <span className="font-mono text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 border border-stone-300 dark:border-stone-700">
               {currentModule?.title || 'Module'}
             </span>
-            <span className="text-xs font-mono font-bold text-stone-400">
+            <span className="text-xs font-mono font-bold text-stone-400 dark:text-stone-500">
               Leçon {currentIndex + 1} / {NUANCE_CARDS.length}
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-stone-900 font-serif leading-tight">
+          <h2 className="text-xl sm:text-2xl font-black text-stone-900 dark:text-stone-100 font-serif leading-tight">
             {currentCard.title}
           </h2>
         </div>
 
         <div className="flex items-center space-x-2 shrink-0">
-          <span className="text-xs font-mono font-bold text-[#c23b22] bg-[#c23b22]/10 px-3 py-1.5 rounded-xl border border-[#c23b22]/20">
+          <span className="text-xs font-mono font-bold text-[#c23b22] dark:text-amber-400 bg-[#c23b22]/10 dark:bg-amber-400/10 px-3 py-1.5 rounded-xl border border-[#c23b22]/20 dark:border-amber-400/20">
             {currentCard.structuralFormula}
           </span>
         </div>
       </div>
 
       {/* 2. STATUT DE PROGRESSION (LES 3 JALONS) */}
-      <div className="p-4 rounded-3xl bg-white border-2 border-stone-900 shadow-[3px_3px_0px_#1c1917] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+      <div className="p-4 rounded-3xl bg-white dark:bg-stone-900 border-2 border-stone-900 dark:border-stone-700 shadow-[3px_3px_0px_#1c1917] dark:shadow-[3px_3px_0px_#000] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
         <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-2xl bg-[#c23b22] text-white flex items-center justify-center font-serif font-black text-base shadow-sm shrink-0">
+          <div className="w-9 h-9 rounded-2xl bg-[#c23b22] dark:bg-amber-600 text-white flex items-center justify-center font-serif font-black text-base shadow-sm shrink-0">
             {isLessonFullyMastered ? '🌳' : isTestPassed ? '🌿' : '🌱'}
           </div>
           <div>
-            <div className="flex items-center space-x-2 font-bold text-stone-900">
+            <div className="flex items-center space-x-2 font-bold text-stone-900 dark:text-stone-100">
               <span>Validation de cette leçon :</span>
               {isLessonFullyMastered ? (
-                <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-900 font-bold border border-emerald-300 flex items-center">
-                  <CheckCircle2 className="w-3 h-3 mr-1 text-emerald-700" /> Ancrée en mémoire durable !
+                <span className="px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 font-bold border border-emerald-300 dark:border-emerald-700 flex items-center">
+                  <CheckCircle2 className="w-3 h-3 mr-1 text-emerald-700 dark:text-emerald-400" /> Ancrée en mémoire durable !
                 </span>
               ) : (
-                <span className="text-stone-500 font-medium">
+                <span className="text-stone-500 dark:text-stone-400 font-medium">
                   Complète les ateliers pour valider l'automatisme
                 </span>
               )}
             </div>
-            <div className="flex items-center space-x-4 mt-1 text-[11px] text-stone-500 font-medium">
-              <span className={`flex items-center space-x-1 ${isTestPassed ? 'text-emerald-700 font-bold' : ''}`}>
-                <CheckCircle2 className={`w-3 h-3 ${isTestPassed ? 'text-emerald-600' : 'text-stone-300'}`} />
+            <div className="flex items-center space-x-4 mt-1 text-[11px] text-stone-500 dark:text-stone-400 font-medium">
+              <span className={`flex items-center space-x-1 ${isTestPassed ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}`}>
+                <CheckCircle2 className={`w-3 h-3 ${isTestPassed ? 'text-emerald-600 dark:text-emerald-400' : 'text-stone-300 dark:text-stone-600'}`} />
                 <span>Quiz Discrimination</span>
               </span>
-              <span className={`flex items-center space-x-1 ${isBuilderPassed ? 'text-emerald-700 font-bold' : ''}`}>
-                <CheckCircle2 className={`w-3 h-3 ${isBuilderPassed ? 'text-emerald-600' : 'text-stone-300'}`} />
+              <span className={`flex items-center space-x-1 ${isBuilderPassed ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}`}>
+                <CheckCircle2 className={`w-3 h-3 ${isBuilderPassed ? 'text-emerald-600 dark:text-emerald-400' : 'text-stone-300 dark:text-stone-600'}`} />
                 <span>Ordre des Mots</span>
               </span>
-              <span className={`flex items-center space-x-1 ${isVoicePassed ? 'text-emerald-700 font-bold' : ''}`}>
-                <CheckCircle2 className={`w-3 h-3 ${isVoicePassed ? 'text-emerald-600' : 'text-stone-300'}`} />
+              <span className={`flex items-center space-x-1 ${isVoicePassed ? 'text-emerald-700 dark:text-emerald-400 font-bold' : ''}`}>
+                <CheckCircle2 className={`w-3 h-3 ${isVoicePassed ? 'text-emerald-600 dark:text-emerald-400' : 'text-stone-300 dark:text-stone-600'}`} />
                 <span>Défi Micro (≥ 80%)</span>
               </span>
             </div>
@@ -514,8 +520,8 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
         {currentRecord?.voiceBestScore ? (
           <div className="text-right shrink-0">
-            <span className="text-[10px] text-stone-400 block font-bold uppercase tracking-wider">Score Oral</span>
-            <span className="font-mono text-base font-black text-[#c23b22]">
+            <span className="text-[10px] text-stone-400 dark:text-stone-500 block font-bold uppercase tracking-wider">Score Oral</span>
+            <span className="font-mono text-base font-black text-[#c23b22] dark:text-amber-400">
               {currentRecord.voiceBestScore}%
             </span>
           </div>
@@ -523,11 +529,11 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
       </div>
 
       {/* 3. ONGLETS DE LA LEÇON */}
-      <div className="flex bg-stone-100 dark:bg-stone-800 p-1 rounded-2xl text-xs font-bold border-2 border-stone-900 shadow-[2px_2px_0px_#1c1917]">
+      <div className="flex bg-stone-100 dark:bg-stone-800 p-1 rounded-2xl text-xs font-bold border-2 border-stone-900 dark:border-stone-700 shadow-[2px_2px_0px_#1c1917] dark:shadow-[2px_2px_0px_#000]">
         <button
           onClick={() => setActiveTab('theory')}
-          className={`flex-1 py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition-all ${
-            activeTab === 'theory' ? 'bg-stone-900 text-white shadow-sm' : 'text-stone-600 hover:text-stone-900'
+          className={`flex-1 py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
+            activeTab === 'theory' ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-sm' : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
           }`}
         >
           <BookOpen className="w-3.5 h-3.5" />
@@ -536,8 +542,8 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
         <button
           onClick={() => setActiveTab('dialogue')}
-          className={`flex-1 py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition-all ${
-            activeTab === 'dialogue' ? 'bg-stone-900 text-white shadow-sm' : 'text-stone-600 hover:text-stone-900'
+          className={`flex-1 py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
+            activeTab === 'dialogue' ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-sm' : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
           }`}
         >
           <MessageSquareQuote className="w-3.5 h-3.5 text-amber-400" />
@@ -546,8 +552,8 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
         <button
           onClick={() => setActiveTab('practice')}
-          className={`flex-1 py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition-all ${
-            activeTab === 'practice' ? 'bg-stone-900 text-white shadow-sm' : 'text-stone-600 hover:text-stone-900'
+          className={`flex-1 py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
+            activeTab === 'practice' ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-sm' : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
           }`}
         >
           <Puzzle className="w-3.5 h-3.5 text-indigo-400" />
@@ -556,8 +562,8 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
         <button
           onClick={() => setActiveTab('voice')}
-          className={`flex-1 py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition-all ${
-            activeTab === 'voice' ? 'bg-stone-900 text-white shadow-sm' : 'text-stone-600 hover:text-stone-900'
+          className={`flex-1 py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
+            activeTab === 'voice' ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-sm' : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
           }`}
         >
           <Mic className="w-3.5 h-3.5 text-rose-400" />
@@ -567,8 +573,8 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
       {/* CONTENU ONGLET 1 : THÉORIE */}
       {activeTab === 'theory' && (
-        <div className="bg-[#fcfaf7] rounded-3xl p-6 sm:p-8 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-6 animate-fadeIn">
-          <div className="p-4 sm:p-5 rounded-2xl bg-stone-900 text-white border-2 border-stone-800 shadow-sm space-y-2">
+        <div className="bg-[#fcfaf7] dark:bg-stone-900 rounded-3xl p-6 sm:p-8 border-2 border-stone-900 dark:border-stone-700 shadow-[4px_4px_0px_#1c1917] dark:shadow-[4px_4px_0px_#000] space-y-6 animate-fadeIn">
+          <div className="p-4 sm:p-5 rounded-2xl bg-stone-900 dark:bg-stone-950 text-white border-2 border-stone-800 dark:border-stone-700 shadow-sm space-y-2">
             <div className="flex items-center justify-between">
               <span className="flex items-center space-x-1.5 text-[10px] font-black uppercase tracking-wider text-amber-400">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
@@ -581,46 +587,46 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           </div>
 
           <div className="space-y-2">
-            <h4 className="text-xs font-black uppercase tracking-wider text-stone-800">
+            <h4 className="text-xs font-black uppercase tracking-wider text-stone-800 dark:text-stone-200">
               💡 Déclic Mental : Pourquoi les Chinois pensent ainsi
             </h4>
-            <div className="text-xs sm:text-sm text-stone-700 leading-relaxed font-medium bg-white p-4 rounded-2xl border border-stone-200 shadow-2xs">
+            <div className="text-xs sm:text-sm text-stone-700 dark:text-stone-200 leading-relaxed font-medium bg-white dark:bg-stone-800/80 p-4 rounded-2xl border border-stone-200 dark:border-stone-700 shadow-2xs">
               {currentCard.keyNuanceExplanation}
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-rose-50/80 border-2 border-rose-200 text-xs sm:text-sm text-rose-950 flex items-start space-x-3">
-            <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+          <div className="p-4 rounded-2xl bg-rose-50/80 dark:bg-rose-950/40 border-2 border-rose-200 dark:border-rose-900/60 text-xs sm:text-sm text-rose-950 dark:text-rose-200 flex items-start space-x-3">
+            <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <strong className="text-rose-900 font-bold block">Le piège de la traduction mot-à-mot :</strong>
+              <strong className="text-rose-900 dark:text-rose-300 font-bold block">Le piège de la traduction mot-à-mot :</strong>
               <p className="leading-relaxed">{currentCard.commonTrap}</p>
             </div>
           </div>
 
           {currentCard.rulePoints && currentCard.rulePoints.length > 0 && (
             <div className="space-y-3 pt-2">
-              <h4 className="text-xs font-black uppercase tracking-wider text-stone-800">
+              <h4 className="text-xs font-black uppercase tracking-wider text-stone-800 dark:text-stone-200">
                 📌 Règles Essentielles & Cas d'Usage :
               </h4>
               <div className="space-y-3">
                 {currentCard.rulePoints.map((rule, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2 shadow-2xs">
-                    <strong className="text-xs sm:text-sm font-bold text-stone-900 block font-serif">
+                  <div key={idx} className="p-4 rounded-2xl bg-white dark:bg-stone-800/90 border border-stone-200 dark:border-stone-700 space-y-2 shadow-2xs">
+                    <strong className="text-xs sm:text-sm font-bold text-stone-900 dark:text-stone-100 block font-serif">
                       {rule.pointTitle}
                     </strong>
-                    <p className="text-xs text-stone-600 leading-relaxed font-normal">
+                    <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed font-normal">
                       {rule.explanation}
                     </p>
                     {rule.exampleChinese && (
-                      <div className="p-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs flex items-center justify-between">
+                      <div className="p-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-xs flex items-center justify-between">
                         <div>
-                          <span className="font-serif font-black text-stone-900 text-sm mr-2">{rule.exampleChinese}</span>
-                          <span className="text-stone-500 font-mono text-[11px] mr-2">({rule.examplePinyin})</span>
-                          <span className="text-stone-600 italic">→ {rule.exampleFrench}</span>
+                          <span className="font-serif font-black text-stone-900 dark:text-stone-100 text-sm mr-2">{rule.exampleChinese}</span>
+                          <span className="text-stone-500 dark:text-stone-400 font-mono text-[11px] mr-2">({rule.examplePinyin})</span>
+                          <span className="text-stone-600 dark:text-stone-300 italic">→ {rule.exampleFrench}</span>
                         </div>
                         <button
                           onClick={() => rule.exampleChinese && handlePlayAudio(rule.exampleChinese, 0.85)}
-                          className="p-1 rounded-lg text-stone-400 hover:text-stone-800 transition-colors shrink-0"
+                          className="p-1 rounded-lg text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 transition-colors shrink-0 cursor-pointer"
                           title="Écouter cet exemple"
                         >
                           <Volume2 className="w-3.5 h-3.5" />
@@ -634,20 +640,20 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
-            <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-1">
-              <span className="font-bold text-stone-800 flex items-center space-x-1.5">
+            <div className="p-4 rounded-2xl bg-white dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 space-y-1">
+              <span className="font-bold text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#c23b22]" />
                 <span>Contexte de communication :</span>
               </span>
-              <p className="text-stone-600 leading-relaxed pl-3.5">
+              <p className="text-stone-600 dark:text-stone-300 leading-relaxed pl-3.5">
                 {currentCard.situationFrench}
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex items-start space-x-2.5 text-amber-950">
-              <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 flex items-start space-x-2.5 text-amber-950 dark:text-amber-200">
+              <Info className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-amber-900 font-bold block mb-0.5">Astuce de locuteur natif :</strong>
+                <strong className="text-amber-900 dark:text-amber-300 font-bold block mb-0.5">Astuce de locuteur natif :</strong>
                 <p className="leading-relaxed">{currentCard.culturalNote}</p>
               </div>
             </div>
@@ -656,7 +662,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           <div className="pt-2 flex justify-end">
             <button
               onClick={() => setActiveTab('dialogue')}
-              className="inline-flex items-center space-x-2 px-5 py-3 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs shadow-md transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center space-x-2 px-5 py-3 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-white font-bold text-xs shadow-md transition-all hover:-translate-y-0.5 cursor-pointer"
             >
               <span>Étape suivante : Exemples & Dialogue</span>
               <ArrowRight className="w-4 h-4" />
@@ -667,89 +673,89 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
       {/* CONTENU ONGLET 2 : DIALOGUES & EXEMPLES */}
       {activeTab === 'dialogue' && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-6 animate-fadeIn">
-          <div className="border-b border-stone-200 pb-3 flex items-center justify-between">
+        <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 border-2 border-stone-900 dark:border-stone-700 shadow-[4px_4px_0px_#1c1917] dark:shadow-[4px_4px_0px_#000] space-y-6 animate-fadeIn">
+          <div className="border-b border-stone-200 dark:border-stone-800 pb-3 flex items-center justify-between">
             <div>
-              <span className="text-[11px] font-black uppercase tracking-wider text-amber-700 block">
+              <span className="text-[11px] font-black uppercase tracking-wider text-amber-700 dark:text-amber-400 block">
                 Immersion & Écoute Active
               </span>
-              <h3 className="text-base sm:text-lg font-black text-stone-900 font-serif">
+              <h3 className="text-base sm:text-lg font-black text-stone-900 dark:text-stone-100 font-serif">
                 Exemples en Situation Réelle & Dialogue Spontané
               </h3>
             </div>
             <VoiceSelector compact />
           </div>
 
-          <div className="p-5 rounded-3xl bg-amber-50/60 border-2 border-stone-900 space-y-3">
-            <div className="flex items-center justify-between text-xs text-stone-500">
-              <span className="font-bold uppercase tracking-wider text-stone-700">Phrase Modèle d'Élocution :</span>
+          <div className="p-5 rounded-3xl bg-amber-50/60 dark:bg-amber-950/30 border-2 border-stone-900 dark:border-stone-700 space-y-3">
+            <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
+              <span className="font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300">Phrase Modèle d'Élocution :</span>
               <div className="flex items-center space-x-1">
                 <button
                   onClick={() => handlePlayAudio(currentCard.targetChinese, 0.85)}
-                  className="px-2.5 py-1 rounded-xl bg-stone-900 text-white font-bold text-xs flex items-center space-x-1 hover:bg-stone-800 transition-colors"
+                  className="px-2.5 py-1 rounded-xl bg-stone-900 hover:bg-stone-800 text-white dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-white font-bold text-xs flex items-center space-x-1 transition-colors cursor-pointer"
                 >
                   <Volume2 className="w-3.5 h-3.5" />
                   <span>Écouter (0.85x)</span>
                 </button>
                 <button
                   onClick={() => handlePlayAudio(currentCard.targetChinese, 0.5)}
-                  className="px-2 py-1 rounded-xl bg-white border border-stone-300 text-stone-700 font-bold text-xs hover:bg-stone-100 transition-colors"
+                  className="px-2 py-1 rounded-xl bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-200 font-bold text-xs hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors cursor-pointer"
                   title="Écouter au ralenti 0.5x"
                 >
-                  <Snail className="w-3.5 h-3.5 text-amber-600" />
+                  <Snail className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                   <span>0.5x</span>
                 </button>
               </div>
             </div>
 
-            <div className="text-xl sm:text-2xl font-black text-stone-900 font-serif chinese-text">
+            <div className="text-xl sm:text-2xl font-black text-stone-900 dark:text-stone-100 font-serif chinese-text">
               {currentCard.targetChinese}
             </div>
-            <div className="text-xs sm:text-sm font-mono text-stone-500">
+            <div className="text-xs sm:text-sm font-mono text-stone-500 dark:text-stone-400">
               {currentCard.targetPinyin}
             </div>
-            <div className="text-xs sm:text-sm text-stone-700 italic border-t border-amber-200/60 pt-2">
+            <div className="text-xs sm:text-sm text-stone-700 dark:text-stone-300 italic border-t border-amber-200/60 dark:border-amber-800/40 pt-2">
               « {currentCard.translationFrench} »
             </div>
           </div>
 
           {currentCard.dialogue && currentCard.dialogue.length > 0 && (
             <div className="space-y-3">
-              <h4 className="text-xs font-black uppercase tracking-wider text-stone-800 flex items-center space-x-1.5">
-                <MessageSquareQuote className="w-4 h-4 text-[#c23b22]" />
+              <h4 className="text-xs font-black uppercase tracking-wider text-stone-800 dark:text-stone-200 flex items-center space-x-1.5">
+                <MessageSquareQuote className="w-4 h-4 text-[#c23b22] dark:text-amber-400" />
                 <span>Mini-Dialogue Oral Spontané :</span>
               </h4>
 
-              <div className="p-4 rounded-2xl bg-[#fcfaf7] border border-stone-200 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#fcfaf7] dark:bg-stone-950 border border-stone-200 dark:border-stone-800 space-y-3">
                 {currentCard.dialogue.map((line, idx) => (
-                  <div key={idx} className="flex items-start space-x-3 p-3 rounded-xl bg-white border border-stone-100 shadow-2xs">
-                    <span className="w-7 h-7 rounded-full bg-stone-900 text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+                  <div key={idx} className="flex items-start space-x-3 p-3 rounded-xl bg-white dark:bg-stone-900 border border-stone-100 dark:border-stone-800 shadow-2xs">
+                    <span className="w-7 h-7 rounded-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
                       {line.speaker}
                     </span>
                     <div className="flex-1 space-y-0.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm sm:text-base font-black text-stone-900 font-serif chinese-text">
+                        <span className="text-sm sm:text-base font-black text-stone-900 dark:text-stone-100 font-serif chinese-text">
                           {line.chinese}
                         </span>
                         <div className="flex items-center space-x-1">
                           <button
                             onClick={() => handlePlayAudio(line.chinese, 0.85)}
-                            className="p-1 rounded-lg text-stone-400 hover:text-stone-800 transition-colors"
+                            className="p-1 rounded-lg text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 transition-colors cursor-pointer"
                             title="Écouter cette réplique"
                           >
                             <Volume2 className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handlePlayAudio(line.chinese, 0.5)}
-                            className="p-1 rounded-lg text-amber-600 hover:text-amber-800 transition-colors text-[10px] font-bold"
+                            className="p-1 rounded-lg text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 transition-colors text-[10px] font-bold cursor-pointer"
                             title="Ralenti 0.5x"
                           >
                             0.5x
                           </button>
                         </div>
                       </div>
-                      <p className="text-[11px] text-stone-400 font-mono">{line.pinyin}</p>
-                      <p className="text-xs text-stone-600 italic">« {line.translation} »</p>
+                      <p className="text-[11px] text-stone-400 dark:text-stone-500 font-mono">{line.pinyin}</p>
+                      <p className="text-xs text-stone-600 dark:text-stone-300 italic">« {line.translation} »</p>
                     </div>
                   </div>
                 ))}
@@ -760,14 +766,14 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           <div className="pt-2 flex justify-between items-center">
             <button
               onClick={() => setActiveTab('theory')}
-              className="text-xs font-bold text-stone-500 hover:text-stone-900"
+              className="text-xs font-bold text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 cursor-pointer"
             >
               ← Revoir la théorie
             </button>
 
             <button
               onClick={() => setActiveTab('practice')}
-              className="inline-flex items-center space-x-2 px-5 py-3 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs shadow-md transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center space-x-2 px-5 py-3 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-white font-bold text-xs shadow-md transition-all hover:-translate-y-0.5 cursor-pointer"
             >
               <span>Étape suivante : Ateliers Pratiques</span>
               <ArrowRight className="w-4 h-4" />
@@ -801,7 +807,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           {currentCard.sentenceBuilder && (
             <div className="space-y-2">
               <div className="flex items-center justify-between px-1">
-                <span className="text-xs font-black uppercase tracking-wider text-stone-700 flex items-center space-x-1.5">
+                <span className="text-xs font-black uppercase tracking-wider text-stone-700 dark:text-stone-300 flex items-center space-x-1.5">
                   <Puzzle className="w-4 h-4 text-indigo-500" />
                   <span>Atelier 2 sur 2 : Reconstitution de Phrase</span>
                 </span>
@@ -822,7 +828,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           <div className="pt-2 flex justify-between items-center">
             <button
               onClick={() => setActiveTab('dialogue')}
-              className="text-xs font-bold text-stone-500 hover:text-stone-900"
+              className="text-xs font-bold text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
             >
               ← Revoir les exemples
             </button>
@@ -840,13 +846,13 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
       {/* CONTENU ONGLET 4 : DÉFI VOCAL */}
       {activeTab === 'voice' && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-6 animate-fadeIn">
-          <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+        <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 border-2 border-stone-900 dark:border-stone-700 shadow-[4px_4px_0px_#1c1917] dark:shadow-[4px_4px_0px_#000] space-y-6 animate-fadeIn">
+          <div className="flex items-center justify-between border-b border-stone-100 dark:border-stone-800 pb-3">
             <span className="text-[11px] font-black uppercase tracking-wider text-[#c23b22] flex items-center space-x-1.5">
               <Mic className="w-4 h-4" />
               <span>Validation Finale : Pratique de l'Élocution Native</span>
             </span>
-            <span className="text-xs font-bold text-stone-500">
+            <span className="text-xs font-bold text-stone-500 dark:text-stone-400">
               Score requis : ≥ 80%
             </span>
           </div>
@@ -854,28 +860,28 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           <div className="space-y-4 py-2 text-center">
             <div className="min-h-[28px] flex items-center justify-center">
               {showPinyin ? (
-                <p className="text-sm sm:text-base font-medium text-stone-700 tracking-wide bg-stone-50 px-3.5 py-1 rounded-xl border border-stone-200">
+                <p className="text-sm sm:text-base font-medium text-stone-700 dark:text-stone-200 tracking-wide bg-stone-50 dark:bg-stone-800 px-3.5 py-1 rounded-xl border border-stone-200 dark:border-stone-700">
                   {currentCard.targetPinyin}
                 </p>
               ) : (
-                <span className="text-xs text-stone-400 italic">
+                <span className="text-xs text-stone-400 dark:text-stone-500 italic">
                   (Pinyin masqué par défaut pour stimuler la lecture directe)
                 </span>
               )}
             </div>
 
-            <div className="text-2xl sm:text-4xl md:text-5xl font-black tracking-wider text-stone-900 chinese-text leading-tight select-all py-1 font-serif">
+            <div className="text-2xl sm:text-4xl md:text-5xl font-black tracking-wider text-stone-900 dark:text-stone-100 chinese-text leading-tight select-all py-1 font-serif">
               {currentCard.targetChinese}
             </div>
 
-            <p className="text-sm text-stone-600 italic">
+            <p className="text-sm text-stone-600 dark:text-stone-300 italic">
               « {currentCard.translationFrench} »
             </p>
 
             <div className="pt-2 flex flex-wrap items-center justify-center gap-2">
               <button
                 onClick={() => setShowPinyin(!showPinyin)}
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold border border-stone-300 transition-colors"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-200 text-xs font-semibold border border-stone-300 dark:border-stone-700 transition-colors"
               >
                 {showPinyin ? <EyeOff className="w-3.5 h-3.5 text-stone-500" /> : <Eye className="w-3.5 h-3.5 text-[#c23b22]" />}
                 <span>{showPinyin ? 'Masquer Pinyin' : 'Révéler Pinyin'}</span>
@@ -886,26 +892,26 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
               <button
                 onClick={() => handlePlayAudio(currentCard.targetChinese, 0.85)}
                 disabled={isPlayingAudio}
-                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold transition-colors shadow-xs"
+                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-white text-white text-xs font-semibold transition-colors shadow-xs"
               >
-                <Volume2 className="w-3.5 h-3.5 text-amber-300" />
+                <Volume2 className="w-3.5 h-3.5 text-amber-300 dark:text-amber-600" />
                 <span>Écouter (0.85x)</span>
               </button>
 
               <button
                 onClick={() => handlePlayAudio(currentCard.targetChinese, 0.5)}
                 disabled={isPlayingAudio}
-                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-white hover:bg-stone-50 text-stone-800 text-xs font-semibold border border-stone-300 transition-colors shadow-xs"
+                className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-white hover:bg-stone-50 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 text-xs font-semibold border border-stone-300 dark:border-stone-700 transition-colors shadow-xs"
                 title="Écouter au ralenti très lent 0.5x"
               >
-                <Snail className="w-3.5 h-3.5 text-amber-600" />
+                <Snail className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span>Ultra-lent (0.5x)</span>
               </button>
             </div>
           </div>
 
           {/* Micro Interactif */}
-          <div className="pt-4 border-t border-stone-200 flex flex-col items-center justify-center space-y-4">
+          <div className="pt-4 border-t border-stone-200 dark:border-stone-800 flex flex-col items-center justify-center space-y-4">
             <div className="flex items-center space-x-4">
               <div className="relative">
                 {isRecording && (
@@ -943,7 +949,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
             </div>
 
             <div className="text-center space-y-1.5 max-w-md">
-              <p className="text-xs sm:text-sm font-semibold text-stone-700">
+              <p className="text-xs sm:text-sm font-semibold text-stone-700 dark:text-stone-300">
                 {isRecording ? (
                   <span className="text-[#c23b22] flex items-center justify-center space-x-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#c23b22] animate-ping" />
@@ -955,26 +961,26 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
               </p>
 
               {liveTranscript && (
-                <div className="text-xs text-stone-800 font-mono bg-stone-100 px-3.5 py-1.5 rounded-xl border border-stone-200 inline-block shadow-2xs">
+                <div className="text-xs text-stone-800 dark:text-stone-200 font-mono bg-stone-100 dark:bg-stone-800 px-3.5 py-1.5 rounded-xl border border-stone-200 dark:border-stone-700 inline-block shadow-2xs">
                   <span className="text-stone-400 mr-1.5">Capté :</span>
-                  <strong className="text-stone-900">{liveTranscript}</strong>
+                  <strong className="text-stone-900 dark:text-stone-100">{liveTranscript}</strong>
                 </div>
               )}
             </div>
 
             {/* Miroir Phonétique */}
             {recordedAudioUrl && (
-              <div className="w-full max-w-2xl mx-auto rounded-3xl p-5 sm:p-6 bg-gradient-to-br from-stone-50 via-white to-amber-50/40 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-4 animate-fadeIn">
-                <div className="flex items-center justify-between border-b border-stone-200 pb-3">
+              <div className="w-full max-w-2xl mx-auto rounded-3xl p-5 sm:p-6 bg-gradient-to-br from-stone-50 via-white to-amber-50/40 dark:from-stone-900 dark:via-stone-900 dark:to-stone-800/60 border-2 border-stone-900 dark:border-stone-700 shadow-[4px_4px_0px_#1c1917] dark:shadow-[4px_4px_0px_#000] space-y-4 animate-fadeIn">
+                <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-700 pb-3">
                   <div className="flex items-center space-x-2">
-                    <Headphones className="w-4 h-4 text-stone-900" />
-                    <h4 className="font-serif font-black text-sm text-stone-900">
+                    <Headphones className="w-4 h-4 text-stone-900 dark:text-stone-100" />
+                    <h4 className="font-serif font-black text-sm text-stone-900 dark:text-stone-100">
                       Miroir Phonétique & Auto-Écoute
                     </h4>
                   </div>
                   <button
                     onClick={() => setShowPhoneticTips(!showPhoneticTips)}
-                    className="text-[11px] font-bold text-stone-600 hover:text-stone-900 bg-stone-100 px-2 py-1 rounded-lg border border-stone-200"
+                    className="text-[11px] font-bold text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 bg-stone-100 dark:bg-stone-800 px-2 py-1 rounded-lg border border-stone-200 dark:border-stone-700"
                   >
                     {showPhoneticTips ? 'Masquer' : 'Repères des tons'}
                   </button>
@@ -983,7 +989,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   <button
                     onClick={handleTogglePlayUserAudio}
-                    className="p-3 rounded-2xl border-2 border-stone-900 font-black text-xs transition-all shadow-xs flex items-center justify-center space-x-2 bg-white hover:bg-stone-100 text-stone-900"
+                    className="p-3 rounded-2xl border-2 border-stone-900 dark:border-stone-700 font-black text-xs transition-all shadow-xs flex items-center justify-center space-x-2 bg-white dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-700 text-stone-900 dark:text-stone-100"
                   >
                     <Play className="w-4 h-4 text-[#c23b22] fill-[#c23b22]" />
                     <span>Écouter ma Voix</span>
@@ -991,7 +997,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
                   <button
                     onClick={() => handlePlayMirrorComparison('native-then-user')}
-                    className="p-3 rounded-2xl border-2 border-stone-900 font-black text-xs transition-all shadow-md flex items-center justify-center space-x-2 bg-stone-900 text-white"
+                    className="p-3 rounded-2xl border-2 border-stone-900 dark:border-stone-600 font-black text-xs transition-all shadow-md flex items-center justify-center space-x-2 bg-stone-900 dark:bg-stone-700 text-white"
                   >
                     <ArrowRightLeft className="w-4 h-4 text-amber-300" />
                     <span>Miroir : Natif ➔ Toi</span>
@@ -999,15 +1005,15 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
                   <button
                     onClick={() => handlePlayMirrorComparison('user-then-native')}
-                    className="p-3 rounded-2xl border border-stone-300 bg-white hover:bg-stone-50 text-stone-800 font-bold text-xs transition-all flex items-center justify-center space-x-2"
+                    className="p-3 rounded-2xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 hover:bg-stone-50 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 font-bold text-xs transition-all flex items-center justify-center space-x-2"
                   >
-                    <Volume2 className="w-4 h-4 text-stone-600" />
+                    <Volume2 className="w-4 h-4 text-stone-600 dark:text-stone-400" />
                     <span>Toi ➔ Natif</span>
                   </button>
                 </div>
 
                 {showPhoneticTips && (
-                  <div className="p-3 rounded-2xl bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">
+                  <div className="p-3 rounded-2xl bg-white dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
                     💡 En t'écoutant, compare la hauteur des tons avec la voix native pour corriger l'effet d'illusion crânienne !
                   </div>
                 )}
@@ -1017,34 +1023,34 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
           {/* Évaluation */}
           {evaluation && (
-            <div className="mt-4 pt-4 border-t border-stone-200 space-y-4 animate-fadeIn">
+            <div className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-800 space-y-4 animate-fadeIn">
               <div className={`p-4 rounded-2xl border-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
                 evaluation.accuracyScore >= 80 
-                  ? 'bg-emerald-50/70 border-emerald-300 text-emerald-950' 
-                  : 'bg-amber-50/60 border-amber-300 text-stone-900'
+                  ? 'bg-emerald-50/70 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-700 text-emerald-950 dark:text-emerald-100' 
+                  : 'bg-amber-50/60 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700 text-stone-900 dark:text-stone-100'
               }`}>
                 <div className="space-y-1.5">
                   <div className="flex items-center space-x-2">
                     <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-stone-900 text-white font-mono">
                       🤖 Diagnostic IA
                     </span>
-                    <span className="text-xs font-bold text-stone-700">
+                    <span className="text-xs font-bold text-stone-700 dark:text-stone-300">
                       {evaluation.aiFeedback?.summaryTitle || (evaluation.accuracyScore >= 80 ? 'Prononciation Conforme' : 'Ajustement Requis')}
                     </span>
                   </div>
 
-                  <p className="text-xs sm:text-sm font-semibold text-stone-800 leading-snug">
+                  <p className="text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-200 leading-snug">
                     {evaluation.aiFeedback?.aiDiagnosis || evaluation.feedbackMessage}
                   </p>
 
                   {evaluation.aiFeedback?.actionableTip && (
-                    <p className="text-xs text-amber-900 bg-amber-100/70 px-2.5 py-1 rounded-lg font-medium inline-block">
+                    <p className="text-xs text-amber-900 dark:text-amber-200 bg-amber-100/70 dark:bg-amber-900/50 px-2.5 py-1 rounded-lg font-medium inline-block">
                       💡 <strong>Conseil :</strong> {evaluation.aiFeedback.actionableTip}
                     </p>
                   )}
 
                   {evaluation.spokenText && (
-                    <p className="text-xs text-stone-500 font-mono">
+                    <p className="text-xs text-stone-500 dark:text-stone-400 font-mono">
                       Capté par le micro : « {evaluation.spokenText} »
                     </p>
                   )}
@@ -1053,18 +1059,18 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
                 <div className="flex items-center space-x-3 shrink-0">
                   <div className="text-right">
                     <span className={`text-2xl sm:text-3xl font-black ${
-                      evaluation.accuracyScore >= 80 ? 'text-emerald-700' : 'text-[#c23b22]'
+                      evaluation.accuracyScore >= 80 ? 'text-emerald-700 dark:text-emerald-400' : 'text-[#c23b22]'
                     }`}>
                       {evaluation.accuracyScore}%
                     </span>
-                    <span className="text-[10px] text-stone-500 block font-bold">
+                    <span className="text-[10px] text-stone-500 dark:text-stone-400 block font-bold">
                       {evaluation.accuracyScore >= 80 ? 'Objectif Validé' : 'Seuil : ≥80%'}
                     </span>
                   </div>
 
                   <button
                     onClick={startRecording}
-                    className="p-2.5 rounded-xl bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors shadow-xs"
+                    className="p-2.5 rounded-xl bg-white dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-200 border border-stone-200 dark:border-stone-700 transition-colors shadow-xs"
                     title="Réessayer"
                   >
                     <RotateCcw className="w-4 h-4" />
@@ -1073,7 +1079,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
               </div>
 
               {/* Alignement des caractères */}
-              <div className="flex flex-wrap gap-2 p-3 rounded-2xl bg-stone-50 border border-stone-200">
+              <div className="flex flex-wrap gap-2 p-3 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700">
                 {(evaluation.aiFeedback?.characterBreakdown || evaluation.matchedCharacters.map((mc: any) => ({
                   targetChar: mc.char,
                   status: mc.status === 'correct' ? 'exact' : 'substituted'
@@ -1082,12 +1088,12 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
                     key={idx}
                     className={`px-3 py-1.5 rounded-xl flex items-center space-x-1.5 border font-mono text-xs transition-all ${
                       charItem.status === 'exact'
-                        ? 'bg-emerald-100/70 text-emerald-900 border-emerald-300 font-bold'
+                        ? 'bg-emerald-100/70 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-200 border-emerald-300 dark:border-emerald-700 font-bold'
                         : charItem.status === 'substituted'
-                        ? 'bg-amber-100/70 text-amber-900 border-amber-300 font-bold'
+                        ? 'bg-amber-100/70 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-700 font-bold'
                         : charItem.status === 'omitted'
-                        ? 'bg-rose-100 text-rose-900 border-rose-300'
-                        : 'bg-stone-100 text-stone-700 border-stone-300'
+                        ? 'bg-rose-100 dark:bg-rose-950/60 text-rose-900 dark:text-rose-200 border-rose-300 dark:border-rose-700'
+                        : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border-stone-300 dark:border-stone-700'
                     }`}
                   >
                     <span className="chinese-text font-serif text-sm font-black">{charItem.targetChar || '—'}</span>
@@ -1099,12 +1105,12 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
               </div>
 
               {evaluation.accuracyScore >= 80 && (
-                <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-400 text-emerald-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fadeIn">
+                <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-400 dark:border-emerald-600 text-emerald-950 dark:text-emerald-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fadeIn">
                   <div className="flex items-center space-x-2.5">
                     <Award className="w-6 h-6 text-emerald-600 shrink-0" />
                     <div>
                       <strong className="text-sm font-black block font-serif">太棒了 ! Leçon Validée et Ancrée !</strong>
-                      <span className="text-xs text-emerald-800">Structure assimilée avec succès.</span>
+                      <span className="text-xs text-emerald-800 dark:text-emerald-300">Structure assimilée avec succès.</span>
                     </div>
                   </div>
 
@@ -1125,11 +1131,11 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
       )}
 
       {/* Navigation basse */}
-      <div className="flex items-center justify-between text-xs text-stone-500 pt-2">
+      <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400 pt-2">
         <button
           onClick={prevCard}
           disabled={currentIndex === 0}
-          className="inline-flex items-center space-x-1 hover:text-stone-900 disabled:opacity-20 transition-colors font-bold"
+          className="inline-flex items-center space-x-1 hover:text-stone-900 dark:hover:text-stone-100 disabled:opacity-20 transition-colors font-bold"
         >
           <ChevronLeft className="w-4 h-4" />
           <span>Leçon précédente</span>
@@ -1137,7 +1143,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
 
         <button
           onClick={onBackToModules}
-          className="text-stone-500 hover:text-stone-900 font-semibold"
+          className="text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 font-semibold"
         >
           Retour au sommaire des modules
         </button>
@@ -1145,7 +1151,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
         <button
           onClick={nextCard}
           disabled={currentIndex === NUANCE_CARDS.length - 1}
-          className="inline-flex items-center space-x-1 hover:text-stone-900 disabled:opacity-20 transition-colors font-bold"
+          className="inline-flex items-center space-x-1 hover:text-stone-900 dark:hover:text-stone-100 disabled:opacity-20 transition-colors font-bold"
         >
           <span>Leçon suivante</span>
           <ChevronRight className="w-4 h-4" />

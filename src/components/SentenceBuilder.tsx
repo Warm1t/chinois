@@ -33,15 +33,17 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
 
   // Initialisation à chaque changement d'exercice
   useEffect(() => {
+    if (!exercise || !Array.isArray(exercise.tokens)) return;
+
     // Si déjà validé auparavant, pré-remplir avec l'ordre correct
     if (alreadyCompleted) {
-      setSelectedTokens(exercise.correctTokens);
+      setSelectedTokens(exercise.correctTokens || []);
       setAvailableTokens([]);
       setIsSubmitted(true);
       setIsCorrect(true);
     } else {
       // Mélanger les tokens
-      const initialTokens = exercise.tokens.map((text, idx) => ({
+      const initialTokens = (exercise.tokens || []).map((text, idx) => ({
         id: `token-${idx}-${text}`,
         text
       }));
@@ -107,6 +109,10 @@ export const SentenceBuilder: React.FC<SentenceBuilderProps> = ({
       }
     }
   };
+
+  if (!exercise || !Array.isArray(exercise.tokens)) {
+    return null;
+  }
 
   return (
     <div className="bg-white rounded-3xl p-5 sm:p-7 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-5 animate-fadeIn">

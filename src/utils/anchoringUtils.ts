@@ -3,20 +3,36 @@ import { AnchoringRecord, NuanceCard, AnchoringStage } from '../types/fluent';
 export const STORAGE_KEY = 'fluent_anchoring_records';
 
 export const getAnchoringRecords = (): Record<string, AnchoringRecord> => {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  return saved ? JSON.parse(saved) : {};
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return {};
+    const parsed = JSON.parse(saved);
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+      return parsed;
+    }
+    return {};
+  } catch (e) {
+    console.warn("Erreur lecture anchoring records:", e);
+    return {};
+  }
 };
 
 export const saveAnchoringRecord = (record: AnchoringRecord): Record<string, AnchoringRecord> => {
-  const records = getAnchoringRecords();
-  records[record.cardId] = record;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  const records = { ...getAnchoringRecords() };
+  if (record && record.cardId) {
+    records[record.cardId] = record;
+  }
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  } catch (e) {
+    console.warn("Erreur écriture anchoring records:", e);
+  }
   return records;
 };
 
 // Mettre à jour l'ancrage lors de la réussite du test actif
 export const recordTestSuccess = (cardId: string): AnchoringRecord => {
-  const records = getAnchoringRecords();
+  const records = { ...getAnchoringRecords() };
   const current = records[cardId] || {
     cardId,
     stage: 'decouvert',
@@ -42,7 +58,7 @@ export const recordTestSuccess = (cardId: string): AnchoringRecord => {
 
 // Mettre à jour l'ancrage lors de la pratique vocale
 export const recordVoiceScore = (cardId: string, score: number): AnchoringRecord => {
-  const records = getAnchoringRecords();
+  const records = { ...getAnchoringRecords() };
   const current = records[cardId] || {
     cardId,
     stage: 'decouvert',
@@ -54,14 +70,14 @@ export const recordVoiceScore = (cardId: string, score: number): AnchoringRecord
     consecutiveSuccesses: 0,
   };
 
-  if (score > current.voiceBestScore) {
+  if (score > (current.voiceBestScore || 0)) {
     current.voiceBestScore = score;
   }
 
   // Si score >= 80 et test passé -> passage au stade ANCRÉ
   if (score >= 80 && current.testPassed) {
     current.stage = 'ancre';
-    current.consecutiveSuccesses += 1;
+    current.consecutiveSuccesses = (current.consecutiveSuccesses || 0) + 1;
     // Intervalles de répétition espacée (SRS) : 1j, 3j, 7j, 14j, 30j
     const intervals = [1, 3, 7, 14, 30];
     const nextInterval = intervals[Math.min(current.consecutiveSuccesses, intervals.length - 1)];
@@ -85,13 +101,15 @@ export const getFormattedDate = (daysOffset: number = 0): string => {
 
 // Obtenir la liste des fiches à réviser aujourd'hui
 export const getCardsDueForReview = (cards: NuanceCard[]): NuanceCard[] => {
-  const records = getAnchoringRecords();
+  if (!Array.isArray(cards)) return [];
+  const records = getAnchoringRecords() || {};
   const today = getFormattedDate(0);
 
   return cards.filter((card) => {
+    if (!card || !card.id) return false;
     const rec = records[card.id];
     if (!rec) return false;
     // Si la date de révision est aujourd'hui ou passée, ou si pas encore ancré
-    return rec.nextReviewDate <= today || rec.stage !== 'ancre';
+    return (rec.nextReviewDate && rec.nextReviewDate <= today) || rec.stage !== 'ancre';
   });
 };

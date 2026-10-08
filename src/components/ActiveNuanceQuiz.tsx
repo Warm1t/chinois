@@ -45,12 +45,20 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
 
   // Le mot cible à placer (l'option correcte)
   const targetWord = useMemo(() => {
-    return testQuestion.options[testQuestion.correctIndex] || '';
+    if (!testQuestion || !Array.isArray(testQuestion.options)) return '';
+    return testQuestion.options[testQuestion.correctIndex] || testQuestion.options[0] || '';
   }, [testQuestion]);
 
   // Découpage intelligent de la phrase en segments et slots (A, B, C, D)
   const placementData = useMemo(() => {
-    const raw = testQuestion.sentenceWithBlank || '';
+    const raw = testQuestion?.sentenceWithBlank || '';
+    if (!raw) {
+      return {
+        prefixChunks: ['', '', '', ''],
+        correctSlot: 'A' as const,
+        fullCorrectSentence: targetWord
+      };
+    }
     const parts = raw.split(/_{2,}/);
     const beforeBlank = parts[0] || '';
     const afterBlank = parts[1] || '';
@@ -150,6 +158,50 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
   };
 
   const isAnyPassed = alreadyPassed || isSlotCorrect || isChoiceCorrect;
+
+  // Fonction de rendu d'un slot interactif (A), (B), (C) - définie AVANT le return JSX
+  const renderSlotButton = (slotKey: 'A' | 'B' | 'C') => {
+    const isThisSlotSelected = selectedSlot === slotKey;
+    const isThisSlotCorrect = slotKey === placementData.correctSlot;
+
+    // Si la réponse correcte a été trouvée, le bon slot affiche le mot inséré fièrement
+    if (isSlotSubmitted && isSlotCorrect && isThisSlotCorrect) {
+      return (
+        <span className="inline-flex items-center px-3 py-1 rounded-xl bg-emerald-500 text-white font-bold shadow-xs animate-bounce-short ring-2 ring-emerald-300 mx-1">
+          {targetWord}
+        </span>
+      );
+    }
+
+    // Si ce slot a été cliqué et était faux
+    if (isSlotSubmitted && !isSlotCorrect && isThisSlotSelected) {
+      return (
+        <button
+          onClick={() => handleSelectSlot(slotKey)}
+          className="inline-flex items-center justify-center px-3 py-1 rounded-xl text-xs font-mono font-black bg-rose-600 text-white border-2 border-rose-700 shadow-xs mx-1 animate-shake"
+          title={`Emplacement (${slotKey}) erroné`}
+        >
+          ✕ ({slotKey})
+        </button>
+      );
+    }
+
+    // État normal : bouton slot interactif
+    return (
+      <button
+        onClick={() => handleSelectSlot(slotKey)}
+        disabled={isSlotSubmitted && isSlotCorrect}
+        className="inline-flex items-center justify-center px-3 py-1 rounded-xl text-xs font-mono font-black border-2 border-dashed border-amber-500 hover:border-amber-600 bg-amber-50/80 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-900 dark:text-amber-200 hover:scale-105 transition-all shadow-2xs mx-1 cursor-pointer active:scale-95"
+        title={`Insérer « ${targetWord} » à l'emplacement (${slotKey})`}
+      >
+        ({slotKey})
+      </button>
+    );
+  };
+
+  if (!testQuestion || !Array.isArray(testQuestion.options)) {
+    return null;
+  }
 
   return (
     <div className="bg-white dark:bg-stone-900 rounded-3xl p-5 sm:p-7 border-2 border-stone-900 dark:border-stone-700 shadow-[4px_4px_0px_#1c1917] dark:shadow-[4px_4px_0px_#000] space-y-5 animate-fadeIn">
@@ -375,44 +427,4 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
 
     </div>
   );
-
-  // Fonction de rendu d'un slot interactif (A), (B), (C)
-  function renderSlotButton(slotKey: 'A' | 'B' | 'C') {
-    const isThisSlotSelected = selectedSlot === slotKey;
-    const isThisSlotCorrect = slotKey === placementData.correctSlot;
-
-    // Si la réponse correcte a été trouvée, le bon slot affiche le mot inséré fièrement
-    if (isSlotSubmitted && isSlotCorrect && isThisSlotCorrect) {
-      return (
-        <span className="inline-flex items-center px-3 py-1 rounded-xl bg-emerald-500 text-white font-bold shadow-xs animate-bounce-short ring-2 ring-emerald-300 mx-1">
-          {targetWord}
-        </span>
-      );
-    }
-
-    // Si ce slot a été cliqué et était faux
-    if (isSlotSubmitted && !isSlotCorrect && isThisSlotSelected) {
-      return (
-        <button
-          onClick={() => handleSelectSlot(slotKey)}
-          className="inline-flex items-center justify-center px-3 py-1 rounded-xl text-xs font-mono font-black bg-rose-600 text-white border-2 border-rose-700 shadow-xs mx-1 animate-shake"
-          title={`Emplacement (${slotKey}) erroné`}
-        >
-          ✕ ({slotKey})
-        </button>
-      );
-    }
-
-    // État normal : bouton slot interactif
-    return (
-      <button
-        onClick={() => handleSelectSlot(slotKey)}
-        disabled={isSlotSubmitted && isSlotCorrect}
-        className="inline-flex items-center justify-center px-3 py-1 rounded-xl text-xs font-mono font-black border-2 border-dashed border-amber-500 hover:border-amber-600 bg-amber-50/80 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-900 dark:text-amber-200 hover:scale-105 transition-all shadow-2xs mx-1 cursor-pointer active:scale-95"
-        title={`Insérer « ${targetWord} » à l'emplacement (${slotKey})`}
-      >
-        ({slotKey})
-      </button>
-    );
-  }
 };

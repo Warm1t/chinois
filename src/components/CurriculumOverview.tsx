@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { CurriculumModule, NuanceCard, AnchoringRecord, AnkiWord } from '../types/fluent';
 import { ModuleLessonView } from './ModuleLessonView';
+import { ErrorBoundary } from './ErrorBoundary';
 import { 
   Compass, 
   CheckCircle2, 
@@ -20,7 +21,7 @@ import {
 interface CurriculumOverviewProps {
   modules: CurriculumModule[];
   cards: NuanceCard[];
-  anchoringRecords: Record<string, AnchoringRecord>;
+  anchoringRecords?: Record<string, AnchoringRecord>;
   currentCardId?: string;
   onSelectCard?: (cardId: string) => void;
   onClose?: () => void;
@@ -32,7 +33,7 @@ interface CurriculumOverviewProps {
 export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
   modules,
   cards,
-  anchoringRecords,
+  anchoringRecords = {},
   currentCardId,
   onSelectCard,
   onClose,
@@ -47,28 +48,36 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Si une leçon est sélectionnée, on affiche la leçon complète
+  // Si une leçon est sélectionnée, on affiche la leçon complète protégée par ErrorBoundary
   if (activeLessonId) {
     return (
-      <ModuleLessonView
-        cardId={activeLessonId}
-        onSelectCard={(id) => {
-          setActiveLessonId(id);
-          if (onSelectCard) onSelectCard(id);
-        }}
-        onBackToModules={() => setActiveLessonId(null)}
-        onExerciseCompleted={onExerciseCompleted}
-        syncedAnkiWords={syncedAnkiWords}
-        onOpenAnchorSession={onOpenAnchorSession}
-      />
+      <ErrorBoundary
+        fallbackTitle="Impossible de charger cette leçon"
+        onReset={() => setActiveLessonId(null)}
+      >
+        <ModuleLessonView
+          cardId={activeLessonId}
+          onSelectCard={(id) => {
+            setActiveLessonId(id);
+            if (onSelectCard) onSelectCard(id);
+          }}
+          onBackToModules={() => setActiveLessonId(null)}
+          onExerciseCompleted={onExerciseCompleted}
+          syncedAnkiWords={syncedAnkiWords}
+          onOpenAnchorSession={onOpenAnchorSession}
+        />
+      </ErrorBoundary>
     );
   }
 
+  // Sécurité enregistrements d'ancrage
+  const safeRecords = anchoringRecords || {};
+
   // Calcul des statistiques globales
   const totalCards = cards.length;
-  const masteredCount = Object.values(anchoringRecords).filter(r => r.stage === 'ancre').length;
-  const learningCount = Object.values(anchoringRecords).filter(r => r.stage === 'assimilation').length;
-  const globalProgress = Math.round((masteredCount / totalCards) * 100);
+  const masteredCount = Object.values(safeRecords).filter(r => r?.stage === 'ancre').length;
+  const learningCount = Object.values(safeRecords).filter(r => r?.stage === 'assimilation').length;
+  const globalProgress = totalCards > 0 ? Math.round((masteredCount / totalCards) * 100) : 0;
 
   // Liste des catégories avec libellés et icônes
   const CATEGORIES = [
@@ -263,7 +272,7 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
         ) : (
           filteredModules.map((module) => {
             const moduleCards = cards.filter(c => c.moduleId === module.id);
-            const moduleMastered = moduleCards.filter(c => anchoringRecords[c.id]?.stage === 'ancre').length;
+            const moduleMastered = moduleCards.filter(c => safeRecords[c.id]?.stage === 'ancre').length;
             const modulePercent = Math.round((moduleMastered / moduleCards.length) * 100);
 
             return (
@@ -302,7 +311,7 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
                 {/* Liste interactive des fiches de ce module */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   {moduleCards.map((card) => {
-                    const rec = anchoringRecords[card.id];
+                    const rec = safeRecords[card.id];
                     const isCurrent = card.id === currentCardId;
 
                     let stageBadge = (
