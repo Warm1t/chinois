@@ -11,6 +11,7 @@ import { ProfileSyncModal } from './components/ProfileSyncModal';
 import { AuthModal } from './components/AuthModal';
 import { AnkiWord } from './types/fluent';
 import { StoryReaderView } from './components/StoryReaderView';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
 import { UserProfileBackup, createProfileBackup } from './utils/profileSyncUtils';
@@ -283,16 +284,24 @@ export const App: React.FC = () => {
 
           {/* VUE 4 : LES MODULES D'ÉLOCUTION & LEÇONS STRUCTURÉES */}
           {activeView === 'curriculum' && (
-            <CurriculumOverview
-              modules={CURRICULUM_MODULES}
-              cards={NUANCE_CARDS}
-              anchoringRecords={anchoringRecords}
-              currentCardId={selectedCardId}
-              onSelectCard={(cardId) => setSelectedCardId(cardId)}
-              syncedAnkiWords={syncedAnkiWords}
-              onExerciseCompleted={handleExerciseCompleted}
-              onOpenAnchorSession={() => setIsDailyAnchorModalOpen(true)}
-            />
+            <ErrorBoundary
+              fallbackTitle="Impossible de charger le module d'élocution"
+              onReset={() => {
+                setSelectedCardId(NUANCE_CARDS[0].id);
+                setActiveView('curriculum');
+              }}
+            >
+              <CurriculumOverview
+                modules={CURRICULUM_MODULES}
+                cards={NUANCE_CARDS}
+                anchoringRecords={anchoringRecords}
+                currentCardId={selectedCardId}
+                onSelectCard={(cardId) => setSelectedCardId(cardId)}
+                syncedAnkiWords={syncedAnkiWords}
+                onExerciseCompleted={handleExerciseCompleted}
+                onOpenAnchorSession={() => setIsDailyAnchorModalOpen(true)}
+              />
+            </ErrorBoundary>
           )}
         </div>
 

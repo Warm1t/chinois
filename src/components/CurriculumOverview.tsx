@@ -48,6 +48,38 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  // Filtrage des modules et cartes (doit impérativement être appelé AVANT tout return conditionnel !)
+  const filteredModules = useMemo(() => {
+    return modules.filter(module => {
+      // 1. Filtre par catégorie
+      if (selectedCategory !== 'all' && module.category !== selectedCategory) {
+        return false;
+      }
+
+      // 2. Filtre par recherche textuelle
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        const moduleMatch = module.title.toLowerCase().includes(q) || 
+                            module.subtitle.toLowerCase().includes(q) || 
+                            module.description.toLowerCase().includes(q);
+
+        const cardMatch = cards
+          .filter(c => c.moduleId === module.id)
+          .some(c => 
+            c.title.toLowerCase().includes(q) ||
+            c.structuralFormula.toLowerCase().includes(q) ||
+            c.targetChinese.toLowerCase().includes(q) ||
+            c.situationFrench.toLowerCase().includes(q) ||
+            c.level.toLowerCase().includes(q)
+          );
+
+        return moduleMatch || cardMatch;
+      }
+
+      return true;
+    });
+  }, [modules, cards, selectedCategory, searchQuery]);
+
   // Si une leçon est sélectionnée, on affiche la leçon complète protégée par ErrorBoundary
   if (activeLessonId) {
     return (
@@ -103,38 +135,6 @@ export const CurriculumOverview: React.FC<CurriculumOverviewProps> = ({
         return <Link2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />;
     }
   };
-
-  // Filtrage des modules et cartes
-  const filteredModules = useMemo(() => {
-    return modules.filter(module => {
-      // 1. Filtre par catégorie
-      if (selectedCategory !== 'all' && module.category !== selectedCategory) {
-        return false;
-      }
-
-      // 2. Filtre par recherche textuelle
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
-        const moduleMatch = module.title.toLowerCase().includes(q) || 
-                            module.subtitle.toLowerCase().includes(q) || 
-                            module.description.toLowerCase().includes(q);
-
-        const cardMatch = cards
-          .filter(c => c.moduleId === module.id)
-          .some(c => 
-            c.title.toLowerCase().includes(q) ||
-            c.structuralFormula.toLowerCase().includes(q) ||
-            c.targetChinese.toLowerCase().includes(q) ||
-            c.situationFrench.toLowerCase().includes(q) ||
-            c.level.toLowerCase().includes(q)
-          );
-
-        return moduleMatch || cardMatch;
-      }
-
-      return true;
-    });
-  }, [modules, cards, selectedCategory, searchQuery]);
 
   return (
     <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 sm:p-8 border border-stone-200/90 dark:border-stone-800 shadow-sm space-y-6 animate-fadeIn transition-colors duration-200">
