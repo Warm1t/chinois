@@ -215,84 +215,86 @@ export const App: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <main className="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        {/* VUE 1 : ACCUEIL GUIDÉ (Cockpit automatique du jour) */}
-        {activeView === 'home' && (
-          <HomeDashboard
-            modules={CURRICULUM_MODULES}
-            cards={NUANCE_CARDS}
-            anchoringRecords={anchoringRecords}
-            syncedAnkiWords={syncedAnkiWords}
-            streakDays={streakDays}
-            dueCards={dueCards}
-            todayHanzi={todayHanzi}
-            onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
-            onSelectPreviousHanzi={() => setHanziOffsetDays(prev => prev - 1)}
-            onSelectNextHanzi={() => setHanziOffsetDays(prev => prev + 1)}
-            onStartGuidedAction={handleStartGuidedAction}
-            onNavigateToView={(view) => setActiveView(view)}
-            onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
-            onOpenPinnedWordsModal={() => setIsPinnedWordsModalOpen(true)}
-            onOpenCalendarModal={() => setIsCalendarModalOpen(true)}
-            onSelectCard={(cardId) => {
-              setSelectedCardId(cardId);
-              setActiveView('curriculum');
-            }}
-          />
-        )}
+        <div key={activeView} className="animate-tab-switch space-y-8">
+          {/* VUE 1 : ACCUEIL GUIDÉ (Cockpit automatique du jour) */}
+          {activeView === 'home' && (
+            <HomeDashboard
+              modules={CURRICULUM_MODULES}
+              cards={NUANCE_CARDS}
+              anchoringRecords={anchoringRecords}
+              syncedAnkiWords={syncedAnkiWords}
+              streakDays={streakDays}
+              dueCards={dueCards}
+              todayHanzi={todayHanzi}
+              onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
+              onSelectPreviousHanzi={() => setHanziOffsetDays(prev => prev - 1)}
+              onSelectNextHanzi={() => setHanziOffsetDays(prev => prev + 1)}
+              onStartGuidedAction={handleStartGuidedAction}
+              onNavigateToView={(view) => setActiveView(view)}
+              onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
+              onOpenPinnedWordsModal={() => setIsPinnedWordsModalOpen(true)}
+              onOpenCalendarModal={() => setIsCalendarModalOpen(true)}
+              onSelectCard={(cardId) => {
+                setSelectedCardId(cardId);
+                setActiveView('curriculum');
+              }}
+            />
+          )}
 
-        {/* VUE HISTOIRES : LECTEUR IMMERSIF AVEC ANCRAGE ANKI */}
-        {activeView === 'stories' && (
-          <StoryReaderView
-            syncedAnkiWords={syncedAnkiWords}
-            onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
-            onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
-            onIncrementStreak={() => {
-              setStreakDays(prev => prev + 1);
-              triggerAutoSyncToCloud();
-            }}
-          />
-        )}
+          {/* VUE HISTOIRES : LECTEUR IMMERSIF AVEC ANCRAGE ANKI */}
+          {activeView === 'stories' && (
+            <StoryReaderView
+              syncedAnkiWords={syncedAnkiWords}
+              onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
+              onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
+              onIncrementStreak={() => {
+                setStreakDays(prev => prev + 1);
+                triggerAutoSyncToCloud();
+              }}
+            />
+          )}
 
-        {/* VUE 2 : LABO VOCAL (Phrases courantes du quotidien & Auto-écoute) */}
-        {activeView === 'lab' && (
-          <VoiceCoachLab
-            customPracticePhrase={customPracticePhrase}
-            onClearCustomPhrase={() => setCustomPracticePhrase(null)}
-            onPracticeCompleted={(phraseId, score) => {
-              if (score >= 80) {
-                setToastMessage(`🎉 太棒了 ! Phrase validée à l'oral (${score}%) !`);
-                setTimeout(() => setToastMessage(null), 3500);
-              }
-              triggerAutoSyncToCloud();
-            }}
-          />
-        )}
+          {/* VUE 2 : LABO VOCAL (Phrases courantes du quotidien & Auto-écoute) */}
+          {activeView === 'lab' && (
+            <VoiceCoachLab
+              customPracticePhrase={customPracticePhrase}
+              onClearCustomPhrase={() => setCustomPracticePhrase(null)}
+              onPracticeCompleted={(phraseId, score) => {
+                if (score >= 80) {
+                  setToastMessage(`🎉 太棒了 ! Phrase validée à l'oral (${score}%) !`);
+                  setTimeout(() => setToastMessage(null), 3500);
+                }
+                triggerAutoSyncToCloud();
+              }}
+            />
+          )}
 
-        {/* VUE 3 : PARTENAIRE IA DE CONVERSATION (Dialogue spontané & oral) */}
-        {activeView === 'chat' && (
-          <ConversationChatBot
-            onWordAddedToAnki={() => {
-              setToastMessage("✨ Mot enregistré dans ton Anki local et prêt à être révisé !");
-              setTimeout(() => setToastMessage(null), 3000);
-            }}
-          />
-        )}
+          {/* VUE 3 : PARTENAIRE IA DE CONVERSATION (Dialogue spontané & oral) */}
+          {activeView === 'chat' && (
+            <ConversationChatBot
+              onWordAddedToAnki={() => {
+                setToastMessage("✨ Mot enregistré dans ton Anki local et prêt à être révisé !");
+                setTimeout(() => setToastMessage(null), 3000);
+              }}
+            />
+          )}
 
-        {/* VUE 4 : LES MODULES D'ÉLOCUTION & LEÇONS STRUCTURÉES */}
-        {activeView === 'curriculum' && (
-          <CurriculumOverview
-            modules={CURRICULUM_MODULES}
-            cards={NUANCE_CARDS}
-            anchoringRecords={anchoringRecords}
-            currentCardId={selectedCardId}
-            onSelectCard={(cardId) => setSelectedCardId(cardId)}
-            syncedAnkiWords={syncedAnkiWords}
-            onExerciseCompleted={handleExerciseCompleted}
-            onOpenAnchorSession={() => setIsDailyAnchorModalOpen(true)}
-          />
-        )}
+          {/* VUE 4 : LES MODULES D'ÉLOCUTION & LEÇONS STRUCTURÉES */}
+          {activeView === 'curriculum' && (
+            <CurriculumOverview
+              modules={CURRICULUM_MODULES}
+              cards={NUANCE_CARDS}
+              anchoringRecords={anchoringRecords}
+              currentCardId={selectedCardId}
+              onSelectCard={(cardId) => setSelectedCardId(cardId)}
+              syncedAnkiWords={syncedAnkiWords}
+              onExerciseCompleted={handleExerciseCompleted}
+              onOpenAnchorSession={() => setIsDailyAnchorModalOpen(true)}
+            />
+          )}
+        </div>
 
       </main>
 

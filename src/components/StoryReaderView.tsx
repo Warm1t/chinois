@@ -62,8 +62,29 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   onIncrementStreak,
   onOpenAppleSyncModal,
 }) => {
+  // Histoires terminées (sauvegardées en local)
+  const [completedStoryIds, setCompletedStoryIds] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('fluent_completed_stories');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   const [stories, setStories] = useState<MaayotStory[]>(BUILT_IN_STORIES);
-  const [selectedStoryId, setSelectedStoryId] = useState<string>(BUILT_IN_STORIES[0].id);
+
+  // Sélectionne par défaut la PREMIÈRE histoire NON validée (au lieu de toujours la première)
+  const [selectedStoryId, setSelectedStoryId] = useState<string>(() => {
+    try {
+      const saved = localStorage.getItem('fluent_completed_stories');
+      const completed: string[] = saved ? JSON.parse(saved) : [];
+      const firstUncompleted = BUILT_IN_STORIES.find(s => !completed.includes(s.id));
+      return firstUncompleted ? firstUncompleted.id : BUILT_IN_STORIES[0].id;
+    } catch {
+      return BUILT_IN_STORIES[0].id;
+    }
+  });
 
   // Préférences du lecteur immersif
   const [showPinyin, setShowPinyin] = useState<boolean>(true);
@@ -120,12 +141,6 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   const storyUserAudioPlayerRef = useRef<HTMLAudioElement | null>(null);
   const [storyRecordedAudioUrl, setStoryRecordedAudioUrl] = useState<string | null>(null);
   const [isPlayingStoryUserAudio, setIsPlayingStoryUserAudio] = useState<boolean>(false);
-
-  // Histoires terminées (sauvegardées en local)
-  const [completedStoryIds, setCompletedStoryIds] = useState<string[]>(() => {
-    const saved = localStorage.getItem('fluent_completed_stories');
-    return saved ? JSON.parse(saved) : [];
-  });
 
   const activeStory = stories.find(s => s.id === selectedStoryId) || stories[0];
 
@@ -329,10 +344,24 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     if (!completedStoryIds.includes(activeStory.id)) {
       const updated = [...completedStoryIds, activeStory.id];
       setCompletedStoryIds(updated);
-      localStorage.setItem('fluent_completed_stories', JSON.stringify(updated));
-      window.dispatchEvent(new CustomEvent('fluent_completed_stories_changed', { detail: { completedStoryIds: updated } }));
+      try {
+        localStorage.setItem('fluent_completed_stories', JSON.stringify(updated));
+        window.dispatchEvent(new CustomEvent('fluent_completed_stories_changed', { detail: { completedStoryIds: updated } }));
+      } catch {}
       triggerAutoSyncToCloud();
       if (onIncrementStreak) onIncrementStreak();
+
+      // Basculer directement sur la PREMIÈRE histoire NON validée
+      const firstUnvalidated = stories.find(s => !updated.includes(s.id));
+      if (firstUnvalidated) {
+        setSelectedStoryId(firstUnvalidated.id);
+      }
+    } else {
+      // Si déjà validée, proposer de basculer vers la première non validée
+      const firstUnvalidated = stories.find(s => !completedStoryIds.includes(s.id));
+      if (firstUnvalidated) {
+        setSelectedStoryId(firstUnvalidated.id);
+      }
     }
   };
 
@@ -1595,26 +1624,41 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
         )}
 
         {/* 9. BOUTON FINAL : VALIDER L'HISTOIRE (+1 JOUR DE STREAK) */}
-        <div className="pt-4 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="text-xs text-stone-500 font-medium">
+        <div className="pt-4 border-t border-stone-200 dark:border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span className="text-xs text-stone-500 dark:text-stone-400 font-medium">
             Termine la lecture pour marquer ton jour de pratique.
           </span>
 
-          <button
-            onClick={handleMarkAsCompleted}
-            className={`w-full sm:w-auto px-6 py-3 rounded-2xl font-black text-xs shadow-md border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 ${
-              completedStoryIds.includes(activeStory.id)
-                ? 'bg-emerald-600 text-white hover:bg-emerald-700'
-                : 'bg-stone-900 text-white hover:bg-stone-800'
-            }`}
-          >
-            <CheckCircle2 className="w-4 h-4" />
-            <span>
-              {completedStoryIds.includes(activeStory.id)
-                ? 'Histoire validée (Pratique du jour enregistrée)'
-                : 'Marquer l\'histoire comme lue (+1j Streak)'}
-            </span>
-          </button>
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
+            {stories.some(s => !completedStoryIds.includes(s.id)) && completedStoryIds.includes(activeStory.id) && (
+              <button
+                onClick={() => {
+                  const firstUnread = stories.find(s => !completedStoryIds.includes(s.id));
+                  if (firstUnread) setSelectedStoryId(firstUnread.id);
+                }}
+                className="px-4 py-3 rounded-2xl font-bold text-xs bg-amber-400 hover:bg-amber-500 text-stone-900 border-2 border-stone-900 shadow-sm transition-all flex items-center space-x-1.5 cursor-pointer"
+              >
+                <span>📖 Prochaine histoire à valider</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            )}
+
+            <button
+              onClick={handleMarkAsCompleted}
+              className={`w-full sm:w-auto px-6 py-3 rounded-2xl font-black text-xs shadow-md border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 ${
+                completedStoryIds.includes(activeStory.id)
+                  ? 'bg-emerald-600 text-white hover:bg-emerald-700'
+                  : 'bg-stone-900 text-white hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-white'
+              }`}
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              <span>
+                {completedStoryIds.includes(activeStory.id)
+                  ? 'Histoire validée (Pratique du jour enregistrée)'
+                  : 'Marquer l\'histoire comme lue (+1j Streak)'}
+              </span>
+            </button>
+          </div>
         </div>
 
       </div>

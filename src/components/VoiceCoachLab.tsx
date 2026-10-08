@@ -81,8 +81,28 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Index de la phrase active dans la liste filtrée
-  const [activePhraseIndex, setActivePhraseIndex] = useState<number>(0);
+  // Scores sauvegardés dans le stockage local
+  const [phraseScores, setPhraseScores] = useState<Record<string, number>>(() => {
+    try {
+      const saved = localStorage.getItem('fluent_voice_lab_scores');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  // Index de la phrase active dans la liste filtrée : initialisé sur la PREMIÈRE non validée (< 80%)
+  const [activePhraseIndex, setActivePhraseIndex] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('fluent_voice_lab_scores');
+      const scores: Record<string, number> = saved ? JSON.parse(saved) : {};
+      const all = [...getCustomVoicePhrases(), ...EVERYDAY_PHRASES];
+      const firstUnmastered = all.findIndex(p => (scores[p.id] || 0) < 80);
+      return firstUnmastered !== -1 ? firstUnmastered : 0;
+    } catch {
+      return 0;
+    }
+  });
 
   // Vitesse de lecture audio : 0.5 (Ultra-lente), 0.85 (Base ralentie recommandée), 1.0 (Normale)
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(0.85);
@@ -104,15 +124,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   const [isPlayingMirror, setIsPlayingMirror] = useState(false);
   const [mirrorStage, setMirrorStage] = useState<'native' | 'pause' | 'user' | null>(null);
 
-  // Scores sauvegardés dans le stockage local
-  const [phraseScores, setPhraseScores] = useState<Record<string, number>>(() => {
-    try {
-      const saved = localStorage.getItem('fluent_voice_lab_scores');
-      return saved ? JSON.parse(saved) : {};
-    } catch {
-      return {};
-    }
-  });
+  const autoAdvanceTimerRef = useRef<any>(null);
 
   const recognitionRef = useRef<any>(null);
   const silenceTimerRef = useRef<any>(null);
@@ -347,6 +359,10 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   const resetPhraseSession = () => {
     cleanupRecording();
     stopAllPlayback();
+    if (autoAdvanceTimerRef.current) {
+      clearTimeout(autoAdvanceTimerRef.current);
+      autoAdvanceTimerRef.current = null;
+    }
     if (mediaStreamRef.current) {
       try {
         mediaStreamRef.current.getTracks().forEach(track => track.stop());
@@ -369,6 +385,10 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     return () => {
       cleanupRecording();
       stopAllPlayback();
+      if (autoAdvanceTimerRef.current) {
+        clearTimeout(autoAdvanceTimerRef.current);
+        autoAdvanceTimerRef.current = null;
+      }
     };
   }, [currentPhrase?.id]);
 
@@ -382,13 +402,18 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
           userAudioPlayerRef.current.pause();
         } catch (e) {}
       }
+      if (autoAdvanceTimerRef.current) {
+        clearTimeout(autoAdvanceTimerRef.current);
+        autoAdvanceTimerRef.current = null;
+      }
     };
   }, [recordedAudioUrl]);
 
   // Si le filtre change et réduit la taille de la liste
   useEffect(() => {
-    if (activePhraseIndex >= filteredPhrases.length) {
-      setActivePhraseIndex(0);
+    if (activePhraseIndex >= filteredPhrases.length && filteredPhrases.length > 0) {
+      const firstUnmastered = filteredPhrases.findIndex(p => (phraseScores[p.id] || 0) < 80);
+      setActivePhraseIndex(firstUnmastered !== -1 ? firstUnmastered : 0);
     }
   }, [filteredPhrases.length]);
 
@@ -576,24 +601,40 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     // Enregistrer la réussite uniquement si le test IA est validé sans complaisance
     if (feedback.isPassed) {
       const currentBest = phraseScores[currentPhrase.id] || 0;
-      if (feedback.accuracyScore > currentBest) {
-        const updatedScores = {
-          ...phraseScores,
-          [currentPhrase.id]: feedback.accuracyScore
-        };
-        setPhraseScores(updatedScores);
-        try {
-          localStorage.setItem('fluent_voice_lab_scores', JSON.stringify(updatedScores));
-          window.dispatchEvent(new CustomEvent('fluent_voice_lab_scores_changed', { detail: { scores: updatedScores } }));
-          triggerAutoSyncToCloud();
-        } catch {}
-      }
+      const newScore = Math.max(currentBest, feedback.accuracyScore);
+      const updatedScores = {
+        ...phraseScores,
+        [currentPhrase.id]: newScore
+      };
+      setPhraseScores(updatedScores);
+      try {
+        localStorage.setItem('fluent_voice_lab_scores', JSON.stringify(updatedScores));
+        window.dispatchEvent(new CustomEvent('fluent_voice_lab_scores_changed', { detail: { scores: updatedScores } }));
+        triggerAutoSyncToCloud();
+      } catch {}
 
       setAnkiToast(`🎉 Phrase validée à l'oral (${feedback.accuracyScore}%) ! 太棒了 !`);
       setTimeout(() => setAnkiToast(null), 3500);
 
       if (onPracticeCompleted) {
         onPracticeCompleted(currentPhrase.id, feedback.accuracyScore);
+      }
+
+      // Trouver la première phrase non encore validée dans la liste
+      const nextUnmasteredIdx = filteredPhrases.findIndex(
+        (p, idx) => idx > activePhraseIndex && (updatedScores[p.id] || 0) < 80
+      );
+      const firstUnmasteredOverall = filteredPhrases.findIndex(
+        (p) => (updatedScores[p.id] || 0) < 80
+      );
+      const targetUnmasteredIdx = nextUnmasteredIdx !== -1 ? nextUnmasteredIdx : firstUnmasteredOverall;
+
+      // Transition automatique douce vers la première phrase non validée après 2.2s
+      if (targetUnmasteredIdx !== -1 && targetUnmasteredIdx !== activePhraseIndex) {
+        if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
+        autoAdvanceTimerRef.current = setTimeout(() => {
+          setActivePhraseIndex(targetUnmasteredIdx);
+        }, 2200);
       }
     }
   };
@@ -684,8 +725,41 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     }
   };
 
-  // Navigation dans les phrases
+  // Sélection de catégorie : se positionne automatiquement sur la PREMIÈRE non validée
+  const handleSelectCategory = (catId: string) => {
+    if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
+    setSelectedCategory(catId);
+    setSearchQuery('');
+    const allList = [...customPhrases, ...EVERYDAY_PHRASES];
+    let targetList: EverydayPhrase[] = [];
+    if (catId === 'all') targetList = allList;
+    else if (catId === 'mastered') targetList = allList.filter(p => (phraseScores[p.id] || 0) >= 80);
+    else if (catId === 'to_practice') targetList = allList.filter(p => (phraseScores[p.id] || 0) < 80);
+    else if (catId === 'custom') targetList = customPhrases;
+    else if (catId === 'anki') targetList = ankiPhrases;
+    else targetList = allList.filter(p => p.category === catId);
+
+    const firstUnmastered = targetList.findIndex(p => (phraseScores[p.id] || 0) < 80);
+    setActivePhraseIndex(firstUnmastered !== -1 ? firstUnmastered : 0);
+  };
+
+  // Navigation dans les phrases : priorise la prochaine non validée
   const nextPhrase = () => {
+    if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
+    if (filteredPhrases.length <= 1) return;
+    // Chercher la prochaine phrase non validée après l'index courant
+    const nextUnmastered = filteredPhrases.findIndex((p, idx) => idx > activePhraseIndex && (phraseScores[p.id] || 0) < 80);
+    if (nextUnmastered !== -1) {
+      setActivePhraseIndex(nextUnmastered);
+      return;
+    }
+    // Sinon chercher la première non validée depuis le début
+    const fromStartUnmastered = filteredPhrases.findIndex((p) => (phraseScores[p.id] || 0) < 80);
+    if (fromStartUnmastered !== -1 && fromStartUnmastered !== activePhraseIndex) {
+      setActivePhraseIndex(fromStartUnmastered);
+      return;
+    }
+    // Si toutes sont validées, défilement classique
     if (activePhraseIndex < filteredPhrases.length - 1) {
       setActivePhraseIndex(prev => prev + 1);
     } else {
@@ -694,6 +768,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   };
 
   const prevPhrase = () => {
+    if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
     if (activePhraseIndex > 0) {
       setActivePhraseIndex(prev => prev - 1);
     } else {
@@ -702,6 +777,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   };
 
   const pickRandomPhrase = () => {
+    if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
     if (filteredPhrases.length <= 1) return;
     let randomIndex = activePhraseIndex;
     while (randomIndex === activePhraseIndex) {
@@ -711,6 +787,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   };
 
   const jumpToNextUnmastered = () => {
+    if (autoAdvanceTimerRef.current) clearTimeout(autoAdvanceTimerRef.current);
     if (filteredPhrases.length <= 1) return;
     const nextIdx = filteredPhrases.findIndex((p, idx) => idx > activePhraseIndex && (phraseScores[p.id] || 0) < 80);
     if (nextIdx !== -1) {
@@ -859,10 +936,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
               return (
                 <button
                   key={cat.id}
-                  onClick={() => {
-                    setSelectedCategory(cat.id);
-                    setActivePhraseIndex(0);
-                  }}
+                  onClick={() => handleSelectCategory(cat.id)}
                   className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition-all flex items-center space-x-1.5 border ${
                     selectedCategory === cat.id
                       ? 'bg-stone-900 text-white border-stone-900 shadow-2xs font-black'
