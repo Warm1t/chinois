@@ -139,8 +139,8 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          {/* Controls : Statistiques, Thème & Menu Outils Déroulant */}
-          <div className="flex items-center space-x-2 text-xs self-end sm:self-center">
+          {/* Controls : Statistiques, Statut Compte (Invité / Connecté), Thème & Menu Outils Déroulant */}
+          <div className="flex flex-wrap items-center gap-2 text-xs self-start sm:self-center">
             
             {/* Capsule Statistiques Quotidiennes Récapitulative */}
             <div className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 font-bold select-none shadow-2xs">
@@ -171,26 +171,44 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* Bouton Compte / Connexion Multi-Appareils */}
+            {/* Statut d'Authentification Visible Directement : Invité vs Connecté */}
             {onOpenAuthModal && (
               currentUser ? (
                 <button
                   onClick={onOpenAuthModal}
-                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 font-bold text-xs transition-all shadow-2xs"
-                  title={`Connecté : ${currentUser.email} • Synchro automatique active`}
+                  className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 hover:bg-emerald-100 dark:hover:bg-emerald-900/70 border-2 border-emerald-500/80 dark:border-emerald-600 text-emerald-950 dark:text-emerald-100 font-bold text-xs transition-all shadow-xs group"
+                  title={`Connecté : ${currentUser.email} • Synchronisation Cloud automatique active (cliquer pour gérer le compte)`}
                 >
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="hidden md:inline font-mono text-[11px]">{currentUser.email?.split('@')[0]}</span>
-                  <span className="text-[9px] bg-emerald-200/80 dark:bg-emerald-900 px-1 py-0.2 rounded font-bold">Lié</span>
+                  <span className="relative flex h-2.5 w-2.5 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                  </span>
+                  <div className="flex items-center space-x-1.5">
+                    <span className="font-extrabold text-emerald-900 dark:text-emerald-200">Connecté</span>
+                    <span className="font-mono text-[11px] text-emerald-700 dark:text-emerald-300 max-w-[85px] sm:max-w-[140px] truncate">
+                      ({currentUser.email?.split('@')[0]})
+                    </span>
+                  </div>
+                  <span className="hidden sm:inline-flex items-center text-[9px] bg-emerald-200/90 dark:bg-emerald-800 text-emerald-950 dark:text-emerald-100 px-1.5 py-0.5 rounded-md font-black uppercase tracking-tight">
+                    ☁️ Synchro
+                  </span>
                 </button>
               ) : (
                 <button
                   onClick={onOpenAuthModal}
-                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-emerald-50 dark:bg-stone-800 dark:hover:bg-emerald-950/40 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 hover:text-emerald-800 font-bold text-xs transition-all shadow-2xs"
-                  title="Connecte-toi pour synchroniser ton PC et ton iPhone"
+                  className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/50 border-2 border-amber-400/90 dark:border-amber-600 text-amber-950 dark:text-amber-100 font-bold text-xs transition-all shadow-xs group"
+                  title="Vous êtes actuellement en Mode Invité (données sauvegardées uniquement sur cet appareil). Cliquez pour vous connecter et synchroniser votre PC et iPhone !"
                 >
-                  <span className="w-2 h-2 rounded-full bg-amber-400" />
-                  <span className="hidden sm:inline">Connexion</span>
+                  <span className="relative flex h-2.5 w-2.5 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500" />
+                  </span>
+                  <span className="font-extrabold text-amber-900 dark:text-amber-200">
+                    Invité
+                  </span>
+                  <span className="text-[10px] bg-amber-200/90 dark:bg-amber-800 text-amber-950 dark:text-amber-100 px-2 py-0.5 rounded-md font-black uppercase tracking-tight group-hover:scale-105 transition-transform">
+                    Connexion
+                  </span>
                 </button>
               )
             )}
