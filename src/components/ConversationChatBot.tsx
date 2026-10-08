@@ -166,9 +166,10 @@ export const ConversationChatBot: React.FC<ConversationChatBotProps> = ({
       hanzi: kw.hanzi,
       pinyin: kw.pinyin,
       translation: kw.translation,
-      deckName: `Partenaire IA (${activeScenario.title})`,
+      deckName: 'Fluent',
+      source: 'fluent_to_anki',
     });
-    setAnkiToast(res.isNew ? `✨ "${kw.hanzi}" ajouté à Anki (${res.totalCount} cartes) !` : `✓ "${kw.hanzi}" est déjà dans ton Anki !`);
+    setAnkiToast(res.isNew ? `✨ "${kw.hanzi}" ajouté à ton paquet Anki "Fluent" (${res.totalCount} cartes) !` : `✓ "${kw.hanzi}" est déjà dans ton Anki !`);
     if (onWordAddedToAnki) onWordAddedToAnki();
     setTimeout(() => setAnkiToast(null), 3000);
   };

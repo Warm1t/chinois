@@ -142,10 +142,11 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
       hanzi: currentPhrase.hanzi,
       pinyin: currentPhrase.pinyin,
       translation: currentPhrase.french,
-      deckName: 'Labo Vocal (Terrain)',
+      deckName: 'Fluent',
+      source: 'fluent_to_anki',
     });
     setIsInAnki(true);
-    setAnkiToast(res.isNew ? `✨ Phrase ajoutée à Anki (${res.totalCount} cartes) !` : `✓ Déjà dans ton Anki !`);
+    setAnkiToast(res.isNew ? `✨ Phrase ajoutée à ton paquet Anki "Fluent" (${res.totalCount} cartes) !` : `✓ Déjà dans ton Anki !`);
     setTimeout(() => setAnkiToast(null), 3000);
   };
 

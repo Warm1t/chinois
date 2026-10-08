@@ -94,8 +94,9 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   const shadowAudioChunksRef = useRef<Blob[]>([]);
   const shadowUserAudioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
-  // Mot actif sélectionné pour la pop-up de dictionnaire
+  // Mot actif sélectionné pour la pop-up de dictionnaire et index de phrase associé
   const [selectedWord, setSelectedWord] = useState<StoryWordToken | null>(null);
+  const [selectedWordSentenceIdx, setSelectedWordSentenceIdx] = useState<number | null>(null);
 
   // État du Quiz
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
@@ -592,10 +593,13 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
       hanzi: word.hanzi,
       pinyin: word.pinyin,
       translation: word.translation,
-      deckName: 'Histoires Quotidiennes',
+      deckName: 'Fluent',
+      source: 'fluent_to_anki',
     });
-    setAnkiToast(res.isNew ? `✨ "${word.hanzi}" ajouté à Anki (${res.totalCount} cartes) !` : `✓ "${word.hanzi}" est déjà dans ton Anki !`);
-    setTimeout(() => setAnkiToast(null), 3000);
+    setAnkiToast(res.isNew 
+      ? `✨ "${word.hanzi}" ajouté à ton paquet Anki "Fluent" (${res.totalCount} cartes) !` 
+      : `✓ "${word.hanzi}" est déjà dans ton Anki !`);
+    setTimeout(() => setAnkiToast(null), 3500);
   };
 
   return (
@@ -1007,13 +1011,21 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                                   {/* Mots du chunk cliquables pour popup dictionnaire */}
                                   <div className="flex items-end gap-x-1">
                                     {chunk.words.map((word, wIdx) => {
-                                      const isSelected = selectedWord?.hanzi === word.hanzi;
+                                      const isSelected = selectedWord?.hanzi === word.hanzi && selectedWordSentenceIdx === globalIdx;
                                       const inAnki = isWordInUserAnki(word.hanzi);
 
                                       return (
                                         <span
                                           key={wIdx}
-                                          onClick={() => setSelectedWord(word)}
+                                          onClick={() => {
+                                            if (selectedWord?.hanzi === word.hanzi && selectedWordSentenceIdx === globalIdx) {
+                                              setSelectedWord(null);
+                                              setSelectedWordSentenceIdx(null);
+                                            } else {
+                                              setSelectedWord(word);
+                                              setSelectedWordSentenceIdx(globalIdx);
+                                            }
+                                          }}
                                           className={`group inline-flex flex-col items-center cursor-pointer rounded-lg px-1 py-0.5 transition-all select-none ${
                                             isSelected
                                               ? 'bg-amber-300 text-stone-950 font-bold ring-2 ring-stone-900'
@@ -1070,13 +1082,21 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                         /* MODE CLASSIQUE MOT PAR MOT */
                         <div className="flex flex-wrap items-end gap-x-1.5 gap-y-3 py-1">
                           {sentence.words.map((word, wIdx) => {
-                            const isSelected = selectedWord?.hanzi === word.hanzi;
+                            const isSelected = selectedWord?.hanzi === word.hanzi && selectedWordSentenceIdx === globalIdx;
                             const inAnki = isWordInUserAnki(word.hanzi);
 
                             return (
                               <span
                                 key={wIdx}
-                                onClick={() => setSelectedWord(word)}
+                                onClick={() => {
+                                  if (selectedWord?.hanzi === word.hanzi && selectedWordSentenceIdx === globalIdx) {
+                                    setSelectedWord(null);
+                                    setSelectedWordSentenceIdx(null);
+                                  } else {
+                                    setSelectedWord(word);
+                                    setSelectedWordSentenceIdx(globalIdx);
+                                  }
+                                }}
                                 className={`group inline-flex flex-col items-center cursor-pointer rounded-lg px-1 py-0.5 transition-all select-none ${
                                   isSelected
                                     ? 'bg-amber-300/80 text-stone-950 font-bold ring-2 ring-stone-900'
@@ -1114,6 +1134,65 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                         <p className="text-xs sm:text-sm font-sans text-stone-500 italic pl-1 border-l-2 border-amber-300">
                           {sentence.translation}
                         </p>
+                      )}
+
+                      {/* POP-UP DICTIONNAIRE DIRECTEMENT SOUS LA PHRASE (STYLE MAAYOT INLINE) */}
+                      {selectedWord && selectedWordSentenceIdx === globalIdx && (
+                        <div className="mt-3 p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-stone-900 border-2 border-stone-900 dark:border-stone-700 shadow-[3px_3px_0px_#1c1917] dark:shadow-[3px_3px_0px_#000000] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-fadeIn">
+                          <div className="flex items-center space-x-3.5">
+                            <button
+                              onClick={(e) => handlePronounceWord(selectedWord.hanzi, e)}
+                              className="w-10 h-10 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 flex items-center justify-center transition-colors shrink-0"
+                              title="Écouter la prononciation"
+                            >
+                              <Volume2 className="w-5 h-5 text-amber-800" />
+                            </button>
+                            <div>
+                              <div className="flex items-center space-x-2">
+                                <span className="text-2xl font-black text-stone-900 dark:text-stone-100 font-serif chinese-text">
+                                  {selectedWord.hanzi}
+                                </span>
+                                <span className="text-sm font-bold font-mono text-stone-600 dark:text-stone-300 bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded-md">
+                                  {selectedWord.pinyin}
+                                </span>
+                                {isWordInUserAnki(selectedWord.hanzi) && (
+                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 flex items-center space-x-0.5">
+                                    <BookmarkCheck className="w-3 h-3 mr-0.5 text-emerald-600" />
+                                    <span>Dans ton Anki</span>
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-xs font-semibold text-stone-700 dark:text-stone-300 mt-0.5">
+                                {selectedWord.translation}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center space-x-2 self-end sm:self-center">
+                            <button
+                              onClick={() => handleSaveWordToAnki(selectedWord)}
+                              className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                                isWordInUserAnki(selectedWord.hanzi)
+                                  ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700 shadow-2xs'
+                                  : 'bg-white hover:bg-emerald-50 dark:bg-stone-800 dark:hover:bg-emerald-950/40 text-stone-800 dark:text-stone-200 hover:text-emerald-900 border-stone-300 hover:border-emerald-300 shadow-2xs'
+                              }`}
+                              title="Ajouter ce mot directement à ton deck Anki (Paquet Fluent)"
+                            >
+                              <BookmarkCheck className={`w-3.5 h-3.5 ${isWordInUserAnki(selectedWord.hanzi) ? 'text-emerald-600' : 'text-stone-400'}`} />
+                              <span>{isWordInUserAnki(selectedWord.hanzi) ? 'Dans ton Anki' : 'Ajouter à Anki (Fluent)'}</span>
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                setSelectedWord(null);
+                                setSelectedWordSentenceIdx(null);
+                              }}
+                              className="text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 text-xs font-bold underline px-1.5 py-1"
+                            >
+                              Fermer
+                            </button>
+                          </div>
+                        </div>
                       )}
 
                       {/* 🎤 STUDIO INTERACTIF DE SHADOWING & CALIBRAGE DU RYTHME */}
@@ -1269,62 +1348,6 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
             );
           })}
         </div>
-
-        {/* 5. POP-UP DICTIONNAIRE AU CLIC SUR UN MOT (STYLE MAAYOT ONE-CLICK) */}
-        {selectedWord && (
-          <div className="p-4 rounded-2xl bg-white border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 animate-fadeIn">
-            <div className="flex items-center space-x-3.5">
-              <button
-                onClick={(e) => handlePronounceWord(selectedWord.hanzi, e)}
-                className="w-10 h-10 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 flex items-center justify-center transition-colors shrink-0"
-                title="Écouter la prononciation"
-              >
-                <Volume2 className="w-5 h-5 text-amber-800" />
-              </button>
-              <div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-2xl font-black text-stone-900 font-serif">
-                    {selectedWord.hanzi}
-                  </span>
-                  <span className="text-sm font-bold font-mono text-stone-600 bg-stone-100 px-2 py-0.5 rounded-md">
-                    {selectedWord.pinyin}
-                  </span>
-                  {isWordInUserAnki(selectedWord.hanzi) && (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center space-x-0.5">
-                      <BookmarkCheck className="w-3 h-3 mr-0.5 text-emerald-600" />
-                      <span>Dans ton Anki</span>
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs font-semibold text-stone-700 mt-0.5">
-                  {selectedWord.translation}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-2 self-end sm:self-center">
-              <button
-                onClick={() => handleSaveWordToAnki(selectedWord)}
-                className={`inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
-                  isWordInUserAnki(selectedWord.hanzi)
-                    ? 'bg-emerald-50 text-emerald-800 border-emerald-300 shadow-2xs'
-                    : 'bg-white hover:bg-emerald-50 text-stone-800 hover:text-emerald-900 border-stone-300 hover:border-emerald-300 shadow-2xs'
-                }`}
-                title="Ajouter ce mot directement à ton deck Anki"
-              >
-                <BookmarkCheck className={`w-3.5 h-3.5 ${isWordInUserAnki(selectedWord.hanzi) ? 'text-emerald-600' : 'text-stone-400'}`} />
-                <span>{isWordInUserAnki(selectedWord.hanzi) ? 'Dans ton Anki' : 'Ajouter à Anki'}</span>
-              </button>
-
-              <button
-                onClick={() => setSelectedWord(null)}
-                className="text-stone-400 hover:text-stone-800 text-xs font-bold underline px-1.5 py-1"
-              >
-                Fermer
-              </button>
-            </div>
-          </div>
-        )}
 
         {/* 6. VOCABULAIRE CIBLE DE L'HISTOIRE */}
         <div className="p-4 rounded-2xl bg-stone-100/80 border border-stone-200 space-y-2">

@@ -7,7 +7,10 @@ import {
   deleteWordFromLocalAnki, 
   clearAllLocalAnkiWords, 
   saveWordToLocalAnki,
-  exportWordsToJson
+  exportWordsToJson,
+  checkAnkiConnection,
+  syncWordDirectlyToAnkiDesktop,
+  syncAllFluentWordsToAnkiDesktop
 } from '../utils/ankiConnect';
 import { 
   generateSentencesForWord, 
@@ -32,7 +35,14 @@ import {
   FileText, 
   ArrowRight,
   ExternalLink,
-  MessageSquare
+  MessageSquare,
+  Zap,
+  FolderDown,
+  FolderUp,
+  AlertCircle,
+  CheckCircle2,
+  HelpCircle,
+  RefreshCw
 } from 'lucide-react';
 
 interface PinnedWordsAnkiModalProps {
@@ -51,6 +61,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
   onPracticePhrase,
 }) => {
   const [activeTab, setActiveTab] = useState<'list' | 'sentences'>('list');
+  const [sourceFilter, setSourceFilter] = useState<'all' | 'fluent' | 'imported'>('fluent');
   const [searchQuery, setSearchQuery] = useState('');
   const [copySuccess, setCopySuccess] = useState(false);
   const [exportFormat, setExportFormat] = useState<'basic' | 'tsv'>('basic');
@@ -62,6 +73,10 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
   // Audio en cours
   const [playingId, setPlayingId] = useState<string | null>(null);
 
+  // Synchronisation directe vers Anki Desktop
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncStatusMessage, setSyncStatusMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
+
   // Ajout manuel d'un mot
   const [showAddForm, setShowAddForm] = useState(false);
   const [newHanzi, setNewHanzi] = useState('');
@@ -70,8 +85,26 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Filtrage des mots
-  const filteredWords = words.filter(w => {
+  // Séparation nette des mots selon leur provenance
+  const isFluentWord = (w: AnkiWord) => 
+    w.source === 'fluent_to_anki' || w.deckName === 'Fluent' || (!w.source && w.id.startsWith('local-anki'));
+
+  const isImportedWord = (w: AnkiWord) => 
+    w.source === 'imported_from_anki' || (!isFluentWord(w) && w.deckName !== 'Fluent');
+
+  const fluentWords = words.filter(isFluentWord);
+  const importedWords = words.filter(isImportedWord);
+
+  // Sélection de la liste selon le filtre de source
+  const sourceFilteredWords = 
+    sourceFilter === 'fluent' 
+      ? fluentWords 
+      : sourceFilter === 'imported' 
+      ? importedWords 
+      : words;
+
+  // Filtrage par recherche
+  const filteredWords = sourceFilteredWords.filter(w => {
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase().trim();
     return (
@@ -82,7 +115,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
   });
 
   // Phrases générées
-  const allGeneratedSentences = generateSentencesForAllPinnedWords(words);
+  const allGeneratedSentences = generateSentencesForAllPinnedWords(sourceFilteredWords);
   const filteredSentences = allGeneratedSentences.filter(s => {
     if (selectedWordFilter !== 'all' && s.wordHanzi !== selectedWordFilter) {
       return false;
@@ -99,7 +132,8 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
 
   // Copier au format Anki
   const handleCopyClipboard = async () => {
-    const ok = await copyWordsToClipboardForAnki(words, exportFormat);
+    const listToCopy = sourceFilter === 'fluent' ? fluentWords : sourceFilteredWords;
+    const ok = await copyWordsToClipboardForAnki(listToCopy, exportFormat);
     if (ok) {
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2500);
@@ -108,7 +142,67 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
 
   // Exporter en fichier .txt Anki
   const handleExportFile = () => {
-    exportWordsToAnkiTextFile(words, exportFormat);
+    const listToExport = sourceFilter === 'fluent' ? fluentWords : sourceFilteredWords;
+    exportWordsToAnkiTextFile(listToExport, exportFormat);
+  };
+
+  // Synchronisation directe de tous les mots Fluent vers Anki Desktop
+  const handleDirectDesktopSync = async () => {
+    setIsSyncing(true);
+    setSyncStatusMessage(null);
+    try {
+      const isOnline = await checkAnkiConnection();
+      if (!isOnline) {
+        setSyncStatusMessage({
+          text: "Anki Desktop n'est pas détecté. Lance Anki sur ton PC (avec l'extension AnkiConnect), ou utilise le bouton 'Télécharger fichier .txt' !",
+          type: 'info'
+        });
+        setIsSyncing(false);
+        return;
+      }
+
+      const res = await syncAllFluentWordsToAnkiDesktop();
+      if (res.success > 0) {
+        setSyncStatusMessage({
+          text: `🎉 ${res.success} mot(s) injecté(s) directement dans ton paquet "Fluent" sur Anki Desktop !`,
+          type: 'success'
+        });
+      } else if (res.failed > 0) {
+        setSyncStatusMessage({
+          text: `Erreur lors de l'ajout des cartes dans Anki Desktop (${res.failed} échecs).`,
+          type: 'error'
+        });
+      } else {
+        setSyncStatusMessage({
+          text: `Tous tes mots Fluent sont déjà synchronisés dans ton paquet Anki "Fluent" !`,
+          type: 'success'
+        });
+      }
+    } catch (err: any) {
+      setSyncStatusMessage({
+        text: "Impossible de joindre AnkiConnect : " + (err?.message || ''),
+        type: 'error'
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  // Synchronisation d'un mot unique
+  const handleSyncSingleWord = async (word: AnkiWord) => {
+    setSyncStatusMessage(null);
+    const ok = await syncWordDirectlyToAnkiDesktop(word);
+    if (ok) {
+      setSyncStatusMessage({
+        text: `✓ "${word.hanzi}" transféré avec succès dans ton Anki Desktop (paquet Fluent) !`,
+        type: 'success'
+      });
+    } else {
+      setSyncStatusMessage({
+        text: `Impossible de transférer "${word.hanzi}". Vérifie qu'Anki tourne sur ton PC.`,
+        type: 'error'
+      });
+    }
   };
 
   // Supprimer un mot
@@ -133,7 +227,8 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
       hanzi: newHanzi.trim(),
       pinyin: newPinyin.trim(),
       translation: newTranslation.trim(),
-      deckName: 'Ajout Manuel',
+      deckName: 'Fluent',
+      source: 'fluent_to_anki',
     });
     setNewHanzi('');
     setNewPinyin('');
@@ -192,11 +287,11 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                   Mes Mots Épinglés & Export Anki
                 </h2>
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-200 border border-amber-300 dark:border-amber-700">
-                  {words.length} mot{words.length > 1 ? 's' : ''}
+                  {words.length} mot{words.length > 1 ? 's' : ''} au total
                 </span>
               </div>
               <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
-                Liste prête à être importée dans ton application Anki et phrases contextuelles pour t'entraîner
+                Distinction entre les mots créés dans Fluent (paquet <strong>"Fluent"</strong>) et ceux importés depuis ton Anki
               </p>
             </div>
           </div>
@@ -210,7 +305,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
           </button>
         </div>
 
-        {/* ONGLETS DE NAVIGATION */}
+        {/* ONGLETS PRINCIPAUX DE NAVIGATION */}
         <div className="flex items-center px-4 sm:px-6 border-b border-stone-200 dark:border-stone-800 bg-white dark:bg-[#181513] text-xs font-bold space-x-2 pt-3">
           <button
             onClick={() => setActiveTab('list')}
@@ -241,18 +336,46 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
         {activeTab === 'list' && (
           <div className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-1">
             
-            {/* BANDEAU D'ACTIONS D'EXPORTATION RAPIDE */}
+            {/* MESSAGE DE STATUT SYNCHRO ANKI */}
+            {syncStatusMessage && (
+              <div className={`p-3.5 rounded-2xl border text-xs font-semibold flex items-center justify-between gap-2 animate-fadeIn ${
+                syncStatusMessage.type === 'success'
+                  ? 'bg-emerald-50 text-emerald-900 border-emerald-300'
+                  : syncStatusMessage.type === 'error'
+                  ? 'bg-rose-50 text-rose-900 border-rose-300'
+                  : 'bg-amber-50 text-amber-900 border-amber-300'
+              }`}>
+                <div className="flex items-center space-x-2">
+                  {syncStatusMessage.type === 'success' ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  ) : syncStatusMessage.type === 'error' ? (
+                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                  ) : (
+                    <HelpCircle className="w-4 h-4 text-amber-600 shrink-0" />
+                  )}
+                  <span>{syncStatusMessage.text}</span>
+                </div>
+                <button 
+                  onClick={() => setSyncStatusMessage(null)}
+                  className="text-stone-400 hover:text-stone-700 text-xs font-bold"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
+            {/* BANDEAU D'ACTIONS D'EXPORTATION RAPIDE VERS ANKI */}
             <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-stone-900 to-stone-800 text-white border-2 border-stone-900 shadow-[4px_4px_0px_#c23b22] space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
-                    Exportation Directe vers Anki
+                    Exportation & Synchronisation Anki
                   </span>
                   <h3 className="text-base font-bold font-serif text-white">
-                    Exporter ou copier pour ton Anki Desktop / Mobile
+                    Transférer vers le paquet "Fluent" ou Exporter
                   </h3>
                   <p className="text-xs text-stone-300 mt-0.5">
-                    Format TSV tabulé encodé en UTF-8, prêt pour la commande <em>Fichier → Importer</em> d’Anki.
+                    Tous tes mots enregistrés dans l'application sont assignés au paquet <strong>Fluent</strong> pour ne pas se mélanger à tes autres paquets Anki.
                   </p>
                 </div>
 
@@ -286,15 +409,29 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
 
               {/* Boutons d'action */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                {/* 1. Transférer directement dans Anki Desktop si ouvert */}
+                <button
+                  onClick={handleDirectDesktopSync}
+                  disabled={isSyncing || fluentWords.length === 0}
+                  className="py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 disabled:opacity-50 text-stone-950 font-black text-xs border border-stone-900 shadow-sm transition-all flex items-center justify-center space-x-2"
+                  title="Ajoute directement les mots au paquet 'Fluent' dans Anki Desktop"
+                >
+                  <Zap className={`w-4 h-4 fill-stone-950 ${isSyncing ? 'animate-bounce' : ''}`} />
+                  <span>{isSyncing ? 'Envoi vers Anki...' : '⚡ Vers Anki Desktop (Paquet Fluent)'}</span>
+                </button>
+
+                {/* 2. Télécharger fichier texte pour Anki */}
                 <button
                   onClick={handleExportFile}
                   disabled={words.length === 0}
                   className="py-2.5 px-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-stone-950 font-black text-xs border border-stone-900 shadow-sm transition-all flex items-center justify-center space-x-2"
+                  title="Télécharger un fichier texte importable dans Anki"
                 >
                   <Download className="w-4 h-4" />
                   <span>Télécharger fichier Anki (.txt)</span>
                 </button>
 
+                {/* 3. Copier dans le presse-papier */}
                 <button
                   onClick={handleCopyClipboard}
                   disabled={words.length === 0}
@@ -316,16 +453,64 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                     </>
                   )}
                 </button>
+              </div>
+            </div>
 
+            {/* FILTRE DE PROVENANCE : DISTINCTION NETTE DEMANDÉE PAR L'UTILISATEUR */}
+            <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-stone-100 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800">
+              <div className="flex items-center space-x-1.5 text-xs font-bold">
+                <span className="text-stone-400 uppercase text-[10px] tracking-wider pr-1">Afficher :</span>
+                
+                {/* 1. Mots créés dans Fluent (à transférer dans le paquet Fluent) */}
                 <button
-                  onClick={() => exportWordsToJson(words)}
-                  disabled={words.length === 0}
-                  className="py-2.5 px-3.5 rounded-xl bg-stone-700/80 hover:bg-stone-700 disabled:opacity-50 text-stone-200 font-bold text-xs border border-stone-700 transition-all flex items-center justify-center space-x-2"
+                  onClick={() => setSourceFilter('fluent')}
+                  className={`px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 ${
+                    sourceFilter === 'fluent'
+                      ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
+                      : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                  }`}
                 >
-                  <FileText className="w-4 h-4 text-stone-300" />
-                  <span>Sauvegarder en JSON</span>
+                  <FolderUp className="w-3.5 h-3.5 text-amber-500" />
+                  <span>📦 Paquet Fluent (vers Anki) ({fluentWords.length})</span>
+                </button>
+
+                {/* 2. Mots importés depuis Anki */}
+                <button
+                  onClick={() => setSourceFilter('imported')}
+                  className={`px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 ${
+                    sourceFilter === 'imported'
+                      ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
+                      : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                  }`}
+                >
+                  <FolderDown className="w-3.5 h-3.5 text-blue-500" />
+                  <span>🔄 Importés d'Anki ({importedWords.length})</span>
+                </button>
+
+                {/* 3. Tous les mots */}
+                <button
+                  onClick={() => setSourceFilter('all')}
+                  className={`px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 ${
+                    sourceFilter === 'all'
+                      ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
+                      : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                  }`}
+                >
+                  <span>🌟 Tous ({words.length})</span>
                 </button>
               </div>
+
+              {/* Bouton Sauvegarder JSON */}
+              {words.length > 0 && (
+                <button
+                  onClick={() => exportWordsToJson(words)}
+                  className="text-stone-500 hover:text-stone-800 text-[11px] font-bold flex items-center space-x-1"
+                  title="Sauvegarder tout le vocabulaire en fichier JSON de sauvegarde"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Sauvegarde JSON</span>
+                </button>
+              )}
             </div>
 
             {/* BARRE DE RECHERCHE & ACTIONS DE LISTE */}
@@ -334,7 +519,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                 <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
-                  placeholder="Rechercher parmi mes mots (Hanzi, Pinyin, Français)..."
+                  placeholder="Rechercher par Hanzi, Pinyin ou Français..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-9 pr-3 py-2 bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-xl text-xs text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-stone-900 shadow-2xs"
@@ -347,7 +532,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                   className="px-3 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 text-xs font-bold flex items-center space-x-1.5 transition-colors border border-stone-200 dark:border-stone-700"
                 >
                   <Plus className="w-3.5 h-3.5 text-[#c23b22]" />
-                  <span>Ajouter un mot</span>
+                  <span>Ajouter au paquet Fluent</span>
                 </button>
 
                 {words.length > 0 && (
@@ -362,11 +547,11 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
               </div>
             </div>
 
-            {/* FORMULAIRE D'AJOUT MANUEL */}
+            {/* FORMULAIRE D'AJOUT MANUEL DANS LE PAQUET FLUENT */}
             {showAddForm && (
               <form onSubmit={handleAddManualWord} className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-300 dark:border-amber-800 space-y-3 animate-fadeIn">
                 <span className="text-xs font-bold text-amber-950 dark:text-amber-300 block">
-                  Ajouter un mot ou une phrase à exporter :
+                  Ajouter un mot au paquet "Fluent" (prêt pour Anki) :
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   <input
@@ -405,29 +590,35 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                     type="submit"
                     className="px-4 py-1.5 rounded-lg bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs font-bold shadow-xs"
                   >
-                    Enregistrer le mot
+                    Enregistrer dans le paquet Fluent
                   </button>
                 </div>
               </form>
             )}
 
-            {/* LISTE DES MOTS ÉPINGLÉS */}
+            {/* LISTE DES MOTS ÉPINGLÉS AVEC BADGES DISTINCTS */}
             {filteredWords.length === 0 ? (
               <div className="p-8 text-center rounded-2xl bg-stone-50 dark:bg-stone-900/50 border-2 border-dashed border-stone-200 dark:border-stone-800 space-y-2">
                 <span className="text-3xl block">📌</span>
                 <h4 className="text-sm font-bold text-stone-800 dark:text-stone-200">
-                  {words.length === 0 ? "Aucun mot épinglé pour le moment" : "Aucun mot ne correspond à ta recherche"}
+                  {sourceFilter === 'fluent'
+                    ? "Aucun mot dans le paquet 'Fluent' pour le moment"
+                    : sourceFilter === 'imported'
+                    ? "Aucun mot importé d'Anki pour le moment"
+                    : "Aucun mot ne correspond à ta recherche"}
                 </h4>
                 <p className="text-xs text-stone-500 max-w-md mx-auto">
-                  {words.length === 0 
-                    ? "Quand tu lis une histoire, que tu pratiques au Labo Vocal ou que tu parles avec le Partenaire IA, clique sur « Épingler / Ajouter à Anki » pour constituer ta liste d'export !"
-                    : "Essaye un autre mot-clé ou réinitialise la recherche."}
+                  {sourceFilter === 'fluent'
+                    ? "Quand tu cliques sur un mot dans une histoire, au Labo Vocal ou dans le Chat, clique sur « Ajouter à Anki » pour le placer dans ton paquet Fluent !"
+                    : "Importe tes paquets existants via le menu « AnkiConnect » pour les voir ici."}
                 </p>
               </div>
             ) : (
               <div className="space-y-2">
                 {filteredWords.map((word) => {
                   const sentencesCount = generateSentencesForWord(word).length;
+                  const isFromFluent = isFluentWord(word);
+
                   return (
                     <div
                       key={word.id}
@@ -448,7 +639,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                         </button>
 
                         <div className="min-w-0">
-                          <div className="flex items-center space-x-2">
+                          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                             <span className="text-base sm:text-lg font-black font-serif chinese-text text-stone-900 dark:text-stone-100">
                               {word.hanzi}
                             </span>
@@ -457,14 +648,43 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                                 {word.pinyin}
                               </span>
                             )}
+
+                            {/* Badge de provenance distinctif */}
+                            {isFromFluent ? (
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800 flex items-center space-x-1">
+                                <span>📦 Paquet Fluent</span>
+                                {word.syncedToAnkiDesktop ? (
+                                  <span className="text-emerald-700 font-bold ml-1" title="Présent dans Anki Desktop">✓</span>
+                                ) : (
+                                  <span className="text-stone-400 font-normal ml-0.5" title="À transférer">⏳</span>
+                                )}
+                              </span>
+                            ) : (
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 flex items-center space-x-1">
+                                <span>🔄 Anki : {word.deckName || 'Importé'}</span>
+                              </span>
+                            )}
                           </div>
-                          <p className="text-xs text-stone-700 dark:text-stone-300 truncate font-medium">
+                          
+                          <p className="text-xs text-stone-700 dark:text-stone-300 truncate font-medium mt-0.5">
                             {word.translation || 'Sans traduction'}
                           </p>
                         </div>
                       </div>
 
                       <div className="flex items-center space-x-2 shrink-0">
+                        {/* Bouton de transfert unitaire si c'est un mot Fluent pas encore envoyé à Anki Desktop */}
+                        {isFromFluent && !word.syncedToAnkiDesktop && (
+                          <button
+                            onClick={() => handleSyncSingleWord(word)}
+                            className="px-2 py-1 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] font-bold flex items-center space-x-1 transition-all"
+                            title="Envoyer immédiatement ce mot dans le paquet 'Fluent' sur Anki Desktop"
+                          >
+                            <Zap className="w-3 h-3 text-emerald-600" />
+                            <span className="hidden sm:inline">Transférer</span>
+                          </button>
+                        )}
+
                         {/* Bouton pour voir les phrases générées pour ce mot */}
                         <button
                           onClick={() => {
@@ -514,14 +734,14 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                 </div>
 
                 {/* Filtre par mot épinglé */}
-                {words.length > 0 && (
+                {sourceFilteredWords.length > 0 && (
                   <select
                     value={selectedWordFilter}
                     onChange={(e) => setSelectedWordFilter(e.target.value)}
                     className="p-2 rounded-xl bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 text-xs font-bold text-stone-800 dark:text-stone-200"
                   >
-                    <option value="all">🌟 Tous mes mots ({words.length})</option>
-                    {words.map(w => (
+                    <option value="all">🌟 Tous les mots ({sourceFilteredWords.length})</option>
+                    {sourceFilteredWords.map(w => (
                       <option key={w.id} value={w.hanzi}>
                         {w.hanzi} ({w.translation || w.pinyin})
                       </option>
@@ -655,7 +875,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
         {/* PIED DE MODAL */}
         <div className="p-4 border-t border-stone-200 dark:border-stone-800 bg-[#fbf9f5] dark:bg-[#1f1b18] flex items-center justify-between">
           <span className="text-xs text-stone-500 dark:text-stone-400">
-            {words.length} carte{words.length > 1 ? 's' : ''} Anki prêtes
+            {fluentWords.length} mot{fluentWords.length > 1 ? 's' : ''} dans le paquet Fluent • {importedWords.length} mot{importedWords.length > 1 ? 's' : ''} importé{importedWords.length > 1 ? 's' : ''} d'Anki
           </span>
 
           <button
@@ -670,4 +890,3 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
     </div>
   );
 };
-

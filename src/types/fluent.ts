@@ -118,6 +118,8 @@ export interface AnkiWord {
   exampleSentence?: string;
   examplePinyin?: string;
   exampleTranslation?: string;
+  source?: 'imported_from_anki' | 'fluent_to_anki'; // Distinction : vient d'Anki Desktop vs mot créé dans Fluent à transférer
+  syncedToAnkiDesktop?: boolean; // Vrai si le mot a été injecté directement dans Anki Desktop
 }
 
 // ==========================================
