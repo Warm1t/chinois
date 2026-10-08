@@ -33,6 +33,7 @@ import {
   RefreshCw,
   FileText
 } from 'lucide-react';
+import { User } from '@supabase/supabase-js';
 
 interface ProfileSyncModalProps {
   isOpen: boolean;
@@ -42,6 +43,8 @@ interface ProfileSyncModalProps {
   syncedAnkiWords: AnkiWord[];
   anchoringRecords: Record<string, AnchoringRecord>;
   onProfileRestored: (backup: UserProfileBackup) => void;
+  onOpenAuthModal?: () => void;
+  currentUser?: User | null;
 }
 
 export const ProfileSyncModal: React.FC<ProfileSyncModalProps> = ({
@@ -52,6 +55,8 @@ export const ProfileSyncModal: React.FC<ProfileSyncModalProps> = ({
   syncedAnkiWords,
   anchoringRecords,
   onProfileRestored,
+  onOpenAuthModal,
+  currentUser,
 }) => {
   const [activeTab, setActiveTab] = useState<'cloud' | 'file'>('cloud');
   const [statusMessage, setStatusMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
@@ -301,6 +306,67 @@ export const ProfileSyncModal: React.FC<ProfileSyncModalProps> = ({
         {/* CONTENU ONGLET 1 : CLOUD SUPABASE */}
         {activeTab === 'cloud' && (
           <div className="space-y-4 animate-fadeIn">
+            {/* Bannière de Connexion Supabase Auth (Recommandée pour lier iPhone et PC) */}
+            <div className={`p-4 rounded-2xl border transition-all ${
+              currentUser
+                ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800'
+                : 'bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/20 border-amber-300 dark:border-amber-700/60'
+            }`}>
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start space-x-3">
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-bold ${
+                    currentUser
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-amber-500 text-white shadow-2xs'
+                  }`}>
+                    {currentUser ? <ShieldCheck className="w-5 h-5" /> : <Smartphone className="w-5 h-5" />}
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <h4 className="text-xs font-black uppercase tracking-wider text-stone-900 dark:text-stone-100">
+                        {currentUser ? 'Compte Connecté (Multi-Appareils Actif)' : 'Lier PC & iPhone Automatiquement'}
+                      </h4>
+                      <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded ${
+                        currentUser
+                          ? 'bg-emerald-200 dark:bg-emerald-900 text-emerald-900 dark:text-emerald-200'
+                          : 'bg-amber-200 dark:bg-amber-900 text-amber-950 dark:text-amber-200'
+                      }`}>
+                        {currentUser ? 'Actif' : 'Recommandé'}
+                      </span>
+                    </div>
+
+                    <p className="text-[11px] text-stone-600 dark:text-stone-300 mt-1 leading-relaxed">
+                      {currentUser ? (
+                        <>
+                          Tu es connecté avec <strong className="text-emerald-700 dark:text-emerald-400 font-mono">{currentUser.email}</strong>. Tes révisions, cartes Anki et progrès sont enregistrés sous ce compte unique.
+                        </>
+                      ) : (
+                        <>
+                          Pour que le site comprenne que tu es la <strong>même personne</strong> sur ton PC et ton iPhone, connecte-toi avec ton adresse email et mot de passe.
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                {onOpenAuthModal && (
+                  <button
+                    onClick={() => {
+                      onOpenAuthModal();
+                      onClose();
+                    }}
+                    className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                      currentUser
+                        ? 'bg-white hover:bg-emerald-50 dark:bg-stone-800 dark:hover:bg-stone-700 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700'
+                        : 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-700 shadow-sm'
+                    }`}
+                  >
+                    {currentUser ? 'Mon Compte' : 'Se Connecter'}
+                  </button>
+                )}
+              </div>
+            </div>
+
             {/* Clé de Profil Privée */}
             <div className="p-3.5 rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50/80 dark:bg-stone-900/40">
               <div className="flex items-center justify-between mb-1.5">

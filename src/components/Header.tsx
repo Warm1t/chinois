@@ -3,6 +3,7 @@ import { Mic, Sparkles, Layers, Check, Home, Compass, BookOpen, Bot } from 'luci
 import { HeaderMenuDropdown } from './HeaderMenuDropdown';
 import { ThemeToggle } from './ThemeToggle';
 import { getAppTheme, AppTheme } from '../utils/themeUtils';
+import { User } from '@supabase/supabase-js';
 
 interface HeaderProps {
   currentView: 'home' | 'stories' | 'lab' | 'chat' | 'curriculum';
@@ -15,6 +16,8 @@ interface HeaderProps {
   onOpenCalendarModal: () => void;
   onOpenProfileSyncModal: () => void;
   onOpenAppleSyncModal?: () => void;
+  onOpenAuthModal?: () => void;
+  currentUser?: User | null;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -28,6 +31,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCalendarModal,
   onOpenProfileSyncModal,
   onOpenAppleSyncModal,
+  onOpenAuthModal,
+  currentUser,
 }) => {
   const [theme, setTheme] = useState<AppTheme>(getAppTheme());
 
@@ -166,6 +171,30 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
+            {/* Bouton Compte / Connexion Multi-Appareils */}
+            {onOpenAuthModal && (
+              currentUser ? (
+                <button
+                  onClick={onOpenAuthModal}
+                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 font-bold text-xs transition-all shadow-2xs"
+                  title={`Connecté : ${currentUser.email} • Synchro automatique active`}
+                >
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="hidden md:inline font-mono text-[11px]">{currentUser.email?.split('@')[0]}</span>
+                  <span className="text-[9px] bg-emerald-200/80 dark:bg-emerald-900 px-1 py-0.2 rounded font-bold">Lié</span>
+                </button>
+              ) : (
+                <button
+                  onClick={onOpenAuthModal}
+                  className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-emerald-50 dark:bg-stone-800 dark:hover:bg-emerald-950/40 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 hover:text-emerald-800 font-bold text-xs transition-all shadow-2xs"
+                  title="Connecte-toi pour synchroniser ton PC et ton iPhone"
+                >
+                  <span className="w-2 h-2 rounded-full bg-amber-400" />
+                  <span className="hidden sm:inline">Connexion</span>
+                </button>
+              )
+            )}
+
             {/* Basculeur de Mode Encre / Mode Sombre */}
             <ThemeToggle />
 
@@ -177,6 +206,8 @@ export const Header: React.FC<HeaderProps> = ({
               onOpenCalendarModal={onOpenCalendarModal}
               onOpenProfileSyncModal={onOpenProfileSyncModal}
               onOpenAppleSyncModal={onOpenAppleSyncModal}
+              onOpenAuthModal={onOpenAuthModal}
+              currentUser={currentUser}
             />
 
           </div>

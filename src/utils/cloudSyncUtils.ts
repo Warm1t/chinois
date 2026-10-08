@@ -1,22 +1,177 @@
+import { User, Session } from '@supabase/supabase-js';
 import { supabase } from './supabaseClient';
-import { UserProfileBackup, applyProfileBackupToStorage } from './profileSyncUtils';
+import { 
+  UserProfileBackup, 
+  applyProfileBackupToStorage, 
+  mergeProfileBackups 
+} from './profileSyncUtils';
 
 const SYNC_USER_ID_KEY = 'fluent_sync_user_id';
 const LAST_SYNC_KEY = 'fluent_last_cloud_sync';
 const AUTO_SYNC_ENABLED_KEY = 'fluent_auto_cloud_sync_enabled';
 
-// Récupérer l'identifiant secret de synchro de l'utilisateur (défaut 'warm1t')
+// ==========================================
+// 1. GESTION DE L'AUTHENTIFICATION SUPABASE
+// ==========================================
+
+/**
+ * Récupérer la session active de Supabase Auth
+ */
+export const getAuthSession = async (): Promise<Session | null> => {
+  try {
+    const { data } = await supabase.auth.getSession();
+    return data.session;
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * Récupérer l'utilisateur actuellement connecté
+ */
+export const getAuthUser = async (): Promise<User | null> => {
+  try {
+    const { data } = await supabase.auth.getUser();
+    return data.user;
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * Inscription par Email & Mot de passe
+ */
+export const signUpWithEmail = async (
+  email: string, 
+  password: string
+): Promise<{ success: boolean; user?: User; session?: Session | null; error?: string }> => {
+  try {
+    const cleanEmail = email.trim().toLowerCase();
+    const { data, error } = await supabase.auth.signUp({
+      email: cleanEmail,
+      password,
+    });
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    return { 
+      success: true, 
+      user: data.user || undefined, 
+      session: data.session 
+    };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Erreur lors de l’inscription' };
+  }
+};
+
+/**
+ * Connexion par Email & Mot de passe
+ */
+export const signInWithEmail = async (
+  email: string, 
+  password: string
+): Promise<{ success: boolean; user?: User; session?: Session | null; error?: string }> => {
+  try {
+    const cleanEmail = email.trim().toLowerCase();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: cleanEmail,
+      password,
+    });
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    return { 
+      success: true, 
+      user: data.user || undefined, 
+      session: data.session 
+    };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Erreur lors de la connexion' };
+  }
+};
+
+/**
+ * Déconnexion du compte
+ */
+export const signOutUser = async (): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Erreur lors de la déconnexion' };
+  }
+};
+
+/**
+ * Connexion par Magic Link (Lien magique en 1-clic par email)
+ */
+export const sendMagicLink = async (
+  email: string
+): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const cleanEmail = email.trim().toLowerCase();
+    const { error } = await supabase.auth.signInWithOtp({
+      email: cleanEmail,
+    });
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Erreur d’envoi du lien magique' };
+  }
+};
+
+// ==========================================
+// 2. IDENTIFIANT DE SYNCHRONISATION EFFECTIF
+// ==========================================
+
+/**
+ * Récupère l'identifiant synchrone stocké en local (défaut 'warm1t')
+ */
 export const getSyncUserId = (): string => {
   return localStorage.getItem(SYNC_USER_ID_KEY) || 'warm1t';
 };
 
-// Définir un nouvel identifiant (ex: pour connecter son iPhone avec la même clé)
+/**
+ * Définir un identifiant manuel
+ */
 export const setSyncUserId = (userId: string) => {
-  const clean = userId.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+  const clean = userId.trim().toLowerCase().replace(/[^a-z0-9_@-]/g, '');
   localStorage.setItem(SYNC_USER_ID_KEY, clean || 'warm1t');
 };
 
-// Savoir si l'auto-synchronisation est activée
+/**
+ * Détermine l'identifiant effectif :
+ * 1. customUserId si spécifié
+ * 2. ID de l'utilisateur authentifié (Supabase Auth UID) si connecté
+ * 3. Pseudo local stocké en dernier recours
+ */
+export const resolveEffectiveUserId = async (customUserId?: string): Promise<string> => {
+  if (customUserId && customUserId.trim()) {
+    return customUserId.trim().toLowerCase();
+  }
+
+  const authUser = await getAuthUser();
+  if (authUser && authUser.id) {
+    return authUser.id;
+  }
+
+  return getSyncUserId();
+};
+
+// ==========================================
+// 3. PARAMÈTRES ET STATUT DE SYNCHRO
+// ==========================================
+
 export const isAutoSyncEnabled = (): boolean => {
   const val = localStorage.getItem(AUTO_SYNC_ENABLED_KEY);
   return val === null ? true : val === 'true'; // activé par défaut
@@ -35,13 +190,49 @@ export const setLastSyncTime = (timestamp: string) => {
 };
 
 /**
+ * Lire le profil local actuel depuis localStorage
+ */
+export const getCurrentLocalProfile = (): UserProfileBackup => {
+  try {
+    const completedRaw = localStorage.getItem('fluent_completed_exercises');
+    const streakRaw = localStorage.getItem('fluent_streak_days');
+    const ankiRaw = localStorage.getItem('fluent_anki_words');
+    const anchorRaw = localStorage.getItem('fluent_anchoring_records');
+
+    return {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      completedExercises: completedRaw ? JSON.parse(completedRaw) : [],
+      streakDays: streakRaw ? parseInt(streakRaw, 10) : 1,
+      syncedAnkiWords: ankiRaw ? JSON.parse(ankiRaw) : [],
+      anchoringRecords: anchorRaw ? JSON.parse(anchorRaw) : {},
+      reminderTime: localStorage.getItem('fluent_reminder_time') || '09:00',
+      webhookUrl: localStorage.getItem('fluent_webhook_url') || '',
+    };
+  } catch {
+    return {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      completedExercises: [],
+      streakDays: 1,
+      syncedAnkiWords: [],
+      anchoringRecords: {},
+    };
+  }
+};
+
+// ==========================================
+// 4. OPÉRATIONS PUSH & PULL CLOUD
+// ==========================================
+
+/**
  * Sauvegarder la progression dans Supabase
  */
 export const pushProfileToCloud = async (
   profile: UserProfileBackup,
   customUserId?: string
-): Promise<{ success: boolean; error?: string }> => {
-  const userId = (customUserId || getSyncUserId()).trim().toLowerCase();
+): Promise<{ success: boolean; effectiveUserId?: string; error?: string }> => {
+  const userId = await resolveEffectiveUserId(customUserId);
   if (!userId) {
     return { success: false, error: 'Identifiant de synchronisation manquant.' };
   }
@@ -65,7 +256,7 @@ export const pushProfileToCloud = async (
 
     const nowIso = new Date().toISOString();
     setLastSyncTime(nowIso);
-    return { success: true };
+    return { success: true, effectiveUserId: userId };
   } catch (err: any) {
     console.error('Exception Supabase push:', err);
     return { success: false, error: err.message || 'Erreur réseau vers Supabase' };
@@ -73,12 +264,12 @@ export const pushProfileToCloud = async (
 };
 
 /**
- * Récupérer la progression depuis Supabase
+ * Récupérer et fusionner la progression depuis Supabase
  */
 export const pullProfileFromCloud = async (
   customUserId?: string
-): Promise<{ success: boolean; data?: UserProfileBackup; error?: string }> => {
-  const userId = (customUserId || getSyncUserId()).trim().toLowerCase();
+): Promise<{ success: boolean; data?: UserProfileBackup; effectiveUserId?: string; error?: string }> => {
+  const userId = await resolveEffectiveUserId(customUserId);
   if (!userId) {
     return { success: false, error: 'Identifiant de synchronisation manquant.' };
   }
@@ -98,15 +289,27 @@ export const pullProfileFromCloud = async (
     if (!data || !data.data) {
       return {
         success: false,
-        error: `Aucune sauvegarde trouvée dans le Cloud pour la clé "${userId}". Cliquez sur "Sauvegarder vers le Cloud" d'abord.`,
+        error: `Aucune sauvegarde trouvée dans le Cloud pour ce compte. Enregistrez votre progression d’abord !`,
       };
     }
 
     const cloudProfile = data.data as UserProfileBackup;
-    applyProfileBackupToStorage(cloudProfile);
+    const localProfile = getCurrentLocalProfile();
+
+    // Fusion intelligente : conserve les cartes Anki et progrès des deux côtés sans perte
+    const mergedProfile = mergeProfileBackups(localProfile, cloudProfile);
+    applyProfileBackupToStorage(mergedProfile);
     setLastSyncTime(data.updated_at || new Date().toISOString());
 
-    return { success: true, data: cloudProfile };
+    // Si le local avait du contenu nouveau qui a enrichi le profil, le renvoyer silencieusement vers Supabase
+    if (
+      mergedProfile.syncedAnkiWords.length > cloudProfile.syncedAnkiWords.length || 
+      mergedProfile.completedExercises.length > cloudProfile.completedExercises.length
+    ) {
+      pushProfileToCloud(mergedProfile, userId).catch(() => {});
+    }
+
+    return { success: true, data: mergedProfile, effectiveUserId: userId };
   } catch (err: any) {
     console.error('Exception Supabase pull:', err);
     return { success: false, error: err.message || 'Erreur réseau vers Supabase' };

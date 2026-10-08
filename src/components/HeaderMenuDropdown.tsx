@@ -19,6 +19,8 @@ import {
   setVoiceGenderPreference 
 } from '../utils/speechUtils';
 
+import { User } from '@supabase/supabase-js';
+
 interface HeaderMenuDropdownProps {
   syncedAnkiWordsCount: number;
   onOpenAnkiModal: () => void;
@@ -26,6 +28,8 @@ interface HeaderMenuDropdownProps {
   onOpenCalendarModal: () => void;
   onOpenProfileSyncModal: () => void;
   onOpenAppleSyncModal?: () => void;
+  onOpenAuthModal?: () => void;
+  currentUser?: User | null;
 }
 
 export const HeaderMenuDropdown: React.FC<HeaderMenuDropdownProps> = ({
@@ -35,6 +39,8 @@ export const HeaderMenuDropdown: React.FC<HeaderMenuDropdownProps> = ({
   onOpenCalendarModal,
   onOpenProfileSyncModal,
   onOpenAppleSyncModal,
+  onOpenAuthModal,
+  currentUser,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [voicePreference, setVoicePreference] = useState<VoiceGenderPreference>(getVoiceGenderPreference());
@@ -151,9 +157,44 @@ export const HeaderMenuDropdown: React.FC<HeaderMenuDropdownProps> = ({
 
           {/* Section 2 : Synchronisation & Données */}
           <div className="space-y-1.5">
-            <span className="text-[10px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500 block mb-1">
-              Données & Synchronisation
-            </span>
+            {/* Option Compte & Authentification Supabase */}
+            <div
+              onClick={() => {
+                if (onOpenAuthModal) onOpenAuthModal();
+                else onOpenProfileSyncModal();
+                setIsOpen(false);
+              }}
+              className="p-2.5 rounded-2xl bg-emerald-50/50 hover:bg-emerald-100/70 dark:bg-emerald-950/20 dark:hover:bg-emerald-900/40 cursor-pointer border border-emerald-200/80 dark:border-emerald-800/60 transition-all flex items-center justify-between group"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 font-bold shadow-2xs">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="flex items-center space-x-1.5">
+                    <h4 className="text-xs font-bold text-stone-900 dark:text-stone-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">
+                      {currentUser ? 'Mon Compte Fluent' : 'Connexion Multi-Appareils'}
+                    </h4>
+                    <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                      Supabase
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-stone-500 dark:text-stone-400">
+                    {currentUser 
+                      ? `Connecté : ${currentUser.email}` 
+                      : "Synchronise ton PC et ton iPhone automatiquement"}
+                  </p>
+                </div>
+              </div>
+
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                currentUser
+                  ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                  : 'bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-400'
+              }`}>
+                {currentUser ? '🟢 Lié' : 'Se connecter'}
+              </span>
+            </div>
 
             {/* Option 0 : Mes Mots Épinglés & Export Anki */}
             <div

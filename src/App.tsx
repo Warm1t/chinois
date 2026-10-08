@@ -8,12 +8,15 @@ import { DailyAnchorModal } from './components/DailyAnchorModal';
 import { CalendarReminderModal } from './components/CalendarReminderModal';
 import { AnkiLinkModal } from './components/AnkiLinkModal';
 import { ProfileSyncModal } from './components/ProfileSyncModal';
+import { AuthModal } from './components/AuthModal';
 import { AnkiWord } from './types/fluent';
 import { StoryReaderView } from './components/StoryReaderView';
 import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
 import { UserProfileBackup, createProfileBackup } from './utils/profileSyncUtils';
-import { pushProfileToCloud, pullProfileFromCloud, isAutoSyncEnabled } from './utils/cloudSyncUtils';
+import { pushProfileToCloud, pullProfileFromCloud, isAutoSyncEnabled, getAuthUser } from './utils/cloudSyncUtils';
+import { supabase } from './utils/supabaseClient';
+import { User } from '@supabase/supabase-js';
 import { getAppTheme, applyThemeToDocument } from './utils/themeUtils';
 import { AppleSyncModal } from './components/AppleSyncModal';
 import { PinnedWordsAnkiModal } from './components/PinnedWordsAnkiModal';
@@ -26,6 +29,10 @@ export const App: React.FC = () => {
   // Par défaut : l'Accueil Guidé pour une prise en main instantanée sans fatigue décisionnelle !
   const [activeView, setActiveView] = useState<'home' | 'stories' | 'lab' | 'chat' | 'curriculum'>('home');
   const [selectedCardId, setSelectedCardId] = useState<string>(NUANCE_CARDS[0].id);
+
+  // État Authentification Supabase Multi-Appareils
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const [completedExercises, setCompletedExercises] = useState<string[]>(() => {
     const saved = localStorage.getItem('fluent_completed_exercises');
@@ -96,6 +103,30 @@ export const App: React.FC = () => {
   useEffect(() => {
     applyThemeToDocument(getAppTheme());
 
+    // 1. Vérifier si un compte est connecté
+    getAuthUser().then(user => {
+      setCurrentUser(user);
+    });
+
+    // 2. Écouter les connexions / déconnexions en temps réel
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const user = session?.user || null;
+      setCurrentUser(user);
+      if (user && (event === 'SIGNED_IN' || event === 'USER_UPDATED')) {
+        try {
+          const res = await pullProfileFromCloud(user.id);
+          if (res.success && res.data) {
+            handleProfileRestored(res.data);
+            setToastMessage(`☁️ Connecté (${user.email}) : progression synchronisée !`);
+            setTimeout(() => setToastMessage(null), 3500);
+          }
+        } catch (e) {
+          console.warn('Erreur pull cloud sur connexion :', e);
+        }
+      }
+    });
+
+    // 3. Récupérer automatiquement la progression cloud
     const autoSyncFromCloudOnStartup = async () => {
       if (!isAutoSyncEnabled()) return;
       try {
@@ -105,7 +136,7 @@ export const App: React.FC = () => {
           const cloudWordsCount = cloudData.syncedAnkiWords?.length || 0;
           const localWordsCount = syncedAnkiWords.length;
 
-          // Si cet appareil est vierge (ex: iPhone au 1er lancement) ou a moins de cartes :
+          // Si le cloud a des cartes ou des exercices que ce navigateur n'a pas encore :
           if (cloudWordsCount > localWordsCount || (cloudData.completedExercises?.length || 0) > completedExercises.length) {
             handleProfileRestored(cloudData);
             setToastMessage(`☁️ Synchronisé avec le Cloud : ${cloudWordsCount} cartes Anki restaurées !`);
@@ -118,6 +149,10 @@ export const App: React.FC = () => {
     };
 
     autoSyncFromCloudOnStartup();
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleExerciseCompleted = (cardId: string) => {
@@ -175,6 +210,8 @@ export const App: React.FC = () => {
         onOpenCalendarModal={() => setIsCalendarModalOpen(true)}
         onOpenProfileSyncModal={() => setIsProfileSyncModalOpen(true)}
         onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
+        onOpenAuthModal={() => setIsAuthModalOpen(true)}
+        currentUser={currentUser}
       />
 
       {/* Main Content Area */}
@@ -326,6 +363,30 @@ export const App: React.FC = () => {
         syncedAnkiWords={syncedAnkiWords}
         anchoringRecords={anchoringRecords}
         onProfileRestored={handleProfileRestored}
+        onOpenAuthModal={() => setIsAuthModalOpen(true)}
+        currentUser={currentUser}
+      />
+
+      {/* Supabase Multi-Device Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onAuthSuccess={async (user) => {
+          setCurrentUser(user);
+          try {
+            const res = await pullProfileFromCloud(user.id);
+            if (res.success && res.data) {
+              handleProfileRestored(res.data);
+            }
+          } catch (e) {
+            console.warn('Erreur pull cloud :', e);
+          }
+        }}
+        onSignOutSuccess={() => {
+          setCurrentUser(null);
+          setToastMessage("Déconnecté avec succès.");
+          setTimeout(() => setToastMessage(null), 3000);
+        }}
       />
 
       {/* Apple iPhone Sync Modal (Daily Hanzi & Widget iOS) */}
