@@ -46,8 +46,11 @@ import {
   Music,
   Info,
   Square,
-  Award
+  Award,
+  Trash2
 } from 'lucide-react';
+import { getCustomStories, saveCustomStory, deleteCustomStory } from '../utils/customStoriesUtils';
+import { GenerateStoryModal } from './GenerateStoryModal';
 
 interface StoryReaderViewProps {
   syncedAnkiWords: AnkiWord[];
@@ -72,15 +75,20 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     }
   });
 
-  const [stories, setStories] = useState<MaayotStory[]>(BUILT_IN_STORIES);
+  const [stories, setStories] = useState<MaayotStory[]>(() => {
+    return [...getCustomStories(), ...BUILT_IN_STORIES];
+  });
+
+  const [isGenerateModalOpen, setIsGenerateModalOpen] = useState<boolean>(false);
 
   // Sélectionne par défaut la PREMIÈRE histoire NON validée (au lieu de toujours la première)
   const [selectedStoryId, setSelectedStoryId] = useState<string>(() => {
     try {
       const saved = localStorage.getItem('fluent_completed_stories');
       const completed: string[] = saved ? JSON.parse(saved) : [];
-      const firstUncompleted = BUILT_IN_STORIES.find(s => !completed.includes(s.id));
-      return firstUncompleted ? firstUncompleted.id : BUILT_IN_STORIES[0].id;
+      const allStories = [...getCustomStories(), ...BUILT_IN_STORIES];
+      const firstUncompleted = allStories.find(s => !completed.includes(s.id));
+      return firstUncompleted ? firstUncompleted.id : (allStories[0]?.id || BUILT_IN_STORIES[0].id);
     } catch {
       return BUILT_IN_STORIES[0].id;
     }
@@ -376,8 +384,19 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     const shuffled = [...syncedAnkiWords].sort(() => 0.5 - Math.random());
     const newStory = generateStoryFromAnkiWords(shuffled);
 
-    setStories(prev => [newStory, ...prev]);
+    saveCustomStory(newStory);
     setSelectedStoryId(newStory.id);
+  };
+
+  // Supprimer une histoire personnalisée
+  const handleDeleteCustomStory = (storyId: string) => {
+    deleteCustomStory(storyId);
+    const remaining = stories.filter(s => s.id !== storyId);
+    if (remaining.length > 0) {
+      setSelectedStoryId(remaining[0].id);
+    } else {
+      setSelectedStoryId(BUILT_IN_STORIES[0].id);
+    }
   };
 
   // Helper pour trouver un mimeType audio supporté par le navigateur
@@ -641,6 +660,16 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     return () => window.removeEventListener('fluent_completed_stories_changed', handleStoriesChange);
   }, []);
 
+  useEffect(() => {
+    const handleCustomStoriesChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ stories?: MaayotStory[] }>;
+      const custom = customEvent.detail?.stories || getCustomStories();
+      setStories([...custom, ...BUILT_IN_STORIES]);
+    };
+    window.addEventListener('fluent_custom_stories_changed', handleCustomStoriesChange);
+    return () => window.removeEventListener('fluent_custom_stories_changed', handleCustomStoriesChange);
+  }, []);
+
   // Vérifier si un mot dans le dictionnaire fait partie des cartes Anki de l'utilisateur
   const isWordInUserAnki = (hanzi: string) => {
     if (!hanzi) return false;
@@ -712,13 +741,23 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
             </button>
           )}
 
-          {/* Bouton Générer avec mes mots Anki */}
+          {/* Bouton Générer avec IA */}
+          <button
+            onClick={() => setIsGenerateModalOpen(true)}
+            className="px-4 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-rose-500 to-indigo-600 hover:from-amber-400 hover:via-rose-400 hover:to-indigo-500 text-white font-black text-xs shadow-md border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 shrink-0 hover:-translate-y-0.5 cursor-pointer"
+          >
+            <Sparkles className="w-4 h-4 text-yellow-300" />
+            <span>✨ Générer une Histoire IA</span>
+          </button>
+
+          {/* Bouton Générer rapide avec mes mots Anki */}
           <button
             onClick={handleGenerateAnkiStory}
-            className="px-4 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-black text-xs shadow-md border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 shrink-0 hover:-translate-y-0.5"
+            className="px-4 py-3 rounded-2xl bg-white hover:bg-stone-100 text-stone-800 font-bold text-xs shadow-xs border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 shrink-0 hover:-translate-y-0.5 cursor-pointer"
+            title="Génération instantanée basée sur vos cartes Anki"
           >
-            <Wand2 className="w-4 h-4" />
-            <span>Créer une Histoire avec mes Mots Anki</span>
+            <Wand2 className="w-4 h-4 text-amber-500" />
+            <span>Mode Rapide Anki</span>
           </button>
         </div>
       </div>
@@ -728,6 +767,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
         {stories.map(story => {
           const isSelected = story.id === selectedStoryId;
           const isCompleted = completedStoryIds.includes(story.id);
+          const isCustom = story.id.startsWith('custom-');
 
           return (
             <button
@@ -739,14 +779,20 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                   : 'bg-white text-stone-700 border-stone-200 hover:border-stone-400'
               }`}
             >
-              {isCompleted ? (
+              {isCustom ? (
+                <Sparkles className={`w-3.5 h-3.5 ${isSelected ? 'text-amber-300' : 'text-amber-500'}`} />
+              ) : isCompleted ? (
                 <BookmarkCheck className="w-3.5 h-3.5 text-emerald-400" />
               ) : (
                 <BookOpen className="w-3.5 h-3.5 text-amber-500" />
               )}
               <span className="font-serif font-black">{story.title}</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-stone-200/50 text-stone-700 font-mono">
-                {story.level}
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                isCustom 
+                  ? 'bg-amber-100 text-amber-900 border border-amber-300' 
+                  : 'bg-stone-200/50 text-stone-700'
+              }`}>
+                {isCustom ? `✨ ${story.level}` : story.level}
               </span>
             </button>
           );
@@ -766,14 +812,37 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
               <span className="text-xs font-bold text-stone-500">
                 • {activeStory.category} • ~{activeStory.readTime} ({activeStory.wordCount} caractères)
               </span>
+              {activeStory.id.startsWith('custom-') && (
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 flex items-center space-x-1">
+                  <Sparkles className="w-3 h-3 text-amber-600" />
+                  <span>Personnalisée / IA</span>
+                </span>
+              )}
             </div>
 
-            {completedStoryIds.includes(activeStory.id) && (
-              <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-300 flex items-center space-x-1">
-                <Check className="w-3.5 h-3.5" />
-                <span>Histoire lue & validée</span>
-              </span>
-            )}
+            <div className="flex items-center space-x-2">
+              {completedStoryIds.includes(activeStory.id) && (
+                <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-300 flex items-center space-x-1">
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Histoire lue & validée</span>
+                </span>
+              )}
+
+              {activeStory.id.startsWith('custom-') && (
+                <button
+                  onClick={() => {
+                    if (window.confirm(`Supprimer définitivement l'histoire "${activeStory.title}" ?`)) {
+                      handleDeleteCustomStory(activeStory.id);
+                    }
+                  }}
+                  className="px-2.5 py-1 text-xs text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl font-bold flex items-center space-x-1 transition-all cursor-pointer"
+                  title="Supprimer cette histoire personnalisée"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Supprimer</span>
+                </button>
+              )}
+            </div>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-black text-stone-900 font-serif tracking-tight">
@@ -1662,6 +1731,17 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
         </div>
 
       </div>
+
+      {/* Modale de génération d'histoire personnalisée IA */}
+      <GenerateStoryModal
+        isOpen={isGenerateModalOpen}
+        onClose={() => setIsGenerateModalOpen(false)}
+        syncedAnkiWords={syncedAnkiWords}
+        onStoryGenerated={(newStory) => {
+          saveCustomStory(newStory);
+          setSelectedStoryId(newStory.id);
+        }}
+      />
 
     </div>
   );

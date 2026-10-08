@@ -314,22 +314,25 @@ export const pullProfileFromCloud = async (
     applyProfileBackupToStorage(mergedProfile);
     setLastSyncTime(data.updated_at || new Date().toISOString());
 
-    // Si le local avait du contenu nouveau qui a enrichi le profil (cartes Anki, histoires, labo vocal ou exercices), le renvoyer silencieusement vers Supabase
+    // Si le local avait du contenu nouveau qui a enrichi le profil (cartes Anki, histoires, labo vocal, exercices ou histoires personnalisées), le renvoyer silencieusement vers Supabase
     const cloudWords = cloudProfile.syncedAnkiWords?.length || 0;
     const cloudExercises = cloudProfile.completedExercises?.length || 0;
     const cloudStories = cloudProfile.completedStories?.length || 0;
     const cloudVoice = Object.keys(cloudProfile.voiceLabScores || {}).length;
+    const cloudCustomStories = (cloudProfile.customStories || []).length;
 
     const mergedWords = mergedProfile.syncedAnkiWords.length;
     const mergedExercises = mergedProfile.completedExercises.length;
     const mergedStories = (mergedProfile.completedStories || []).length;
     const mergedVoice = Object.keys(mergedProfile.voiceLabScores || {}).length;
+    const mergedCustomStories = (mergedProfile.customStories || []).length;
 
     if (
       mergedWords > cloudWords || 
       mergedExercises > cloudExercises ||
       mergedStories > cloudStories ||
-      mergedVoice > cloudVoice
+      mergedVoice > cloudVoice ||
+      mergedCustomStories > cloudCustomStories
     ) {
       pushProfileToCloud(mergedProfile, userId).catch(() => {});
     }

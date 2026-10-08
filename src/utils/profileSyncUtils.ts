@@ -1,4 +1,4 @@
-import { AnkiWord, AnchoringRecord } from '../types/fluent';
+import { AnkiWord, AnchoringRecord, MaayotStory } from '../types/fluent';
 import { STORAGE_KEY as ANCHOR_STORAGE_KEY } from './anchoringUtils';
 
 export interface UserProfileBackup {
@@ -12,6 +12,7 @@ export interface UserProfileBackup {
   voiceLabScores?: Record<string, number>;
   builderCompleted?: Record<string, boolean>;
   customVoicePhrases?: any[];
+  customStories?: MaayotStory[];
   reminderTime?: string;
   webhookUrl?: string;
 }
@@ -25,7 +26,8 @@ export const createProfileBackup = (
   completedStories?: string[],
   voiceLabScores?: Record<string, number>,
   builderCompleted?: Record<string, boolean>,
-  customVoicePhrases?: any[]
+  customVoicePhrases?: any[],
+  customStories?: MaayotStory[]
 ): UserProfileBackup => {
   const getStoredJson = <T>(key: string, fallback: T): T => {
     try {
@@ -44,6 +46,7 @@ export const createProfileBackup = (
   const finalVoiceLabScores = voiceLabScores ?? getStoredJson<Record<string, number>>('fluent_voice_lab_scores', {});
   const finalBuilderCompleted = builderCompleted ?? getStoredJson<Record<string, boolean>>('fluent_builder_completed', {});
   const finalCustomVoicePhrases = customVoicePhrases ?? getStoredJson<any[]>('fluent_custom_voice_phrases', []);
+  const finalCustomStories = customStories ?? getStoredJson<MaayotStory[]>('fluent_custom_stories', []);
 
   const reminderTime = localStorage.getItem('fluent_reminder_time') || '09:00';
   const webhookUrl = localStorage.getItem('fluent_webhook_url') || '';
@@ -59,6 +62,7 @@ export const createProfileBackup = (
     voiceLabScores: finalVoiceLabScores,
     builderCompleted: finalBuilderCompleted,
     customVoicePhrases: finalCustomVoicePhrases,
+    customStories: finalCustomStories,
     reminderTime,
     webhookUrl,
   };
@@ -96,6 +100,7 @@ export const parseProfileBackup = (rawContent: string): UserProfileBackup | null
       voiceLabScores: typeof data.voiceLabScores === 'object' && data.voiceLabScores !== null ? data.voiceLabScores : {},
       builderCompleted: typeof data.builderCompleted === 'object' && data.builderCompleted !== null ? data.builderCompleted : {},
       customVoicePhrases: Array.isArray(data.customVoicePhrases) ? data.customVoicePhrases : [],
+      customStories: Array.isArray(data.customStories) ? data.customStories : [],
       reminderTime: data.reminderTime || '09:00',
       webhookUrl: data.webhookUrl || '',
     };
@@ -131,6 +136,9 @@ export const applyProfileBackupToStorage = (backup: UserProfileBackup) => {
   if (Array.isArray(backup.customVoicePhrases)) {
     localStorage.setItem('fluent_custom_voice_phrases', JSON.stringify(backup.customVoicePhrases));
   }
+  if (Array.isArray(backup.customStories)) {
+    localStorage.setItem('fluent_custom_stories', JSON.stringify(backup.customStories));
+  }
   if (backup.reminderTime) localStorage.setItem('fluent_reminder_time', backup.reminderTime);
   if (backup.webhookUrl) localStorage.setItem('fluent_webhook_url', backup.webhookUrl);
 
@@ -153,6 +161,11 @@ export const applyProfileBackupToStorage = (backup: UserProfileBackup) => {
     window.dispatchEvent(
       new CustomEvent('fluent_custom_voice_phrases_changed', { 
         detail: { phrases: backup.customVoicePhrases || [] } 
+      })
+    );
+    window.dispatchEvent(
+      new CustomEvent('fluent_custom_stories_changed', { 
+        detail: { stories: backup.customStories || [] } 
       })
     );
     window.dispatchEvent(
@@ -202,6 +215,16 @@ export const mergeProfileBackups = (
     if (p && p.hanzi) customPhrasesMap.set(p.hanzi.trim(), p);
   });
   const customVoicePhrases = Array.from(customPhrasesMap.values());
+
+  // Fusionner les histoires personnalisées par id
+  const customStoriesMap = new Map<string, MaayotStory>();
+  (cloud.customStories || []).forEach(s => {
+    if (s && s.id) customStoriesMap.set(s.id, s);
+  });
+  (local.customStories || []).forEach(s => {
+    if (s && s.id) customStoriesMap.set(s.id, s);
+  });
+  const customStories = Array.from(customStoriesMap.values());
 
   // Fusionner les mots Anki par Hanzi
   const wordsMap = new Map<string, AnkiWord>();
@@ -255,6 +278,7 @@ export const mergeProfileBackups = (
     voiceLabScores,
     builderCompleted,
     customVoicePhrases,
+    customStories,
     reminderTime: cloud.reminderTime || local.reminderTime || '09:00',
     webhookUrl: cloud.webhookUrl || local.webhookUrl || '',
   };
