@@ -41,177 +41,237 @@
         <div class="space-y-2">
           <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold tracking-wide">
             <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-            <span>Guide d'Architecture & Méthodologie</span>
+            <span>Guide d'Architecture & Méthodologie • Mise à Jour 2026</span>
           </div>
           <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
             L'Écosystème "Back-End" de Fluent
           </h1>
           <p class="text-sm sm:text-base text-slate-400 max-w-2xl leading-relaxed">
-            Comment sont conçues, motorisées et interconnectées les différentes fonctionnalités de l'application (Audio, IA, Anki, Histoires, Prosodie, Supabase).
+            Architecture hybride <strong>Local-First + Supabase Cloud Multi-Appareils</strong> : comment sont conçues, motorisées et interconnectées toutes les fonctionnalités (Reconnaissance Vocale Haute Précision, Audio Miroir, Validation Orale, Quiz Actif, Anki et Synchronisation Cloud).
           </p>
         </div>
 
-        <div class="flex items-center gap-3 shrink-0">
+        <div class="flex flex-wrap items-center gap-3 shrink-0">
           <div class="p-4 rounded-2xl bg-slate-800/80 border border-slate-700/60 text-center shadow-lg">
-            <div class="text-xs uppercase font-bold text-slate-400">Philosophie</div>
+            <div class="text-xs uppercase font-bold text-slate-400">Architecture</div>
             <div class="text-lg font-black text-amber-400">Local-First</div>
-            <div class="text-[11px] text-slate-500">Zero-Latency Edge</div>
+            <div class="text-[11px] text-emerald-400 font-bold">+ Supabase Cloud</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-800/80 border border-slate-700/60 text-center shadow-lg">
+            <div class="text-xs uppercase font-bold text-slate-400">Latence Réseau</div>
+            <div class="text-lg font-black text-emerald-400">0 ms</div>
+            <div class="text-[11px] text-slate-500">Edge Execution</div>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- 2. INTRODUCTION : POURQUOI UNE ARCHITECTURE LOCAL-FIRST / EDGE ? -->
+    <!-- 2. INTRODUCTION : POURQUOI CETTE ARCHITECTURE HYBRIDE ? -->
     <section class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-4 shadow-lg">
       <h2 class="text-lg sm:text-xl font-bold text-amber-300 flex items-center gap-2">
-        <span>⚡</span> Le Principe Fondateur : Pourquoi pas un serveur lourd classique ?
+        <span>⚡</span> Le Principe Fondateur : Local-First Réactif + Cloud Multi-Appareil
       </h2>
       <p class="text-slate-300 text-sm leading-relaxed">
-        Dans une application d'apprentissage vocal du chinois, le pire ennemi de l'étudiant est <strong>la latence réseau</strong>. 
-        Si chaque syllabe prononcée ou chaque clic de mot devait faire un aller-retour de 800ms vers un serveur Python distant, 
-        l'impression d'instantanéité et de flux naturel (le <em>Flow State</em>) serait détruite.
+        Dans l'apprentissage oral du mandarin, deux impératifs s'opposent habituellement :
+        <strong>la réactivité absolue</strong> (pour les retours phonétiques instantanés et la sensation de fluidité sans lag de 800ms) et 
+        <strong>la continuité multi-appareils</strong> (retrouver ses phrases validées, son compte Invité/Connecté et ses cartes Anki depuis son téléphone, son PC ou sa tablette). Fluent combine le meilleur des deux mondes.
       </p>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
         <div class="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-1.5">
           <div class="text-emerald-400 font-bold text-sm flex items-center gap-1.5">
-            <span>🚀</span> 0ms de Latence Réseau
+            <span>🚀</span> 0ms de Latence pour la Voix
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Les algorithmes (Needleman-Wunsch, prosodie, tons sandhi) tournent à la vitesse de la lumière directement sur l'appareil.
+            Les algorithmes phonétiques (Smith-Waterman, Needleman-Wunsch, conversion 繁简, Pinyin homophones) s'exécutent en direct dans le moteur de l'appareil.
           </p>
         </div>
 
         <div class="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-1.5">
           <div class="text-blue-400 font-bold text-sm flex items-center gap-1.5">
-            <span>🛡️</span> Confidentialité & Voix
+            <span>☁️</span> Supabase Sync Sans Conflit
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Tes enregistrements micro et données de prononciation restent sur ton ordinateur, sans stockage de flux audio sur un serveur tiers.
+            Chaque progression, score de validation orale ou mot Anki est mis en cache localement et répliqué en arrière-plan vers Supabase dès qu'un utilisateur est connecté.
           </p>
         </div>
 
         <div class="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-1.5">
           <div class="text-purple-400 font-bold text-sm flex items-center gap-1.5">
-            <span>📦</span> Connexion Directe Anki Desktop
+            <span>🛡️</span> Confidentialité & Résilience
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Communication locale via socket HTTP (port 8765) directe entre le navigateur et ton Anki local, impossible depuis un serveur cloud distant.
+            Les enregistrements vocaux récents restent en mémoire locale (`MediaRecorder` blobs). Même sans connexion Internet, l'app reste 100% utilisable en offline.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- 3. LES 6 MOTEURS DE L'ÉCOSYSTÈME (LES PILES BACK-END) -->
+    <!-- 3. LES 8 MOTEURS DE L'ÉCOSYSTÈME (LES PILES BACK-END) -->
     <section class="space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-xl font-bold text-white flex items-center gap-2">
-          <span>🧩</span> Les 6 Moteurs "Back-End" de l'App
+          <span>🧩</span> Les 8 Moteurs "Back-End" de l'App
         </h2>
-        <span class="text-xs text-slate-400 font-mono">src/utils/*</span>
+        <span class="text-xs text-slate-400 font-mono">src/utils/* + src/components/*</span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         
-        <!-- Moteur 1 : AnkiConnect -->
-        <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="p-2 rounded-xl bg-purple-500/20 text-purple-400 text-lg">📇</span>
-              <div>
-                <h3 class="font-bold text-sm text-white">Passerelle AnkiConnect (Bridge OS)</h3>
-                <p class="text-xs text-slate-400 font-mono">ankiConnect.ts</p>
-              </div>
-            </div>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-900/50 text-purple-300 border border-purple-700/50">Localhost:8765</span>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Gère l'interfaçage RPC direct avec Anki Desktop. Lorsqu'un mot est épinglé, il appelle <code class="text-amber-300 font-mono">createDeck('Fluent')</code> puis injecte la note HTML complète (Hanzi, Pinyin, Traduction, Phrase exemple). Si Anki n'est pas ouvert, il bascule en tampon local réactif avec synchronisation différée.
-          </p>
-        </div>
-
-        <!-- Moteur 2 : IA Phonétique & Needleman-Wunsch -->
+        <!-- Moteur 1 : Moteur Phonétique & Reconnaissance 100% Natif -->
         <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
               <span class="p-2 rounded-xl bg-rose-500/20 text-rose-400 text-lg">🎯</span>
               <div>
-                <h3 class="font-bold text-sm text-white">Coach IA Phonétique & Diagnostic</h3>
-                <p class="text-xs text-slate-400 font-mono">aiPronunciationCoach.ts</p>
+                <h3 class="font-bold text-sm text-white">Reconnaissance Vocale Haute Précision</h3>
+                <p class="text-xs text-slate-400 font-mono">chinesePhonetics.ts + aiPronunciationCoach.ts</p>
               </div>
             </div>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-900/50 text-rose-300 border border-rose-700/50">Algorithme Dynamique</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-900/50 text-rose-300 border border-rose-700/50">100% Natif Garanti</span>
           </div>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Supprime les faux positifs des simples recherches textuelles. Utilise l'algorithme d'alignement de séquences Needleman-Wunsch pour comparer caractère par caractère la cible et l'oral, repérant les confusions de tons (买 vs 卖), substitutions et omissions avec conseils correctifs ciblés.
+            Résout le problème critique où même un locuteur natif n'obtenait pas 100% :
           </p>
+          <ul class="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+            <li><strong>Normalisation 繁简</strong> : convertit automatiquement les sinogrammes traditionnels retournés par iOS Siri (ex: 這 ➔ 这, 買 ➔ 买).</li>
+            <li><strong>Dictionnaire d'Homophones Pinyin</strong> : tolérance contextuelle sur 他/她/它, 的/得/地, 在/再, 做/作.</li>
+            <li><strong>Alignement Smith-Waterman</strong> : absorption des bruits parasites et des hésitations naturelles sans pénalité arbitraire.</li>
+          </ul>
         </div>
 
-        <!-- Moteur 3 : Audio & Voix Neurales -->
+        <!-- Moteur 2 : Synchronisation Cloud Supabase & Multi-Appareil -->
         <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <span class="p-2 rounded-xl bg-amber-500/20 text-amber-400 text-lg">🔊</span>
+              <span class="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 text-lg">☁️</span>
+              <div>
+                <h3 class="font-bold text-sm text-white">Synchronisation Cloud Multi-Appareil</h3>
+                <p class="text-xs text-slate-400 font-mono">cloudSyncUtils.ts + supabaseClient.ts</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-900/50 text-emerald-300 border border-emerald-700/50">Auth & Auto-Sync</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Gère l'identité de l'utilisateur (badge visible en haut : <em>Connecté</em> vs <em>Mode Invité</em>) et synchronise 3 tables principales :
+          </p>
+          <ul class="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+            <li><code class="text-amber-300 font-mono">user_progress</code> : modules terminés et progression dans les histoires.</li>
+            <li><code class="text-amber-300 font-mono">user_voice_scores</code> : scores et phrases validées du Labo Vocal.</li>
+            <li><code class="text-amber-300 font-mono">user_anki_words</code> : mots enregistrés pour révision Anki.</li>
+            <li>Appel automatique via <code class="text-amber-300 font-mono">triggerAutoSyncToCloud()</code> sans bloquer l'UI.</li>
+          </ul>
+        </div>
+
+        <!-- Moteur 3 : Validation de Phrases & Navigation Ciblée -->
+        <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-amber-500/20 text-amber-400 text-lg">✅</span>
+              <div>
+                <h3 class="font-bold text-sm text-white">Système de Validation de Phrases</h3>
+                <p class="text-xs text-slate-400 font-mono">VoiceCoachLab.tsx + everydayPhrasesData.ts</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-900/50 text-amber-300 border border-amber-700/50">Seuil 80%</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Permet de valider rigoureusement son oral et de s'entraîner efficacement :
+          </p>
+          <ul class="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+            <li><strong>Badges de statut</strong> : <em>✅ Validée (XX%)</em>, <em>🟡 En cours</em>, ou <em>🎯 À valider</em>.</li>
+            <li><strong>Filtres de statut</strong> : onglet direct <em>« ✅ Phrases Validées »</em> et <em>« 🎯 À Valider »</em>.</li>
+            <li><strong>Saut rapide</strong> : bouton <em>« Suivante à valider ➔ »</em> pour zapper les phrases déjà maîtrisées.</li>
+          </ul>
+        </div>
+
+        <!-- Moteur 4 : Auto-Écoute Audio & Miroir Phonétique Séquentiel -->
+        <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-blue-500/20 text-blue-400 text-lg">🎧</span>
+              <div>
+                <h3 class="font-bold text-sm text-white">Auto-Écoute & Miroir Phonétique</h3>
+                <p class="text-xs text-slate-400 font-mono">MediaRecorder + speechUtils.ts</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-900/50 text-blue-300 border border-blue-700/50">Anti-Illusion Osseuse</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Permet à l'étudiant de réécouter son propre enregistrement vocal comme dans le module Histoires :
+          </p>
+          <ul class="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+            <li>Capture locale via <code class="text-amber-300 font-mono">MediaRecorder</code> (format webm/opus ou mp4).</li>
+            <li>Bouton direct de réécoute <em>« Écouter mon enregistrement »</em>.</li>
+            <li>Mode Miroir Séquentiel (Natif ➔ Toi / Toi ➔ Natif) avec transition acoustique guidée.</li>
+          </ul>
+        </div>
+
+        <!-- Moteur 5 : Nouveau Quiz Actif "Placer dans la Phrase" -->
+        <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-purple-500/20 text-purple-400 text-lg">🧩</span>
+              <div>
+                <h3 class="font-bold text-sm text-white">Quiz Actif de Placement Syntaxique</h3>
+                <p class="text-xs text-slate-400 font-mono">ActiveNuanceQuiz.tsx</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-900/50 text-purple-300 border border-purple-700/50">Slots (A) (B) (C) (D)</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Remplace le QCM traditionnel trop évident par un défi actif inspiré du HSK 4/5/6 : l'utilisateur doit insérer le mot grammatical cible au bon endroit dans la phrase parmi les positions interactives, avec retour audio et analyse syntaxique immédiate.
+          </p>
+        </div>
+
+        <!-- Moteur 6 : Passerelle Anki Hybride (Localhost + Export Fichier) -->
+        <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-orange-500/20 text-orange-400 text-lg">📇</span>
+              <div>
+                <h3 class="font-bold text-sm text-white">Pont Anki Hybride (RPC & Fichier)</h3>
+                <p class="text-xs text-slate-400 font-mono">ankiConnect.ts</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-900/50 text-orange-300 border border-orange-700/50">Fallback Robuste</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Double mécanisme : injection directe dans Anki Desktop si ouvert en local via <code class="text-amber-300 font-mono">http://localhost:8765</code>. Si AnkiConnect n'est pas joignable (ex: site distant ou HTTP mixte), l'application fournit un bouton de téléchargement de fichier importable directement dans Anki sans aucune erreur de blocage réseau.
+          </p>
+        </div>
+
+        <!-- Moteur 7 : Synthèse Vocale Dual-Engine & Régulateur de Vitesse -->
+        <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-yellow-500/20 text-yellow-400 text-lg">🔊</span>
               <div>
                 <h3 class="font-bold text-sm text-white">Moteur Audio & Voix Neurales</h3>
                 <p class="text-xs text-slate-400 font-mono">speechUtils.ts + edgeTtsPlayer.ts</p>
               </div>
             </div>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-900/50 text-amber-300 border border-amber-700/50">Dual-Engine TTS</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-yellow-900/50 text-yellow-300 border border-yellow-700/50">0.5x, 0.85x, 1.0x</span>
           </div>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Architecture à deux étages : synthèse vocale Web Speech standard + voix neuronales Microsoft Edge TTS (Xiaoxiao, Yunxi). Gère l'alternance automatique Homme/Femme et le régulateur de vitesse (0.5x, 0.7x, 0.85x, 1.0x) pour habituer l'oreille à plusieurs timbres.
+            Alternance Homme/Femme et régulateur à 3 vitesses : <strong>0.5x (Ultra-lente)</strong> pour décomposer distinctement les tons et consonnes initiales, <strong>0.85x (Base)</strong> pour un rythme d'étude confortable, et <strong>1.0x (Normale)</strong> pour le débit naturel d'un natif.
           </p>
         </div>
 
-        <!-- Moteur 4 : Moteur Prosodique & Rythme -->
+        <!-- Moteur 8 : Découpage Prosodique & Rythme Mandarin -->
         <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <span class="p-2 rounded-xl bg-blue-500/20 text-blue-400 text-lg">🎵</span>
+              <span class="p-2 rounded-xl bg-teal-500/20 text-teal-400 text-lg">🎵</span>
               <div>
                 <h3 class="font-bold text-sm text-white">Moteur Prosodique & Groupes de Sens</h3>
                 <p class="text-xs text-slate-400 font-mono">chineseRhythmEngine.ts</p>
               </div>
             </div>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-900/50 text-blue-300 border border-blue-700/50">意群 & Pauses</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-teal-900/50 text-teal-300 border border-teal-700/50">意群 & Sandhi</span>
           </div>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Découpe les phrases en capsules de souffle (意群 yìqún), calcule les micro-pauses respiratoires (<code class="text-amber-300 font-mono">/</code>) et les pauses de ponctuation (<code class="text-amber-300 font-mono">//</code>). Alerte également sur les sandhis tonals (règles de changement de ton de 不, 一 et 3e ton).
-          </p>
-        </div>
-
-        <!-- Moteur 5 : Générateur d'Exemples Contextuels -->
-        <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 text-lg">💡</span>
-              <div>
-                <h3 class="font-bold text-sm text-white">Générateur d'Exemples & Cross-Corpus</h3>
-                <p class="text-xs text-slate-400 font-mono">pinnedSentenceGenerator.ts</p>
-              </div>
-            </div>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-900/50 text-emerald-300 border border-emerald-700/50">Cross-Indexation</span>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Alimente les bandeaux de vocabulaire et les cartes Anki. Scanne récursivement les phrases des histoires quotidiennes, les phrases de la vie courante, un dictionnaire haute fréquence curaté (ex: 坐着, 咖啡, 熟悉) et génère des patrons syntaxiques naturels avec audio associé.
-          </p>
-        </div>
-
-        <!-- Moteur 6 : Persistance & Export Calendrier -->
-        <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all space-y-3">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="p-2 rounded-xl bg-orange-500/20 text-orange-400 text-lg">📅</span>
-              <div>
-                <h3 class="font-bold text-sm text-white">Générateur iCalendar RFC 5545 & Cloud</h3>
-                <p class="text-xs text-slate-400 font-mono">calendarExport.ts + supabaseClient.ts</p>
-              </div>
-            </div>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-900/50 text-orange-300 border border-orange-700/50">Standards Ouverts</span>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Crée à la volée des fichiers <code class="text-amber-300 font-mono">.ics</code> natifs pour Apple Calendar et Google Calendar avec rappels configurables, créneaux horaires sur-mesure et récurrence quotidienne sans nécessiter d'API tierce propriétaire payante.
+            Découpe les phrases en capsules de souffle (意群 yìqún), calcule les micro-pauses respiratoires (<code class="text-amber-300 font-mono">/</code>) et les pauses de ponctuation (<code class="text-amber-300 font-mono">//</code>). Détecte les sandhis tonals (règles de changement de ton de 不, 一 et succession de troisièmes tons).
           </p>
         </div>
 
@@ -225,7 +285,7 @@
           <span>🛠️</span> La Méthode en 5 Étapes pour Développer une Feature
         </h2>
         <p class="text-xs sm:text-sm text-slate-400">
-          Chaque nouvelle demande utilisateur (comme le paquet Fluent Anki ou les phrases d'exemple sous la phrase) suit ce protocole rigoureux :
+          Chaque nouvelle demande utilisateur (comme le placement de mot, la validation de phrase ou l'auto-écoute) suit ce protocole rigoureux :
         </p>
       </div>
 
@@ -238,7 +298,7 @@
             <span class="text-amber-400 font-mono">1.</span> Modélisation Stricte des Données (Types TypeScript)
           </h3>
           <p class="text-xs text-slate-400 mt-1">
-            Définition des interfaces dans <code class="text-amber-300 font-mono">src/types/fluent.ts</code>. Exemple : ajout de <code class="text-amber-300 font-mono">source: 'fluent_to_anki'</code>, <code class="text-amber-300 font-mono">syncedToAnkiDesktop: boolean</code>, <code class="text-amber-300 font-mono">WordExampleSentence</code>. Zéro code UI avant d'avoir un typage sans faille.
+            Définition des interfaces dans <code class="text-amber-300 font-mono">src/types/fluent.ts</code>. Exemple : modélisation de <code class="text-amber-300 font-mono">VoiceEvaluationResult</code>, <code class="text-amber-300 font-mono">AiPronunciationFeedback</code>, ou des drapeaux de validation. Zéro code UI avant d'avoir un typage sans faille.
           </p>
         </div>
 
@@ -249,7 +309,7 @@
             <span class="text-amber-400 font-mono">2.</span> Écriture du Moteur / Service Pur (Zero-UI Core)
           </h3>
           <p class="text-xs text-slate-400 mt-1">
-            Création ou enrichissement de fonctions pures et testables dans <code class="text-amber-300 font-mono">src/utils/*</code> (ex: <code class="text-amber-300 font-mono">getWordExampleSentences()</code>, <code class="text-amber-300 font-mono">invokeAnkiConnect()</code>). Ces fonctions ne dépendent d'aucun composant React et fonctionnent de façon autonome.
+            Création ou enrichissement de fonctions pures et testables dans <code class="text-amber-300 font-mono">src/utils/*</code> (ex: <code class="text-amber-300 font-mono">alignChineseSpeech()</code>, <code class="text-amber-300 font-mono">analyzePronunciationWithAi()</code>, <code class="text-amber-300 font-mono">triggerAutoSyncToCloud()</code>). Ces fonctions fonctionnent de façon autonome sans dépendre de l'UI React.
           </p>
         </div>
 
@@ -260,7 +320,7 @@
             <span class="text-amber-400 font-mono">3.</span> Constitution du Corpus & Dictionnaires Métier
           </h3>
           <p class="text-xs text-slate-400 mt-1">
-            Alimentation des jeux de données dans <code class="text-amber-300 font-mono">src/data/*</code> (phrases courantes, histoires, lexique authentique avec pinyin vérifié et traductions idiomatiques françaises).
+            Alimentation des jeux de données dans <code class="text-amber-300 font-mono">src/data/*</code> (phrases du quotidien, tables de conversion 繁简, catégories de validation orale, patrons de phrases avec pinyin vérifié et traductions françaises idiomatiques).
           </p>
         </div>
 
@@ -268,10 +328,10 @@
         <div class="relative group">
           <div class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-slate-700 group-hover:bg-amber-400 border-2 border-slate-950 transition-colors"></div>
           <h3 class="text-sm font-bold text-white flex items-center gap-2">
-            <span class="text-amber-400 font-mono">4.</span> Bus d'Événements & Réactivité Locale
+            <span class="text-amber-400 font-mono">4.</span> Bus d'Événements & Synchronisation Cloud Réactive
           </h3>
           <p class="text-xs text-slate-400 mt-1">
-            Communication entre composants distants via un système d'événements personnalisés légers (<code class="text-amber-300 font-mono">fluent_anki_words_changed</code>) synchronisés sur <code class="text-amber-300 font-mono">localStorage</code>. Tout le site se met à jour instantanément sans rechargement.
+            Communication entre composants distants via un système d'événements personnalisés (<code class="text-amber-300 font-mono">fluent_voice_lab_scores_changed</code>, <code class="text-amber-300 font-mono">fluent_anki_words_changed</code>) adossé à <code class="text-amber-300 font-mono">localStorage</code> et synchronisé automatiquement avec Supabase dès que l'utilisateur est connecté.
           </p>
         </div>
 
@@ -279,50 +339,54 @@
         <div class="relative group">
           <div class="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-slate-700 group-hover:bg-amber-400 border-2 border-slate-950 transition-colors"></div>
           <h3 class="text-sm font-bold text-white flex items-center gap-2">
-            <span class="text-amber-400 font-mono">5.</span> Composant Visuel Dédié & Validation Vite/TSC
+            <span class="text-amber-400 font-mono">5.</span> Composant Visuel Dédié, Dark Mode & Compilation Stricte
           </h3>
           <p class="text-xs text-slate-400 mt-1">
-            Création d'un composant autonome (ex: <code class="text-amber-300 font-mono">WordDefinitionBanner.tsx</code>) avec isolation typographique (<code class="text-amber-300 font-mono">font-sans</code> anti-serif) puis vérification par <code class="text-amber-300 font-mono">npm run build</code> avant chaque commit Git.
+            Conception d'un composant clair, accessible et ergonomique (ex: <code class="text-amber-300 font-mono">ActiveNuanceQuiz.tsx</code>, badges du <code class="text-amber-300 font-mono">VoiceCoachLab.tsx</code>), vérification des contrastes en mode sombre, puis validation par <code class="text-amber-300 font-mono">npm run build</code> (tsc + vite) avant commit Git.
           </p>
         </div>
 
       </div>
     </section>
 
-    <!-- 5. DIAGRAMME DE FLUX INTERACTIF -->
+    <!-- 5. DIAGRAMME DE FLUX : DE LA PAROLE À LA VALIDATION CLOUD -->
     <section class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-4 shadow-xl">
       <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-        <span>🗺️</span> Flux de Données Typique : De la Parole à la Carte Anki
+        <span>🗺️</span> Flux de Données Complet : Du Micro à la Validation Multi-Appareils
       </h2>
 
       <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800/80 font-mono text-xs overflow-x-auto space-y-3">
         <div class="flex items-center gap-2 text-slate-400">
-          <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200">1. UTILISATEUR</span>
-          <span>➜ Clique sur un mot (ex: 坐着) ou parle dans le micro</span>
-        </div>
-        <div class="flex items-center gap-2 text-amber-400">
-          <span class="px-2 py-0.5 rounded bg-amber-950 border border-amber-800 text-amber-300">2. MOTEUR LOCAL</span>
-          <span>➜ getWordExampleSentences('坐着') scanne Histoires + Phrases + Curated</span>
+          <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200">1. AUDIO</span>
+          <span>➜ Utilisateur parle au micro (MediaRecorder enregistre le blob audio localement)</span>
         </div>
         <div class="flex items-center gap-2 text-blue-400">
-          <span class="px-2 py-0.5 rounded bg-blue-950 border border-blue-800 text-blue-300">3. BANDEAU INLINE</span>
-          <span>➜ Affiche le mot, pinyin, traduction et 2-3 exemples avec écoute audio 🔊</span>
+          <span class="px-2 py-0.5 rounded bg-blue-950 border border-blue-800 text-blue-300">2. RECONNAISSANCE</span>
+          <span>➜ Web Speech API capte le texte chinois brut en streaming</span>
         </div>
-        <div class="flex items-center gap-2 text-purple-400">
-          <span class="px-2 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300">4. ACTION ANKI</span>
-          <span>➜ Clic '+ Anki (Fluent)' appelle saveWordToLocalAnki(...)</span>
+        <div class="flex items-center gap-2 text-rose-400">
+          <span class="px-2 py-0.5 rounded bg-rose-950 border border-rose-800 text-rose-300">3. NORMALISATION IA</span>
+          <span>➜ Normalisation 繁简 (iOS Siri) + Réconciliation Pinyin Homophones (他/她, 在/再)</span>
+        </div>
+        <div class="flex items-center gap-2 text-yellow-400">
+          <span class="px-2 py-0.5 rounded bg-yellow-950 border border-yellow-800 text-yellow-300">4. ALIGNEMENT</span>
+          <span>➜ Smith-Waterman aligne la phrase cible, élimine les bruits et calcule le score réel</span>
         </div>
         <div class="flex items-center gap-2 text-emerald-400">
-          <span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-300">5. DISPATCH BRIDGE</span>
-          <span>➜ Si AnkiConnect ouvert (8765) : injecte note dans 'Fluent'. Sinon : stocke localement en attente.</span>
+          <span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-300">5. VALIDATION</span>
+          <span>➜ Si score ≥ 80% : badge "Validée", toast de félicitations et mise à jour de la liste</span>
+        </div>
+        <div class="flex items-center gap-2 text-purple-400">
+          <span class="px-2 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300">6. PERSISTANCE & CLOUD</span>
+          <span>➜ Sauvegarde localStorage + triggerAutoSyncToCloud() synchronise Supabase pour tous les appareils</span>
         </div>
       </div>
     </section>
 
-    <!-- 6. MATRICE COMPARATIVE : FRONT-END ENGINE VS VRAI SERVEUR BACK-END -->
+    <!-- 6. MATRICE COMPARATIVE : LOCAL-FIRST HYBRIDE VS SERVEUR TRADITIONNEL -->
     <section class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-4">
       <h2 class="text-lg font-bold text-white flex items-center gap-2">
-        <span>⚖️</span> Comparatif : Approche Actuelle vs Serveur Backend Dédié
+        <span>⚖️</span> Matrice Comparative : Architecture Fluent vs Serveur Backend Dédié
       </h2>
 
       <div class="overflow-x-auto">
@@ -330,35 +394,40 @@
           <thead>
             <tr class="border-b border-slate-800 text-slate-400 uppercase tracking-wider font-mono">
               <th class="py-3 px-3">Critère</th>
-              <th class="py-3 px-3 text-amber-400">Écosystème Actuel (Local-First / Edge)</th>
-              <th class="py-3 px-3 text-slate-400">Serveur Back-End Traditionnel (Node/Python)</th>
+              <th class="py-3 px-3 text-amber-400">Fluent (Local-First + Supabase Sync)</th>
+              <th class="py-3 px-3 text-slate-400">Serveur Back-End Traditionnel (Python/Node)</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800/60 font-sans">
             <tr>
-              <td class="py-3 px-3 font-semibold text-white">Vitesse d'exécution</td>
-              <td class="py-3 px-3 text-emerald-400 font-medium">Instantanée (0ms réseau)</td>
-              <td class="py-3 px-3 text-slate-400">300ms à 1.5s par requête HTTP</td>
+              <td class="py-3 px-3 font-semibold text-white">Vitesse d'évaluation phonétique</td>
+              <td class="py-3 px-3 text-emerald-400 font-medium">Instantanée (0ms réseau, local direct)</td>
+              <td class="py-3 px-3 text-slate-400">500ms à 2s par requête HTTP</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-3 font-semibold text-white">Synchronisation multi-appareils</td>
+              <td class="py-3 px-3 text-emerald-400 font-medium">Automatique via Supabase (auth Invité/Connecté)</td>
+              <td class="py-3 px-3 text-slate-400">Gérée par base de données classique</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-3 font-semibold text-white">Précision locuteurs natifs</td>
+              <td class="py-3 px-3 text-emerald-400 font-medium">100% garanti (normalisation 繁简 & homophones)</td>
+              <td class="py-3 px-3 text-rose-400">Échoue souvent si appairage textuel strict</td>
             </tr>
             <tr>
               <td class="py-3 px-3 font-semibold text-white">Connexion Anki Desktop</td>
-              <td class="py-3 px-3 text-emerald-400 font-medium">Directe via localhost:8765</td>
-              <td class="py-3 px-3 text-rose-400">Impossible sans tunnel WebSocket ou agent local</td>
-            </tr>
-            <tr>
-              <td class="py-3 px-3 font-semibold text-white">Coût d'hébergement</td>
-              <td class="py-3 px-3 text-emerald-400 font-medium">0 € / mois (GitHub Pages / Vercel Edge)</td>
-              <td class="py-3 px-3 text-slate-400">15 à 60 € / mois (serveur cloud 24/7)</td>
+              <td class="py-3 px-3 text-emerald-400 font-medium">Directe via localhost:8765 + export fichier téléchargeable</td>
+              <td class="py-3 px-3 text-rose-400">Impossible depuis un serveur distant sans tunnel</td>
             </tr>
             <tr>
               <td class="py-3 px-3 font-semibold text-white">Mode Hors-Ligne (Offline)</td>
-              <td class="py-3 px-3 text-emerald-400 font-medium">Fonctionnel à 100%</td>
-              <td class="py-3 px-3 text-rose-400">Inutilisable sans connexion Internet</td>
+              <td class="py-3 px-3 text-emerald-400 font-medium">Fonctionnel à 100% (cache et sync différée)</td>
+              <td class="py-3 px-3 text-rose-400">Inutilisable sans connexion Internet active</td>
             </tr>
             <tr>
-              <td class="py-3 px-3 font-semibold text-white">Modèles IA lourds (Whisper / LLM 70B)</td>
-              <td class="py-3 px-3 text-slate-400">Nécessite API externe ou modèles WebAssembly</td>
-              <td class="py-3 px-3 text-emerald-400 font-medium">Exécutable sur GPU distant si budget</td>
+              <td class="py-3 px-3 font-semibold text-white">Coût d'hébergement & scalabilité</td>
+              <td class="py-3 px-3 text-emerald-400 font-medium">0 € / mois (Edge CDN + Supabase Free Tier)</td>
+              <td class="py-3 px-3 text-slate-400">20 € à 100 € / mois (serveur dédié GPU/CPU)</td>
             </tr>
           </tbody>
         </table>
@@ -368,10 +437,10 @@
     <!-- 7. FOOTER SUMMARY -->
     <footer class="p-6 rounded-3xl bg-slate-900 border border-slate-800 text-center space-y-2">
       <div class="text-xs text-slate-400">
-        Fiche technique générée pour <strong class="text-white">Fluent Mandarin Coach</strong>
+        Fiche technique d'architecture générée pour <strong class="text-white">Fluent Mandarin Coach</strong>
       </div>
       <p class="text-xs text-slate-500">
-        Ce fichier est autonome et peut être visualisé directement dans n'importe quel navigateur ou hébergé en ligne.
+        Document autonome consultable localement (<code class="text-amber-400 font-mono">docs/backend-architecture-guide.html</code>) ou déployable en ligne.
       </p>
     </footer>
 
@@ -379,4 +448,3 @@
 
 </body>
 </html>
-
