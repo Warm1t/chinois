@@ -428,7 +428,11 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     setIsRecording(true);
 
     recognition.onresult = (event: any) => {
-      const spokenText = event.results[0][0].transcript;
+      let spokenText = '';
+      for (let i = 0; i < event.results.length; ++i) {
+        spokenText += event.results[i][0].transcript;
+      }
+      spokenText = spokenText.trim();
       setWrittenResponse(spokenText);
       cleanupStoryRecording();
 
@@ -541,7 +545,11 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     setShadowingRecording(true);
 
     recognition.onresult = (event: any) => {
-      const spoken = event.results[0][0].transcript;
+      let spoken = '';
+      for (let i = 0; i < event.results.length; ++i) {
+        spoken += event.results[i][0].transcript;
+      }
+      spoken = spoken.trim();
       setShadowingSpokenText(spoken);
       cleanupShadowRecording();
 

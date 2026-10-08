@@ -781,9 +781,9 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
         <div className="space-y-6 animate-fadeIn">
           <div className="space-y-2">
             <div className="flex items-center justify-between px-1">
-              <span className="text-xs font-black uppercase tracking-wider text-stone-700 flex items-center space-x-1.5">
-                <HelpCircle className="w-4 h-4 text-amber-500" />
-                <span>Atelier 1 sur 2 : Test de Discrimination Active</span>
+              <span className="text-xs font-black uppercase tracking-wider text-stone-700 dark:text-stone-300 flex items-center space-x-1.5">
+                <Puzzle className="w-4 h-4 text-amber-500" />
+                <span>Atelier 1 sur 2 : Défi de Placement dans la phrase 🧩</span>
               </span>
               {isTestPassed && (
                 <span className="text-xs font-bold text-emerald-600 flex items-center">

@@ -1,3 +1,9 @@
+import { 
+  normalizeChineseText, 
+  areCharsPhoneticallyEquivalent, 
+  alignChineseSpeech 
+} from './chinesePhonetics';
+
 export interface AiCharAnalysis {
   targetChar: string;
   spokenChar?: string;
@@ -40,15 +46,15 @@ const COMMON_PHONETIC_PAIRS: Record<string, { expectedPinyin: string; tip: strin
 };
 
 /**
- * Algorithme d'alignement de séquences Needleman-Wunsch (Programmation Dynamique)
- * Évite rigoureusement l'illusion de l'ancien 'includes()' qui validait des phrases fausses.
+ * Algorithme d'alignement phonétique intelligent avec normalisation 繁简 et tolérance homophone.
+ * Conçu pour accorder 100% garanti à un locuteur natif et un score juste et encourageant aux apprenants.
  */
 export const analyzePronunciationWithAi = (
   spokenRaw: string,
   targetRaw: string
 ): AiPronunciationFeedback => {
-  const cleanTarget = targetRaw.replace(/[^\u4e00-\u9fa5]/g, '');
-  const cleanSpoken = spokenRaw.replace(/[^\u4e00-\u9fa5]/g, '');
+  const cleanTarget = normalizeChineseText(targetRaw);
+  const cleanSpoken = normalizeChineseText(spokenRaw);
 
   if (!cleanSpoken) {
     return {
@@ -68,120 +74,55 @@ export const analyzePronunciationWithAi = (
     };
   }
 
-  const t = cleanTarget.split('');
-  const s = cleanSpoken.split('');
-  const m = t.length;
-  const n = s.length;
+  // 1. Alignement haute fidélité via le moteur phonétique
+  const alignment = alignChineseSpeech(cleanSpoken, cleanTarget);
 
-  // Matrice de programmation dynamique pour l'alignement optimal
-  const dp: number[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
-
-  for (let i = 0; i <= m; i++) dp[i][0] = -i * 1.5;
-  for (let j = 0; j <= n; j++) dp[0][j] = -j * 0.8;
-
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      const isMatch = t[i - 1] === s[j - 1];
-      const matchScore = isMatch ? 2 : -1.2;
-      dp[i][j] = Math.max(
-        dp[i - 1][j - 1] + matchScore, // Substitution ou Match
-        dp[i - 1][j] - 1.5,            // Omission dans ce qui a été dit
-        dp[i][j - 1] - 0.8             // Insertion d'un mot parasite
-      );
-    }
-  }
-
-  // Backtracking pour extraire l'alignement précis
-  let i = m;
-  let j = n;
-  const alignedTarget: (string | null)[] = [];
-  const alignedSpoken: (string | null)[] = [];
-
-  while (i > 0 || j > 0) {
-    if (i > 0 && j > 0) {
-      const isMatch = t[i - 1] === s[j - 1];
-      const matchScore = isMatch ? 2 : -1.2;
-      if (dp[i][j] === dp[i - 1][j - 1] + matchScore) {
-        alignedTarget.unshift(t[i - 1]);
-        alignedSpoken.unshift(s[j - 1]);
-        i--;
-        j--;
-        continue;
-      }
-    }
-    if (i > 0 && dp[i][j] === dp[i - 1][j] - 1.5) {
-      alignedTarget.unshift(t[i - 1]);
-      alignedSpoken.unshift(null);
-      i--;
-    } else {
-      alignedTarget.unshift(null);
-      alignedSpoken.unshift(s[j - 1]);
-      j--;
-    }
-  }
-
-  // Analyse caractère par caractère
   const breakdown: AiCharAnalysis[] = [];
   let exactMatches = 0;
   let substitutedCount = 0;
   let omittedCount = 0;
   const phoneticAlerts: string[] = [];
 
-  for (let k = 0; k < alignedTarget.length; k++) {
-    const targetChar = alignedTarget[k];
-    const spokenChar = alignedSpoken[k];
+  for (const match of alignment.charMatches) {
+    const { targetChar, spokenChar, isMatch } = match;
 
-    if (targetChar && spokenChar) {
-      if (targetChar === spokenChar) {
-        breakdown.push({
-          targetChar,
-          spokenChar,
-          status: 'exact',
-        });
-        exactMatches++;
-      } else {
-        // Substitution détectée : l'utilisateur a confondu un mot ou un ton !
-        const pairInfo = COMMON_PHONETIC_PAIRS[targetChar];
-        const explanation = pairInfo 
-          ? `Attendu: ${pairInfo.expectedPinyin} — Tu as dit '${spokenChar}'`
-          : `Remplacé par '${spokenChar}' (son ou ton décalé)`;
+    if (isMatch) {
+      breakdown.push({
+        targetChar,
+        spokenChar: spokenChar || targetChar,
+        status: 'exact',
+      });
+      exactMatches++;
+    } else if (spokenChar) {
+      const pairInfo = COMMON_PHONETIC_PAIRS[targetChar];
+      const explanation = pairInfo 
+        ? `Attendu: ${pairInfo.expectedPinyin} — Capté: '${spokenChar}'`
+        : `Capté '${spokenChar}' au lieu de '${targetChar}'`;
 
-        if (pairInfo) {
-          phoneticAlerts.push(pairInfo.tip);
-        }
-
-        breakdown.push({
-          targetChar,
-          spokenChar,
-          status: 'substituted',
-          explanation,
-        });
-        substitutedCount++;
+      if (pairInfo) {
+        phoneticAlerts.push(pairInfo.tip);
       }
-    } else if (targetChar && !spokenChar) {
-      // Caractère omis
+
+      breakdown.push({
+        targetChar,
+        spokenChar,
+        status: 'substituted',
+        explanation,
+      });
+      substitutedCount++;
+    } else {
       breakdown.push({
         targetChar,
         status: 'omitted',
         explanation: 'Syllabe escamotée ou inaudible',
       });
       omittedCount++;
-    } else if (!targetChar && spokenChar) {
-      // Caractère parasite ajouté
-      breakdown.push({
-        targetChar: '',
-        spokenChar,
-        status: 'extra',
-        explanation: `Syllabe parasite '${spokenChar}'`,
-      });
     }
   }
 
-  // Calcul du score rigoureux (Pas de complaisance : chaque erreur pénalise justement le score)
-  const maxPossible = cleanTarget.length * 2;
-  const earned = (exactMatches * 2) - (substitutedCount * 1.5) - (omittedCount * 2);
-  const rawPercentage = Math.round((earned / maxPossible) * 100);
-  const accuracyScore = Math.max(0, Math.min(100, rawPercentage));
+  // Calcul du score : basé sur la proportion exacte de syllabes validées (sans pénalités absurdes)
+  // 100% si tous les caractères correspondent (même avec traditional/homophones/variantes orales)
+  const accuracyScore = alignment.score;
 
   // Diagnostic IA
   let status: 'mastered' | 'good' | 'hesitant' | 'poor';
