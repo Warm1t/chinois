@@ -36,6 +36,7 @@ interface HomeDashboardProps {
   onStartGuidedAction: (cardId: string, actionType: 'card' | 'anchor') => void;
   onNavigateToView: (view: 'home' | 'stories' | 'lab' | 'chat' | 'curriculum') => void;
   onOpenAnkiModal: () => void;
+  onOpenPinnedWordsModal?: () => void;
   onOpenCalendarModal: () => void;
   onSelectCard: (cardId: string) => void;
   onSelectPreviousHanzi?: () => void;
@@ -54,6 +55,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   onStartGuidedAction,
   onNavigateToView,
   onOpenAnkiModal,
+  onOpenPinnedWordsModal,
   onOpenCalendarModal,
   onSelectCard,
   onSelectPreviousHanzi,
@@ -463,7 +465,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
         {/* Cartes Anki */}
         <div 
-          onClick={onOpenAnkiModal}
+          onClick={onOpenPinnedWordsModal || onOpenAnkiModal}
           className="bg-white p-5 rounded-2xl border-2 border-stone-900 shadow-[3px_3px_0px_#1c1917] flex items-center justify-between cursor-pointer hover:bg-amber-50/50 transition-colors group"
         >
           <div className="flex items-center space-x-4">

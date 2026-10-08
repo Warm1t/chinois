@@ -34,12 +34,14 @@ interface AnkiLinkModalProps {
   onClose: () => void;
   syncedWords: AnkiWord[];
   onWordsUpdated: (words: AnkiWord[]) => void;
+  onOpenPinnedWordsModal?: () => void;
 }
 
 export const AnkiLinkModal: React.FC<AnkiLinkModalProps> = ({
   onClose,
   syncedWords,
   onWordsUpdated,
+  onOpenPinnedWordsModal,
 }) => {
   const [activeTab, setActiveTab] = useState<'direct' | 'import' | 'browse'>('direct');
   const [isAnkiConnected, setIsAnkiConnected] = useState<boolean | null>(null);
@@ -638,6 +640,19 @@ export const AnkiLinkModal: React.FC<AnkiLinkModalProps> = ({
                   className="w-full pl-9 pr-3 py-2 rounded-xl border border-stone-200 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-stone-900"
                 />
               </div>
+
+              {onOpenPinnedWordsModal && (
+                <button
+                  onClick={() => {
+                    onClose();
+                    onOpenPinnedWordsModal();
+                  }}
+                  className="px-3 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 text-xs font-black flex items-center space-x-1.5 transition-colors shrink-0 shadow-2xs"
+                  title="Ouvrir l'exportation Anki et les phrases générées pour ces mots"
+                >
+                  <span>📌 Exporter & Phrases</span>
+                </button>
+              )}
 
               {syncedWords.length > 0 && (
                 <button

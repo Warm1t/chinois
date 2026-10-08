@@ -44,10 +44,14 @@ import {
 
 interface VoiceCoachLabProps {
   onPracticeCompleted?: (phraseId: string, score: number) => void;
+  customPracticePhrase?: EverydayPhrase | null;
+  onClearCustomPhrase?: () => void;
 }
 
 export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   onPracticeCompleted,
+  customPracticePhrase,
+  onClearCustomPhrase,
 }) => {
   // Catégorie sélectionnée
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -119,7 +123,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   });
 
   // Phrase courante
-  const currentPhrase: EverydayPhrase = filteredPhrases[activePhraseIndex] || filteredPhrases[0] || EVERYDAY_PHRASES[0];
+  const currentPhrase: EverydayPhrase = customPracticePhrase || filteredPhrases[activePhraseIndex] || filteredPhrases[0] || EVERYDAY_PHRASES[0];
 
   useEffect(() => {
     setIsInAnki(isWordInLocalAnki(currentPhrase.hanzi));
@@ -179,6 +183,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     if (mediaRecorderRef.current) {
       try {
         mediaRecorderRef.current.ondataavailable = null;
+        mediaRecorderRef.current.onstop = null;
         if (mediaRecorderRef.current.state === 'recording') {
           mediaRecorderRef.current.stop();
         }
@@ -198,7 +203,10 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     cleanupRecording();
     stopAllPlayback();
     setEvaluation(null);
+    setAiFeedback(null);
     setLiveTranscript('');
+    accumulatedTranscriptRef.current = '';
+    audioChunksRef.current = [];
     setRecordedAudioUrl(prevUrl => {
       if (prevUrl) URL.revokeObjectURL(prevUrl);
       return null;
@@ -256,6 +264,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
       setLiveTranscript('');
       setEvaluation(null);
+      setAiFeedback(null);
       accumulatedTranscriptRef.current = '';
       audioChunksRef.current = [];
 
@@ -311,24 +320,40 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
         const combined = (accumulatedTranscriptRef.current + interim).trim();
         setLiveTranscript(combined);
 
+        // Marge de confort : 8 secondes complètes de silence avant finalisation automatique,
+        // ou l'utilisateur clique sur le bouton pour évaluer quand il est prêt.
         if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
         silenceTimerRef.current = setTimeout(() => {
-          finalizeRecording();
-        }, 3500);
+          if (isRecordingRef.current) {
+            finalizeRecording();
+          }
+        }, 8000);
       };
 
       recognition.onerror = (err: any) => {
-        console.warn("SpeechRecognition error:", err);
-        cleanupRecording();
+        console.warn("SpeechRecognition event:", err);
+        // Si c'est juste une pause respiratoire ('no-speech'), NE PAS couper l'enregistrement !
+        if (err?.error === 'no-speech') {
+          return;
+        }
+        if (err?.error === 'not-allowed' || err?.error === 'service-not-allowed') {
+          cleanupRecording();
+        }
       };
 
       recognition.onend = () => {
-        if (isRecordingRef.current) {
-          try {
-            recognition.start();
-          } catch (e) {
-            cleanupRecording();
-          }
+        // Dans Chrome, la reconnaissance s'arrête parfois dès un silence d'une seconde.
+        // On la relance en douceur pour laisser le temps de réfléchir et parler sans stress.
+        if (isRecordingRef.current && recognitionRef.current) {
+          setTimeout(() => {
+            if (isRecordingRef.current && recognitionRef.current) {
+              try {
+                recognitionRef.current.start();
+              } catch (e) {
+                // Ignore si déjà actif ou en transition audio
+              }
+            }
+          }, 120);
         }
       };
 
@@ -680,6 +705,26 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
       {/* 4. CARTE PRINCIPALE DE LA PHRASE À PRATIQUER */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-6 animate-fadeIn">
         
+        {/* Bannière Phrase Spéciale Mot Épinglé */}
+        {customPracticePhrase && (
+          <div className="p-3.5 bg-amber-50 rounded-2xl border-2 border-amber-400 text-amber-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-fadeIn">
+            <div className="flex items-center space-x-2">
+              <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
+              <span className="text-xs font-bold">
+                🎯 Mode Entraînement : Phrase personnalisée générée à partir de ton mot épinglé !
+              </span>
+            </div>
+            {onClearCustomPhrase && (
+              <button
+                onClick={onClearCustomPhrase}
+                className="text-xs font-black text-stone-900 hover:underline bg-white px-3 py-1 rounded-lg border border-amber-300 self-start sm:self-auto shadow-2xs"
+              >
+                Revenir aux phrases standards
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Navigation & Thème */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-100 pb-3">
           <div className="flex items-center space-x-2">
@@ -694,26 +739,34 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
           </div>
 
           <div className="flex items-center space-x-2 self-end sm:self-auto">
-            <span className="text-xs font-mono font-bold text-stone-400">
-              {activePhraseIndex + 1} / {filteredPhrases.length}
-            </span>
-            
-            <div className="flex items-center space-x-1">
-              <button
-                onClick={prevPhrase}
-                className="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors"
-                title="Phrase précédente"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={nextPhrase}
-                className="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors"
-                title="Phrase suivante"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
+            {!customPracticePhrase ? (
+              <>
+                <span className="text-xs font-mono font-bold text-stone-400">
+                  {activePhraseIndex + 1} / {filteredPhrases.length}
+                </span>
+                
+                <div className="flex items-center space-x-1">
+                  <button
+                    onClick={prevPhrase}
+                    className="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors"
+                    title="Phrase précédente"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={nextPhrase}
+                    className="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 transition-colors"
+                    title="Phrase suivante"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <span className="text-xs font-mono font-bold text-amber-600 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">
+                Phrase Épinglée
+              </span>
+            )}
           </div>
         </div>
 
@@ -1006,9 +1059,9 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
             
             {/* Carte Diagnostic Coach IA */}
             <div className={`p-5 rounded-3xl border-2 transition-all space-y-3 ${
-              (aiFeedback?.isPassed ?? evaluation!.accuracyScore >= 80)
+              (aiFeedback?.isPassed ?? (evaluation?.accuracyScore ?? 0) >= 80)
                 ? 'bg-emerald-50/70 border-emerald-400 text-emerald-950'
-                : (evaluation!.accuracyScore >= 50)
+                : ((evaluation?.accuracyScore ?? aiFeedback?.accuracyScore ?? 0) >= 50)
                 ? 'bg-amber-50/70 border-amber-300 text-amber-950'
                 : 'bg-rose-50/70 border-rose-300 text-rose-950'
             }`}>
@@ -1024,23 +1077,23 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
                     </span>
                   </div>
                   <p className="text-xs sm:text-sm font-medium leading-relaxed">
-                    {aiFeedback?.aiDiagnosis || evaluation!.feedbackMessage}
+                    {aiFeedback?.aiDiagnosis || evaluation?.feedbackMessage || "Prononciation analysée."}
                   </p>
                 </div>
 
                 <div className="flex items-center space-x-3 shrink-0 self-end sm:self-auto">
                   <div className="text-right">
                     <span className={`text-2xl sm:text-3xl font-black ${
-                      (aiFeedback?.isPassed ?? evaluation!.accuracyScore >= 80)
+                      (aiFeedback?.isPassed ?? (evaluation?.accuracyScore ?? 0) >= 80)
                         ? 'text-emerald-700'
-                        : (evaluation!.accuracyScore >= 50)
+                        : ((evaluation?.accuracyScore ?? aiFeedback?.accuracyScore ?? 0) >= 50)
                         ? 'text-amber-700'
                         : 'text-rose-700'
                     }`}>
-                      {evaluation!.accuracyScore}%
+                      {evaluation?.accuracyScore ?? aiFeedback?.accuracyScore ?? 0}%
                     </span>
                     <span className="text-[10px] text-stone-500 block font-bold uppercase">
-                      {(aiFeedback?.isPassed ?? evaluation!.accuracyScore >= 80) ? 'Validé ✓' : 'Précision'}
+                      {(aiFeedback?.isPassed ?? (evaluation?.accuracyScore ?? 0) >= 80) ? 'Validé ✓' : 'Précision'}
                     </span>
                   </div>
 
@@ -1066,7 +1119,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
               )}
 
               {/* Comparatif Cible vs Capté */}
-              {evaluation?.spokenText && (
+              {(evaluation?.spokenText || aiFeedback?.spokenText) && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
                   <div className="p-2.5 rounded-xl bg-white/70 border border-stone-200/70">
                     <span className="text-[10px] text-stone-400 block font-bold uppercase">Phrase Cible Attendue :</span>
@@ -1076,7 +1129,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
                   <div className="p-2.5 rounded-xl bg-white/70 border border-stone-200/70">
                     <span className="text-[10px] text-stone-400 block font-bold uppercase">Capté par le micro :</span>
-                    <strong className="text-stone-900 font-serif chinese-text text-sm">« {evaluation.spokenText} »</strong>
+                    <strong className="text-stone-900 font-serif chinese-text text-sm">« {evaluation?.spokenText || aiFeedback?.spokenText} »</strong>
                   </div>
                 </div>
               )}
@@ -1096,11 +1149,11 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                {(aiFeedback?.characterBreakdown || evaluation!.matchedCharacters.map(m => ({
+                {(aiFeedback?.characterBreakdown || evaluation?.matchedCharacters?.map(m => ({
                   targetChar: m.char,
                   status: m.status === 'correct' ? ('exact' as const) : ('substituted' as const),
                   explanation: undefined as string | undefined,
-                }))).map((charItem, idx) => (
+                })) || []).map((charItem, idx) => (
                   <div
                     key={idx}
                     className={`p-2.5 rounded-2xl border text-xs flex flex-col justify-between transition-all ${
@@ -1136,7 +1189,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
             </div>
 
             {/* Célébration si score >= 80% ET validé par l'IA */}
-            {(aiFeedback?.isPassed ?? evaluation!.accuracyScore >= 80) && (
+            {(aiFeedback?.isPassed ?? (evaluation ? evaluation.accuracyScore >= 80 : false)) && (
               <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-400 text-emerald-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fadeIn shadow-xs">
                 <div className="flex items-center space-x-2.5">
                   <Award className="w-6 h-6 text-emerald-600 shrink-0" />

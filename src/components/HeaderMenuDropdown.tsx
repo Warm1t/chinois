@@ -22,6 +22,7 @@ import {
 interface HeaderMenuDropdownProps {
   syncedAnkiWordsCount: number;
   onOpenAnkiModal: () => void;
+  onOpenPinnedWordsModal?: () => void;
   onOpenCalendarModal: () => void;
   onOpenProfileSyncModal: () => void;
   onOpenAppleSyncModal?: () => void;
@@ -30,6 +31,7 @@ interface HeaderMenuDropdownProps {
 export const HeaderMenuDropdown: React.FC<HeaderMenuDropdownProps> = ({
   syncedAnkiWordsCount,
   onOpenAnkiModal,
+  onOpenPinnedWordsModal,
   onOpenCalendarModal,
   onOpenProfileSyncModal,
   onOpenAppleSyncModal,
@@ -153,6 +155,36 @@ export const HeaderMenuDropdown: React.FC<HeaderMenuDropdownProps> = ({
               Données & Synchronisation
             </span>
 
+            {/* Option 0 : Mes Mots Épinglés & Export Anki */}
+            <div
+              onClick={() => {
+                if (onOpenPinnedWordsModal) onOpenPinnedWordsModal();
+                else onOpenAnkiModal();
+                setIsOpen(false);
+              }}
+              className="p-2.5 rounded-2xl bg-amber-50/50 hover:bg-amber-100/60 dark:bg-amber-950/20 dark:hover:bg-amber-900/30 cursor-pointer border border-amber-200/80 dark:border-amber-800/60 transition-all flex items-center justify-between group"
+            >
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 rounded-xl bg-amber-400 text-stone-950 flex items-center justify-center shrink-0 font-bold">
+                  📌
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] transition-colors">
+                    Mes Mots & Export Anki
+                  </h4>
+                  <p className="text-[11px] text-stone-500 dark:text-stone-400">
+                    {syncedAnkiWordsCount > 0 
+                      ? `${syncedAnkiWordsCount} mots • Export .txt & phrases` 
+                      : "Gérer mes mots et exporter vers Anki"}
+                  </p>
+                </div>
+              </div>
+
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-200 dark:bg-amber-900/80 text-amber-950 dark:text-amber-200">
+                {syncedAnkiWordsCount}
+              </span>
+            </div>
+
             {/* Option 1 : Anki */}
             <div
               onClick={() => {
@@ -162,17 +194,15 @@ export const HeaderMenuDropdown: React.FC<HeaderMenuDropdownProps> = ({
               className="p-2.5 rounded-2xl hover:bg-stone-50 dark:hover:bg-stone-800/80 cursor-pointer border border-transparent hover:border-stone-200 dark:hover:border-stone-700 transition-all flex items-center justify-between group"
             >
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 flex items-center justify-center shrink-0">
                   <Layers className="w-4 h-4" />
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] transition-colors">
-                    Deck Anki
+                    AnkiConnect (Desktop)
                   </h4>
                   <p className="text-[11px] text-stone-500 dark:text-stone-400">
-                    {syncedAnkiWordsCount > 0 
-                      ? `${syncedAnkiWordsCount} mots synchronisés`
-                      : "Lier ton deck ou importer des fichiers"}
+                    Lier tes paquets locaux Anki
                   </p>
                 </div>
               </div>

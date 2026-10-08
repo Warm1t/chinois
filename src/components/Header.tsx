@@ -11,6 +11,7 @@ interface HeaderProps {
   completedExercisesCount: number;
   syncedAnkiWordsCount: number;
   onOpenAnkiModal: () => void;
+  onOpenPinnedWordsModal?: () => void;
   onOpenCalendarModal: () => void;
   onOpenProfileSyncModal: () => void;
   onOpenAppleSyncModal?: () => void;
@@ -23,6 +24,7 @@ export const Header: React.FC<HeaderProps> = ({
   completedExercisesCount,
   syncedAnkiWordsCount,
   onOpenAnkiModal,
+  onOpenPinnedWordsModal,
   onOpenCalendarModal,
   onOpenProfileSyncModal,
   onOpenAppleSyncModal,
@@ -150,9 +152,12 @@ export const Header: React.FC<HeaderProps> = ({
                 <>
                   <span className="text-stone-300 dark:text-stone-600">•</span>
                   <span 
-                    onClick={onOpenAnkiModal}
+                    onClick={() => {
+                      if (onOpenPinnedWordsModal) onOpenPinnedWordsModal();
+                      else onOpenAnkiModal();
+                    }}
                     className="flex items-center space-x-1 cursor-pointer hover:text-[#c23b22] transition-colors" 
-                    title={`${syncedAnkiWordsCount} mots Anki liés (cliquer pour ouvrir)`}
+                    title={`${syncedAnkiWordsCount} mots épinglés (cliquer pour voir la liste & exporter vers Anki)`}
                   >
                     <Layers className="w-3.5 h-3.5 text-amber-600" />
                     <span className="text-stone-900 dark:text-stone-100 font-mono">{syncedAnkiWordsCount}</span>
@@ -168,6 +173,7 @@ export const Header: React.FC<HeaderProps> = ({
             <HeaderMenuDropdown
               syncedAnkiWordsCount={syncedAnkiWordsCount}
               onOpenAnkiModal={onOpenAnkiModal}
+              onOpenPinnedWordsModal={onOpenPinnedWordsModal}
               onOpenCalendarModal={onOpenCalendarModal}
               onOpenProfileSyncModal={onOpenProfileSyncModal}
               onOpenAppleSyncModal={onOpenAppleSyncModal}

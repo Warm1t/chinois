@@ -115,6 +115,9 @@ export interface AnkiWord {
   translation?: string;
   deckName?: string;
   addedAt: string;
+  exampleSentence?: string;
+  examplePinyin?: string;
+  exampleTranslation?: string;
 }
 
 // ==========================================

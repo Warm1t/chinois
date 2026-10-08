@@ -16,6 +16,8 @@ import { UserProfileBackup, createProfileBackup } from './utils/profileSyncUtils
 import { pushProfileToCloud, pullProfileFromCloud, isAutoSyncEnabled } from './utils/cloudSyncUtils';
 import { getAppTheme, applyThemeToDocument } from './utils/themeUtils';
 import { AppleSyncModal } from './components/AppleSyncModal';
+import { PinnedWordsAnkiModal } from './components/PinnedWordsAnkiModal';
+import { EverydayPhrase } from './data/everydayPhrasesData';
 import { getTodayDailyHanzi } from './data/dailyHanziData';
 import { getTodayDailyStory } from './data/storiesData';
 import { Sparkles } from 'lucide-react';
@@ -41,6 +43,8 @@ export const App: React.FC = () => {
   });
 
   const [isAnkiModalOpen, setIsAnkiModalOpen] = useState(false);
+  const [isPinnedWordsModalOpen, setIsPinnedWordsModalOpen] = useState(false);
+  const [customPracticePhrase, setCustomPracticePhrase] = useState<EverydayPhrase | null>(null);
   const [isDailyAnchorModalOpen, setIsDailyAnchorModalOpen] = useState(false);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [isProfileSyncModalOpen, setIsProfileSyncModalOpen] = useState(false);
@@ -71,6 +75,22 @@ export const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('fluent_anki_words', JSON.stringify(syncedAnkiWords));
   }, [syncedAnkiWords]);
+
+  // Synchronisation en direct avec les événements d'ajout/suppression de mots Anki
+  useEffect(() => {
+    const handleWordsChanged = (e: any) => {
+      if (e?.detail?.words) {
+        setSyncedAnkiWords(e.detail.words);
+      } else {
+        try {
+          const raw = localStorage.getItem('fluent_anki_words');
+          setSyncedAnkiWords(raw ? JSON.parse(raw) : []);
+        } catch {}
+      }
+    };
+    window.addEventListener('fluent_anki_words_changed', handleWordsChanged);
+    return () => window.removeEventListener('fluent_anki_words_changed', handleWordsChanged);
+  }, []);
 
   // Initialisation du thème et synchronisation automatique Cloud au premier chargement (ex: sur iPhone)
   useEffect(() => {
@@ -151,6 +171,7 @@ export const App: React.FC = () => {
         completedExercisesCount={anchoredCount}
         syncedAnkiWordsCount={syncedAnkiWords.length}
         onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
+        onOpenPinnedWordsModal={() => setIsPinnedWordsModalOpen(true)}
         onOpenCalendarModal={() => setIsCalendarModalOpen(true)}
         onOpenProfileSyncModal={() => setIsProfileSyncModalOpen(true)}
         onOpenAppleSyncModal={() => setIsAppleSyncModalOpen(true)}
@@ -175,6 +196,7 @@ export const App: React.FC = () => {
             onStartGuidedAction={handleStartGuidedAction}
             onNavigateToView={(view) => setActiveView(view)}
             onOpenAnkiModal={() => setIsAnkiModalOpen(true)}
+            onOpenPinnedWordsModal={() => setIsPinnedWordsModalOpen(true)}
             onOpenCalendarModal={() => setIsCalendarModalOpen(true)}
             onSelectCard={(cardId) => {
               setSelectedCardId(cardId);
@@ -196,6 +218,8 @@ export const App: React.FC = () => {
         {/* VUE 2 : LABO VOCAL (Phrases courantes du quotidien & Auto-écoute) */}
         {activeView === 'lab' && (
           <VoiceCoachLab
+            customPracticePhrase={customPracticePhrase}
+            onClearCustomPhrase={() => setCustomPracticePhrase(null)}
             onPracticeCompleted={(phraseId, score) => {
               if (score >= 80) {
                 setToastMessage(`🎉 太棒了 ! Phrase validée à l'oral (${score}%) !`);
@@ -256,6 +280,7 @@ export const App: React.FC = () => {
         <AnkiLinkModal
           onClose={() => setIsAnkiModalOpen(false)}
           syncedWords={syncedAnkiWords}
+          onOpenPinnedWordsModal={() => setIsPinnedWordsModalOpen(true)}
           onWordsUpdated={(words) => {
             setSyncedAnkiWords(words);
 
@@ -277,6 +302,20 @@ export const App: React.FC = () => {
           }}
         />
       )}
+
+      {/* Modal Mes Mots Épinglés & Export Anki & Phrases Proposées */}
+      <PinnedWordsAnkiModal
+        isOpen={isPinnedWordsModalOpen}
+        onClose={() => setIsPinnedWordsModalOpen(false)}
+        words={syncedAnkiWords}
+        onWordsUpdated={(words) => setSyncedAnkiWords(words)}
+        onPracticePhrase={(phrase) => {
+          setCustomPracticePhrase(phrase);
+          setActiveView('lab');
+          setToastMessage(`🎙️ Phrase chargée au Labo Vocal : « ${phrase.hanzi} »`);
+          setTimeout(() => setToastMessage(null), 3500);
+        }}
+      />
 
       {/* Profile Sync & Progression Backup Modal */}
       <ProfileSyncModal
