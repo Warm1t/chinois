@@ -1,6 +1,6 @@
 export interface EverydayPhrase {
   id: string;
-  category: 'restaurant' | 'transport' | 'shopping' | 'social' | 'work' | 'housing' | 'reactions' | 'health';
+  category: 'restaurant' | 'transport' | 'shopping' | 'social' | 'work' | 'housing' | 'reactions' | 'health' | 'custom' | 'anki' | string;
   categoryLabel: string;
   categoryIcon: string;
   hanzi: string;
@@ -8,11 +8,14 @@ export interface EverydayPhrase {
   french: string;
   situation: string;
   tip?: string;
-  difficulty: 'Indispensable' | 'Courant' | 'Fluide';
+  difficulty?: 'Indispensable' | 'Courant' | 'Fluide' | string;
+  isCustom?: boolean;
 }
 
 export const EVERYDAY_CATEGORIES = [
   { id: 'all', label: 'Toutes les phrases', icon: '✨' },
+  { id: 'custom', label: 'Mes ajouts', icon: '✍️' },
+  { id: 'anki', label: 'Mes cartes Anki', icon: '⭐' },
   { id: 'restaurant', label: 'Restaurant & Café', icon: '🍜' },
   { id: 'transport', label: 'Taxi & Transports', icon: '🚕' },
   { id: 'shopping', label: 'Shopping & Paiements', icon: '🛍️' },
@@ -477,3 +480,68 @@ export const EVERYDAY_PHRASES: EverydayPhrase[] = [
   },
 ];
 
+export const getCustomVoicePhrases = (): EverydayPhrase[] => {
+  try {
+    const raw = localStorage.getItem('fluent_custom_voice_phrases');
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+};
+
+export const saveCustomVoicePhrase = (phrase: {
+  hanzi: string;
+  pinyin?: string;
+  french?: string;
+  situation?: string;
+  tip?: string;
+}): EverydayPhrase => {
+  const customPhrases = getCustomVoicePhrases();
+  const newPhrase: EverydayPhrase = {
+    id: `custom-voice-${Date.now()}`,
+    category: 'custom',
+    categoryLabel: '✍️ Mes Ajouts',
+    categoryIcon: '✍️',
+    hanzi: phrase.hanzi.trim(),
+    pinyin: (phrase.pinyin || '').trim(),
+    french: (phrase.french || '').trim() || 'Phrase personnalisée',
+    situation: (phrase.situation || '').trim() || 'Ajouté par toi pour pratique vocale',
+    tip: phrase.tip?.trim(),
+    difficulty: 'Courant',
+    isCustom: true,
+  };
+  const updated = [newPhrase, ...customPhrases.filter(p => p.hanzi !== newPhrase.hanzi)];
+  localStorage.setItem('fluent_custom_voice_phrases', JSON.stringify(updated));
+  window.dispatchEvent(new CustomEvent('fluent_custom_voice_phrases_changed', { detail: { phrases: updated } }));
+  return newPhrase;
+};
+
+export const deleteCustomVoicePhrase = (phraseId: string): void => {
+  const customPhrases = getCustomVoicePhrases();
+  const updated = customPhrases.filter(p => p.id !== phraseId);
+  localStorage.setItem('fluent_custom_voice_phrases', JSON.stringify(updated));
+  window.dispatchEvent(new CustomEvent('fluent_custom_voice_phrases_changed', { detail: { phrases: updated } }));
+};
+
+export const convertAnkiWordToVoicePhrase = (word: {
+  id?: string;
+  hanzi: string;
+  pinyin?: string;
+  translation?: string;
+  deckName?: string;
+  exampleSentence?: string;
+}): EverydayPhrase => {
+  return {
+    id: `anki-voice-${word.id || word.hanzi}`,
+    category: 'anki',
+    categoryLabel: '⭐ Mes Cartes Anki',
+    categoryIcon: '⭐',
+    hanzi: word.hanzi,
+    pinyin: word.pinyin || '',
+    french: word.translation || 'Vocabulaire de ta collection Anki',
+    situation: word.deckName ? `Carte Anki • Paquet "${word.deckName}"` : 'Carte issue de ta collection Anki',
+    tip: word.exampleSentence ? `Exemple : ${word.exampleSentence}` : undefined,
+    difficulty: 'Courant',
+    isCustom: false,
+  };
+};

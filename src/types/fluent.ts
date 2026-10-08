@@ -1,4 +1,4 @@
-  export type HskLevel = 'HSK 3' | 'HSK 4';
+export type HskLevel = 'HSK 3' | 'HSK 4';
 
 export type NuanceCategory = 
   | 'aspect_temps'           // 了1, 了2, 过, 着, 在

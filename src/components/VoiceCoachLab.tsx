@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   EVERYDAY_PHRASES, 
   EVERYDAY_CATEGORIES, 
-  EverydayPhrase 
+  EverydayPhrase,
+  getCustomVoicePhrases,
+  saveCustomVoicePhrase,
+  deleteCustomVoicePhrase,
+  convertAnkiWordToVoicePhrase
 } from '../data/everydayPhrasesData';
 import { 
   playChineseAudio, 
@@ -15,7 +19,7 @@ import {
 import { analyzePronunciationWithAi, AiPronunciationFeedback } from '../utils/aiPronunciationCoach';
 import { VoiceSelector } from './VoiceSelector';
 import { VoiceEvaluationResult } from '../types/fluent';
-import { saveWordToLocalAnki, isWordInLocalAnki } from '../utils/ankiConnect';
+import { saveWordToLocalAnki, isWordInLocalAnki, getLocalAnkiWords } from '../utils/ankiConnect';
 import { triggerAutoSyncToCloud } from '../utils/cloudSyncUtils';
 import { 
   Mic, 
@@ -40,7 +44,10 @@ import {
   Zap,
   Gauge,
   Plus,
-  BookmarkCheck
+  BookmarkCheck,
+  Trash2,
+  X,
+  BookOpen
 } from 'lucide-react';
 
 interface VoiceCoachLabProps {
@@ -54,6 +61,22 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   customPracticePhrase,
   onClearCustomPhrase,
 }) => {
+  // Phrases personnalisées ajoutées par l'utilisateur
+  const [customPhrases, setCustomPhrases] = useState<EverydayPhrase[]>(() => getCustomVoicePhrases());
+  // Cartes Anki converties en phrases pour le labo vocal
+  const [ankiPhrases, setAnkiPhrases] = useState<EverydayPhrase[]>(() => {
+    return getLocalAnkiWords().map(convertAnkiWordToVoicePhrase);
+  });
+
+  // Modal d'ajout de phrase / mot
+  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
+  const [newHanzi, setNewHanzi] = useState<string>('');
+  const [newPinyin, setNewPinyin] = useState<string>('');
+  const [newFrench, setNewFrench] = useState<string>('');
+  const [newSituation, setNewSituation] = useState<string>('');
+  const [newTip, setNewTip] = useState<string>('');
+  const [addToAnkiToo, setAddToAnkiToo] = useState<boolean>(true);
+
   // Catégorie sélectionnée
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -108,35 +131,73 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
   const isSupported = isSpeechRecognitionSupported();
 
-  // Filtrage des phrases
-  const filteredPhrases = EVERYDAY_PHRASES.filter(phrase => {
-    const matchesCategory = selectedCategory === 'all' || phrase.category === selectedCategory;
-    if (!matchesCategory) return false;
+  // Écouter les changements des phrases personnalisées
+  useEffect(() => {
+    const handleCustomChange = () => {
+      setCustomPhrases(getCustomVoicePhrases());
+    };
+    window.addEventListener('fluent_custom_voice_phrases_changed', handleCustomChange);
+    return () => window.removeEventListener('fluent_custom_voice_phrases_changed', handleCustomChange);
+  }, []);
 
-    if (!searchQuery.trim()) return true;
+  // Écouter les changements de cartes Anki
+  useEffect(() => {
+    const handleAnkiCardsChange = () => {
+      setAnkiPhrases(getLocalAnkiWords().map(convertAnkiWordToVoicePhrase));
+    };
+    window.addEventListener('fluent_anki_words_changed', handleAnkiCardsChange);
+    return () => window.removeEventListener('fluent_anki_words_changed', handleAnkiCardsChange);
+  }, []);
+
+  // Liste source selon la catégorie sélectionnée
+  const sourcePhrases = React.useMemo(() => {
+    if (selectedCategory === 'custom') {
+      return customPhrases;
+    }
+    if (selectedCategory === 'anki') {
+      return ankiPhrases;
+    }
+    if (selectedCategory === 'all') {
+      return [...customPhrases, ...EVERYDAY_PHRASES];
+    }
+    return [...customPhrases, ...EVERYDAY_PHRASES].filter(phrase => phrase.category === selectedCategory);
+  }, [selectedCategory, customPhrases, ankiPhrases]);
+
+  // Filtrage des phrases avec recherche
+  const filteredPhrases = React.useMemo(() => {
+    if (!searchQuery.trim()) return sourcePhrases;
     const query = searchQuery.toLowerCase().trim();
-    return (
-      phrase.hanzi.includes(query) ||
-      phrase.pinyin.toLowerCase().includes(query) ||
-      phrase.french.toLowerCase().includes(query) ||
-      phrase.situation.toLowerCase().includes(query)
-    );
-  });
+    return sourcePhrases.filter(phrase => {
+      return (
+        phrase.hanzi.includes(query) ||
+        phrase.pinyin.toLowerCase().includes(query) ||
+        phrase.french.toLowerCase().includes(query) ||
+        phrase.situation.toLowerCase().includes(query)
+      );
+    });
+  }, [sourcePhrases, searchQuery]);
 
   // Phrase courante
-  const currentPhrase: EverydayPhrase = customPracticePhrase || filteredPhrases[activePhraseIndex] || filteredPhrases[0] || EVERYDAY_PHRASES[0];
+  const currentPhrase: EverydayPhrase | null = customPracticePhrase 
+    || filteredPhrases[activePhraseIndex] 
+    || filteredPhrases[0] 
+    || (EVERYDAY_PHRASES[0] as EverydayPhrase);
 
   useEffect(() => {
-    setIsInAnki(isWordInLocalAnki(currentPhrase.hanzi));
-  }, [currentPhrase.hanzi]);
+    if (currentPhrase) {
+      setIsInAnki(isWordInLocalAnki(currentPhrase.hanzi));
+    }
+  }, [currentPhrase?.hanzi]);
 
   useEffect(() => {
     const handleAnkiChange = () => {
-      setIsInAnki(isWordInLocalAnki(currentPhrase.hanzi));
+      if (currentPhrase) {
+        setIsInAnki(isWordInLocalAnki(currentPhrase.hanzi));
+      }
     };
     window.addEventListener('fluent_anki_words_changed', handleAnkiChange);
     return () => window.removeEventListener('fluent_anki_words_changed', handleAnkiChange);
-  }, [currentPhrase.hanzi]);
+  }, [currentPhrase?.hanzi]);
 
   useEffect(() => {
     const handleScoresChange = (e: Event) => {
@@ -157,6 +218,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   }, []);
 
   const handleSaveToAnki = () => {
+    if (!currentPhrase) return;
     const res = saveWordToLocalAnki({
       hanzi: currentPhrase.hanzi,
       pinyin: currentPhrase.pinyin,
@@ -167,6 +229,53 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     setIsInAnki(true);
     setAnkiToast(res.isNew ? `✨ Phrase ajoutée à ton paquet Anki "Fluent" (${res.totalCount} cartes) !` : `✓ Déjà dans ton Anki !`);
     setTimeout(() => setAnkiToast(null), 3000);
+  };
+
+  const handleCreateCustomPhrase = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newHanzi.trim()) return;
+
+    const saved = saveCustomVoicePhrase({
+      hanzi: newHanzi.trim(),
+      pinyin: newPinyin.trim(),
+      french: newFrench.trim() || 'Pratique orale personnalisée',
+      situation: newSituation.trim() || 'Ajouté par toi au labo vocal',
+      tip: newTip.trim() || undefined,
+    });
+
+    if (addToAnkiToo) {
+      saveWordToLocalAnki({
+        hanzi: newHanzi.trim(),
+        pinyin: newPinyin.trim(),
+        translation: newFrench.trim() || 'Pratique orale personnalisée',
+        deckName: 'Fluent',
+        source: 'fluent_to_anki',
+      });
+    }
+
+    triggerAutoSyncToCloud();
+    setSelectedCategory('custom');
+    setSearchQuery('');
+    setActivePhraseIndex(0);
+    setIsAddModalOpen(false);
+    setNewHanzi('');
+    setNewPinyin('');
+    setNewFrench('');
+    setNewSituation('');
+    setNewTip('');
+    setAnkiToast(`✨ "${saved.hanzi}" ajouté à tes phrases du Labo Vocal !`);
+    setTimeout(() => setAnkiToast(null), 3500);
+  };
+
+  const handleDeleteCurrentPhrase = () => {
+    if (!currentPhrase?.isCustom) return;
+    if (window.confirm(`Supprimer "${currentPhrase.hanzi}" de tes phrases personnalisées ?`)) {
+      deleteCustomVoicePhrase(currentPhrase.id);
+      triggerAutoSyncToCloud();
+      setActivePhraseIndex(0);
+      setAnkiToast(`Phrase supprimée de tes ajouts.`);
+      setTimeout(() => setAnkiToast(null), 2500);
+    }
   };
 
   // Nettoyage audio et micro
@@ -600,7 +709,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
             </div>
             <div className="text-xs">
               <span className="font-bold text-stone-900 block">
-                {masteredCount} / {EVERYDAY_PHRASES.length} maîtrisées (≥ 80%)
+                {masteredCount} / {EVERYDAY_PHRASES.length + customPhrases.length} maîtrisées (≥ 80%)
               </span>
               <span className="text-[10px] text-stone-500">
                 Pratique orale spontanée
@@ -675,25 +784,50 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
       {/* 3. FILTRES THÉMATIQUES & RECHERCHE */}
       <div className="space-y-3">
         
-        {/* Pilules de catégories */}
-        <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 text-xs font-bold scrollbar-none">
-          {EVERYDAY_CATEGORIES.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                setSelectedCategory(cat.id);
-                setActivePhraseIndex(0);
-              }}
-              className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition-all flex items-center space-x-1.5 border ${
-                selectedCategory === cat.id
-                  ? 'bg-stone-900 text-white border-stone-900 shadow-2xs'
-                  : 'bg-white hover:bg-stone-100 text-stone-700 border-stone-200'
-              }`}
-            >
-              <span>{cat.icon}</span>
-              <span>{cat.label}</span>
-            </button>
-          ))}
+        {/* Pilules de catégories + Bouton Ajouter */}
+        <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1 text-xs font-bold scrollbar-none">
+          <div className="flex items-center space-x-1.5 shrink-0">
+            {EVERYDAY_CATEGORIES.map(cat => {
+              let count: number | null = null;
+              if (cat.id === 'all') count = EVERYDAY_PHRASES.length + customPhrases.length;
+              else if (cat.id === 'custom') count = customPhrases.length;
+              else if (cat.id === 'anki') count = ankiPhrases.length;
+
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    setSelectedCategory(cat.id);
+                    setActivePhraseIndex(0);
+                  }}
+                  className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition-all flex items-center space-x-1.5 border ${
+                    selectedCategory === cat.id
+                      ? 'bg-stone-900 text-white border-stone-900 shadow-2xs font-black'
+                      : 'bg-white hover:bg-stone-100 text-stone-700 border-stone-200'
+                  }`}
+                >
+                  <span>{cat.icon}</span>
+                  <span>{cat.label}</span>
+                  {count !== null && (
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                      selectedCategory === cat.id ? 'bg-stone-800 text-amber-300' : 'bg-stone-100 text-stone-500'
+                    }`}>
+                      {count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            onClick={() => setIsAddModalOpen(true)}
+            className="px-3.5 py-1.5 rounded-xl whitespace-nowrap transition-all flex items-center space-x-1.5 bg-[#c23b22] hover:bg-[#a9301a] text-white border border-[#c23b22] font-black shadow-xs active:scale-95 shrink-0"
+            title="Ajouter un mot ou une phrase au labo vocal"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>+ Ajouter au labo</span>
+          </button>
         </div>
 
         {/* Barre de recherche et bouton Aléatoire */}
@@ -724,7 +858,54 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
       </div>
 
-      {/* 4. CARTE PRINCIPALE DE LA PHRASE À PRATIQUER */}
+      {/* 4. CARTE PRINCIPALE DE LA PHRASE OU ÉTAT VIDE */}
+      {filteredPhrases.length === 0 || !currentPhrase ? (
+        <div className="bg-white rounded-3xl p-8 sm:p-12 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] text-center space-y-4 animate-fadeIn">
+          <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mx-auto text-2xl border border-amber-200">
+            {selectedCategory === 'custom' ? '✍️' : selectedCategory === 'anki' ? '⭐' : '🔍'}
+          </div>
+          <div className="space-y-1">
+            <h3 className="text-lg font-black font-serif text-stone-900">
+              {selectedCategory === 'custom'
+                ? "Aucune phrase personnalisée pour l'instant"
+                : selectedCategory === 'anki'
+                ? "Aucune carte Anki trouvée"
+                : "Aucune phrase trouvée"}
+            </h3>
+            <p className="text-xs text-stone-500 max-w-md mx-auto">
+              {selectedCategory === 'custom'
+                ? "Ajoute tes propres phrases ou mots pour t'entraîner à les prononcer avec analyse IA instantanée."
+                : selectedCategory === 'anki'
+                ? "Enregistre des cartes dans Anki depuis les histoires ou le chat pour pouvoir les travailler à l'oral ici !"
+                : "Essaie un autre terme de recherche ou explore une autre catégorie."}
+            </p>
+          </div>
+
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+            {selectedCategory === 'custom' && (
+              <button
+                onClick={() => setIsAddModalOpen(true)}
+                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-[#c23b22] hover:bg-[#a9301a] text-white text-xs font-black shadow-md transition-all active:scale-95"
+              >
+                <Plus className="w-4 h-4" />
+                <span>+ Ajouter une phrase au labo</span>
+              </button>
+            )}
+
+            {selectedCategory !== 'all' && (
+              <button
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setSearchQuery('');
+                }}
+                className="px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition-colors"
+              >
+                Voir toutes les phrases standards
+              </button>
+            )}
+          </div>
+        </div>
+      ) : (
       <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-6 animate-fadeIn">
         
         {/* Bannière Phrase Spéciale Mot Épinglé */}
@@ -749,7 +930,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
         {/* Navigation & Thème */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-100 pb-3">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 flex-wrap gap-y-1">
             <span className="text-base">{currentPhrase.categoryIcon}</span>
             <span className="font-bold text-xs text-stone-900">
               {currentPhrase.categoryLabel}
@@ -758,9 +939,32 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
             <span className="text-stone-500 text-xs">
               {currentPhrase.situation}
             </span>
+
+            {/* Badges d'état personnalisé / Anki */}
+            {currentPhrase.isCustom && (
+              <span className="text-[10px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full border border-purple-200">
+                ✍️ Mon ajout
+              </span>
+            )}
+            {currentPhrase.category === 'anki' && (
+              <span className="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-300">
+                ⭐ Carte Anki
+              </span>
+            )}
           </div>
 
           <div className="flex items-center space-x-2 self-end sm:self-auto">
+            {currentPhrase.isCustom && (
+              <button
+                onClick={handleDeleteCurrentPhrase}
+                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-xs font-bold text-rose-600 hover:text-rose-700 hover:bg-rose-50 border border-rose-200 transition-colors mr-1"
+                title="Supprimer cette phrase de mes ajouts"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Supprimer</span>
+              </button>
+            )}
+
             {!customPracticePhrase ? (
               <>
                 <span className="text-xs font-mono font-bold text-stone-400">
@@ -817,6 +1021,44 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
           <p className="text-sm sm:text-base text-stone-700 italic max-w-xl mx-auto">
             « {currentPhrase.french} »
           </p>
+
+          {/* Mots / Découpage rapide pour Anki */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 pt-1">
+            <span className="text-[10px] text-stone-400 font-bold uppercase tracking-wider">
+              Sauvegarder un terme dans Anki :
+            </span>
+            {currentPhrase.hanzi
+              .replace(/[，。？！、；：“”‘’]/g, ' ')
+              .split(/\s+/)
+              .filter(segment => segment.trim().length > 0)
+              .map((seg, sIdx) => {
+                const segInAnki = isWordInLocalAnki(seg);
+                return (
+                  <button
+                    key={sIdx}
+                    onClick={() => {
+                      const res = saveWordToLocalAnki({
+                        hanzi: seg,
+                        translation: currentPhrase.french,
+                        deckName: 'Fluent',
+                        source: 'fluent_to_anki',
+                      });
+                      setAnkiToast(res.isNew ? `✨ "${seg}" ajouté à ton paquet Anki "Fluent" !` : `✓ "${seg}" est déjà dans Anki !`);
+                      setTimeout(() => setAnkiToast(null), 3000);
+                    }}
+                    className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-xs font-serif font-bold transition-all border ${
+                      segInAnki
+                        ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                        : 'bg-stone-50 hover:bg-emerald-50 text-stone-700 hover:text-emerald-900 border-stone-200'
+                    }`}
+                    title={segInAnki ? `Déjà dans Anki` : `Ajouter "${seg}" à Anki`}
+                  >
+                    <span>{seg}</span>
+                    <BookmarkCheck className={`w-3 h-3 ${segInAnki ? 'text-emerald-600' : 'text-stone-400'}`} />
+                  </button>
+                );
+              })}
+          </div>
 
           {/* Astuce de locuteur natif si disponible */}
           {currentPhrase.tip && (
@@ -1235,29 +1477,162 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
         )}
 
       </div>
+      )}
 
       {/* 8. NAVIGATION BASSE */}
-      <div className="flex items-center justify-between text-xs text-stone-500 pt-2">
-        <button
-          onClick={prevPhrase}
-          className="inline-flex items-center space-x-1 hover:text-stone-900 transition-colors font-bold"
-        >
-          <ChevronLeft className="w-4 h-4" />
-          <span>Phrase précédente</span>
-        </button>
+      {filteredPhrases.length > 0 && currentPhrase && (
+        <div className="flex items-center justify-between text-xs text-stone-500 pt-2">
+          <button
+            onClick={prevPhrase}
+            className="inline-flex items-center space-x-1 hover:text-stone-900 transition-colors font-bold"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            <span>Phrase précédente</span>
+          </button>
 
-        <span className="text-[11px] text-stone-400 hidden sm:inline">
-          💡 Écoute à 0.5x pour décomposer les tons ➔ Répète au micro ➔ Compare dans le miroir
-        </span>
+          <span className="text-[11px] text-stone-400 hidden sm:inline">
+            💡 Écoute à 0.5x pour décomposer les tons ➔ Répète au micro ➔ Compare dans le miroir
+          </span>
 
-        <button
-          onClick={nextPhrase}
-          className="inline-flex items-center space-x-1 hover:text-stone-900 transition-colors font-bold"
-        >
-          <span>Phrase suivante</span>
-          <ChevronRight className="w-4 h-4" />
-        </button>
-      </div>
+          <button
+            onClick={nextPhrase}
+            className="inline-flex items-center space-x-1 hover:text-stone-900 transition-colors font-bold"
+          >
+            <span>Phrase suivante</span>
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* MODAL : AJOUTER UNE PHRASE OU UN MOT AU LABO VOCAL */}
+      {isAddModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fadeIn">
+          <div className="bg-white rounded-3xl border-2 border-stone-900 shadow-[6px_6px_0px_#1c1917] max-w-lg w-full p-6 space-y-5 animate-scaleUp max-h-[90vh] overflow-y-auto">
+            
+            <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+              <div className="flex items-center space-x-2.5">
+                <span className="p-2 rounded-xl bg-red-100 text-[#c23b22]">
+                  <Plus className="w-5 h-5" />
+                </span>
+                <div>
+                  <h3 className="font-serif font-black text-lg text-stone-900">
+                    Ajouter au Labo Vocal
+                  </h3>
+                  <p className="text-[11px] text-stone-500">
+                    Entraîne-toi sur tes propres mots ou phrases avec le coach vocal IA.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsAddModalOpen(false)}
+                className="p-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateCustomPhrase} className="space-y-4">
+              <div>
+                <label className="block text-xs font-black uppercase tracking-wider text-stone-700 mb-1">
+                  Sinogrammes (Hanzi) <span className="text-[#c23b22]">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={newHanzi}
+                  onChange={(e) => setNewHanzi(e.target.value)}
+                  placeholder="ex: 我想喝一杯奶茶"
+                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-stone-200 focus:border-stone-900 focus:outline-none text-base font-serif font-bold text-stone-900 placeholder-stone-300"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">
+                    Pinyin (optionnel)
+                  </label>
+                  <input
+                    type="text"
+                    value={newPinyin}
+                    onChange={(e) => setNewPinyin(e.target.value)}
+                    placeholder="ex: Wǒ xiǎng hē yì bēi nǎichá"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-stone-900 focus:outline-none text-xs font-mono text-stone-800 placeholder-stone-400"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">
+                    Contexte / Situation
+                  </label>
+                  <input
+                    type="text"
+                    value={newSituation}
+                    onChange={(e) => setNewSituation(e.target.value)}
+                    placeholder="ex: Au salon de thé"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-stone-900 focus:outline-none text-xs text-stone-800 placeholder-stone-400"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Traduction française
+                </label>
+                <input
+                  type="text"
+                  value={newFrench}
+                  onChange={(e) => setNewFrench(e.target.value)}
+                  placeholder="ex: Je voudrais boire un thé au lait."
+                  className="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-stone-900 focus:outline-none text-xs text-stone-800 placeholder-stone-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Conseil de prononciation ou ton (optionnel)
+                </label>
+                <input
+                  type="text"
+                  value={newTip}
+                  onChange={(e) => setNewTip(e.target.value)}
+                  placeholder="ex: Attention au 3ème ton sur 想 et 奶"
+                  className="w-full px-3 py-2 rounded-xl border border-stone-200 focus:border-stone-900 focus:outline-none text-xs text-stone-800 placeholder-stone-400"
+                />
+              </div>
+
+              <div className="pt-2">
+                <label className="flex items-center space-x-2 text-xs font-semibold text-stone-700 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={addToAnkiToo}
+                    onChange={(e) => setAddToAnkiToo(e.target.checked)}
+                    className="rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+                  />
+                  <span>Ajouter aussi directement à mon paquet Anki "Fluent"</span>
+                </label>
+              </div>
+
+              <div className="pt-3 border-t border-stone-100 flex items-center justify-end space-x-2">
+                <button
+                  type="button"
+                  onClick={() => setIsAddModalOpen(false)}
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors"
+                >
+                  Annuler
+                </button>
+                <button
+                  type="submit"
+                  disabled={!newHanzi.trim()}
+                  className="px-5 py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 disabled:opacity-50 text-white text-xs font-black shadow-md transition-all active:scale-95"
+                >
+                  Enregistrer et Pratiquer
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );

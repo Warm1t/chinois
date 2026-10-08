@@ -11,6 +11,7 @@ export interface UserProfileBackup {
   completedStories?: string[];
   voiceLabScores?: Record<string, number>;
   builderCompleted?: Record<string, boolean>;
+  customVoicePhrases?: any[];
   reminderTime?: string;
   webhookUrl?: string;
 }
@@ -23,7 +24,8 @@ export const createProfileBackup = (
   anchoringRecords?: Record<string, AnchoringRecord>,
   completedStories?: string[],
   voiceLabScores?: Record<string, number>,
-  builderCompleted?: Record<string, boolean>
+  builderCompleted?: Record<string, boolean>,
+  customVoicePhrases?: any[]
 ): UserProfileBackup => {
   const getStoredJson = <T>(key: string, fallback: T): T => {
     try {
@@ -41,6 +43,7 @@ export const createProfileBackup = (
   const finalCompletedStories = completedStories ?? getStoredJson<string[]>('fluent_completed_stories', []);
   const finalVoiceLabScores = voiceLabScores ?? getStoredJson<Record<string, number>>('fluent_voice_lab_scores', {});
   const finalBuilderCompleted = builderCompleted ?? getStoredJson<Record<string, boolean>>('fluent_builder_completed', {});
+  const finalCustomVoicePhrases = customVoicePhrases ?? getStoredJson<any[]>('fluent_custom_voice_phrases', []);
 
   const reminderTime = localStorage.getItem('fluent_reminder_time') || '09:00';
   const webhookUrl = localStorage.getItem('fluent_webhook_url') || '';
@@ -55,6 +58,7 @@ export const createProfileBackup = (
     completedStories: finalCompletedStories,
     voiceLabScores: finalVoiceLabScores,
     builderCompleted: finalBuilderCompleted,
+    customVoicePhrases: finalCustomVoicePhrases,
     reminderTime,
     webhookUrl,
   };
@@ -91,6 +95,7 @@ export const parseProfileBackup = (rawContent: string): UserProfileBackup | null
       completedStories: Array.isArray(data.completedStories) ? data.completedStories : [],
       voiceLabScores: typeof data.voiceLabScores === 'object' && data.voiceLabScores !== null ? data.voiceLabScores : {},
       builderCompleted: typeof data.builderCompleted === 'object' && data.builderCompleted !== null ? data.builderCompleted : {},
+      customVoicePhrases: Array.isArray(data.customVoicePhrases) ? data.customVoicePhrases : [],
       reminderTime: data.reminderTime || '09:00',
       webhookUrl: data.webhookUrl || '',
     };
@@ -123,6 +128,9 @@ export const applyProfileBackupToStorage = (backup: UserProfileBackup) => {
   if (backup.builderCompleted) {
     localStorage.setItem('fluent_builder_completed', JSON.stringify(backup.builderCompleted));
   }
+  if (Array.isArray(backup.customVoicePhrases)) {
+    localStorage.setItem('fluent_custom_voice_phrases', JSON.stringify(backup.customVoicePhrases));
+  }
   if (backup.reminderTime) localStorage.setItem('fluent_reminder_time', backup.reminderTime);
   if (backup.webhookUrl) localStorage.setItem('fluent_webhook_url', backup.webhookUrl);
 
@@ -140,6 +148,11 @@ export const applyProfileBackupToStorage = (backup: UserProfileBackup) => {
     window.dispatchEvent(
       new CustomEvent('fluent_voice_lab_scores_changed', { 
         detail: { scores: backup.voiceLabScores || {} } 
+      })
+    );
+    window.dispatchEvent(
+      new CustomEvent('fluent_custom_voice_phrases_changed', { 
+        detail: { phrases: backup.customVoicePhrases || [] } 
       })
     );
     window.dispatchEvent(
@@ -179,6 +192,16 @@ export const mergeProfileBackups = (
     ...(cloud.builderCompleted || {}),
     ...(local.builderCompleted || {})
   };
+
+  // Fusionner les phrases personnalisées du labo vocal
+  const customPhrasesMap = new Map<string, any>();
+  (cloud.customVoicePhrases || []).forEach(p => {
+    if (p && p.hanzi) customPhrasesMap.set(p.hanzi.trim(), p);
+  });
+  (local.customVoicePhrases || []).forEach(p => {
+    if (p && p.hanzi) customPhrasesMap.set(p.hanzi.trim(), p);
+  });
+  const customVoicePhrases = Array.from(customPhrasesMap.values());
 
   // Fusionner les mots Anki par Hanzi
   const wordsMap = new Map<string, AnkiWord>();
@@ -231,6 +254,7 @@ export const mergeProfileBackups = (
     completedStories,
     voiceLabScores,
     builderCompleted,
+    customVoicePhrases,
     reminderTime: cloud.reminderTime || local.reminderTime || '09:00',
     webhookUrl: cloud.webhookUrl || local.webhookUrl || '',
   };
