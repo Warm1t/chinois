@@ -154,7 +154,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
       const isOnline = await checkAnkiConnection();
       if (!isOnline) {
         setSyncStatusMessage({
-          text: "Anki Desktop n'est pas détecté. Lance Anki sur ton PC (avec l'extension AnkiConnect), ou utilise le bouton 'Télécharger fichier .txt' !",
+          text: "Anki Desktop non détecté en local (ou bloqué par HTTPS). Utilise simplement le bouton 'Télécharger fichier Anki (.txt)' : il s'importe partout sans configuration !",
           type: 'info'
         });
         setIsSyncing(false);
@@ -169,7 +169,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
         });
       } else if (res.failed > 0) {
         setSyncStatusMessage({
-          text: `Erreur lors de l'ajout des cartes dans Anki Desktop (${res.failed} échecs).`,
+          text: `Erreur lors de l'ajout automatique (${res.failed} échecs). Télécharge le fichier .txt pour importer directement dans Anki.`,
           type: 'error'
         });
       } else {
@@ -180,8 +180,8 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
       }
     } catch (err: any) {
       setSyncStatusMessage({
-        text: "Impossible de joindre AnkiConnect : " + (err?.message || ''),
-        type: 'error'
+        text: "Connexion locale AnkiConnect non accessible (restrictions HTTP/HTTPS). Télécharge simplement le fichier .txt !",
+        type: 'info'
       });
     } finally {
       setIsSyncing(false);
@@ -369,13 +369,13 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
-                    Exportation & Synchronisation Anki
+                    Exportation & Téléchargement Anki
                   </span>
                   <h3 className="text-base font-bold font-serif text-white">
-                    Transférer vers le paquet "Fluent" ou Exporter
+                    Exporter tes cartes pour Anki (.txt / TSV)
                   </h3>
                   <p className="text-xs text-stone-300 mt-0.5">
-                    Tous tes mots enregistrés dans l'application sont assignés au paquet <strong>Fluent</strong> pour ne pas se mélanger à tes autres paquets Anki.
+                    Fichier autonome prêt pour Anki (Mobile, Web & Desktop). Importe directement dans Anki sans aucun plugin ni problème réseau.
                   </p>
                 </div>
 
@@ -386,7 +386,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                     onClick={() => setExportFormat('basic')}
                     className={`px-2 py-1 rounded-lg font-bold transition-all ${
                       exportFormat === 'basic'
-                        ? 'bg-amber-400 text-stone-950 shadow-2xs'
+                        ? 'bg-amber-400 text-stone-950 shadow-2xs font-black'
                         : 'text-stone-300 hover:text-white'
                     }`}
                     title="2 champs HTML : Recto (Hanzi+Pinyin) / Verso (Traduction+Exemple)"
@@ -397,7 +397,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                     onClick={() => setExportFormat('tsv')}
                     className={`px-2 py-1 rounded-lg font-bold transition-all ${
                       exportFormat === 'tsv'
-                        ? 'bg-amber-400 text-stone-950 shadow-2xs'
+                        ? 'bg-amber-400 text-stone-950 shadow-2xs font-black'
                         : 'text-stone-300 hover:text-white'
                     }`}
                     title="4 colonnes brutes : Hanzi \t Pinyin \t Traduction \t Exemple"
@@ -407,39 +407,29 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                 </div>
               </div>
 
-              {/* Boutons d'action */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-                {/* 1. Transférer directement dans Anki Desktop si ouvert */}
-                <button
-                  onClick={handleDirectDesktopSync}
-                  disabled={isSyncing || fluentWords.length === 0}
-                  className="py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-500 hover:from-emerald-300 hover:to-emerald-400 disabled:opacity-50 text-stone-950 font-black text-xs border border-stone-900 shadow-sm transition-all flex items-center justify-center space-x-2"
-                  title="Ajoute directement les mots au paquet 'Fluent' dans Anki Desktop"
-                >
-                  <Zap className={`w-4 h-4 fill-stone-950 ${isSyncing ? 'animate-bounce' : ''}`} />
-                  <span>{isSyncing ? 'Envoi vers Anki...' : '⚡ Vers Anki Desktop (Paquet Fluent)'}</span>
-                </button>
-
-                {/* 2. Télécharger fichier texte pour Anki */}
+              {/* Actions principales : Télécharger & Copier */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {/* 1. Télécharger fichier texte pour Anki (ACTION HERO) */}
                 <button
                   onClick={handleExportFile}
                   disabled={words.length === 0}
-                  className="py-2.5 px-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-stone-950 font-black text-xs border border-stone-900 shadow-sm transition-all flex items-center justify-center space-x-2"
+                  className="py-3 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-stone-950 font-black text-xs sm:text-sm border-2 border-stone-900 shadow-md transition-all flex items-center justify-center space-x-2 active:scale-98"
                   title="Télécharger un fichier texte importable dans Anki"
                 >
-                  <Download className="w-4 h-4" />
-                  <span>Télécharger fichier Anki (.txt)</span>
+                  <Download className="w-4 h-4 text-stone-950" />
+                  <span>📥 Télécharger le fichier Anki (.txt)</span>
                 </button>
 
-                {/* 3. Copier dans le presse-papier */}
+                {/* 2. Copier dans le presse-papier */}
                 <button
                   onClick={handleCopyClipboard}
                   disabled={words.length === 0}
-                  className={`py-2.5 px-3.5 rounded-xl font-bold text-xs border border-stone-700 transition-all flex items-center justify-center space-x-2 ${
+                  className={`py-3 px-4 rounded-xl font-bold text-xs sm:text-sm border border-stone-600 transition-all flex items-center justify-center space-x-2 ${
                     copySuccess
                       ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
-                      : 'bg-stone-700/80 hover:bg-stone-700 text-white disabled:opacity-50'
+                      : 'bg-stone-800 hover:bg-stone-700 text-white disabled:opacity-50'
                   }`}
+                  title="Copier toutes les cartes dans le presse-papier"
                 >
                   {copySuccess ? (
                     <>
@@ -448,10 +438,28 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                     </>
                   ) : (
                     <>
-                      <Copy className="w-4 h-4" />
+                      <Copy className="w-4 h-4 text-amber-300" />
                       <span>Copier pour Anki (1-Clic)</span>
                     </>
                   )}
+                </button>
+              </div>
+
+              {/* Pied de bandeau : astuce d'importation universelle + synchronisation locale optionnelle */}
+              <div className="pt-2 border-t border-stone-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-stone-400">
+                <span className="flex items-center space-x-1.5">
+                  <span>💡</span>
+                  <span>Dans Anki : menu <strong>Fichier ➔ Importer</strong> et choisis ton fichier téléchargé.</span>
+                </span>
+
+                <button
+                  onClick={handleDirectDesktopSync}
+                  disabled={isSyncing || fluentWords.length === 0}
+                  className="text-stone-400 hover:text-amber-300 transition-colors inline-flex items-center space-x-1.5 self-start sm:self-auto underline decoration-dotted text-[11px]"
+                  title="Optionnel : injecter directement si Anki Desktop tourne sur cet ordinateur"
+                >
+                  <Zap className={`w-3 h-3 ${isSyncing ? 'animate-bounce text-amber-300' : ''}`} />
+                  <span>{isSyncing ? 'Envoi vers Anki...' : 'Injecter vers Anki Desktop local (optionnel)'}</span>
                 </button>
               </div>
             </div>

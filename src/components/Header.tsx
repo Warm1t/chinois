@@ -70,9 +70,6 @@ export const Header: React.FC<HeaderProps> = ({
                   {theme === 'dark' ? '🌙 Mode Sombre' : '📜 Mode Encre'}
                 </span>
               </div>
-              <p className="text-[11px] text-stone-500 font-medium hidden sm:block">
-                Passe du vocabulaire Anki aux pensées complètes
-              </p>
             </div>
           </div>
 

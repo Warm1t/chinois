@@ -1033,10 +1033,10 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                                     isChunkActive
                                       ? 'bg-amber-400 text-stone-950 border-stone-900 shadow-md scale-105 ring-2 ring-amber-300'
                                       : chunk.stressLevel === 'prominent'
-                                      ? 'bg-amber-50/90 border-amber-300 shadow-2xs'
+                                      ? 'bg-amber-50/90 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700/60 shadow-2xs'
                                       : chunk.stressLevel === 'light'
-                                      ? 'bg-stone-50/50 border-stone-200 text-stone-600'
-                                      : 'bg-white border-stone-200'
+                                      ? 'bg-stone-50/50 dark:bg-stone-900/60 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300'
+                                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800'
                                   }`}
                                   title={chunk.stressLevel === 'prominent' ? "Groupe avec emphase ou intensité prosodique" : undefined}
                                 >
@@ -1062,18 +1062,18 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                                             isSelected
                                               ? 'bg-amber-300 text-stone-950 font-bold ring-2 ring-stone-900'
                                               : word.isTarget
-                                              ? 'border-b-2 border-amber-500 font-bold text-stone-900'
+                                              ? 'border-b-2 border-amber-500 font-bold text-stone-900 dark:text-stone-100'
                                               : inAnki
-                                              ? 'border-b-2 border-[#c23b22] text-stone-900'
-                                              : 'hover:bg-stone-100 text-stone-900'
+                                              ? 'border-b-2 border-[#c23b22] text-stone-900 dark:text-stone-100'
+                                              : 'hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-100'
                                           }`}
                                         >
                                           {showPinyin && word.pinyin && (
-                                            <span className="text-[11px] font-sans text-stone-500 font-normal tracking-normal leading-none mb-1 group-hover:text-stone-900">
+                                            <span className="text-[11px] font-sans text-stone-500 dark:text-stone-400 font-normal tracking-normal leading-none mb-1 group-hover:text-stone-900 dark:group-hover:text-white">
                                               {word.pinyin}
                                             </span>
                                           )}
-                                          <span className="chinese-text font-bold text-xl sm:text-2xl leading-none">
+                                          <span className="chinese-text font-bold text-xl sm:text-2xl leading-none text-stone-900 dark:text-stone-100">
                                             {word.hanzi}
                                           </span>
                                         </span>
@@ -1084,7 +1084,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                                   {/* Badge de sandhi tonal si applicable */}
                                   {chunk.sandhiHint && (
                                     <span 
-                                      className="ml-1.5 text-[9px] font-mono px-1.5 py-0.2 rounded-md bg-amber-100 text-amber-900 border border-amber-200 font-bold cursor-help"
+                                      className="ml-1.5 text-[9px] font-mono px-1.5 py-0.2 rounded-md bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 font-bold cursor-help"
                                       title={chunk.sandhiHint}
                                     >
                                       ⚡ ton
@@ -1133,18 +1133,18 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                                   isSelected
                                     ? 'bg-amber-300/80 text-stone-950 font-bold ring-2 ring-stone-900'
                                     : word.isTarget
-                                    ? 'bg-amber-100/90 hover:bg-amber-200 border-b-2 border-amber-500 font-bold text-stone-900'
+                                    ? 'bg-amber-100/90 dark:bg-amber-950/60 hover:bg-amber-200 dark:hover:bg-amber-900/60 border-b-2 border-amber-500 font-bold text-stone-900 dark:text-stone-100'
                                     : inAnki
-                                    ? 'bg-rose-50 hover:bg-rose-100 border-b-2 border-[#c23b22] text-stone-900'
-                                    : 'hover:bg-stone-200/70 text-stone-900'
+                                    ? 'bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/40 border-b-2 border-[#c23b22] text-stone-900 dark:text-stone-100'
+                                    : 'hover:bg-stone-200/70 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-100'
                                 }`}
                               >
                                 {showPinyin && word.pinyin && (
-                                  <span className="text-[11px] font-sans text-stone-500 font-normal tracking-normal leading-none mb-1 group-hover:text-stone-900">
+                                  <span className="text-[11px] font-sans text-stone-500 dark:text-stone-400 font-normal tracking-normal leading-none mb-1 group-hover:text-stone-900 dark:group-hover:text-white">
                                     {word.pinyin}
                                   </span>
                                 )}
-                                <span className="chinese-text font-bold text-xl sm:text-2xl leading-none">
+                                <span className="chinese-text font-bold text-xl sm:text-2xl leading-none text-stone-900 dark:text-stone-100">
                                   {word.hanzi}
                                 </span>
                               </span>
