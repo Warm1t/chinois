@@ -293,6 +293,15 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
     }
   };
 
+  const getSupportedVoiceMimeType = (): string => {
+    if (typeof MediaRecorder === 'undefined') return '';
+    const candidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/aac'];
+    for (const t of candidates) {
+      if (MediaRecorder.isTypeSupported(t)) return t;
+    }
+    return '';
+  };
+
   const cleanupRecording = () => {
     isRecordingRef.current = false;
     isStartingRef.current = false;
@@ -309,17 +318,17 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
       } catch (e) {}
       recognitionRef.current = null;
     }
+    let wasRecording = false;
     if (mediaRecorderRef.current) {
       try {
-        mediaRecorderRef.current.ondataavailable = null;
-        mediaRecorderRef.current.onstop = null;
         if (mediaRecorderRef.current.state === 'recording') {
+          wasRecording = true;
           mediaRecorderRef.current.stop();
         }
       } catch (e) {}
       mediaRecorderRef.current = null;
     }
-    if (mediaStreamRef.current) {
+    if (mediaStreamRef.current && !wasRecording) {
       try {
         mediaStreamRef.current.getTracks().forEach(track => track.stop());
       } catch (e) {}
@@ -331,6 +340,12 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
   const resetPhraseSession = () => {
     cleanupRecording();
     stopAllPlayback();
+    if (mediaStreamRef.current) {
+      try {
+        mediaStreamRef.current.getTracks().forEach(track => track.stop());
+      } catch (e) {}
+      mediaStreamRef.current = null;
+    }
     setEvaluation(null);
     setAiFeedback(null);
     setLiveTranscript('');
@@ -349,6 +364,19 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
       stopAllPlayback();
     };
   }, [currentPhrase?.id]);
+
+  useEffect(() => {
+    return () => {
+      if (recordedAudioUrl) {
+        URL.revokeObjectURL(recordedAudioUrl);
+      }
+      if (userAudioPlayerRef.current) {
+        try {
+          userAudioPlayerRef.current.pause();
+        } catch (e) {}
+      }
+    };
+  }, [recordedAudioUrl]);
 
   // Si le filtre change et réduit la taille de la liste
   useEffect(() => {
@@ -403,7 +431,8 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
           const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
           mediaStreamRef.current = stream;
 
-          const recorder = new MediaRecorder(stream);
+          const mimeType = getSupportedVoiceMimeType();
+          const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
           recorder.ondataavailable = (event: BlobEvent) => {
             if (event.data && event.data.size > 0) {
               audioChunksRef.current.push(event.data);
@@ -412,11 +441,18 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
           recorder.onstop = () => {
             if (audioChunksRef.current.length > 0) {
-              const audioBlob = new Blob(audioChunksRef.current, { type: recorder.mimeType || 'audio/webm' });
+              const blobType = recorder.mimeType || 'audio/webm';
+              const audioBlob = new Blob(audioChunksRef.current, { type: blobType });
               if (audioBlob.size > 0) {
                 const url = URL.createObjectURL(audioBlob);
                 setRecordedAudioUrl(url);
               }
+            }
+            if (mediaStreamRef.current) {
+              try {
+                mediaStreamRef.current.getTracks().forEach(track => track.stop());
+              } catch (e) {}
+              mediaStreamRef.current = null;
             }
           };
 
@@ -1117,9 +1153,9 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
         </div>
 
         {/* 5. MICROPHONE INTERACTIF : ENREGISTREMENT & RECONNAISSANCE */}
-        <div className="pt-4 border-t border-stone-200 flex flex-col items-center justify-center space-y-4">
+        <div className="pt-4 border-t border-stone-200 dark:border-stone-800 flex flex-col items-center justify-center space-y-4">
           
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <div className="relative">
               {isRecording && (
                 <>
@@ -1153,10 +1189,45 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
                 <span>Évaluer</span>
               </button>
             )}
+
+            {recordedAudioUrl && !isRecording && (
+              <div className="flex flex-wrap items-center gap-2 animate-fadeIn">
+                <button
+                  onClick={handleTogglePlayUserAudio}
+                  className={`px-4 py-2.5 rounded-xl border-2 border-stone-900 font-bold text-xs flex items-center space-x-2 transition-all shadow-xs ${
+                    isPlayingUserAudio && !isPlayingMirror
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-blue-500/30 ring-2 ring-blue-400'
+                      : 'bg-white hover:bg-stone-100 text-stone-900 dark:bg-stone-800 dark:hover:bg-stone-700 dark:text-stone-100 dark:border-stone-700'
+                  }`}
+                  title="Écouter mon enregistrement"
+                >
+                  {isPlayingUserAudio && !isPlayingMirror ? (
+                    <>
+                      <Pause className="w-4 h-4 text-white" />
+                      <span>Pause</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-4 h-4 text-blue-600 fill-blue-600 dark:text-blue-400 dark:fill-blue-400" />
+                      <span>Écouter mon enregistrement</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => handlePlayAudio(currentPhrase.hanzi)}
+                  className="px-3.5 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 font-bold text-xs flex items-center space-x-1.5 border border-stone-300 dark:border-stone-700 transition-colors shadow-2xs"
+                  title="Écouter le modèle natif pour comparer ta prononciation"
+                >
+                  <Volume2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  <span>Modèle Natif</span>
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="text-center space-y-1 max-w-md">
-            <p className="text-xs sm:text-sm font-semibold text-stone-700">
+            <p className="text-xs sm:text-sm font-semibold text-stone-700 dark:text-stone-300">
               {isRecording ? (
                 <span className="text-[#c23b22] flex items-center justify-center space-x-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#c23b22] animate-ping" />
@@ -1168,9 +1239,9 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
             </p>
 
             {liveTranscript && (
-              <div className="text-xs text-stone-800 font-mono bg-stone-100 px-3.5 py-1.5 rounded-xl border border-stone-200 inline-block shadow-2xs">
-                <span className="text-stone-400 mr-1.5">Capté en direct :</span>
-                <strong className="text-stone-900">{liveTranscript}</strong>
+              <div className="text-xs text-stone-800 dark:text-stone-200 font-mono bg-stone-100 dark:bg-stone-800 px-3.5 py-1.5 rounded-xl border border-stone-200 dark:border-stone-700 inline-block shadow-2xs">
+                <span className="text-stone-400 dark:text-stone-500 mr-1.5">Capté en direct :</span>
+                <strong className="text-stone-900 dark:text-stone-100">{liveTranscript}</strong>
               </div>
             )}
           </div>
@@ -1201,21 +1272,21 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
           {/* 6. AUTO-ÉCOUTE & MIROIR PHONÉTIQUE (S'ÉCOUTER SOI-MÊME) */}
           {recordedAudioUrl && (
-            <div className="w-full max-w-2xl mx-auto rounded-3xl p-5 sm:p-6 bg-gradient-to-br from-stone-50 via-white to-amber-50/40 border-2 border-stone-900 shadow-[4px_4px_0px_#1c1917] space-y-4 animate-fadeIn">
+            <div className="w-full max-w-2xl mx-auto rounded-3xl p-5 sm:p-6 bg-gradient-to-br from-stone-50 via-white to-amber-50/40 dark:from-stone-900 dark:via-stone-900 dark:to-stone-950 border-2 border-stone-900 dark:border-stone-700 shadow-[4px_4px_0px_#1c1917] dark:shadow-[4px_4px_0px_#000] space-y-4 animate-fadeIn">
               
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 dark:border-stone-800 pb-3">
                 <div className="flex items-center space-x-2.5">
                   <div className="w-8 h-8 rounded-xl bg-stone-900 text-amber-300 flex items-center justify-center shadow-xs shrink-0">
                     <Headphones className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="font-serif font-black text-sm sm:text-base text-stone-900 flex items-center space-x-2">
+                    <h4 className="font-serif font-black text-sm sm:text-base text-stone-900 dark:text-stone-100 flex items-center space-x-2">
                       <span>Miroir Phonétique & Auto-Écoute</span>
-                      <span className="text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      <span className="text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
                         Enregistrement prêt
                       </span>
                     </h4>
-                    <p className="text-[11px] text-stone-600">
+                    <p className="text-[11px] text-stone-600 dark:text-stone-400">
                       Écoute ton timbre réel pour dépasser l'illusion osseuse et vérifier tes tons.
                     </p>
                   </div>
@@ -1223,9 +1294,9 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
                 <button
                   onClick={() => setShowPhoneticGuide(!showPhoneticGuide)}
-                  className="inline-flex items-center space-x-1.5 text-[11px] font-bold text-stone-600 hover:text-stone-900 transition-colors self-start sm:self-auto bg-stone-100 px-2.5 py-1 rounded-lg border border-stone-200"
+                  className="inline-flex items-center space-x-1.5 text-[11px] font-bold text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 transition-colors self-start sm:self-auto bg-stone-100 dark:bg-stone-800 px-2.5 py-1 rounded-lg border border-stone-200 dark:border-stone-700"
                 >
-                  <HelpCircle className="w-3.5 h-3.5 text-amber-600" />
+                  <HelpCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                   <span>{showPhoneticGuide ? 'Masquer' : 'Repères des tons'}</span>
                 </button>
               </div>
@@ -1236,10 +1307,10 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
                 {/* 1. Écouter son enregistrement réel */}
                 <button
                   onClick={handleTogglePlayUserAudio}
-                  className={`p-3 rounded-2xl border-2 border-stone-900 font-black text-xs transition-all shadow-xs flex items-center justify-center space-x-2 ${
+                  className={`p-3 rounded-2xl border-2 border-stone-900 dark:border-stone-700 font-black text-xs transition-all shadow-xs flex items-center justify-center space-x-2 ${
                     isPlayingUserAudio && !isPlayingMirror
                       ? 'bg-[#c23b22] text-white shadow-[#c23b22]/30 scale-102'
-                      : 'bg-white hover:bg-stone-100 text-stone-900 hover:-translate-y-0.5'
+                      : 'bg-white hover:bg-stone-100 text-stone-900 dark:bg-stone-800 dark:hover:bg-stone-700 dark:text-stone-100 hover:-translate-y-0.5'
                   }`}
                 >
                   {isPlayingUserAudio && !isPlayingMirror ? (
@@ -1272,10 +1343,10 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
                 {/* 3. Comparaison Correction : Toi ➔ Natif */}
                 <button
                   onClick={() => handlePlayMirrorComparison('user-then-native')}
-                  className="p-3 rounded-2xl border border-stone-300 bg-white hover:bg-stone-50 text-stone-800 font-bold text-xs transition-all shadow-2xs flex items-center justify-center space-x-2 hover:-translate-y-0.5"
+                  className="p-3 rounded-2xl border border-stone-300 dark:border-stone-700 bg-white hover:bg-stone-50 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 font-bold text-xs transition-all shadow-2xs flex items-center justify-center space-x-2 hover:-translate-y-0.5"
                   title="Joue ta voix puis le modèle pour entendre la correction"
                 >
-                  <Volume2 className="w-4 h-4 text-stone-600" />
+                  <Volume2 className="w-4 h-4 text-stone-600 dark:text-stone-300" />
                   <span>Correction : Toi ➔ Natif</span>
                 </button>
 
@@ -1283,30 +1354,30 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
               {/* Guide des tons */}
               {showPhoneticGuide && (
-                <div className="p-4 rounded-2xl bg-white border border-stone-200 text-xs space-y-2.5 animate-fadeIn">
-                  <div className="flex items-center space-x-1.5 text-stone-900 font-bold font-serif">
+                <div className="p-4 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-xs space-y-2.5 animate-fadeIn">
+                  <div className="flex items-center space-x-1.5 text-stone-900 dark:text-stone-100 font-bold font-serif">
                     <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                     <span>Pourquoi a-t-on l'impression de bien prononcer ?</span>
                   </div>
-                  <p className="text-[11px] text-stone-600 leading-relaxed">
+                  <p className="text-[11px] text-stone-600 dark:text-stone-400 leading-relaxed">
                     Par la conduction osseuse du crâne, on entend sa voix plus grave et on compense inconsciemment ses erreurs. En s'écoutant dans le miroir, on entend exactement la mélodie que perçoit un locuteur natif !
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
-                    <div className="p-2 rounded-xl bg-stone-50 border border-stone-200">
-                      <strong className="block text-stone-900 font-serif">1er Ton (55)</strong>
-                      <span className="text-stone-500 text-[10px]">Haut et plat, ne chute pas !</span>
+                    <div className="p-2 rounded-xl bg-stone-50 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700">
+                      <strong className="block text-stone-900 dark:text-stone-100 font-serif">1er Ton (55)</strong>
+                      <span className="text-stone-500 dark:text-stone-400 text-[10px]">Haut et plat, ne chute pas !</span>
                     </div>
-                    <div className="p-2 rounded-xl bg-stone-50 border border-stone-200">
-                      <strong className="block text-stone-900 font-serif">2ème Ton (35)</strong>
-                      <span className="text-stone-500 text-[10px]">Monte franc (« Hein ?! »).</span>
+                    <div className="p-2 rounded-xl bg-stone-50 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700">
+                      <strong className="block text-stone-900 dark:text-stone-100 font-serif">2ème Ton (35)</strong>
+                      <span className="text-stone-500 dark:text-stone-400 text-[10px]">Monte franc (« Hein ?! »).</span>
                     </div>
-                    <div className="p-2 rounded-xl bg-stone-50 border border-stone-200">
-                      <strong className="block text-stone-900 font-serif">3ème Ton (214)</strong>
-                      <span className="text-stone-500 text-[10px]">Plonge bien dans les graves.</span>
+                    <div className="p-2 rounded-xl bg-stone-50 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700">
+                      <strong className="block text-stone-900 dark:text-stone-100 font-serif">3ème Ton (214)</strong>
+                      <span className="text-stone-500 dark:text-stone-400 text-[10px]">Plonge bien dans les graves.</span>
                     </div>
-                    <div className="p-2 rounded-xl bg-stone-50 border border-stone-200">
-                      <strong className="block text-stone-900 font-serif">4ème Ton (51)</strong>
-                      <span className="text-stone-500 text-[10px]">Chute sèche comme un ordre !</span>
+                    <div className="p-2 rounded-xl bg-stone-50 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700">
+                      <strong className="block text-stone-900 dark:text-stone-100 font-serif">4ème Ton (51)</strong>
+                      <span className="text-stone-500 dark:text-stone-400 text-[10px]">Chute sèche comme un ordre !</span>
                     </div>
                   </div>
                 </div>
@@ -1319,18 +1390,18 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
 
         {/* 7. DIAGNOSTIC IA & CORRECTION PHONÉTIQUE INTELLIGENTE */}
         {(aiFeedback || evaluation) && (
-          <div className="mt-4 pt-4 border-t border-stone-200 space-y-4 animate-fadeIn">
+          <div className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-800 space-y-4 animate-fadeIn">
             
             {/* Carte Diagnostic Coach IA */}
             <div className={`p-5 rounded-3xl border-2 transition-all space-y-3 ${
               (aiFeedback?.isPassed ?? (evaluation?.accuracyScore ?? 0) >= 80)
-                ? 'bg-emerald-50/70 border-emerald-400 text-emerald-950'
+                ? 'bg-emerald-50/70 border-emerald-400 text-emerald-950 dark:bg-emerald-950/40 dark:border-emerald-700 dark:text-emerald-100'
                 : ((evaluation?.accuracyScore ?? aiFeedback?.accuracyScore ?? 0) >= 50)
-                ? 'bg-amber-50/70 border-amber-300 text-amber-950'
-                : 'bg-rose-50/70 border-rose-300 text-rose-950'
+                ? 'bg-amber-50/70 border-amber-300 text-amber-950 dark:bg-amber-950/40 dark:border-amber-700 dark:text-amber-100'
+                : 'bg-rose-50/70 border-rose-300 text-rose-950 dark:bg-rose-950/40 dark:border-rose-700 dark:text-rose-100'
             }`}>
               
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200/60 pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200/60 dark:border-stone-700/60 pb-3">
                 <div className="space-y-1">
                   <div className="flex items-center space-x-2">
                     <span className="p-1 rounded-lg bg-stone-900 text-white text-[10px] font-bold font-mono uppercase">
@@ -1345,28 +1416,49 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
                   </p>
                 </div>
 
-                <div className="flex items-center space-x-3 shrink-0 self-end sm:self-auto">
-                  <div className="text-right">
+                <div className="flex items-center space-x-2.5 shrink-0 self-end sm:self-auto">
+                  <div className="text-right mr-1">
                     <span className={`text-2xl sm:text-3xl font-black ${
                       (aiFeedback?.isPassed ?? (evaluation?.accuracyScore ?? 0) >= 80)
-                        ? 'text-emerald-700'
+                        ? 'text-emerald-700 dark:text-emerald-300'
                         : ((evaluation?.accuracyScore ?? aiFeedback?.accuracyScore ?? 0) >= 50)
-                        ? 'text-amber-700'
-                        : 'text-rose-700'
+                        ? 'text-amber-700 dark:text-amber-300'
+                        : 'text-rose-700 dark:text-rose-300'
                     }`}>
                       {evaluation?.accuracyScore ?? aiFeedback?.accuracyScore ?? 0}%
                     </span>
-                    <span className="text-[10px] text-stone-500 block font-bold uppercase">
+                    <span className="text-[10px] text-stone-500 dark:text-stone-400 block font-bold uppercase">
                       {(aiFeedback?.isPassed ?? (evaluation?.accuracyScore ?? 0) >= 80) ? 'Validé ✓' : 'Précision'}
                     </span>
                   </div>
 
+                  {/* Réécouter sa voix depuis la carte résultat */}
+                  {recordedAudioUrl && (
+                    <button
+                      onClick={handleTogglePlayUserAudio}
+                      className={`p-2.5 rounded-xl border border-stone-300 dark:border-stone-700 transition-colors shadow-2xs flex items-center space-x-1.5 text-xs font-bold ${
+                        isPlayingUserAudio && !isPlayingMirror
+                          ? 'bg-blue-600 text-white border-blue-600'
+                          : 'bg-white hover:bg-stone-100 text-stone-800 dark:bg-stone-800 dark:hover:bg-stone-700 dark:text-stone-200'
+                      }`}
+                      title="Réécouter mon enregistrement vocal"
+                    >
+                      {isPlayingUserAudio && !isPlayingMirror ? (
+                        <Pause className="w-4 h-4" />
+                      ) : (
+                        <Play className="w-4 h-4 text-blue-600 fill-blue-600 dark:text-blue-400 dark:fill-blue-400" />
+                      )}
+                      <span className="hidden sm:inline">Réécouter</span>
+                    </button>
+                  )}
+
                   <button
                     onClick={startRecording}
-                    className="p-2.5 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 transition-colors shadow-2xs"
+                    className="p-2.5 rounded-xl bg-white hover:bg-stone-100 text-stone-800 dark:bg-stone-800 dark:hover:bg-stone-700 dark:text-stone-200 border border-stone-300 dark:border-stone-700 transition-colors shadow-2xs flex items-center space-x-1.5 text-xs font-bold"
                     title="Réessayer immédiatement"
                   >
                     <RotateCcw className="w-4 h-4" />
+                    <span className="hidden sm:inline">Réessayer</span>
                   </button>
                 </div>
               </div>
