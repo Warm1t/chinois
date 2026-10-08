@@ -1161,14 +1161,6 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                         </div>
                       )}
 
-                      {/* CONSEIL DE RYTHME PROSODIQUE */}
-                      {readerMode === 'rhythm' && analysis.rhythmAdvice && (
-                        <p className="text-[11px] text-amber-900/90 bg-amber-50/70 px-3 py-1.5 rounded-xl border border-amber-200 font-sans font-medium flex items-center space-x-1.5">
-                          <span>💡</span>
-                          <span>{analysis.rhythmAdvice}</span>
-                        </p>
-                      )}
-
                       {/* TRADUCTION FRANÇAISE */}
                       {showTranslation && sentence.translation && (
                         <p className="text-xs sm:text-sm font-sans text-stone-500 italic pl-1 border-l-2 border-amber-300">
