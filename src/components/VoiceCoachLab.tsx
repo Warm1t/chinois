@@ -1150,6 +1150,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
                     onClick={() => {
                       const res = saveWordToLocalAnki({
                         hanzi: seg,
+                        pinyin: seg === currentPhrase.hanzi ? currentPhrase.pinyin : undefined,
                         translation: currentPhrase.french,
                         deckName: 'Fluent',
                         source: 'fluent_to_anki',

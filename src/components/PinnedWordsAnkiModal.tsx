@@ -64,7 +64,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
   const [sourceFilter, setSourceFilter] = useState<'all' | 'fluent' | 'imported'>('fluent');
   const [searchQuery, setSearchQuery] = useState('');
   const [copySuccess, setCopySuccess] = useState(false);
-  const [exportFormat, setExportFormat] = useState<'basic' | 'tsv'>('basic');
+  const [exportFormat, setExportFormat] = useState<'3fields' | 'tsv'>('3fields');
   const [selectedWordFilter, setSelectedWordFilter] = useState<string>('all');
   
   // Masquer / afficher la traduction française des phrases proposées (masquée par défaut)
@@ -369,13 +369,13 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
-                    Exportation & Téléchargement Anki
+                    Exportation & Téléchargement Anki • 3 Champs
                   </span>
                   <h3 className="text-base font-bold font-serif text-white">
                     Exporter tes cartes pour Anki (.txt / TSV)
                   </h3>
                   <p className="text-xs text-stone-300 mt-0.5">
-                    Fichier autonome prêt pour Anki (Mobile, Web & Desktop). Importe directement dans Anki sans aucun plugin ni problème réseau.
+                    Structure exacte à 3 champs : <strong>1. Chinois</strong> ➔ <strong>2. Pinyin (au milieu)</strong> ➔ <strong>3. Français</strong>.
                   </p>
                 </div>
 
@@ -383,19 +383,19 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                 <div className="flex items-center space-x-1.5 bg-stone-800/90 p-1 rounded-xl border border-stone-700 text-[11px] self-start sm:self-auto shrink-0">
                   <span className="text-stone-400 px-1 text-[10px]">Format :</span>
                   <button
-                    onClick={() => setExportFormat('basic')}
-                    className={`px-2 py-1 rounded-lg font-bold transition-all ${
-                      exportFormat === 'basic'
+                    onClick={() => setExportFormat('3fields')}
+                    className={`px-2.5 py-1 rounded-lg font-bold transition-all ${
+                      exportFormat === '3fields'
                         ? 'bg-amber-400 text-stone-950 shadow-2xs font-black'
                         : 'text-stone-300 hover:text-white'
                     }`}
-                    title="2 champs HTML : Recto (Hanzi+Pinyin) / Verso (Traduction+Exemple)"
+                    title="3 champs stricts : Champ 1 Chinois / Champ 2 Pinyin (au milieu) / Champ 3 Français"
                   >
-                    Standard Basic (2 champs)
+                    3 Champs (Chinois • Pinyin • FR)
                   </button>
                   <button
                     onClick={() => setExportFormat('tsv')}
-                    className={`px-2 py-1 rounded-lg font-bold transition-all ${
+                    className={`px-2.5 py-1 rounded-lg font-bold transition-all ${
                       exportFormat === 'tsv'
                         ? 'bg-amber-400 text-stone-950 shadow-2xs font-black'
                         : 'text-stone-300 hover:text-white'
@@ -407,6 +407,19 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                 </div>
               </div>
 
+              {/* Rappel visuel de la structure des 3 champs */}
+              <div className="p-2.5 rounded-xl bg-stone-950/70 border border-stone-700/80 text-[11px] text-stone-300 flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center space-x-1.5 flex-wrap">
+                  <span className="text-amber-400 font-bold">Ordre des champs Anki :</span>
+                  <span className="font-mono text-stone-200 bg-stone-800 px-1.5 py-0.5 rounded">Champ 1 : Chinois (汉字)</span>
+                  <span className="text-stone-500">➜</span>
+                  <span className="font-mono text-amber-300 font-bold bg-amber-950/90 px-1.5 py-0.5 rounded border border-amber-800/80">Champ 2 : Pinyin (au milieu)</span>
+                  <span className="text-stone-500">➜</span>
+                  <span className="font-mono text-stone-200 bg-stone-800 px-1.5 py-0.5 rounded">Champ 3 : Français</span>
+                </div>
+                <span className="text-[10px] text-emerald-400 font-medium">✓ Compatible Anki Mobile, Web & Desktop</span>
+              </div>
+
               {/* Actions principales : Télécharger & Copier */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                 {/* 1. Télécharger fichier texte pour Anki (ACTION HERO) */}
@@ -414,10 +427,10 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                   onClick={handleExportFile}
                   disabled={words.length === 0}
                   className="py-3 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-stone-950 font-black text-xs sm:text-sm border-2 border-stone-900 shadow-md transition-all flex items-center justify-center space-x-2 active:scale-98"
-                  title="Télécharger un fichier texte importable dans Anki"
+                  title="Télécharger un fichier texte à 3 champs importable dans Anki"
                 >
                   <Download className="w-4 h-4 text-stone-950" />
-                  <span>📥 Télécharger le fichier Anki (.txt)</span>
+                  <span>📥 Télécharger les cartes 3 Champs (.txt)</span>
                 </button>
 
                 {/* 2. Copier dans le presse-papier */}
@@ -429,7 +442,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                       ? 'bg-emerald-500 text-white border-emerald-400 shadow-sm'
                       : 'bg-stone-800 hover:bg-stone-700 text-white disabled:opacity-50'
                   }`}
-                  title="Copier toutes les cartes dans le presse-papier"
+                  title="Copier les cartes à 3 champs dans le presse-papier"
                 >
                   {copySuccess ? (
                     <>
@@ -439,7 +452,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                   ) : (
                     <>
                       <Copy className="w-4 h-4 text-amber-300" />
-                      <span>Copier pour Anki (1-Clic)</span>
+                      <span>Copier 3 Champs (1-Clic)</span>
                     </>
                   )}
                 </button>
@@ -449,7 +462,7 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
               <div className="pt-2 border-t border-stone-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-stone-400">
                 <span className="flex items-center space-x-1.5">
                   <span>💡</span>
-                  <span>Dans Anki : menu <strong>Fichier ➔ Importer</strong> et choisis ton fichier téléchargé.</span>
+                  <span>Dans Anki : <strong>Fichier ➔ Importer</strong>. Les 3 champs (Chinois, Pinyin, Français) sont automatiquement reconnus.</span>
                 </span>
 
                 <button
@@ -559,32 +572,47 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
             {showAddForm && (
               <form onSubmit={handleAddManualWord} className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-300 dark:border-amber-800 space-y-3 animate-fadeIn">
                 <span className="text-xs font-bold text-amber-950 dark:text-amber-300 block">
-                  Ajouter un mot au paquet "Fluent" (prêt pour Anki) :
+                  Ajouter une carte au paquet "Fluent" (Structure 3 Champs Anki) :
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                  <input
-                    type="text"
-                    required
-                    placeholder="Hanzi (ex: 明白)"
-                    value={newHanzi}
-                    onChange={(e) => setNewHanzi(e.target.value)}
-                    className="p-2 text-xs rounded-xl bg-white dark:bg-stone-900 border border-stone-300 dark:border-stone-700"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Pinyin (ex: míngbai)"
-                    value={newPinyin}
-                    onChange={(e) => setNewPinyin(e.target.value)}
-                    className="p-2 text-xs rounded-xl bg-white dark:bg-stone-900 border border-stone-300 dark:border-stone-700"
-                  />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Traduction (ex: comprendre)"
-                    value={newTranslation}
-                    onChange={(e) => setNewTranslation(e.target.value)}
-                    className="p-2 text-xs rounded-xl bg-white dark:bg-stone-900 border border-stone-300 dark:border-stone-700"
-                  />
+                  <div>
+                    <span className="text-[10px] font-bold text-stone-600 dark:text-stone-400 block mb-1">
+                      Champ 1 : Mot en chinois (Hanzi)
+                    </span>
+                    <input
+                      type="text"
+                      required
+                      placeholder="ex: 明白"
+                      value={newHanzi}
+                      onChange={(e) => setNewHanzi(e.target.value)}
+                      className="w-full p-2 text-xs rounded-xl bg-white dark:bg-stone-900 border border-stone-300 dark:border-stone-700"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400 block mb-1">
+                      Champ 2 : Pinyin (au milieu !)
+                    </span>
+                    <input
+                      type="text"
+                      placeholder="ex: míngbai"
+                      value={newPinyin}
+                      onChange={(e) => setNewPinyin(e.target.value)}
+                      className="w-full p-2 text-xs rounded-xl bg-white dark:bg-stone-900 border border-amber-300 dark:border-amber-700 font-mono"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-stone-600 dark:text-stone-400 block mb-1">
+                      Champ 3 : Français (Traduction)
+                    </span>
+                    <input
+                      type="text"
+                      required
+                      placeholder="ex: comprendre"
+                      value={newTranslation}
+                      onChange={(e) => setNewTranslation(e.target.value)}
+                      className="w-full p-2 text-xs rounded-xl bg-white dark:bg-stone-900 border border-stone-300 dark:border-stone-700"
+                    />
+                  </div>
                 </div>
                 <div className="flex justify-end space-x-2 pt-1">
                   <button
@@ -647,19 +675,33 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                         </button>
 
                         <div className="min-w-0">
-                          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                            <span className="text-base sm:text-lg font-black font-serif chinese-text text-stone-900 dark:text-stone-100">
+                          {/* 3 Champs Anki : Champ 1 Chinois • Champ 2 Pinyin (au milieu) • Champ 3 Français */}
+                          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                            {/* Champ 1 : Mot en chinois */}
+                            <span className="text-base sm:text-lg font-black font-serif chinese-text text-stone-900 dark:text-stone-100" title="Champ 1 : Mot en chinois">
                               {word.hanzi}
                             </span>
-                            {word.pinyin && (
-                              <span className="text-xs font-mono text-stone-500 dark:text-stone-400">
-                                {word.pinyin}
-                              </span>
-                            )}
+
+                            <span className="text-stone-300 dark:text-stone-700 select-none">•</span>
+
+                            {/* Champ 2 : Pinyin (au milieu !) */}
+                            <span 
+                              className="text-xs font-mono font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/70 px-2 py-0.5 rounded-md border border-amber-200 dark:border-amber-800"
+                              title="Champ 2 : Pinyin (au milieu)"
+                            >
+                              {word.pinyin || '—'}
+                            </span>
+
+                            <span className="text-stone-300 dark:text-stone-700 select-none">•</span>
+
+                            {/* Champ 3 : Traduction française */}
+                            <span className="text-xs text-stone-800 dark:text-stone-200 font-medium" title="Champ 3 : Français">
+                              {word.translation || 'Sans traduction'}
+                            </span>
 
                             {/* Badge de provenance distinctif */}
                             {isFromFluent ? (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800 flex items-center space-x-1">
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800 flex items-center space-x-1 ml-auto sm:ml-0">
                                 <span>📦 Paquet Fluent</span>
                                 {word.syncedToAnkiDesktop ? (
                                   <span className="text-emerald-700 font-bold ml-1" title="Présent dans Anki Desktop">✓</span>
@@ -668,15 +710,20 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                                 )}
                               </span>
                             ) : (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 flex items-center space-x-1">
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 flex items-center space-x-1 ml-auto sm:ml-0">
                                 <span>🔄 Anki : {word.deckName || 'Importé'}</span>
                               </span>
                             )}
                           </div>
                           
-                          <p className="text-xs text-stone-700 dark:text-stone-300 truncate font-medium mt-0.5">
-                            {word.translation || 'Sans traduction'}
-                          </p>
+                          {/* Phrase d'exemple si disponible */}
+                          {word.exampleSentence && (
+                            <p className="text-[11px] text-stone-500 dark:text-stone-400 truncate mt-1">
+                              <span className="font-bold text-[#0284c7]">Exemple : </span>
+                              <span>{word.exampleSentence}</span>
+                              {word.exampleTranslation && <span className="italic ml-1">({word.exampleTranslation})</span>}
+                            </p>
+                          )}
                         </div>
                       </div>
 

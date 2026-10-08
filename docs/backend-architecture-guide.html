@@ -230,15 +230,19 @@
             <div class="flex items-center gap-2">
               <span class="p-2 rounded-xl bg-orange-500/20 text-orange-400 text-lg">📇</span>
               <div>
-                <h3 class="font-bold text-sm text-white">Pont Anki Hybride (RPC & Fichier)</h3>
+                <h3 class="font-bold text-sm text-white">Pont Anki Hybride • Structure 3 Champs</h3>
                 <p class="text-xs text-slate-400 font-mono">ankiConnect.ts</p>
               </div>
             </div>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-900/50 text-orange-300 border border-orange-700/50">Fallback Robuste</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-900/50 text-orange-300 border border-orange-700/50">3 Champs Stricts</span>
           </div>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Double mécanisme : injection directe dans Anki Desktop si ouvert en local via <code class="text-amber-300 font-mono">http://localhost:8765</code>. Si AnkiConnect n'est pas joignable (ex: site distant ou HTTP mixte), l'application fournit un bouton de téléchargement de fichier importable directement dans Anki sans aucune erreur de blocage réseau.
+            Formatage strict des cartes en 3 champs distincts : <strong>Champ 1 : Chinois (汉字)</strong> ➜ <strong>Champ 2 : Pinyin (au milieu)</strong> ➜ <strong>Champ 3 : Français (Traduction + Exemple)</strong>.
           </p>
+          <ul class="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+            <li><strong>Modèle dédié</strong> : création automatique du modèle <code class="text-amber-300 font-mono">Fluent-Chinois-3Champs</code> via AnkiConnect RPC.</li>
+            <li><strong>Export direct</strong> : fichier <code class="text-amber-300 font-mono">.txt</code> / TSV avec colonnes tabulées séparées pour import universel (Mobile, Web & Desktop).</li>
+          </ul>
         </div>
 
         <!-- Moteur 7 : Synthèse Vocale Dual-Engine & Régulateur de Vitesse -->

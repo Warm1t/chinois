@@ -142,6 +142,25 @@ export const PINYIN_LOOKUP: Record<string, string> = {
 };
 
 /**
+ * Recherche ou reconstruit les syllabes Pinyin d'un texte ou d'un terme chinois
+ */
+export const lookupPinyinForText = (text: string): string => {
+  if (!text) return '';
+  const syllables: string[] = [];
+  for (const char of text) {
+    const simp = TRADITIONAL_TO_SIMPLIFIED_MAP[char] || char;
+    if (PINYIN_LOOKUP[simp]) {
+      syllables.push(PINYIN_LOOKUP[simp]);
+    } else if (PINYIN_LOOKUP[char]) {
+      syllables.push(PINYIN_LOOKUP[char]);
+    } else if (/[\u4e00-\u9fa5]/.test(char)) {
+      syllables.push(char);
+    }
+  }
+  return syllables.join(' ').trim();
+};
+
+/**
  * Normalise un texte chinois en sinogrammes simplifiés et retire la ponctuation
  */
 export const normalizeChineseText = (text: string): string => {

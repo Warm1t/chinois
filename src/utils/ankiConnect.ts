@@ -1,5 +1,6 @@
 import { AnkiWord } from '../types/fluent';
 import { triggerAutoSyncToCloud } from './cloudSyncUtils';
+import { lookupPinyinForText } from './chinesePhonetics';
 
 export const DEFAULT_ANKI_URL = 'http://127.0.0.1:8765';
 
@@ -237,35 +238,45 @@ export const exportWordsToJson = (words: AnkiWord[]) => {
 };
 
 // 9. Exporter directement au format fichier texte compatible Anki (.txt tab-separated)
-export const exportWordsToAnkiTextFile = (words: AnkiWord[], format: 'basic' | 'tsv' = 'basic') => {
+// Structure stricte à 3 champs :
+// Champ 1 : Mot en chinois (Hanzi)
+// Champ 2 : Pinyin (au milieu !)
+// Champ 3 : Français (Traduction française + phrase d'exemple)
+export const exportWordsToAnkiTextFile = (words: AnkiWord[], format: '3fields' | 'tsv' | 'basic' = '3fields') => {
   if (words.length === 0) return;
 
   let content = '';
-  if (format === 'basic') {
-    // Format compatible avec le modèle 'Basic' par défaut d'Anki (2 champs HTML : Recto / Verso)
+  if (format === '3fields' || format === 'basic') {
+    // Format standard à 3 champs stricts
     const lines = words.map(w => {
-      const front = `<b>${w.hanzi}</b>${w.pinyin ? `<br><span style="color:#666;font-size:0.9em">${w.pinyin}</span>` : ''}`;
+      const field1_hanzi = w.hanzi.trim();
+      const field2_pinyin = (w.pinyin || lookupPinyinForText(w.hanzi) || '').trim();
       const exampleHtml = w.exampleSentence 
-        ? `<div style="margin-top:8px;padding-top:6px;border-top:1px dashed #ccc;font-size:0.9em;color:#0369a1"><b>Exemple :</b> ${w.exampleSentence}${w.examplePinyin ? `<br><small style="color:#666">${w.examplePinyin}</small>` : ''}${w.exampleTranslation ? `<br><i style="color:#333">${w.exampleTranslation}</i>` : ''}</div>`
+        ? `<div style="margin-top:8px;padding-top:6px;border-top:1px dashed #cbd5e1;font-size:0.88em;color:#0284c7"><b>Exemple :</b> ${w.exampleSentence}${w.examplePinyin ? `<br><small style="color:#64748b">${w.examplePinyin}</small>` : ''}${w.exampleTranslation ? `<br><i style="color:#334155">${w.exampleTranslation}</i>` : ''}</div>`
         : '';
-      const back = `<div>${w.translation || ''}</div>${exampleHtml}`;
-      return `${front}\t${back}`;
+      const field3_french = `${(w.translation || '').trim()}${exampleHtml}`;
+
+      // Séparation par tabulation : Champ 1 (Chinois) \t Champ 2 (Pinyin) \t Champ 3 (Français)
+      return `${field1_hanzi}\t${field2_pinyin}\t${field3_french}`;
     });
-    content = `#separator:tab\n#html:true\n#tags:fluent-chinese\n` + lines.join('\n');
+    content = `#separator:tab\n#html:true\n#tags:fluent-chinese\n#columns:Chinois\tPinyin\tFrançais\n` + lines.join('\n');
   } else {
-    // Format brut multi-colonnes (Hanzi \t Pinyin \t Traduction \t Exemple)
+    // Format 4 colonnes TSV brut
     const lines = words.map(w => {
-      const exampleText = w.exampleSentence ? `${w.exampleSentence} (${w.exampleTranslation || ''})` : '';
-      return `${w.hanzi}\t${w.pinyin || ''}\t${w.translation || ''}\t${exampleText}\tfluent-chinese`;
+      const field1_hanzi = w.hanzi.trim();
+      const field2_pinyin = (w.pinyin || lookupPinyinForText(w.hanzi) || '').trim();
+      const field3_french = (w.translation || '').trim();
+      const field4_example = w.exampleSentence ? `${w.exampleSentence}${w.exampleTranslation ? ` (${w.exampleTranslation})` : ''}` : '';
+      return `${field1_hanzi}\t${field2_pinyin}\t${field3_french}\t${field4_example}\tfluent-chinese`;
     });
-    content = `#separator:tab\n#html:false\n#tags column:5\n` + lines.join('\n');
+    content = `#separator:tab\n#html:false\n#columns:Chinois\tPinyin\tFrançais\tExemple\ttags\n` + lines.join('\n');
   }
 
   const blob = new Blob([content], { type: 'text/tab-separated-values;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `fluent-cartes-anki-${new Date().toISOString().slice(0, 10)}.txt`;
+  a.download = `fluent-cartes-anki-3champs-${new Date().toISOString().slice(0, 10)}.txt`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -273,22 +284,31 @@ export const exportWordsToAnkiTextFile = (words: AnkiWord[], format: 'basic' | '
 };
 
 // 10. Copier la liste dans le presse-papier au format Anki (1-clic pour coller dans Anki)
-export const copyWordsToClipboardForAnki = async (words: AnkiWord[], format: 'basic' | 'tsv' = 'basic'): Promise<boolean> => {
+// Structure : Champ 1: Chinois \t Champ 2: Pinyin \t Champ 3: Français
+export const copyWordsToClipboardForAnki = async (words: AnkiWord[], format: '3fields' | 'tsv' | 'basic' = '3fields'): Promise<boolean> => {
   if (words.length === 0) return false;
   try {
     let content = '';
-    if (format === 'basic') {
+    if (format === '3fields' || format === 'basic') {
       const lines = words.map(w => {
-        const front = `<b>${w.hanzi}</b>${w.pinyin ? `<br><span style="color:#666">${w.pinyin}</span>` : ''}`;
+        const field1_hanzi = w.hanzi.trim();
+        const field2_pinyin = (w.pinyin || lookupPinyinForText(w.hanzi) || '').trim();
         const exampleHtml = w.exampleSentence 
-          ? `<div style="margin-top:6px;font-size:0.9em;color:#0369a1">Exemple : ${w.exampleSentence} (${w.exampleTranslation || ''})</div>`
+          ? `<div style="margin-top:6px;font-size:0.9em;color:#0284c7">Exemple : ${w.exampleSentence} (${w.exampleTranslation || ''})</div>`
           : '';
-        const back = `${w.translation || ''}${exampleHtml ? `<br>${exampleHtml}` : ''}`;
-        return `${front}\t${back}`;
+        const field3_french = `${(w.translation || '').trim()}${exampleHtml}`;
+        // Champ 1: Chinois \t Champ 2: Pinyin \t Champ 3: Français
+        return `${field1_hanzi}\t${field2_pinyin}\t${field3_french}`;
       });
-      content = `#separator:tab\n#html:true\n#tags:fluent-chinese\n` + lines.join('\n');
+      content = `#separator:tab\n#html:true\n#tags:fluent-chinese\n#columns:Chinois\tPinyin\tFrançais\n` + lines.join('\n');
     } else {
-      const lines = words.map(w => `${w.hanzi}\t${w.pinyin || ''}\t${w.translation || ''}\t${w.exampleSentence || ''}`);
+      const lines = words.map(w => {
+        const field1_hanzi = w.hanzi.trim();
+        const field2_pinyin = (w.pinyin || lookupPinyinForText(w.hanzi) || '').trim();
+        const field3_french = (w.translation || '').trim();
+        const field4_example = w.exampleSentence || '';
+        return `${field1_hanzi}\t${field2_pinyin}\t${field3_french}\t${field4_example}`;
+      });
       content = lines.join('\n');
     }
 
@@ -358,7 +378,78 @@ export const clearAllLocalAnkiWords = (): void => {
   }
 };
 
-// 15. Enregistrer un mot ou une phrase directement dans la collection Anki locale
+// 15. Garantir l'existence d'un modèle Anki à 3 champs stricts :
+// Champ 1: Chinois (Hanzi)
+// Champ 2: Pinyin (au milieu !)
+// Champ 3: Français (Traduction française)
+export const ensureFluentModelExists = async (): Promise<string> => {
+  const modelName = 'Fluent-Chinois-3Champs';
+  try {
+    const existingModels = await invokeAnkiConnect('modelNames');
+    if (existingModels && existingModels.includes(modelName)) {
+      return modelName;
+    }
+
+    await invokeAnkiConnect('createModel', {
+      modelName,
+      inOrderFields: ['Chinois', 'Pinyin', 'Français'],
+      css: `
+        .card { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 20px; text-align: center; color: #1e293b; background-color: #ffffff; padding: 24px; }
+        .chinese { font-size: 42px; font-weight: 900; color: #0f172a; margin-bottom: 12px; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+        .pinyin { font-size: 22px; color: #d97706; font-weight: 700; margin-bottom: 14px; font-family: ui-monospace, SFMono-Regular, monospace; }
+        .french { font-size: 20px; color: #334155; font-weight: 500; }
+        .example-box { margin-top: 18px; padding-top: 14px; border-top: 1px dashed #cbd5e1; font-size: 15px; color: #0284c7; text-align: left; }
+        .example-cn { font-weight: bold; font-size: 16px; color: #0369a1; }
+        .example-py { color: #64748b; font-size: 13px; }
+        .example-fr { color: #475569; font-style: italic; }
+      `,
+      cardTemplates: [
+        {
+          Name: "Reconnaissance (Chinois -> Pinyin + Français)",
+          Front: "<div class=\"chinese\">{{Chinois}}</div>",
+          Back: "<div class=\"chinese\">{{Chinois}}</div><hr id=\"answer\"><div class=\"pinyin\">{{Pinyin}}</div><div class=\"french\">{{Français}}</div>"
+        }
+      ]
+    });
+    return modelName;
+  } catch (e) {
+    return 'Basic';
+  }
+};
+
+// Construit le payload d'une note Anki à 3 champs : Champ 1 Chinois, Champ 2 Pinyin (au milieu), Champ 3 Français
+const buildAnkiNotePayload = (targetDeck: string, word: AnkiWord, modelName: string) => {
+  const pinyin = (word.pinyin || lookupPinyinForText(word.hanzi) || '').trim();
+  const exampleHtml = word.exampleSentence 
+    ? `<div class="example-box" style="margin-top:14px;padding-top:10px;border-top:1px dashed #cbd5e1;font-size:14px;color:#0284c7"><b style="color:#0369a1">Exemple :</b> ${word.exampleSentence}${word.examplePinyin ? `<br><small style="color:#64748b">${word.examplePinyin}</small>` : ''}${word.exampleTranslation ? `<br><i style="color:#475569">${word.exampleTranslation}</i>` : ''}</div>`
+    : '';
+
+  if (modelName === 'Fluent-Chinois-3Champs') {
+    return {
+      deckName: targetDeck,
+      modelName,
+      fields: {
+        'Chinois': word.hanzi.trim(),
+        'Pinyin': pinyin,
+        'Français': `${(word.translation || '').trim()}${exampleHtml}`
+      },
+      tags: ['fluent-chinese']
+    };
+  }
+
+  // Fallback 'Basic' : Présentation en 3 sections avec Pinyin bien mis en valeur au milieu
+  return {
+    deckName: targetDeck,
+    modelName: 'Basic',
+    fields: {
+      Front: word.hanzi.trim(),
+      Back: `<div style="color:#d97706;font-size:1.15em;font-weight:bold;margin-bottom:8px;font-family:monospace">${pinyin}</div><div style="font-size:1.05em;color:#1e293b">${(word.translation || '').trim()}</div>${exampleHtml}`
+    },
+    tags: ['fluent-chinese']
+  };
+};
+
+// 16. Enregistrer un mot ou une phrase directement dans la collection Anki locale
 export const saveWordToLocalAnki = (wordData: {
   hanzi: string;
   pinyin?: string;
@@ -374,15 +465,25 @@ export const saveWordToLocalAnki = (wordData: {
     return { success: false, isNew: false, word: null as any, totalCount: 0 };
   }
 
+  // S'assurer que le Champ 2 (Pinyin au milieu) est toujours renseigné
+  const resolvedPinyin = (wordData.pinyin || '').trim() || lookupPinyinForText(cleanHanzi);
+
   let words: AnkiWord[] = getLocalAnkiWords();
 
   const existingIndex = words.findIndex(w => w.hanzi === cleanHanzi);
   if (existingIndex >= 0) {
-    // Si déjà présent, enrichir avec la phrase d'exemple si fournie
+    let changed = false;
+    if (!words[existingIndex].pinyin && resolvedPinyin) {
+      words[existingIndex].pinyin = resolvedPinyin;
+      changed = true;
+    }
     if (wordData.exampleSentence && !words[existingIndex].exampleSentence) {
       words[existingIndex].exampleSentence = wordData.exampleSentence;
       words[existingIndex].examplePinyin = wordData.examplePinyin;
       words[existingIndex].exampleTranslation = wordData.exampleTranslation;
+      changed = true;
+    }
+    if (changed) {
       try {
         localStorage.setItem('fluent_anki_words', JSON.stringify(words));
         window.dispatchEvent(new CustomEvent('fluent_anki_words_changed', { detail: { words, newWord: words[existingIndex] } }));
@@ -395,10 +496,11 @@ export const saveWordToLocalAnki = (wordData: {
   const targetDeck = wordData.deckName || 'Fluent';
   const targetSource = wordData.source || 'fluent_to_anki';
 
+  // Carte Anki : Champ 1 (Chinois), Champ 2 (Pinyin au milieu), Champ 3 (Français)
   const newWord: AnkiWord = {
     id: `local-anki-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
     hanzi: cleanHanzi,
-    pinyin: (wordData.pinyin || '').trim(),
+    pinyin: resolvedPinyin,
     translation: (wordData.translation || '').trim(),
     deckName: targetDeck,
     source: targetSource,
@@ -419,23 +521,12 @@ export const saveWordToLocalAnki = (wordData: {
     console.warn("Erreur sauvegarde locale Anki :", e);
   }
 
-  // Tentative en arrière-plan d'injection directe dans Anki Desktop dans le paquet "Fluent"
+  // Tentative en arrière-plan d'injection directe dans Anki Desktop dans le paquet "Fluent" à 3 champs
   invokeAnkiConnect('createDeck', { deck: targetDeck })
-    .then(() => {
-      const exampleHtml = newWord.exampleSentence 
-        ? `<br><hr><div style="font-size:0.9em;color:#0284c7"><b>Exemple :</b> ${newWord.exampleSentence}<br><small>${newWord.exampleTranslation || ''}</small></div>`
-        : '';
-      return invokeAnkiConnect('addNote', {
-        note: {
-          deckName: targetDeck,
-          modelName: 'Basic',
-          fields: {
-            Front: `<b>${newWord.hanzi}</b>${newWord.pinyin ? `<br><small style="color:gray">${newWord.pinyin}</small>` : ''}`,
-            Back: `${newWord.translation || ''}${exampleHtml}`
-          },
-          tags: ['fluent-chinese']
-        }
-      });
+    .then(async () => {
+      const modelName = await ensureFluentModelExists();
+      const notePayload = buildAnkiNotePayload(targetDeck, newWord, modelName);
+      return invokeAnkiConnect('addNote', { note: notePayload });
     })
     .then((noteId) => {
       if (noteId) {
@@ -457,27 +548,14 @@ export const saveWordToLocalAnki = (wordData: {
   return { success: true, isNew: true, word: newWord, totalCount: words.length };
 };
 
-// 16. Synchroniser un mot précis en direct dans Anki Desktop
+// 17. Synchroniser un mot précis en direct dans Anki Desktop
 export const syncWordDirectlyToAnkiDesktop = async (word: AnkiWord): Promise<boolean> => {
   const targetDeck = word.deckName || 'Fluent';
   try {
     await invokeAnkiConnect('createDeck', { deck: targetDeck });
-
-    const exampleHtml = word.exampleSentence 
-      ? `<br><hr><div style="font-size:0.9em;color:#0284c7"><b>Exemple :</b> ${word.exampleSentence}<br><small>${word.exampleTranslation || ''}</small></div>`
-      : '';
-
-    await invokeAnkiConnect('addNote', {
-      note: {
-        deckName: targetDeck,
-        modelName: 'Basic',
-        fields: {
-          Front: `<b>${word.hanzi}</b>${word.pinyin ? `<br><small style="color:gray">${word.pinyin}</small>` : ''}`,
-          Back: `${word.translation || ''}${exampleHtml}`
-        },
-        tags: ['fluent-chinese']
-      }
-    });
+    const modelName = await ensureFluentModelExists();
+    const notePayload = buildAnkiNotePayload(targetDeck, word, modelName);
+    await invokeAnkiConnect('addNote', { note: notePayload });
 
     // Mettre à jour l'état local
     const words = getLocalAnkiWords();
@@ -495,7 +573,7 @@ export const syncWordDirectlyToAnkiDesktop = async (word: AnkiWord): Promise<boo
   }
 };
 
-// 17. Synchroniser tous les mots Fluent vers Anki Desktop (Paquet "Fluent")
+// 18. Synchroniser tous les mots Fluent vers Anki Desktop (Paquet "Fluent")
 export const syncAllFluentWordsToAnkiDesktop = async (): Promise<{ success: number; failed: number }> => {
   const words = getLocalAnkiWords();
   const fluentWords = words.filter(w => (w.source === 'fluent_to_anki' || w.deckName === 'Fluent' || !w.source));
@@ -508,27 +586,15 @@ export const syncAllFluentWordsToAnkiDesktop = async (): Promise<{ success: numb
     return { success: 0, failed: fluentWords.length };
   }
 
+  const modelName = await ensureFluentModelExists();
   let successCount = 0;
   let failedCount = 0;
   const updatedWords = [...words];
 
   for (const word of fluentWords) {
     try {
-      const exampleHtml = word.exampleSentence 
-        ? `<br><hr><div style="font-size:0.9em;color:#0284c7"><b>Exemple :</b> ${word.exampleSentence}<br><small>${word.exampleTranslation || ''}</small></div>`
-        : '';
-
-      const noteId = await invokeAnkiConnect('addNote', {
-        note: {
-          deckName: 'Fluent',
-          modelName: 'Basic',
-          fields: {
-            Front: `<b>${word.hanzi}</b>${word.pinyin ? `<br><small style="color:gray">${word.pinyin}</small>` : ''}`,
-            Back: `${word.translation || ''}${exampleHtml}`
-          },
-          tags: ['fluent-chinese']
-        }
-      });
+      const notePayload = buildAnkiNotePayload('Fluent', word, modelName);
+      const noteId = await invokeAnkiConnect('addNote', { note: notePayload });
 
       if (noteId) {
         successCount++;
