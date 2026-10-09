@@ -657,8 +657,8 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
       {
         sentences: [
           {
-            hanzi: '晚上十点，整座写字楼都安静了下来，只剩下李明办公室的灯还亮着。',
-            pinyin: 'Wǎnshang shí diǎn, zhěng zuò xiězìlóu dōu ānjìng le xiàlai, zhǐ shèng xià Lǐ Míng bàngōngshì de dēng hái liàng zhe.',
+            hanzi: '晚上十点，整座写字楼都安静下来了，只剩下李明办公室的灯还亮着。',
+            pinyin: 'Wǎnshang shí diǎn, zhěng zuò xiězìlóu dōu ānjìng xiàlai le, zhǐ shèng xià Lǐ Míng bàngōngshì de dēng hái liàng zhe.',
             translation: 'À dix heures du soir, tout l\'immeuble de bureaux était devenu silencieux, seule la lampe du bureau de Li Ming était encore allumée.',
             words: [
               { hanzi: '晚上', pinyin: 'wǎnshang', translation: 'le soir' },
@@ -666,7 +666,7 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
               { hanzi: '整座', pinyin: 'zhěng zuò', translation: 'tout entier' },
               { hanzi: '写字楼', pinyin: 'xiězìlóu', translation: 'immeuble de bureaux' },
               { hanzi: '都', pinyin: 'dōu', translation: 'tous' },
-              { hanzi: '安静了下来', pinyin: 'ānjìng le xiàlai', translation: 'devenu silencieux' },
+              { hanzi: '安静下来了', pinyin: 'ānjìng xiàlai le', translation: 'devenu silencieux' },
               { hanzi: '只剩下', pinyin: 'zhǐ shèng xià', translation: 'ne rester que' },
               { hanzi: '李明', pinyin: 'Lǐ Míng', translation: 'Li Ming' },
               { hanzi: '办公室', pinyin: 'bàngōngshì', translation: 'bureau' },
@@ -1410,11 +1410,11 @@ export const generateStoryFromAnkiWords = (ankiWords: AnkiWord[]): MaayotStory =
         sentences: [
           {
             hanzi: sentence1Hanzi,
-            pinyin: 'Jīntiān zǎochen, yángguāng sǎ zài chuāngtái shang, wǒ zuò zài shūzhuō qián kāishǐ fùxí wǒ de zhōngwén kǎpiàn.',
+            pinyin: 'Jīntiān zǎochén, yángguāng sǎ zài chuāngtái shang, wǒ zuò zài shūzhuō qián kāishǐ fùxí wǒ de zhōngwén kǎpiàn.',
             translation: 'Ce matin, le soleil baignait le rebord de la fenêtre, et j\'étais assis à mon bureau pour réviser mes cartes de chinois.',
             words: [
               { hanzi: '今天', pinyin: 'jīntiān', translation: 'aujourd\'hui' },
-              { hanzi: '早晨', pinyin: 'zǎochen', translation: 'matin' },
+              { hanzi: '早晨', pinyin: 'zǎochén', translation: 'matin' },
               { hanzi: '阳光', pinyin: 'yángguāng', translation: 'lumière du soleil' },
               { hanzi: '坐在', pinyin: 'zuò zài', translation: 'être assis à' },
               { hanzi: '书桌前', pinyin: 'shūzhuō qián', translation: 'devant le bureau' },
