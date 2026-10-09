@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Mic, Sparkles, Layers, Check, Home, Compass, BookOpen, Bot } from 'lucide-react';
+import React from 'react';
+import { Mic, Sparkles, Layers, Home, Compass, BookOpen, Bot } from 'lucide-react';
 import { HeaderMenuDropdown } from './HeaderMenuDropdown';
 import { ThemeToggle } from './ThemeToggle';
-import { getAppTheme, AppTheme } from '../utils/themeUtils';
 import { User } from '@supabase/supabase-js';
 
 interface HeaderProps {
@@ -34,19 +33,10 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAuthModal,
   currentUser,
 }) => {
-  const [theme, setTheme] = useState<AppTheme>(getAppTheme());
-
-  useEffect(() => {
-    const handleTheme = (e: any) => {
-      setTheme(e.detail as AppTheme);
-    };
-    window.addEventListener('fluent_theme_changed', handleTheme);
-    return () => window.removeEventListener('fluent_theme_changed', handleTheme);
-  }, []);
 
   return (
     <header className="bg-[#fdfcf9]/90 backdrop-blur-md border-b-2 border-stone-200/90 sticky top-0 z-40 shadow-xs transition-colors duration-200">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           
           {/* Section Gauche : Logo & Sceau interactif + Capsule Statistiques */}
@@ -59,18 +49,9 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="font-bold text-xl chinese-text leading-none">语</span>
               </div>
               <div>
-                <div className="flex items-center space-x-2">
-                  <h1 className="text-xl font-black tracking-tight text-stone-900 dark:text-stone-100 font-serif">
-                    Fluent
-                  </h1>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border hidden lg:inline transition-colors ${
-                    theme === 'dark'
-                      ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
-                      : 'bg-[#c23b22]/10 text-[#c23b22] border-[#c23b22]/30'
-                  }`}>
-                    {theme === 'dark' ? '🌙 Mode Sombre' : '📜 Mode Encre'}
-                  </span>
-                </div>
+                <h1 className="text-xl font-black tracking-tight text-stone-900 dark:text-stone-100 font-serif">
+                  Fluent
+                </h1>
               </div>
             </div>
 
@@ -177,28 +158,22 @@ export const Header: React.FC<HeaderProps> = ({
               currentUser ? (
                 <button
                   onClick={onOpenAuthModal}
-                  className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 hover:bg-emerald-100 dark:hover:bg-emerald-900/70 border-2 border-emerald-500/80 dark:border-emerald-600 text-emerald-950 dark:text-emerald-100 font-bold text-xs transition-all shadow-xs group"
+                  className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 hover:bg-emerald-100 dark:hover:bg-emerald-900/70 border-2 border-emerald-500/80 dark:border-emerald-600 text-emerald-950 dark:text-emerald-100 font-bold text-xs transition-all shadow-xs group cursor-pointer"
                   title={`Connecté : ${currentUser.email} • Synchronisation Cloud automatique active (cliquer pour gérer le compte)`}
                 >
                   <span className="relative flex h-2.5 w-2.5 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
                   </span>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="font-extrabold text-emerald-900 dark:text-emerald-200">Connecté</span>
-                    <span className="font-mono text-[11px] text-emerald-700 dark:text-emerald-300 max-w-[85px] sm:max-w-[140px] truncate">
-                      ({currentUser.email?.split('@')[0]})
-                    </span>
-                  </div>
-                  <span className="hidden sm:inline-flex items-center text-[9px] bg-emerald-200/90 dark:bg-emerald-800 text-emerald-950 dark:text-emerald-100 px-1.5 py-0.5 rounded-md font-black uppercase tracking-tight">
-                    ☁️ Synchro
+                  <span className="font-extrabold text-emerald-900 dark:text-emerald-200">
+                    Connecté
                   </span>
                 </button>
               ) : (
                 <button
                   onClick={onOpenAuthModal}
-                  className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/50 border-2 border-amber-400/90 dark:border-amber-600 text-amber-950 dark:text-amber-100 font-bold text-xs transition-all shadow-xs group"
-                  title="Vous êtes actuellement en Mode Invité (données sauvegardées uniquement sur cet appareil). Cliquez pour vous connecter et synchroniser votre PC et iPhone !"
+                  className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/50 border-2 border-amber-400/90 dark:border-amber-600 text-amber-950 dark:text-amber-100 font-bold text-xs transition-all shadow-xs group cursor-pointer"
+                  title="Vous êtes actuellement en Mode Invité (données sauvegardées localement). Cliquez pour vous connecter et synchroniser !"
                 >
                   <span className="relative flex h-2.5 w-2.5 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
@@ -206,9 +181,6 @@ export const Header: React.FC<HeaderProps> = ({
                   </span>
                   <span className="font-extrabold text-amber-900 dark:text-amber-200">
                     Invité
-                  </span>
-                  <span className="text-[10px] bg-amber-200/90 dark:bg-amber-800 text-amber-950 dark:text-amber-100 px-2 py-0.5 rounded-md font-black uppercase tracking-tight group-hover:scale-105 transition-transform">
-                    Connexion
                   </span>
                 </button>
               )
