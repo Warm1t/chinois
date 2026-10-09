@@ -621,7 +621,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
                       <div className="p-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-xs flex items-center justify-between">
                         <div>
                           <span className="font-serif font-black text-stone-900 dark:text-stone-100 text-sm mr-2">{rule.exampleChinese}</span>
-                          <span className="text-stone-500 dark:text-stone-400 font-mono text-[11px] mr-2">({rule.examplePinyin})</span>
+                          <span data-pinyin className="text-stone-500 dark:text-amber-200 font-mono text-[11px] mr-2 pinyin-text">({rule.examplePinyin})</span>
                           <span className="text-stone-600 dark:text-stone-300 italic">→ {rule.exampleFrench}</span>
                         </div>
                         <button
@@ -711,7 +711,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
             <div className="text-xl sm:text-2xl font-black text-stone-900 dark:text-stone-100 font-serif chinese-text">
               {currentCard.targetChinese}
             </div>
-            <div className="text-xs sm:text-sm font-mono text-stone-500 dark:text-stone-400">
+            <div data-pinyin className="text-xs sm:text-sm font-mono text-stone-500 dark:text-amber-200 pinyin-text">
               {currentCard.targetPinyin}
             </div>
             <div className="text-xs sm:text-sm text-stone-700 dark:text-stone-300 italic border-t border-amber-200/60 dark:border-amber-800/40 pt-2">
@@ -754,7 +754,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
                           </button>
                         </div>
                       </div>
-                      <p className="text-[11px] text-stone-400 dark:text-stone-500 font-mono">{line.pinyin}</p>
+                      <p data-pinyin className="text-[11px] text-stone-400 dark:text-amber-200 font-mono pinyin-text">{line.pinyin}</p>
                       <p className="text-xs text-stone-600 dark:text-stone-300 italic">« {line.translation} »</p>
                     </div>
                   </div>
@@ -860,7 +860,7 @@ export const ModuleLessonView: React.FC<ModuleLessonViewProps> = ({
           <div className="space-y-4 py-2 text-center">
             <div className="min-h-[28px] flex items-center justify-center">
               {showPinyin ? (
-                <p className="text-sm sm:text-base font-medium text-stone-700 dark:text-stone-200 tracking-wide bg-stone-50 dark:bg-stone-800 px-3.5 py-1 rounded-xl border border-stone-200 dark:border-stone-700">
+                <p data-pinyin className="text-sm sm:text-base font-medium text-stone-700 dark:text-amber-200 tracking-wide bg-stone-50 dark:bg-stone-800 px-3.5 py-1 rounded-xl border border-stone-200 dark:border-stone-700 pinyin-text">
                   {currentCard.targetPinyin}
                 </p>
               ) : (

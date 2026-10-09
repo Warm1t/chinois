@@ -1187,7 +1187,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
           {/* Pinyin (Optionnel / Masquable) */}
           <div className="min-h-[28px] flex items-center justify-center">
             {showPinyin ? (
-              <p className="text-sm sm:text-base font-medium text-stone-700 tracking-wide bg-stone-50 px-4 py-1.5 rounded-xl border border-stone-200 inline-block">
+              <p data-pinyin className="text-sm sm:text-base font-medium text-stone-700 dark:text-amber-200 tracking-wide bg-stone-50 dark:bg-stone-800 px-4 py-1.5 rounded-xl border border-stone-200 dark:border-stone-700 inline-block pinyin-text font-mono">
                 {currentPhrase.pinyin}
               </p>
             ) : (
@@ -1630,7 +1630,7 @@ export const VoiceCoachLab: React.FC<VoiceCoachLabProps> = ({
                   <div className="p-2.5 rounded-xl bg-white/70 border border-stone-200/70">
                     <span className="text-[10px] text-stone-400 block font-bold uppercase">Phrase Cible Attendue :</span>
                     <strong className="text-stone-900 font-serif chinese-text text-sm">{currentPhrase.hanzi}</strong>
-                    <span className="text-stone-500 font-mono text-[11px] ml-1.5">({currentPhrase.pinyin})</span>
+                    <span data-pinyin className="text-stone-500 dark:text-amber-200 font-mono text-[11px] ml-1.5 pinyin-text">({currentPhrase.pinyin})</span>
                   </div>
 
                   <div className="p-2.5 rounded-xl bg-white/70 border border-stone-200/70">

@@ -69,7 +69,7 @@ export const DAILY_HANZI_COLLECTION: DailyHanzi[] = [
     ],
     exampleSentence: {
       chinese: '学习汉语需要把听、说、读、写贯通起来。',
-      pinyin: 'Xuéxí hànyǔ xūyào bǎ tīng, shuō, dú, xiě guàntōng qǐlái.',
+      pinyin: 'Xuéxí hànyǔ xūyào bǎ tīng, shuō, dú, xiě guàntōng qǐlai.',
       translation: "L'apprentissage du chinois nécessite de relier harmonieusement l'écoute, le parler, la lecture et l'écrit.",
     },
   },

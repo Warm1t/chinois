@@ -483,7 +483,7 @@ export const generateBotResponse = (
   if (text.includes('你好') || text.includes('哈喽') || text.includes('hi') || text.includes('hello')) {
     return {
       hanzi: '你好啊！能用中文和你交流太开心了！你学习中文多久了？发音听起来很舒服呢！',
-      pinyin: 'Nǐ hǎo a! Néng yòng zhōngwén hé nǐ jiāoliú tài kāixīn le! Nǐ xuéxí zhōngwén duōjiǔ le? Fāyīn tīng qǐlái hěn shūfu ne!',
+      pinyin: 'Nǐ hǎo a! Néng yòng zhōngwén hé nǐ jiāoliú tài kāixīn le! Nǐ xuéxí zhōngwén duōjiǔ le? Fāyīn tīng qǐlai hěn shūfu ne!',
       french: 'Bonjour ! Je suis trop content de pouvoir échanger en chinois avec toi ! Depuis combien de temps apprends-tu le chinois ? Ta prononciation est très agréable à écouter !',
       tip: 'Pour parler de la durée : « 我学中文一年了 » (J’étudie le chinois depuis un an). La particule « 了 » à la fin indique que l’action continue.',
       quickReplies: [
@@ -521,7 +521,7 @@ export const generateBotResponse = (
   // Réponse conversationnelle libre d'encouragement
   return {
     hanzi: '你说得很有意思！用自己的话表达观点，这就是口语进步最快的方法。我们接下来想聊什么呢？',
-    pinyin: 'Nǐ shuō de hěn yǒu yìsi! Yòng zìjǐ de huà biǎodá guǎndiǎn, zhè jiù shì kǒuyǔ jìnbù zuì kuài de fāngfǎ. Wǒmen jiēxiàlái xiǎng liáo shénme ne?',
+    pinyin: 'Nǐ shuō de hěn yǒu yìsi! Yòng zìjǐ de huà biǎodá guǎndiǎn, zhè jiù shì kǒuyǔ jìnbù zuì kuài de fāngfǎ. Wǒmen jiēxiàlai xiǎng liáo shénme ne?',
     french: 'Ce que tu dis est très intéressant ! Exprimer ses idées avec ses propres mots est le moyen le plus rapide de progresser à l’oral. De quoi aimerais-tu parler ensuite ?',
     tip: 'Chaque tentative renforce la connexion neuronale entre le sens et le ton mandarin. Continue sur cette lancée !',
     quickReplies: [

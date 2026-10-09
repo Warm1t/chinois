@@ -529,7 +529,7 @@ export const ConversationChatBot: React.FC<ConversationChatBotProps> = ({
                 >
                   {/* Header de bulle : Role & Pinyin */}
                   {isBot && showPinyin && msg.pinyin && (
-                    <p className="text-xs font-mono text-stone-500 tracking-wide">
+                    <p data-pinyin className="text-xs font-mono text-stone-500 dark:text-amber-200 tracking-wide pinyin-text">
                       {msg.pinyin}
                     </p>
                   )}
@@ -626,7 +626,7 @@ export const ConversationChatBot: React.FC<ConversationChatBotProps> = ({
                               className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-xl bg-stone-50 border border-stone-200 text-xs"
                             >
                               <span className="font-bold font-serif chinese-text">{kw.hanzi}</span>
-                              <span className="text-[10px] text-stone-500 font-mono">({kw.pinyin})</span>
+                              <span data-pinyin className="text-[10px] text-stone-500 dark:text-amber-200 font-mono pinyin-text">({kw.pinyin})</span>
                               <span className="text-stone-300">•</span>
                               <span className="text-[10px] text-stone-600">{kw.translation}</span>
                               <button

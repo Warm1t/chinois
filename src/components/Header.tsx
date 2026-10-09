@@ -47,100 +47,35 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="bg-[#fdfcf9]/90 backdrop-blur-md border-b-2 border-stone-200/90 sticky top-0 z-40 shadow-xs transition-colors duration-200">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           
-          {/* Logo & Calligraphy Seal (Sceau interactif) */}
-          <div 
-            onClick={() => onNavigate('home')}
-            className="flex items-center space-x-3 cursor-pointer group select-none"
-          >
-            <div className="w-10 h-10 rounded-2xl bg-[#c23b22] flex items-center justify-center text-white shadow-[2px_2px_0px_#1c1917] font-serif border-2 border-stone-900 group-hover:-rotate-3 group-hover:scale-105 transition-all">
-              <span className="font-bold text-xl chinese-text leading-none">语</span>
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <h1 className="text-xl font-black tracking-tight text-stone-900 font-serif">
-                  Fluent
-                </h1>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border hidden md:inline transition-colors ${
-                  theme === 'dark'
-                    ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
-                    : 'bg-[#c23b22]/10 text-[#c23b22] border-[#c23b22]/30'
-                }`}>
-                  {theme === 'dark' ? '🌙 Mode Sombre' : '📜 Mode Encre'}
-                </span>
+          {/* Section Gauche : Logo & Sceau interactif + Capsule Statistiques */}
+          <div className="flex items-center justify-between md:justify-start space-x-3 sm:space-x-4 shrink-0">
+            <div 
+              onClick={() => onNavigate('home')}
+              className="flex items-center space-x-3 cursor-pointer group select-none"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-[#c23b22] flex items-center justify-center text-white shadow-[2px_2px_0px_#1c1917] font-serif border-2 border-stone-900 group-hover:-rotate-3 group-hover:scale-105 transition-all">
+                <span className="font-bold text-xl chinese-text leading-none">语</span>
+              </div>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <h1 className="text-xl font-black tracking-tight text-stone-900 dark:text-stone-100 font-serif">
+                    Fluent
+                  </h1>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border hidden lg:inline transition-colors ${
+                    theme === 'dark'
+                      ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                      : 'bg-[#c23b22]/10 text-[#c23b22] border-[#c23b22]/30'
+                  }`}>
+                    {theme === 'dark' ? '🌙 Mode Sombre' : '📜 Mode Encre'}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Navigation Pill Capsule */}
-          <div className="flex items-center space-x-1 bg-stone-100 p-1 rounded-full border border-stone-300 text-xs font-bold self-start sm:self-center shadow-inner">
-            <button
-              onClick={() => onNavigate('home')}
-              className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all ${
-                currentView === 'home'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
-              }`}
-            >
-              <Home className="w-3.5 h-3.5" />
-              <span>Accueil</span>
-            </button>
-
-            <button
-              onClick={() => onNavigate('stories')}
-              className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all ${
-                currentView === 'stories'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
-              }`}
-            >
-              <BookOpen className="w-3.5 h-3.5 text-amber-500" />
-              <span>Histoires</span>
-            </button>
-
-            <button
-              onClick={() => onNavigate('lab')}
-              className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all ${
-                currentView === 'lab'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
-              }`}
-            >
-              <Mic className="w-3.5 h-3.5 text-rose-300" />
-              <span>Labo Vocal</span>
-            </button>
-
-            <button
-              onClick={() => onNavigate('chat')}
-              className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all ${
-                currentView === 'chat'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
-              }`}
-            >
-              <Bot className="w-3.5 h-3.5 text-purple-400" />
-              <span>Partenaire IA</span>
-            </button>
-
-            <button
-              onClick={() => onNavigate('curriculum')}
-              className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all ${
-                currentView === 'curriculum'
-                  ? 'bg-stone-900 text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
-              }`}
-            >
-              <Compass className="w-3.5 h-3.5" />
-              <span>Modules</span>
-            </button>
-          </div>
-
-          {/* Controls : Statistiques, Statut Compte (Invité / Connecté), Thème & Menu Outils Déroulant */}
-          <div className="flex flex-wrap items-center gap-2 text-xs self-start sm:self-center">
-            
-            {/* Capsule Statistiques Quotidiennes Récapitulative */}
-            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 font-bold select-none shadow-2xs">
+            {/* Capsule Statistiques Quotidiennes Récapitulative (basculée à gauche pour équilibrer la barre) */}
+            <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-stone-100 dark:bg-stone-800/80 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 font-bold select-none shadow-2xs">
               <span className="flex items-center space-x-1" title={`Série de ${currentStreak} jours consécutifs`}>
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                 <span className="text-stone-900 dark:text-stone-100">{currentStreak}j</span>
@@ -167,7 +102,76 @@ export const Header: React.FC<HeaderProps> = ({
                 </>
               )}
             </div>
+          </div>
 
+          {/* Section Centrale : Navigation 5 Onglets parfaitement centrée */}
+          <div className="flex-1 flex justify-center w-full md:w-auto my-1 md:my-0">
+            <div className="flex items-center space-x-1 bg-stone-100 dark:bg-stone-800/90 p-1 rounded-full border border-stone-300 dark:border-stone-700 text-xs font-bold shadow-inner overflow-x-auto max-w-full">
+              <button
+                onClick={() => onNavigate('home')}
+                className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all shrink-0 ${
+                  currentView === 'home'
+                    ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-xs'
+                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
+                }`}
+              >
+                <Home className="w-3.5 h-3.5" />
+                <span>Accueil</span>
+              </button>
+
+              <button
+                onClick={() => onNavigate('stories')}
+                className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all shrink-0 ${
+                  currentView === 'stories'
+                    ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-xs'
+                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5 text-amber-500" />
+                <span>Histoires</span>
+              </button>
+
+              <button
+                onClick={() => onNavigate('lab')}
+                className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all shrink-0 ${
+                  currentView === 'lab'
+                    ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-xs'
+                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
+                }`}
+              >
+                <Mic className="w-3.5 h-3.5 text-rose-400" />
+                <span>Labo Vocal</span>
+              </button>
+
+              <button
+                onClick={() => onNavigate('chat')}
+                className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all shrink-0 ${
+                  currentView === 'chat'
+                    ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-xs'
+                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
+                }`}
+              >
+                <Bot className="w-3.5 h-3.5 text-purple-400" />
+                <span>Partenaire IA</span>
+              </button>
+
+              <button
+                onClick={() => onNavigate('curriculum')}
+                className={`flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full transition-all shrink-0 ${
+                  currentView === 'curriculum'
+                    ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-xs'
+                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
+                }`}
+              >
+                <Compass className="w-3.5 h-3.5" />
+                <span>Modules</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Section Droite : Statut Compte (Invité / Connecté), Thème & Menu Outils Déroulant */}
+          <div className="flex items-center justify-end space-x-2 text-xs shrink-0 self-end md:self-auto">
+            
             {/* Statut d'Authentification Visible Directement : Invité vs Connecté */}
             {onOpenAuthModal && (
               currentUser ? (

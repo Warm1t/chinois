@@ -345,7 +345,7 @@ const CURATED_SENTENCES_BY_KEYWORD: Record<string, { hanzi: string; pinyin: stri
   '拿着': [
     {
       hanzi: '他手里拿着一杯热咖啡，微笑着走过来。',
-      pinyin: 'Tā shǒu lǐ ná zhe yì bēi rè kāfēi, wēixiào zhe zǒu guòlái.',
+      pinyin: 'Tā shǒu lǐ ná zhe yì bēi rè kāfēi, wēixiào zhe zǒu guòlai.',
       french: 'Il s’approche avec le sourire, tenant une tasse de café chaud à la main.',
       situation: 'Décrire une personne en mouvement.',
       category: 'social'
@@ -559,7 +559,7 @@ const CURATED_SENTENCES_BY_KEYWORD: Record<string, { hanzi: string; pinyin: stri
   '等': [
     {
       hanzi: '请在门口稍等一下，我拿好包马上出来。',
-      pinyin: 'Qǐng zài ménkǒu shāoděng yíxià, wǒ ná hǎo bāo mǎshàng chūlái.',
+      pinyin: 'Qǐng zài ménkǒu shāoděng yíxià, wǒ ná hǎo bāo mǎshàng chūlai.',
       french: 'Patiente un instant à la porte s’il te plaît, je prends mon sac et je sors tout de suite.',
       situation: 'Faire patienter quelques instants.',
       category: 'social'
@@ -846,7 +846,7 @@ export const getWordExampleSentences = (
       },
       {
         makeHanzi: (w: string) => `你知道“${w}”在实际对话中应该怎么用吗？`,
-        makePinyin: (p: string) => `Nǐ zhīdào "${p}" zài shíjì duìhuà zhōng yīnggāi zěnme yòng ma?`,
+        makePinyin: (p: string) => `Nǐ zhīdao "${p}" zài shíjì duìhuà zhōng yīnggāi zěnme yòng ma?`,
         makeFrench: (t: string) => `Sais-tu comment employer « ${t} » dans une vraie conversation ?`,
         situation: 'Application conversationnelle',
       },

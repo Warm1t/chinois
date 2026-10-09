@@ -848,7 +848,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
           <h1 className="text-2xl sm:text-3xl font-black text-stone-900 font-serif tracking-tight">
             {activeStory.title}
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 font-mono">
+          <p data-pinyin className="text-xs sm:text-sm text-stone-500 dark:text-amber-200 font-mono pinyin-text">
             {activeStory.titlePinyin}
           </p>
           <p className="text-xs sm:text-sm text-stone-700 italic">
@@ -1175,7 +1175,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                                           }`}
                                         >
                                           {showPinyin && word.pinyin && (
-                                            <span className="text-[11px] font-sans text-stone-500 dark:text-stone-400 font-normal tracking-normal leading-none mb-1 group-hover:text-stone-900 dark:group-hover:text-white">
+                                            <span data-pinyin className="text-[11px] font-sans text-stone-500 dark:text-amber-200 font-medium tracking-normal leading-none mb-1 group-hover:text-stone-900 dark:group-hover:text-amber-100 pinyin-text">
                                               {word.pinyin}
                                             </span>
                                           )}
@@ -1246,7 +1246,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                                 }`}
                               >
                                 {showPinyin && word.pinyin && (
-                                  <span className="text-[11px] font-sans text-stone-500 dark:text-stone-400 font-normal tracking-normal leading-none mb-1 group-hover:text-stone-900 dark:group-hover:text-white">
+                                  <span data-pinyin className="text-[11px] font-sans text-stone-500 dark:text-amber-200 font-medium tracking-normal leading-none mb-1 group-hover:text-stone-900 dark:group-hover:text-amber-100 pinyin-text">
                                     {word.pinyin}
                                   </span>
                                 )}
@@ -1305,7 +1305,7 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                           </div>
 
                           <div className="space-y-1.5 text-center">
-                            <p className="text-xs text-stone-400 font-mono">
+                            <p data-pinyin className="text-xs text-stone-400 dark:text-amber-200 font-mono pinyin-text">
                               {sentence.pinyin}
                             </p>
                             <p className="text-xl sm:text-2xl font-black font-serif text-white chinese-text">

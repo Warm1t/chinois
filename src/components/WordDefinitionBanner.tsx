@@ -223,7 +223,7 @@ export const WordDefinitionBanner: React.FC<WordDefinitionBannerProps> = ({
                     <p className="text-sm sm:text-base text-stone-900 dark:text-stone-100 leading-relaxed font-sans">
                       {renderHighlightedSentence(example.hanzi, selectedWord.hanzi)}
                     </p>
-                    <p className="font-sans text-xs font-semibold text-stone-500 dark:text-stone-400">
+                    <p data-pinyin className="font-mono text-xs font-semibold text-stone-500 dark:text-amber-200 pinyin-text">
                       {example.pinyin}
                     </p>
                     <p className="font-sans text-xs sm:text-sm text-stone-600 dark:text-stone-300 italic font-medium">

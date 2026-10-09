@@ -135,6 +135,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '我在北京住了两个月_____。',
       options: ['了', '过', '着', '在'],
       correctIndex: 0,
+      placement: {
+        word: '了',
+        segments: ["我","在北京","住了两个月"],
+        correctGap: 3,
+        punctuation: '。'
+      },
       explanation: 'Le premier 了 après 住 indique la durée de 2 mois écoulée. Le second 了 final indique que tu résides toujours à Pékin actuellement.',
       distractorExplanations: [
         'Correct ! C’est la formule du double 了.',
@@ -157,7 +163,7 @@ export const NUANCE_CARDS: NuanceCard[] = [
     commonTrap: 'Dire "我不去上海" qui signifie "je refuse d’aller à Shanghai" au lieu d’exprimer l’absence d’expérience passée.',
     culturalNote: 'Les Chinois utilisent très souvent "没有...过" lors des premières présentations pour parler des voyages, des plats goûtés ou des films vus.',
     targetChinese: '我从来没有去过上海，但我打算明年去。',
-    targetPinyin: 'Wǒ cónglái méiyǒu qù guò Shànghǎi, dàn wǒ dǎsuàn míngnián qù.',
+    targetPinyin: 'Wǒ cónglái méiyǒu qùguo Shànghǎi, dàn wǒ dǎsuan míngnián qù.',
     translationFrench: 'Je ne suis jamais allé à Shanghai, mais j’ai l’intention d’y aller l’année prochaine.',
     rulePoints: [
       {
@@ -221,6 +227,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '我从来没有吃_____北京烤鸭。',
       options: ['了', '过', '在', '完'],
       correctIndex: 1,
+      placement: {
+        word: '过',
+        segments: ["我","从来没有","吃","北京烤鸭"],
+        correctGap: 3,
+        punctuation: '。'
+      },
       explanation: '过 (guò) est la particule d’aspect dédiée à l’expérience vécue ("avoir déjà fait"). Associée à 没有, elle exprime "n’avoir jamais fait".',
       distractorExplanations: [
         'Faux : 没有...了 est grammaticalement contradictoire pour exprimer une expérience.',
@@ -300,6 +312,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '他在床上躺_____听音乐。',
       options: ['着', '了', '过', '在'],
       correctIndex: 0,
+      placement: {
+        word: '着',
+        segments: ["他","在床上","躺","听音乐"],
+        correctGap: 3,
+        punctuation: '。'
+      },
       explanation: '躺着 (tǎng zhe) décrit la posture allongée continue dans laquelle s’exécute la seconde action (écouter de la musique).',
       distractorExplanations: [
         'Bravo ! Verbe 1 + 着 indique la posture de fond.',
@@ -379,6 +397,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '我不饿_____。',
       options: ['了', '过', '在', '着'],
       correctIndex: 0,
+      placement: {
+        word: '了',
+        segments: ["我","不","饿"],
+        correctGap: 3,
+        punctuation: '。'
+      },
       explanation: '不饿了 (bù è le) signifie "je n’ai plus faim" : le 了 final marque le changement vers la satiété.',
       distractorExplanations: [
         'Parfait ! 不 + adjectif + 了 = "ne plus être".',
@@ -462,6 +486,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '请给我_____来一碗米饭。',
       options: ['再', '又', '还', '过'],
       correctIndex: 0,
+      placement: {
+        word: '再',
+        segments: ["请","给我","来","一碗米饭"],
+        correctGap: 2,
+        punctuation: '。'
+      },
       explanation: 'Tu demandes une action future : "再 + Verbe" est le seul choix pour projeter une répétition à venir.',
       distractorExplanations: [
         'Bravo ! 再 projette l’action dans le futur immédiat.',
@@ -535,6 +565,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '不爱运动的人_____容易生病。',
       options: ['往往', '常常', '再', '又'],
       correctIndex: 0,
+      placement: {
+        word: '往往',
+        segments: ["不爱运动的人","容易","生病"],
+        correctGap: 1,
+        punctuation: '。'
+      },
       explanation: 'Il s’agit d’une loi de conséquence logique générale conditionnée par le manque de sport : 往往 est le choix rigoureux.',
       distractorExplanations: [
         'Excellent ! 往往 relie la condition au résultat récurrent.',
@@ -608,6 +644,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '你_____住在那里吗？',
       options: ['还', '又', '再', '过'],
       correctIndex: 0,
+      placement: {
+        word: '还',
+        segments: ["你","住在","那里"],
+        correctGap: 1,
+        punctuation: '吗？'
+      },
       explanation: 'L’état de résidence n’a pas été interrompu : 还 (hái) traduit "toujours / encore sans rupture".',
       distractorExplanations: [
         'Correct ! 还 marque la continuité ininterrompue.',
@@ -698,6 +740,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '请你_____这本书放在桌子上。',
       options: ['把', '被', '让', '在'],
       correctIndex: 0,
+      placement: {
+        word: '把',
+        segments: ["请你","这本书","放在","桌子上"],
+        correctGap: 1,
+        punctuation: '。'
+      },
       explanation: 'Le livre est l’objet manipulé et déplacé vers un lieu précis (放在桌子上) : la structure 把 s’impose.',
       distractorExplanations: [
         'Bravo ! 把 précède l’objet manipulé.',
@@ -771,6 +819,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '我的蛋糕_____弟弟吃光了。',
       options: ['被', '把', '向', '从'],
       correctIndex: 0,
+      placement: {
+        word: '被',
+        segments: ["我的蛋糕","弟弟","吃光了"],
+        correctGap: 1,
+        punctuation: '。'
+      },
       explanation: 'Le gâteau est la victime passive qui a subi l’action d’être dévoré (吃光了) : 被 introduit l’auteur (弟弟).',
       distractorExplanations: [
         'Exact ! 被 est la marque passive par excellence.',
@@ -844,6 +898,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '你是什么时候_____？',
       options: ['来的', '来了', '来过', '在来'],
       correctIndex: 0,
+      placement: {
+        word: '来的',
+        segments: ["你","是","什么时候"],
+        correctGap: 3,
+        punctuation: '？'
+      },
       explanation: 'La structure focalisatrice de circonstance temporelle passée impose : 是……的 (什么时候来的).',
       distractorExplanations: [
         'Excellent ! 什么时候 + 来的 est la formule naturelle.',
@@ -910,6 +970,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '他太累了，连晚饭_____没吃。',
       options: ['都', '就', '才', '再'],
       correctIndex: 0,
+      placement: {
+        word: '都',
+        segments: ["他太累了，","连晚饭","没吃"],
+        correctGap: 2,
+        punctuation: '。'
+      },
       explanation: 'La structure d’emphase est "连……都 / 也". 都 ou 也 est le mot de liaison obligatoire.',
       distractorExplanations: [
         'Bravo ! 都 complète la paire 连……都.',
@@ -987,6 +1053,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '我听_____清你说的话。',
       options: ['不', '得', '没', '了'],
       correctIndex: 0,
+      placement: {
+        word: '不',
+        segments: ["我","听","清","你说的话"],
+        correctGap: 2,
+        punctuation: '。'
+      },
       explanation: 'Le potentiel négatif s’exprime en insérant "不" entre le verbe et le résultat : 听不清 (tīng bu qīng).',
       distractorExplanations: [
         'Exact ! 听不清 = ne pas arriver à entendre nettement.',
@@ -1060,6 +1132,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '会议材料我已经准备_____了。',
       options: ['好', '完', '过', '在'],
       correctIndex: 0,
+      placement: {
+        word: '好',
+        segments: ["会议材料","我已经","准备","了"],
+        correctGap: 3,
+        punctuation: '。'
+      },
       explanation: '准备好 (zhǔnbèi hǎo) exprime l’état "fin prêt et satisfaisant" avant l’événement.',
       distractorExplanations: [
         'Parfait ! 准备好 = être prêt et opérationnel.',
@@ -1126,6 +1204,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '你_____你的钥匙了吗？',
       options: ['找到', '找完', '看着', '在找'],
       correctIndex: 0,
+      placement: {
+        word: '找到',
+        segments: ["你","你的钥匙","了吗"],
+        correctGap: 1,
+        punctuation: '？'
+      },
       explanation: '找到 (zhǎodào) = aboutir à la découverte de l’objet cherché ("trouver").',
       distractorExplanations: [
         'Bravo ! 找到 = trouver.',
@@ -1178,7 +1262,7 @@ export const NUANCE_CARDS: NuanceCard[] = [
       {
         speaker: 'A',
         chinese: '你打算买市中心的那套新房子吗？',
-        pinyin: 'Nǐ dǎsuàn mǎi shìzhōngxīn de nà tào xīn fángzi ma?',
+        pinyin: 'Nǐ dǎsuan mǎi shìzhōngxīn de nà tào xīn fángzi ma?',
         translation: 'As-tu l’intention d’acheter ce nouvel appartement en centre-ville ?'
       },
       {
@@ -1199,6 +1283,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '这块手表太贵了，我_____。',
       options: ['买不起', '买得起', '买不到', '不买好'],
       correctIndex: 0,
+      placement: {
+        word: '买不起',
+        segments: ["这块手表","太贵了，","我"],
+        correctGap: 3,
+        punctuation: '。'
+      },
       explanation: '买不起 (mǎi bu qǐ) est la formule consacrée pour "ne pas avoir les moyens financiers".',
       distractorExplanations: [
         'Exact ! 买不起 = hors de mes moyens.',
@@ -1269,6 +1359,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '_____他很累，但是他依然坚持工作。',
       options: ['虽然', '因为', '只要', '不仅'],
       correctIndex: 0,
+      placement: {
+        word: '虽然',
+        segments: ["他很累，","但是","他依然坚持工作"],
+        correctGap: 0,
+        punctuation: '。'
+      },
       explanation: 'Le "但是" de la seconde proposition appelle obligatoirement "虽然" dans la première (Bien que... mais...).',
       distractorExplanations: [
         'Parfait ! 虽然...但是... forme la paire de concession.',
@@ -1342,6 +1438,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '_____多练习，_____能说得流利。',
       options: ['只有……才', '只要……就', '因为……所以', '虽然……但是'],
       correctIndex: 0,
+      placement: {
+        word: '只有',
+        segments: ["多练习，","才","能说得流利"],
+        correctGap: 0,
+        punctuation: '。'
+      },
       explanation: 'Il s’agit de la condition indispensable et exigeante : 只有……才.',
       distractorExplanations: [
         'Parfait ! 只有……才 exprime la condition indispensable.',
@@ -1415,6 +1517,12 @@ export const NUANCE_CARDS: NuanceCard[] = [
       sentenceWithBlank: '你读的中文书越多，你的阅读速度_____。',
       options: ['越快', '很快', '更快', '特别快'],
       correctIndex: 0,
+      placement: {
+        word: '越快',
+        segments: ["你读的中文书越多，","你的阅读速度"],
+        correctGap: 2,
+        punctuation: '。'
+      },
       explanation: 'La structure corrélative "越 A 越 B" impose "越" dans les deux propositions en miroir.',
       distractorExplanations: [
         'Parfait ! 越多……越快…… respecte la corrélation 越 A 越 B.',

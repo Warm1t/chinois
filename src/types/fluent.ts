@@ -14,6 +14,14 @@ export interface ActiveTestQuestion {
   correctIndex: number;
   explanation: string;               // Pourquoi cette option est la bonne
   distractorExplanations?: string[]; // Explication pour chaque option erronée
+  // Défi « Placer dans la phrase » rédigé à la main : segments coupés aux vraies frontières de mots,
+  // chaque emplacement incorrect produit une phrase agrammaticale.
+  placement?: {
+    word: string;          // Mot à insérer
+    segments: string[];    // Reste de la phrase, sans ponctuation finale
+    correctGap: number;    // Emplacement i = juste avant segments[i] ; segments.length = à la fin
+    punctuation?: string;  // Ponctuation finale
+  };
 }
 
 export interface ExampleSentence {

@@ -204,7 +204,7 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
         sentences: [
           {
             hanzi: '今天，旁边坐着一位穿白衬衫的老爷爷，他的笑声听起来非常熟悉。',
-            pinyin: 'Jīntiān, pángbiān zuò zhe yí wèi chuān bái chènshān de lǎo yéye, tā de xiàoshēng tīng qǐlái fēicháng shúxī.',
+            pinyin: 'Jīntiān, pángbiān zuò zhe yí wèi chuān bái chènshān de lǎo yéye, tā de xiàoshēng tīng qǐlai fēicháng shúxī.',
             translation: 'Aujourd\'hui, à côté de lui était assis un grand-père en chemise blanche, dont le rire semblait très familier.',
             rhythmAdvice: "Fais une pause nette après '今天，', enchaîne '旁边坐着一位穿白衬衫的' sans t'arrêter sur '的', souffle à la virgule après '老爷爷，' puis pose '他的笑声听起来' avant de faire résonner '非常熟悉' !",
             rhythmChunks: [
@@ -268,11 +268,11 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
               {
                 id: 'chunk-3-6',
                 text: '听起来',
-                pinyin: 'tīng qǐlái',
+                pinyin: 'tīng qǐlai',
                 translation: 'semblait à l\'oreille',
                 pauseType: 'breath',
                 stressLevel: 'standard',
-                words: [{ hanzi: '听起来', pinyin: 'tīng qǐlái', translation: 'sembler' }]
+                words: [{ hanzi: '听起来', pinyin: 'tīng qǐlai', translation: 'sembler' }]
               },
               {
                 id: 'chunk-3-7',
@@ -299,7 +299,7 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
               { hanzi: '老爷爷', pinyin: 'lǎo yéye', translation: 'grand-père, vieil homme' },
               { hanzi: '他的', pinyin: 'tā de', translation: 'son' },
               { hanzi: '笑声', pinyin: 'xiàoshēng', translation: 'rire' },
-              { hanzi: '听起来', pinyin: 'tīng qǐlái', translation: 'sembler à l\'oreille' },
+              { hanzi: '听起来', pinyin: 'tīng qǐlai', translation: 'sembler à l\'oreille' },
               { hanzi: '非常', pinyin: 'fēicháng', translation: 'très' },
               { hanzi: '熟悉', pinyin: 'shúxī', translation: 'familier, bien connu', isTarget: true },
               { hanzi: '。', pinyin: '', translation: '.' }
@@ -658,7 +658,7 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
         sentences: [
           {
             hanzi: '晚上十点，整座写字楼都安静了下来，只剩下李明办公室的灯还亮着。',
-            pinyin: 'Wǎnshang shí diǎn, zhěng zuò xiězìlóu dōu ānjìng le xiàlái, zhǐ shèng xià Lǐ Míng bàngōngshì de dēng hái liàng zhe.',
+            pinyin: 'Wǎnshang shí diǎn, zhěng zuò xiězìlóu dōu ānjìng le xiàlai, zhǐ shèng xià Lǐ Míng bàngōngshì de dēng hái liàng zhe.',
             translation: 'À dix heures du soir, tout l\'immeuble de bureaux était devenu silencieux, seule la lampe du bureau de Li Ming était encore allumée.',
             words: [
               { hanzi: '晚上', pinyin: 'wǎnshang', translation: 'le soir' },
@@ -666,7 +666,7 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
               { hanzi: '整座', pinyin: 'zhěng zuò', translation: 'tout entier' },
               { hanzi: '写字楼', pinyin: 'xiězìlóu', translation: 'immeuble de bureaux' },
               { hanzi: '都', pinyin: 'dōu', translation: 'tous' },
-              { hanzi: '安静了下来', pinyin: 'ānjìng le xiàlái', translation: 'devenu silencieux' },
+              { hanzi: '安静了下来', pinyin: 'ānjìng le xiàlai', translation: 'devenu silencieux' },
               { hanzi: '只剩下', pinyin: 'zhǐ shèng xià', translation: 'ne rester que' },
               { hanzi: '李明', pinyin: 'Lǐ Míng', translation: 'Li Ming' },
               { hanzi: '办公室', pinyin: 'bàngōngshì', translation: 'bureau' },
@@ -679,7 +679,7 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
           },
           {
             hanzi: '面对明天的重要项目发布，他虽然感到巨大的压力，但他知道绝不能放弃。',
-            pinyin: 'Miànduì míngtiān de zhòngyào xiàngmù fābù, tā suīrán gǎndào jùdà de yālì, dàn tā zhīdào jué bù néng fàngqì.',
+            pinyin: 'Miànduì míngtiān de zhòngyào xiàngmù fābù, tā suīrán gǎndào jùdà de yālì, dàn tā zhīdao jué bù néng fàngqì.',
             translation: 'Face au lancement important de projet demain, bien qu\'il ressente une forte pression, il sait qu\'il ne doit absolument pas abandonner.',
             words: [
               { hanzi: '面对', pinyin: 'miànduì', translation: 'faire face à' },
@@ -693,7 +693,7 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
               { hanzi: '巨大的', pinyin: 'jùdà de', translation: 'énorme, immense' },
               { hanzi: '压力', pinyin: 'yālì', translation: 'stress, pression', isTarget: true },
               { hanzi: '但', pinyin: 'dàn', translation: 'mais' },
-              { hanzi: '他知道', pinyin: 'tā zhīdào', translation: 'il sait' },
+              { hanzi: '他知道', pinyin: 'tā zhīdao', translation: 'il sait' },
               { hanzi: '绝不能', pinyin: 'jué bù néng', translation: 'absolument pas pouvoir' },
               { hanzi: '放弃', pinyin: 'fàngqì', translation: 'abandonner' },
               { hanzi: '。', pinyin: '', translation: '.' }
@@ -763,7 +763,7 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
     ],
     discussionPrompt: {
       question: '在你的工作或学中文的过程中，有什么事情是你曾经觉得压力很大，但坚持下来后觉得非常值得的？',
-      questionPinyin: 'Zài nǐ de gōngzuò huò xué zhōngwén de guòchéng zhōng, yǒu shénme shìqing shì nǐ céngjīng juéde yālì hěn dà, dàn jiānchí xiàlái hòu juéde fēicháng zhíde de?',
+      questionPinyin: 'Zài nǐ de gōngzuò huò xué zhōngwén de guòchéng zhōng, yǒu shénme shìqing shì nǐ céngjīng juéde yālì hěn dà, dàn jiānchí xiàlai hòu juéde fēicháng zhíde de?',
       questionTranslation: 'Dans ton travail ou ton apprentissage du chinois, quelle est la chose où tu as ressenti une grosse pression, mais que tu as persévérée et trouvée très valorisante ?',
       suggestedWords: ['坚持 (jiānchí)', '压力 (yālì)', '值得 (zhíde)', '成功 (chénggōng)']
     }

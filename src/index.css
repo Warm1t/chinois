@@ -301,6 +301,28 @@ html.dark .bg-amber-300 .chinese-text {
   color: #1c1917 !important;
 }
 
+/* ==========================================================================
+   PINYIN CHINOIS — HAUTE LISIBILITÉ & CONTRASTE LUMINEUX EN MODE SOMBRE
+   ========================================================================== */
+.chinese-pinyin,
+.pinyin-text,
+[data-pinyin] {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: 0.02em;
+}
+
+html.dark .chinese-pinyin,
+html.dark .pinyin-text,
+html.dark [data-pinyin],
+html.dark span[data-pinyin],
+html.dark p[data-pinyin],
+html.dark .text-stone-500.pinyin-text,
+html.dark .text-stone-400.pinyin-text,
+html.dark .text-stone-500[data-pinyin],
+html.dark .text-stone-400[data-pinyin] {
+  color: #fde68a !important; /* Jaune ambré clair lumineux, contraste parfait sur fond noir encre */
+}
+
 /* Inputs & Formulaires en mode sombre */
 html.dark input,
 html.dark textarea,

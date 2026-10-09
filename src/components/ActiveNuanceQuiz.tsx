@@ -51,9 +51,38 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
 
   // Découpage intelligent de la phrase en segments et slots (A, B, C, D)
   const placementData = useMemo(() => {
+    if (testQuestion?.placement && Array.isArray(testQuestion.placement.segments) && testQuestion.placement.segments.length > 0) {
+      const p = testQuestion.placement;
+      const w = p.word || targetWord;
+      const punc = p.punctuation ?? '。';
+      let full = '';
+      p.segments.forEach((seg, i) => {
+        if (i === p.correctGap) full += w;
+        full += seg;
+      });
+      if (p.correctGap === p.segments.length) full += w;
+      full += punc;
+
+      return {
+        isPlacementConfigured: true,
+        word: w,
+        segments: p.segments,
+        correctGap: p.correctGap,
+        punctuation: punc,
+        fullCorrectSentence: full,
+        prefixChunks: ['', '', '', ''],
+        correctSlot: 'A' as const
+      };
+    }
+
     const raw = testQuestion?.sentenceWithBlank || '';
     if (!raw) {
       return {
+        isPlacementConfigured: false,
+        word: targetWord,
+        segments: [],
+        correctGap: 0,
+        punctuation: '。',
         prefixChunks: ['', '', '', ''],
         correctSlot: 'A' as const,
         fullCorrectSentence: targetWord
@@ -76,6 +105,11 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
       const mid2 = Math.max(mid1 + 1, Math.floor(len * 0.7));
 
       return {
+        isPlacementConfigured: false,
+        word: targetWord,
+        segments: [],
+        correctGap: 2,
+        punctuation: punc,
         prefixChunks: [
           cleanBefore.slice(0, mid1),
           cleanBefore.slice(mid1, mid2),
@@ -96,6 +130,11 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
     const chunk3 = cleanAfter;
 
     return {
+      isPlacementConfigured: false,
+      word: targetWord,
+      segments: [],
+      correctGap: 1,
+      punctuation: '',
       prefixChunks: [
         chunk1,
         chunk2,
@@ -119,12 +158,14 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
   }, [testQuestion]);
 
   // Clic sur un slot dans la phrase
-  const handleSelectSlot = (slotKey: string) => {
+  const handleSelectSlot = (slotKey: string, gapIdx?: number) => {
     if (isSlotSubmitted && isSlotCorrect) return;
 
     setSelectedSlot(slotKey);
     setIsSlotSubmitted(true);
-    const correct = slotKey === placementData.correctSlot;
+    const correct = placementData.isPlacementConfigured
+      ? gapIdx === placementData.correctGap
+      : slotKey === placementData.correctSlot;
     setIsSlotCorrect(correct);
 
     if (correct) {
@@ -159,16 +200,19 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
 
   const isAnyPassed = alreadyPassed || isSlotCorrect || isChoiceCorrect;
 
-  // Fonction de rendu d'un slot interactif (A), (B), (C) - définie AVANT le return JSX
-  const renderSlotButton = (slotKey: 'A' | 'B' | 'C') => {
+  // Fonction de rendu d'un slot interactif (A), (B), (C), (D)
+  const renderSlotButton = (slotKey: string, gapIdx?: number) => {
     const isThisSlotSelected = selectedSlot === slotKey;
-    const isThisSlotCorrect = slotKey === placementData.correctSlot;
+    const isThisSlotCorrect = placementData.isPlacementConfigured
+      ? gapIdx === placementData.correctGap
+      : slotKey === placementData.correctSlot;
+    const wordToDisplay = placementData.isPlacementConfigured ? placementData.word : targetWord;
 
     // Si la réponse correcte a été trouvée, le bon slot affiche le mot inséré fièrement
     if (isSlotSubmitted && isSlotCorrect && isThisSlotCorrect) {
       return (
         <span className="inline-flex items-center px-3 py-1 rounded-xl bg-emerald-500 text-white font-bold shadow-xs animate-bounce-short ring-2 ring-emerald-300 mx-1">
-          {targetWord}
+          {wordToDisplay}
         </span>
       );
     }
@@ -177,7 +221,7 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
     if (isSlotSubmitted && !isSlotCorrect && isThisSlotSelected) {
       return (
         <button
-          onClick={() => handleSelectSlot(slotKey)}
+          onClick={() => handleSelectSlot(slotKey, gapIdx)}
           className="inline-flex items-center justify-center px-3 py-1 rounded-xl text-xs font-mono font-black bg-rose-600 text-white border-2 border-rose-700 shadow-xs mx-1 animate-shake"
           title={`Emplacement (${slotKey}) erroné`}
         >
@@ -189,10 +233,10 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
     // État normal : bouton slot interactif
     return (
       <button
-        onClick={() => handleSelectSlot(slotKey)}
+        onClick={() => handleSelectSlot(slotKey, gapIdx)}
         disabled={isSlotSubmitted && isSlotCorrect}
         className="inline-flex items-center justify-center px-3 py-1 rounded-xl text-xs font-mono font-black border-2 border-dashed border-amber-500 hover:border-amber-600 bg-amber-50/80 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 text-amber-900 dark:text-amber-200 hover:scale-105 transition-all shadow-2xs mx-1 cursor-pointer active:scale-95"
-        title={`Insérer « ${targetWord} » à l'emplacement (${slotKey})`}
+        title={`Insérer « ${wordToDisplay} » à l'emplacement (${slotKey})`}
       >
         ({slotKey})
       </button>
@@ -286,40 +330,59 @@ export const ActiveNuanceQuiz: React.FC<ActiveNuanceQuizProps> = ({
 
           {/* Phrase interactive avec slots cliquables (A), (B), (C), (D) */}
           <div className="p-6 sm:p-8 rounded-2xl bg-[#fdfbf7] dark:bg-stone-950 border-2 border-stone-300 dark:border-stone-800 text-center font-serif text-xl sm:text-2xl font-bold leading-relaxed flex flex-wrap items-center justify-center gap-2">
-            
-            {/* Morceau 1 */}
-            {placementData.prefixChunks[0] && (
-              <span className="text-stone-900 dark:text-stone-100">{placementData.prefixChunks[0]}</span>
-            )}
+            {placementData.isPlacementConfigured ? (
+              <>
+                {placementData.segments.map((seg, idx) => (
+                  <React.Fragment key={idx}>
+                    {renderSlotButton(['A', 'B', 'C', 'D', 'E'][idx] || `${idx + 1}`, idx)}
+                    <span className="text-stone-900 dark:text-stone-100">{seg}</span>
+                  </React.Fragment>
+                ))}
+                {renderSlotButton(
+                  ['A', 'B', 'C', 'D', 'E'][placementData.segments.length] || `${placementData.segments.length + 1}`,
+                  placementData.segments.length
+                )}
+                {placementData.punctuation && (
+                  <span className="text-stone-900 dark:text-stone-100">{placementData.punctuation}</span>
+                )}
+              </>
+            ) : (
+              <>
+                {/* Morceau 1 */}
+                {placementData.prefixChunks[0] && (
+                  <span className="text-stone-900 dark:text-stone-100">{placementData.prefixChunks[0]}</span>
+                )}
 
-            {/* Slot A */}
-            {renderSlotButton('A')}
+                {/* Slot A */}
+                {renderSlotButton('A')}
 
-            {/* Morceau 2 */}
-            {placementData.prefixChunks[1] && (
-              <span className="text-stone-900 dark:text-stone-100">{placementData.prefixChunks[1]}</span>
-            )}
+                {/* Morceau 2 */}
+                {placementData.prefixChunks[1] && (
+                  <span className="text-stone-900 dark:text-stone-100">{placementData.prefixChunks[1]}</span>
+                )}
 
-            {/* Slot B */}
-            {renderSlotButton('B')}
+                {/* Slot B */}
+                {renderSlotButton('B')}
 
-            {/* Morceau 3 */}
-            {placementData.prefixChunks[2] && (
-              <span className="text-stone-900 dark:text-stone-100">{placementData.prefixChunks[2]}</span>
-            )}
+                {/* Morceau 3 */}
+                {placementData.prefixChunks[2] && (
+                  <span className="text-stone-900 dark:text-stone-100">{placementData.prefixChunks[2]}</span>
+                )}
 
-            {/* Slot C */}
-            {renderSlotButton('C')}
+                {/* Slot C */}
+                {renderSlotButton('C')}
 
-            {/* Morceau 4 (Ponctuation ou fin) */}
-            {placementData.prefixChunks[3] && (
-              <span className="text-stone-900 dark:text-stone-100">{placementData.prefixChunks[3]}</span>
+                {/* Morceau 4 (Ponctuation ou fin) */}
+                {placementData.prefixChunks[3] && (
+                  <span className="text-stone-900 dark:text-stone-100">{placementData.prefixChunks[3]}</span>
+                )}
+              </>
             )}
           </div>
 
           {/* Aide textuelle sous les boutons */}
           <p className="text-center text-[11px] text-stone-500 dark:text-stone-400">
-            Clique directement sur l'un des boutons <strong>(A)</strong>, <strong>(B)</strong> ou <strong>(C)</strong> pour positionner le mot.
+            Clique directement sur l'un des boutons {placementData.isPlacementConfigured ? <strong>(A), (B), (C)...</strong> : <><strong>(A)</strong>, <strong>(B)</strong> ou <strong>(C)</strong></>} pour positionner le mot.
           </p>
 
         </div>
