@@ -45,7 +45,8 @@ import {
   CheckCircle2,
   HelpCircle,
   RefreshCw,
-  Bookmark
+  Bookmark,
+  Pencil
 } from 'lucide-react';
 
 interface PinnedWordsAnkiModalProps {
@@ -92,6 +93,13 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
   const [feedbackToast, setFeedbackToast] = useState<string | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
+  // Filtre d'état Anki (pour ne pas empiler les paquets)
+  const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'synced'>('all');
+
+  // Modification en direct de la traduction
+  const [editingWordId, setEditingWordId] = useState<string | null>(null);
+  const [editingTranslation, setEditingTranslation] = useState('');
+
   if (!isOpen) return null;
 
   // Séparation nette des mots selon leur provenance
@@ -105,12 +113,23 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
   const importedWords = words.filter(isImportedWord);
 
   // Sélection de la liste selon le filtre de source
-  const sourceFilteredWords = 
+  const baseWords = 
     sourceFilter === 'fluent' 
       ? fluentWords 
       : sourceFilter === 'imported' 
       ? importedWords 
       : words;
+
+  // Compteurs selon l'état Anki
+  const pendingWordsCount = baseWords.filter(w => !w.syncedToAnkiDesktop).length;
+  const syncedWordsCount = baseWords.filter(w => !!w.syncedToAnkiDesktop).length;
+
+  // Filtrage selon le statut Anki (À noter vs Déjà notés)
+  const sourceFilteredWords = baseWords.filter(w => {
+    if (statusFilter === 'pending') return !w.syncedToAnkiDesktop;
+    if (statusFilter === 'synced') return !!w.syncedToAnkiDesktop;
+    return true;
+  });
 
   // Filtrage par recherche
   const filteredWords = sourceFilteredWords.filter(w => {
@@ -314,6 +333,69 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
     }
   };
 
+  // Basculer l'état "Noté dans Anki" pour un mot
+  const handleToggleNotedInAnki = (word: AnkiWord) => {
+    const newStatus = !word.syncedToAnkiDesktop;
+    const updated: AnkiWord = {
+      ...word,
+      syncedToAnkiDesktop: newStatus,
+    };
+    updateWordInLocalAnki(updated);
+    if (onWordsUpdated) {
+      onWordsUpdated(words.map(w => w.id === updated.id ? updated : w));
+    }
+    setFeedbackToast(
+      newStatus 
+        ? `✓ « ${word.hanzi} » marqué comme bien noté dans Anki` 
+        : `⏳ « ${word.hanzi} » repassé en 'À noter dans Anki'`
+    );
+    setTimeout(() => setFeedbackToast(null), 2500);
+  };
+
+  // Marquer tous les mots en attente comme notés dans Anki (pour ne pas empiler les paquets)
+  const handleMarkAllPendingAsNoted = () => {
+    const listToMark = sourceFilteredWords.filter(w => !w.syncedToAnkiDesktop);
+    if (listToMark.length === 0) return;
+
+    listToMark.forEach(w => {
+      updateWordInLocalAnki({ ...w, syncedToAnkiDesktop: true });
+    });
+
+    if (onWordsUpdated) {
+      const updatedIds = new Set(listToMark.map(w => w.id));
+      onWordsUpdated(words.map(w => updatedIds.has(w.id) ? { ...w, syncedToAnkiDesktop: true } : w));
+    }
+
+    setFeedbackToast(`✓ ${listToMark.length} carte(s) marquée(s) comme notée(s) dans Anki !`);
+    setTimeout(() => setFeedbackToast(null), 3000);
+  };
+
+  // Modification en direct de la traduction
+  const handleStartEdit = (word: AnkiWord) => {
+    setEditingWordId(word.id);
+    setEditingTranslation(word.translation || '');
+  };
+
+  const handleSaveEdit = (word: AnkiWord, e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const updated: AnkiWord = {
+      ...word,
+      translation: editingTranslation.trim(),
+    };
+    updateWordInLocalAnki(updated);
+    if (onWordsUpdated) {
+      onWordsUpdated(words.map(w => w.id === updated.id ? updated : w));
+    }
+    setEditingWordId(null);
+    setFeedbackToast(`✓ Traduction de « ${word.hanzi} » mise à jour !`);
+    setTimeout(() => setFeedbackToast(null), 2500);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingWordId(null);
+    setEditingTranslation('');
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/60 backdrop-blur-sm animate-fadeIn">
       <div 
@@ -504,6 +586,23 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                 </button>
               </div>
 
+              {/* Action rapide : Tout marquer comme noté dans Anki pour ne pas empiler les paquets */}
+              {pendingWordsCount > 0 && (
+                <div className="pt-2.5 border-t border-stone-800/80 flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-[11px] text-stone-400">
+                    💡 Tu as déjà importé ou recopié ces cartes dans Anki ?
+                  </span>
+                  <button
+                    onClick={handleMarkAllPendingAsNoted}
+                    className="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold transition-all flex items-center space-x-1.5 shadow-xs"
+                    title="Marquer toutes ces cartes comme déjà notées dans Anki pour vider la file et ne plus les empiler"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>✓ Tout marquer comme noté dans Anki ({pendingWordsCount})</span>
+                  </button>
+                </div>
+              )}
+
               {/* Pied de bandeau : astuce d'importation universelle + synchronisation locale optionnelle */}
               <div className="pt-2 border-t border-stone-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-stone-400">
                 <span className="flex items-center space-x-1.5">
@@ -523,61 +622,104 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
               </div>
             </div>
 
-            {/* FILTRE DE PROVENANCE : DISTINCTION NETTE DEMANDÉE PAR L'UTILISATEUR */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-stone-100 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800">
-              <div className="flex items-center space-x-1.5 text-xs font-bold">
-                <span className="text-stone-400 uppercase text-[10px] tracking-wider pr-1">Afficher :</span>
-                
-                {/* 1. Mots créés dans Fluent (à transférer dans le paquet Fluent) */}
-                <button
-                  onClick={() => setSourceFilter('fluent')}
-                  className={`px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 ${
-                    sourceFilter === 'fluent'
-                      ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
-                      : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
-                  }`}
-                >
-                  <FolderUp className="w-3.5 h-3.5 text-amber-500" />
-                  <span>📦 Paquet Fluent (vers Anki) ({fluentWords.length})</span>
-                </button>
+            {/* BARRE DE FILTRES : PROVENANCE & ÉTAT ANKI (POUR NE PAS EMPILER LES PAQUETS) */}
+            <div className="flex flex-col gap-2.5 p-3 rounded-2xl bg-stone-100 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-1.5 text-xs font-bold">
+                  <span className="text-stone-400 uppercase text-[10px] tracking-wider pr-1">Paquet :</span>
+                  
+                  {/* 1. Mots créés dans Fluent (à transférer dans le paquet Fluent) */}
+                  <button
+                    onClick={() => setSourceFilter('fluent')}
+                    className={`px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 ${
+                      sourceFilter === 'fluent'
+                        ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
+                        : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                    }`}
+                  >
+                    <FolderUp className="w-3.5 h-3.5 text-amber-500" />
+                    <span>📦 Paquet Fluent ({fluentWords.length})</span>
+                  </button>
 
-                {/* 2. Mots importés depuis Anki */}
-                <button
-                  onClick={() => setSourceFilter('imported')}
-                  className={`px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 ${
-                    sourceFilter === 'imported'
-                      ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
-                      : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
-                  }`}
-                >
-                  <FolderDown className="w-3.5 h-3.5 text-blue-500" />
-                  <span>🔄 Importés d'Anki ({importedWords.length})</span>
-                </button>
+                  {/* 2. Mots importés depuis Anki */}
+                  <button
+                    onClick={() => setSourceFilter('imported')}
+                    className={`px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 ${
+                      sourceFilter === 'imported'
+                        ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
+                        : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                    }`}
+                  >
+                    <FolderDown className="w-3.5 h-3.5 text-blue-500" />
+                    <span>🔄 Importés d'Anki ({importedWords.length})</span>
+                  </button>
 
-                {/* 3. Tous les mots */}
-                <button
-                  onClick={() => setSourceFilter('all')}
-                  className={`px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 ${
-                    sourceFilter === 'all'
-                      ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
-                      : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
-                  }`}
-                >
-                  <span>🌟 Tous ({words.length})</span>
-                </button>
+                  {/* 3. Tous les mots */}
+                  <button
+                    onClick={() => setSourceFilter('all')}
+                    className={`px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 ${
+                      sourceFilter === 'all'
+                        ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
+                        : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                    }`}
+                  >
+                    <span>🌟 Tous ({words.length})</span>
+                  </button>
+                </div>
+
+                {/* Bouton Sauvegarder JSON */}
+                {words.length > 0 && (
+                  <button
+                    onClick={() => exportWordsToJson(words)}
+                    className="text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 text-[11px] font-bold flex items-center space-x-1"
+                    title="Sauvegarder tout le vocabulaire en fichier JSON de sauvegarde"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Sauvegarde JSON</span>
+                  </button>
+                )}
               </div>
 
-              {/* Bouton Sauvegarder JSON */}
-              {words.length > 0 && (
+              {/* LIGNE FILTRE STATUT ANKI : Pour ne pas empiler les paquets ! */}
+              <div className="flex flex-wrap items-center gap-1.5 text-xs font-bold pt-2 border-t border-stone-200/80 dark:border-stone-800/80">
+                <span className="text-stone-400 uppercase text-[10px] tracking-wider pr-1">Statut Anki :</span>
+                
                 <button
-                  onClick={() => exportWordsToJson(words)}
-                  className="text-stone-500 hover:text-stone-800 text-[11px] font-bold flex items-center space-x-1"
-                  title="Sauvegarder tout le vocabulaire en fichier JSON de sauvegarde"
+                  onClick={() => setStatusFilter('pending')}
+                  className={`px-3 py-1 rounded-xl transition-all flex items-center space-x-1.5 ${
+                    statusFilter === 'pending'
+                      ? 'bg-amber-500 text-stone-950 font-black shadow-xs'
+                      : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                  }`}
+                  title="Afficher uniquement les cartes à noter / exporter dans Anki"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Sauvegarde JSON</span>
+                  <span>⏳ À noter dans Anki ({pendingWordsCount})</span>
                 </button>
-              )}
+
+                <button
+                  onClick={() => setStatusFilter('synced')}
+                  className={`px-3 py-1 rounded-xl transition-all flex items-center space-x-1.5 ${
+                    statusFilter === 'synced'
+                      ? 'bg-emerald-600 text-white font-black shadow-xs'
+                      : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                  }`}
+                  title="Afficher les cartes déjà notées dans Anki"
+                >
+                  <Check className="w-3 h-3" />
+                  <span>Déjà notées ({syncedWordsCount})</span>
+                </button>
+
+                <button
+                  onClick={() => setStatusFilter('all')}
+                  className={`px-3 py-1 rounded-xl transition-all ${
+                    statusFilter === 'all'
+                      ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
+                      : 'bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                  }`}
+                >
+                  <span>Toutes ({baseWords.length})</span>
+                </button>
+              </div>
             </div>
 
             {/* BARRE DE RECHERCHE & ACTIONS DE LISTE */}
@@ -740,23 +882,91 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
 
                             <span className="text-stone-300 dark:text-stone-700 select-none">•</span>
 
-                            {/* Champ 3 : Traduction française */}
-                            <span className="text-xs text-stone-800 dark:text-stone-200 font-medium" title="Champ 3 : Français">
-                              {word.translation || 'Sans traduction'}
-                            </span>
-
-                            {/* Badge de provenance distinctif */}
-                            {isFromFluent ? (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800 flex items-center space-x-1 ml-auto sm:ml-0">
-                                <span>📦 Paquet Fluent</span>
-                                {word.syncedToAnkiDesktop ? (
-                                  <span className="text-emerald-700 font-bold ml-1" title="Présent dans Anki Desktop">✓</span>
-                                ) : (
-                                  <span className="text-stone-400 font-normal ml-0.5" title="À transférer">⏳</span>
-                                )}
-                              </span>
+                            {/* Champ 3 : Traduction française modifiable */}
+                            {editingWordId === word.id ? (
+                              <form
+                                onSubmit={(e) => handleSaveEdit(word, e)}
+                                className="inline-flex items-center gap-1.5 my-0.5"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <input
+                                  type="text"
+                                  value={editingTranslation}
+                                  onChange={(e) => setEditingTranslation(e.target.value)}
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Escape') handleCancelEdit();
+                                  }}
+                                  autoFocus
+                                  className="text-xs px-2 py-0.5 rounded-lg border border-amber-400 dark:border-amber-500 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-xs"
+                                  placeholder="Modifier la traduction..."
+                                />
+                                <button
+                                  type="submit"
+                                  className="p-1 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white transition-colors"
+                                  title="Enregistrer la traduction (Entrée)"
+                                >
+                                  <Check className="w-3.5 h-3.5" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={handleCancelEdit}
+                                  className="p-1 rounded-md bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 text-stone-700 dark:text-stone-200 transition-colors"
+                                  title="Annuler (Échap)"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                </button>
+                              </form>
                             ) : (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 flex items-center space-x-1 ml-auto sm:ml-0">
+                              <span className="inline-flex items-center gap-1 group/edit">
+                                <span 
+                                  onClick={() => handleStartEdit(word)}
+                                  className="text-xs text-stone-800 dark:text-stone-200 font-medium cursor-pointer hover:text-amber-600 dark:hover:text-amber-400 underline decoration-dotted decoration-stone-300 dark:decoration-stone-700 hover:decoration-amber-500 transition-colors" 
+                                  title="Cliquer pour modifier la traduction française"
+                                >
+                                  {word.translation || 'Sans traduction'}
+                                </span>
+                                <button
+                                  onClick={() => handleStartEdit(word)}
+                                  className="opacity-40 group-hover/edit:opacity-100 hover:opacity-100 p-0.5 text-stone-500 hover:text-amber-600 dark:hover:text-amber-400 transition-opacity"
+                                  title="Modifier la traduction"
+                                >
+                                  <Pencil className="w-3 h-3" />
+                                </button>
+                              </span>
+                            )}
+
+                            <span className="text-stone-300 dark:text-stone-700 select-none">•</span>
+
+                            {/* Statut Anki interactif (toggle Déjà noté / À noter dans Anki) */}
+                            <button
+                              onClick={() => handleToggleNotedInAnki(word)}
+                              className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-1 transition-all border ${
+                                word.syncedToAnkiDesktop
+                                  ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/60'
+                                  : 'bg-amber-100/90 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-800 hover:bg-amber-200 dark:hover:bg-amber-900/60'
+                              }`}
+                              title={
+                                word.syncedToAnkiDesktop 
+                                  ? "Déjà noté dans Anki ! Cliquer pour repasser en 'À noter'" 
+                                  : "À noter dans Anki ! Cliquer pour marquer comme 'Noté dans Anki'"
+                              }
+                            >
+                              {word.syncedToAnkiDesktop ? (
+                                <>
+                                  <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                                  <span>✓ Noté dans Anki</span>
+                                </>
+                              ) : (
+                                <>
+                                  <span className="text-amber-600 dark:text-amber-400">⏳</span>
+                                  <span>À noter dans Anki</span>
+                                </>
+                              )}
+                            </button>
+
+                            {/* Provenance si paquet externe importé */}
+                            {!isFromFluent && (
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 flex items-center space-x-1">
                                 <span>🔄 Anki : {word.deckName || 'Importé'}</span>
                               </span>
                             )}
