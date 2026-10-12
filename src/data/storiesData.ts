@@ -535,6 +535,62 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
             hanzi: '大卫刚到北京留学不久，非常喜欢一个人在胡同里散步。',
             pinyin: 'Dàwèi gāng dào Běijīng liúxué bù jiǔ, fēicháng xǐhuan yí gè rén zài hútòng lǐ sànbù.',
             translation: 'David est arrivé à Pékin pour étudier il y a peu de temps, et adore se promener seul dans les hutongs.',
+            rhythmAdvice: "Respire après '大卫刚到北京', pose la virgule après '留学不久，', puis enchaîne d'un trait '非常喜欢一个人' sans jamais séparer l'adverbe du verbe, avant de clore sur '在胡同里散步。' !",
+            rhythmChunks: [
+              {
+                id: 'chunk-2-1-1',
+                text: '大卫刚到北京',
+                pinyin: 'Dàwèi gāng dào Běijīng',
+                translation: 'David vient d\'arriver à Pékin',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '大卫', pinyin: 'Dàwèi', translation: 'David' },
+                  { hanzi: '刚到', pinyin: 'gāng dào', translation: 'vient d\'arriver' },
+                  { hanzi: '北京', pinyin: 'Běijīng', translation: 'Pékin' }
+                ]
+              },
+              {
+                id: 'chunk-2-1-2',
+                text: '留学不久，',
+                pinyin: 'liúxué bù jiǔ,',
+                translation: 'étudier depuis peu,',
+                pauseType: 'comma',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '留学', pinyin: 'liúxué', translation: 'étudier à l\'étranger' },
+                  { hanzi: '不久', pinyin: 'bù jiǔ', translation: 'depuis peu' }
+                ]
+              },
+              {
+                id: 'chunk-2-1-3',
+                text: '非常喜欢一个人',
+                pinyin: 'fēicháng xǐhuan yí gè rén',
+                translation: 'adore tout seul',
+                pauseType: 'breath',
+                stressLevel: 'prominent',
+                sandhiHint: 'fēicháng xǐhuan : 非常 (adverbe) et 喜欢 (verbe) restent indissociables',
+                words: [
+                  { hanzi: '非常', pinyin: 'fēicháng', translation: 'très' },
+                  { hanzi: '喜欢', pinyin: 'xǐhuan', translation: 'aimer' },
+                  { hanzi: '一个人', pinyin: 'yí gè rén', translation: 'seul' }
+                ]
+              },
+              {
+                id: 'chunk-2-1-4',
+                text: '在胡同里散步。',
+                pinyin: 'zài hútòng lǐ sànbù.',
+                translation: 'se promener dans les hutongs.',
+                pauseType: 'period',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '在', pinyin: 'zài', translation: 'dans' },
+                  { hanzi: '胡同里', pinyin: 'hútòng lǐ', translation: 'les ruelles (hutong)' },
+                  { hanzi: '散步', pinyin: 'sànbù', translation: 'se promener' },
+                  { hanzi: '。', pinyin: '', translation: '.' }
+                ]
+              }
+            ],
             words: [
               { hanzi: '大卫', pinyin: 'Dàwèi', translation: 'David' },
               { hanzi: '刚到', pinyin: 'gāng dào', translation: 'vient d\'arriver' },
@@ -554,6 +610,74 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
             hanzi: '昨天下午，手机突然没电了，他一不小心在复杂的小巷子里迷路了。',
             pinyin: 'Zuótiān xiàwǔ, shǒujī tūrán méi diàn le, tā yí bù xiǎoxīn zài fùzá de xiǎoxiàngzi lǐ mílù le.',
             translation: 'Hier après-midi, son téléphone est soudainement tombé à plat de batterie, et par inadvertance, il s\'est perdu dans les ruelles tortueuses.',
+            rhythmAdvice: "Pose nettement la virgule après '昨天下午，', souffle après '手机突然没电了，', puis lie '他一不小心' et '在复杂的小巷子里' avant de conclure fermement sur '迷路了。' !",
+            rhythmChunks: [
+              {
+                id: 'chunk-2-2-1',
+                text: '昨天下午，',
+                pinyin: 'Zuótiān xiàwǔ,',
+                translation: 'Hier après-midi,',
+                pauseType: 'comma',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '昨天', pinyin: 'zuótiān', translation: 'hier' },
+                  { hanzi: '下午', pinyin: 'xiàwǔ', translation: 'après-midi' }
+                ]
+              },
+              {
+                id: 'chunk-2-2-2',
+                text: '手机突然没电了，',
+                pinyin: 'shǒujī tūrán méi diàn le,',
+                translation: 'le téléphone n\'a soudain plus de batterie,',
+                pauseType: 'comma',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '手机', pinyin: 'shǒujī', translation: 'téléphone' },
+                  { hanzi: '突然', pinyin: 'tūrán', translation: 'soudainement' },
+                  { hanzi: '没电了', pinyin: 'méi diàn le', translation: 'plus de batterie' }
+                ]
+              },
+              {
+                id: 'chunk-2-2-3',
+                text: '他一不小心',
+                pinyin: 'tā yí bù xiǎoxīn',
+                translation: 'par inadvertance il',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '他', pinyin: 'tā', translation: 'il' },
+                  { hanzi: '一不小心', pinyin: 'yí bù xiǎoxīn', translation: 'par inadvertance' }
+                ]
+              },
+              {
+                id: 'chunk-2-2-4',
+                text: '在复杂的小巷子里',
+                pinyin: 'zài fùzá de xiǎoxiàngzi lǐ',
+                translation: 'dans les ruelles tortueuses',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '在', pinyin: 'zài', translation: 'dans' },
+                  { hanzi: '复杂', pinyin: 'fùzá', translation: 'complexe' },
+                  { hanzi: '的', pinyin: 'de', translation: 'de' },
+                  { hanzi: '小巷子', pinyin: 'xiǎoxiàngzi', translation: 'petites ruelles' },
+                  { hanzi: '里', pinyin: 'lǐ', translation: 'dans' }
+                ]
+              },
+              {
+                id: 'chunk-2-2-5',
+                text: '迷路了。',
+                pinyin: 'mílù le.',
+                translation: 's\'est perdu.',
+                pauseType: 'period',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '迷路', pinyin: 'mílù', translation: 'se perdre', isTarget: true },
+                  { hanzi: '了', pinyin: 'le', translation: 'changement d\'état' },
+                  { hanzi: '。', pinyin: '', translation: '.' }
+                ]
+              }
+            ],
             words: [
               { hanzi: '昨天', pinyin: 'zuótiān', translation: 'hier' },
               { hanzi: '下午', pinyin: 'xiàwǔ', translation: 'après-midi' },
@@ -580,6 +704,63 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
             hanzi: '幸运的是，一位推着自行车的大妈非常热情地带他走出了胡同。',
             pinyin: 'Xìngyùn de shì, yí wèi tuī zhe zìxíngchē de dàmā fēicháng rèqíng de dài tā zǒu chū le hútòng.',
             translation: 'Heureusement, une gentille dame poussant son vélo l\'a guidé très chaleureusement hors des ruelles.',
+            rhythmAdvice: "Pause nette après '幸运的是，', prends le souffle sur '一位推着自行车的大妈', appuie bien sur '非常热情地' sans casser le '地', et termine d'un trait sur '带他走出了胡同。' !",
+            rhythmChunks: [
+              {
+                id: 'chunk-2-3-1',
+                text: '幸运的是，',
+                pinyin: 'Xìngyùn de shì,',
+                translation: 'Heureusement,',
+                pauseType: 'comma',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '幸运的是', pinyin: 'xìngyùn de shì', translation: 'heureusement' }
+                ]
+              },
+              {
+                id: 'chunk-2-3-2',
+                text: '一位推着自行车的大妈',
+                pinyin: 'yí wèi tuī zhe zìxíngchē de dàmā',
+                translation: 'une dame poussant son vélo',
+                pauseType: 'breath',
+                stressLevel: 'standard',
+                sandhiHint: 'yí wèi : se prononce yí (2e ton) devant le 4e ton wèi',
+                words: [
+                  { hanzi: '一位', pinyin: 'yí wèi', translation: 'une dame' },
+                  { hanzi: '推着', pinyin: 'tuī zhe', translation: 'poussant' },
+                  { hanzi: '自行车', pinyin: 'zìxíngchē', translation: 'vélo' },
+                  { hanzi: '的', pinyin: 'de', translation: 'qui' },
+                  { hanzi: '大妈', pinyin: 'dàmā', translation: 'dame âgée' }
+                ]
+              },
+              {
+                id: 'chunk-2-3-3',
+                text: '非常热情地',
+                pinyin: 'fēicháng rèqíng de',
+                translation: 'très chaleureusement',
+                pauseType: 'breath',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '非常', pinyin: 'fēicháng', translation: 'très' },
+                  { hanzi: '热情', pinyin: 'rèqíng', translation: 'chaleureux', isTarget: true },
+                  { hanzi: '地', pinyin: 'de', translation: 'particule adverbiale' }
+                ]
+              },
+              {
+                id: 'chunk-2-3-4',
+                text: '带他走出了胡同。',
+                pinyin: 'dài tā zǒu chū le hútòng.',
+                translation: 'l\'a guidé hors des ruelles.',
+                pauseType: 'period',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '带他', pinyin: 'dài tā', translation: 'le guider' },
+                  { hanzi: '走出了', pinyin: 'zǒu chū le', translation: 'sortir de' },
+                  { hanzi: '胡同', pinyin: 'hútòng', translation: 'les hutongs' },
+                  { hanzi: '。', pinyin: '', translation: '.' }
+                ]
+              }
+            ],
             words: [
               { hanzi: '幸运的是', pinyin: 'xìngyùn de shì', translation: 'heureusement' },
               { hanzi: '一位', pinyin: 'yí wèi', translation: 'une dame' },
@@ -600,6 +781,49 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
             hanzi: '在她的帮助下，大卫顺利找到了地铁站，准时回到了学校。',
             pinyin: 'Zài tā de bāngzhù xià, Dàwèi shùnlì zhǎo dào le dìtiězhàn, zhǔnshí huí dào le xuéxiào.',
             translation: 'Grâce à son aide, David a trouvé la station de métro sans encombre et est rentré à l\'école à l\'heure.',
+            rhythmAdvice: "Marque la virgule après '在她的帮助下，', fais résonner le mot cible '顺利' dans '大卫顺利找到了地铁站，', et conclus avec assurance sur '准时回到了学校。' !",
+            rhythmChunks: [
+              {
+                id: 'chunk-2-4-1',
+                text: '在她的帮助下，',
+                pinyin: 'Zài tā de bāngzhù xià,',
+                translation: 'Grâce à son aide,',
+                pauseType: 'comma',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '在她的', pinyin: 'zài tā de', translation: 'grâce à son' },
+                  { hanzi: '帮助下', pinyin: 'bāngzhù xià', translation: 'aide' }
+                ]
+              },
+              {
+                id: 'chunk-2-4-2',
+                text: '大卫顺利找到了地铁站，',
+                pinyin: 'Dàwèi shùnlì zhǎo dào le dìtiězhàn,',
+                translation: 'David a trouvé la station de métro sans encombre,',
+                pauseType: 'comma',
+                stressLevel: 'prominent',
+                words: [
+                  { hanzi: '大卫', pinyin: 'Dàwèi', translation: 'David' },
+                  { hanzi: '顺利', pinyin: 'shùnlì', translation: 'sans encombre', isTarget: true },
+                  { hanzi: '找到了', pinyin: 'zhǎo dào le', translation: 'a trouvé' },
+                  { hanzi: '地铁站', pinyin: 'dìtiězhàn', translation: 'station de métro' }
+                ]
+              },
+              {
+                id: 'chunk-2-4-3',
+                text: '准时回到了学校。',
+                pinyin: 'zhǔnshí huí dào le xuéxiào.',
+                translation: 'est rentré à l\'école à l\'heure.',
+                pauseType: 'period',
+                stressLevel: 'standard',
+                words: [
+                  { hanzi: '准时', pinyin: 'zhǔnshí', translation: 'à l\'heure' },
+                  { hanzi: '回到了', pinyin: 'huí dào le', translation: 'est rentré à' },
+                  { hanzi: '学校', pinyin: 'xuéxiào', translation: 'l\'école' },
+                  { hanzi: '。', pinyin: '', translation: '.' }
+                ]
+              }
+            ],
             words: [
               { hanzi: '在她的', pinyin: 'zài tā de', translation: 'grâce à son' },
               { hanzi: '帮助下', pinyin: 'bāngzhù xià', translation: 'aide' },
@@ -657,8 +881,8 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
       {
         sentences: [
           {
-            hanzi: '晚上十点，整座写字楼都安静下来了，只剩下李明办公室的灯还亮着。',
-            pinyin: 'Wǎnshang shí diǎn, zhěng zuò xiězìlóu dōu ānjìng xiàlai le, zhǐ shèng xià Lǐ Míng bàngōngshì de dēng hái liàng zhe.',
+            hanzi: '晚上十点，整座写字楼都安静了下来，只剩下李明办公室的灯还亮着。',
+            pinyin: 'Wǎnshang shí diǎn, zhěng zuò xiězìlóu dōu ānjìng le xiàlai, zhǐ shèng xià Lǐ Míng bàngōngshì de dēng hái liàng zhe.',
             translation: 'À dix heures du soir, tout l\'immeuble de bureaux était devenu silencieux, seule la lampe du bureau de Li Ming était encore allumée.',
             words: [
               { hanzi: '晚上', pinyin: 'wǎnshang', translation: 'le soir' },
@@ -666,7 +890,7 @@ export const BUILT_IN_STORIES: MaayotStory[] = [
               { hanzi: '整座', pinyin: 'zhěng zuò', translation: 'tout entier' },
               { hanzi: '写字楼', pinyin: 'xiězìlóu', translation: 'immeuble de bureaux' },
               { hanzi: '都', pinyin: 'dōu', translation: 'tous' },
-              { hanzi: '安静下来了', pinyin: 'ānjìng xiàlai le', translation: 'devenu silencieux' },
+              { hanzi: '安静了下来', pinyin: 'ānjìng le xiàlai', translation: 's\'est calmé, est devenu silencieux' },
               { hanzi: '只剩下', pinyin: 'zhǐ shèng xià', translation: 'ne rester que' },
               { hanzi: '李明', pinyin: 'Lǐ Míng', translation: 'Li Ming' },
               { hanzi: '办公室', pinyin: 'bàngōngshì', translation: 'bureau' },
