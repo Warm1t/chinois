@@ -274,19 +274,32 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
       return;
     }
 
+    // Réinitialiser proprement toute autre lecture en cours
+    stopChineseAudio();
     stopSentenceRhythmAudio();
+    setPlayingSingleSentenceIdx(null);
+    setPlayingRhythmSentenceIdx(null);
+    setActiveRhythmChunkIdx(null);
+
     setIsPlayingAudio(true);
-    await playChineseStoryAudio(
-      activeStory.audioText, 
-      playbackSpeed, 
-      (idx, _text, gender) => {
-        setActiveSpeakerGender(gender);
-        setPlayingSentenceIndex(idx);
-      }
-    );
-    setIsPlayingAudio(false);
-    setActiveSpeakerGender(null);
-    setPlayingSentenceIndex(null);
+
+    // Récupérer la liste exacte des phrases des paragraphes pour un suivi 1:1 parfait
+    const allSentences = activeStory.paragraphs.flatMap(p => p.sentences.map(s => s.hanzi));
+
+    try {
+      await playChineseStoryAudio(
+        allSentences.length > 0 ? allSentences : activeStory.audioText, 
+        playbackSpeed, 
+        (idx, _text, gender) => {
+          setActiveSpeakerGender(gender);
+          setPlayingSentenceIndex(idx);
+        }
+      );
+    } finally {
+      setIsPlayingAudio(false);
+      setActiveSpeakerGender(null);
+      setPlayingSentenceIndex(null);
+    }
   };
 
   // Lecture isolée d'une phrase
@@ -298,39 +311,58 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
       return;
     }
 
+    // Réinitialiser les autres lectures en cours pour éviter les collisions
     stopChineseAudio();
     stopSentenceRhythmAudio();
-    setPlayingSingleSentenceIdx(globalIdx);
+    setIsPlayingAudio(false);
+    setActiveSpeakerGender(null);
+    setPlayingSentenceIndex(null);
     setPlayingRhythmSentenceIdx(null);
-    await playChineseAudio(sentence.hanzi, playbackSpeed);
-    setPlayingSingleSentenceIdx(null);
+    setActiveRhythmChunkIdx(null);
+
+    setPlayingSingleSentenceIdx(globalIdx);
+
+    try {
+      await playChineseAudio(sentence.hanzi, playbackSpeed);
+    } finally {
+      setPlayingSingleSentenceIdx(null);
+    }
   };
 
   // Lecture de la cadence rythmée avec pauses de souffle
   const handlePlaySentenceRhythmCadence = async (sentence: StorySentence, globalIdx: number) => {
     if (playingRhythmSentenceIdx === globalIdx) {
       stopSentenceRhythmAudio();
+      stopChineseAudio();
       setPlayingRhythmSentenceIdx(null);
       setActiveRhythmChunkIdx(null);
       return;
     }
 
+    // Réinitialiser les autres lectures en cours
     stopChineseAudio();
     stopSentenceRhythmAudio();
-    setPlayingRhythmSentenceIdx(globalIdx);
+    setIsPlayingAudio(false);
+    setActiveSpeakerGender(null);
+    setPlayingSentenceIndex(null);
     setPlayingSingleSentenceIdx(null);
 
+    setPlayingRhythmSentenceIdx(globalIdx);
+
     const analysis = analyzeSentenceRhythm(sentence);
-    await playSentenceWithProsodicPauses(
-      analysis.chunks,
-      playbackSpeed,
-      'female',
-      (chunkIdx) => {
-        setActiveRhythmChunkIdx(chunkIdx);
-      }
-    );
-    setPlayingRhythmSentenceIdx(null);
-    setActiveRhythmChunkIdx(null);
+    try {
+      await playSentenceWithProsodicPauses(
+        analysis.chunks,
+        playbackSpeed,
+        'female',
+        (chunkIdx) => {
+          setActiveRhythmChunkIdx(chunkIdx);
+        }
+      );
+    } finally {
+      setPlayingRhythmSentenceIdx(null);
+      setActiveRhythmChunkIdx(null);
+    }
   };
 
   // Prononcer un mot précis au clic (avec audio studio dictionnaire haute définition)

@@ -328,6 +328,15 @@ export const getChineseVoicesBank = async (): Promise<VoiceBankSummary> => {
  * 1. Synthèse vocale enrichie avec alternance Homme/Femme et timbres naturels chinois
  * Entraîne l'oreille en variant les timbres et fréquences acoustiques en mandarin standard.
  */
+// Référence pour débloquer immédiatement la promesse de lecture lors d'un arrêt
+let activeSpeechResolve: (() => void) | null = null;
+// Mémorisation des utterances pour parer au bug Chromium où le garbage collector supprime l'utterance en cours
+const activeUtterances = new Set<SpeechSynthesisUtterance>();
+
+/**
+ * 1. Synthèse vocale enrichie avec alternance Homme/Femme et timbres naturels chinois
+ * Entraîne l'oreille en variant les timbres et fréquences acoustiques en mandarin standard.
+ */
 export const playChineseAudio = async (
   text: string, 
   rate: number = 0.85, 
@@ -335,18 +344,25 @@ export const playChineseAudio = async (
 ): Promise<void> => {
   return new Promise(async (resolve) => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-      alert("Votre navigateur ne supporte pas la synthèse vocale intégrée.");
       resolve();
       return;
     }
-
-    window.speechSynthesis.cancel(); // Stoppe toute lecture en cours
 
     const cleanText = text.replace(/[^\u4e00-\u9fa5，。？！、\s]/g, '').trim();
     if (!cleanText) {
       resolve();
       return;
     }
+
+    let isResolved = false;
+    const safeResolve = () => {
+      if (isResolved) return;
+      isResolved = true;
+      activeSpeechResolve = null;
+      resolve();
+    };
+
+    activeSpeechResolve = safeResolve;
 
     const bank = await getChineseVoicesBank();
     const pref = getVoiceGenderPreference();
@@ -356,61 +372,93 @@ export const playChineseAudio = async (
     if (forcedGender) {
       genderToUse = forcedGender;
     } else if (pref === 'alternate') {
-      // Alterne à chaque appel pour habituer l'oreille
       genderToUse = currentAlternateGender === 'female' ? 'male' : 'female';
       currentAlternateGender = genderToUse;
     } else {
       genderToUse = pref;
     }
 
-    // 1. VOIX NEURALES MICROSOFT HD : Yunxi (Homme) et Xiaoxiao (Femme)
-    // Voix natives studio de très haute fidélité avec intonations réalistes, évitant les voix robotiques locales
+    // 1. TENTATIVE VOIX NEURALE MICROSOFT HD (Edge TTS)
     try {
       const neuralVoice = genderToUse === 'male' ? 'zh-CN-YunxiNeural' : 'zh-CN-XiaoxiaoNeural';
       const edgeSuccess = await playEdgeTtsAudio(cleanText, neuralVoice, rate);
       if (edgeSuccess) {
-        resolve();
+        safeResolve();
         return;
       }
     } catch (err) {
       console.warn("Repli Edge TTS sur synthèse vocale locale :", err);
     }
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'zh-CN'; // Force standard Mandarin language tag
+    // Si la lecture a été arrêtée entre-temps, sortir
+    if (isResolved) return;
 
-    let voiceToUse: SpeechSynthesisVoice | undefined;
-    let pitch = 1.0;
-    let playbackRate = rate;
+    // 2. REPLI ULTRA-ROBUSTE WEB SPEECH API LOCAL
+    try {
+      window.speechSynthesis.cancel();
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
 
-    if (genderToUse === 'female') {
-      voiceToUse = bank.femaleVoices[0] || bank.maleVoices[0];
-      pitch = 1.02;
-      playbackRate = rate;
-    } else {
-      if (bank.maleVoices.length > 0) {
-        voiceToUse = bank.maleVoices[0];
-        pitch = 1.0; // Voix masculine native
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.lang = 'zh-CN';
+
+      let voiceToUse: SpeechSynthesisVoice | undefined;
+      let pitch = 1.0;
+      let playbackRate = rate;
+
+      if (genderToUse === 'female') {
+        voiceToUse = bank.femaleVoices[0] || bank.maleVoices[0];
+        pitch = 1.02;
         playbackRate = rate;
       } else {
-        voiceToUse = bank.femaleVoices[0];
-        pitch = 0.95;
-        playbackRate = rate;
+        if (bank.maleVoices.length > 0) {
+          voiceToUse = bank.maleVoices[0];
+          pitch = 1.0;
+        } else {
+          voiceToUse = bank.femaleVoices[0];
+          pitch = 0.95;
+        }
       }
+
+      if (voiceToUse && isVoiceChinese(voiceToUse)) {
+        utterance.voice = voiceToUse;
+      }
+
+      utterance.pitch = pitch;
+      utterance.rate = playbackRate;
+
+      // Protection absolue contre le garbage collection V8
+      activeUtterances.add(utterance);
+
+      const cleanupUtterance = () => {
+        activeUtterances.delete(utterance);
+        safeResolve();
+      };
+
+      utterance.onend = cleanupUtterance;
+      utterance.onerror = cleanupUtterance;
+
+      // Sécurité anti-blocage : timeout calculé selon la longueur de phrase
+      const maxSpeechMs = Math.max(3500, cleanText.length * 500 + 2500);
+      const safetyTimeout = setTimeout(cleanupUtterance, maxSpeechMs);
+
+      const previousResolve = safeResolve;
+      activeSpeechResolve = () => {
+        clearTimeout(safetyTimeout);
+        activeUtterances.delete(utterance);
+        previousResolve();
+      };
+
+      window.speechSynthesis.speak(utterance);
+
+      // Réveil immédiat si Chrome s'était mis en pause
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+    } catch (e) {
+      safeResolve();
     }
-
-    // Sécurité absolue : on n'assigne la voix QUE si elle est 100% chinoise vérifiée
-    if (voiceToUse && isVoiceChinese(voiceToUse)) {
-      utterance.voice = voiceToUse;
-    }
-
-    utterance.pitch = pitch;
-    utterance.rate = playbackRate;
-
-    utterance.onend = () => resolve();
-    utterance.onerror = () => resolve();
-
-    window.speechSynthesis.speak(utterance);
   });
 };
 
@@ -420,28 +468,44 @@ export const playChineseAudio = async (
 export const stopChineseAudio = (): void => {
   stopEdgeAudio();
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
+    try {
+      window.speechSynthesis.cancel();
+    } catch {}
   }
   if (currentStoryAbortController) {
-    currentStoryAbortController.abort();
+    try {
+      currentStoryAbortController.abort();
+    } catch {}
     currentStoryAbortController = null;
   }
+  if (activeSpeechResolve) {
+    const resolve = activeSpeechResolve;
+    activeSpeechResolve = null;
+    resolve();
+  }
+  activeUtterances.clear();
   isStoryAudioPlaying = false;
 };
 
 /**
  * Lecture complète d'une histoire phrase par phrase avec alternance dynamique Homme/Femme
- * Évite le bug Chromium des textes longs et crée une immersion narrative vivante.
+ * Supporte soit une chaîne de texte brute, soit directement le tableau précis des phrases de l'histoire.
  */
 export const playChineseStoryAudio = async (
-  storyText: string,
+  storyInput: string | string[],
   rate: number = 0.85,
   onSentenceProgress?: (currentSentenceIndex: number, sentenceText: string, gender: 'female' | 'male') => void
 ): Promise<void> => {
   stopChineseAudio();
 
-  // Découpage en phrases
-  const rawSentences = storyText.split(/(?<=[。！？!?\n])/g).map(s => s.trim()).filter(Boolean);
+  // Découpage en phrases si string, sinon utilise directement le tableau fourni
+  let rawSentences: string[] = [];
+  if (Array.isArray(storyInput)) {
+    rawSentences = storyInput.map(s => s.trim()).filter(Boolean);
+  } else {
+    rawSentences = storyInput.split(/(?<=[。！？!?\n])/g).map(s => s.trim()).filter(Boolean);
+  }
+
   if (rawSentences.length === 0) return;
 
   isStoryAudioPlaying = true;
@@ -450,42 +514,49 @@ export const playChineseStoryAudio = async (
   currentStoryAbortController = {
     abort: () => {
       aborted = true;
-      window.speechSynthesis?.cancel();
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.cancel();
+        } catch {}
+      }
     }
   };
 
   const pref = getVoiceGenderPreference();
   let sentenceGender: 'female' | 'male' = 'female';
 
-  for (let i = 0; i < rawSentences.length; i++) {
-    if (aborted) break;
+  try {
+    for (let i = 0; i < rawSentences.length; i++) {
+      if (aborted) break;
 
-    const sentence = rawSentences[i];
+      const sentence = rawSentences[i];
 
-    // Détermination du genre de la phrase
-    if (pref === 'female') {
-      sentenceGender = 'female';
-    } else if (pref === 'male') {
-      sentenceGender = 'male';
-    } else {
-      // Mode 'alternate' : dialogue / alternance phrase par phrase !
-      sentenceGender = i % 2 === 0 ? 'female' : 'male';
+      // Détermination du genre de la phrase
+      if (pref === 'female') {
+        sentenceGender = 'female';
+      } else if (pref === 'male') {
+        sentenceGender = 'male';
+      } else {
+        // Mode 'alternate' : alternance naturelle phrase par phrase
+        sentenceGender = i % 2 === 0 ? 'female' : 'male';
+      }
+
+      if (onSentenceProgress && !aborted) {
+        onSentenceProgress(i, sentence, sentenceGender);
+      }
+
+      await playChineseAudio(sentence, rate, sentenceGender);
+
+      if (aborted) break;
+
+      // Petite pause naturelle entre les phrases
+      await new Promise(r => setTimeout(r, 220));
+      if (aborted) break;
     }
-
-    if (onSentenceProgress) {
-      onSentenceProgress(i, sentence, sentenceGender);
-    }
-
-    await playChineseAudio(sentence, rate, sentenceGender);
-
-    if (aborted) break;
-
-    // Petite pause naturelle entre les phrases (250ms)
-    await new Promise(r => setTimeout(r, 220));
+  } finally {
+    isStoryAudioPlaying = false;
+    currentStoryAbortController = null;
   }
-
-  isStoryAudioPlaying = false;
-  currentStoryAbortController = null;
 };
 
 /**

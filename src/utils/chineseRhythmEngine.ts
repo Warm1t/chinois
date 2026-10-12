@@ -182,32 +182,35 @@ export const playSentenceWithProsodicPauses = async (
     }
   };
 
-  for (let i = 0; i < chunks.length; i++) {
-    if (aborted) break;
+  try {
+    for (let i = 0; i < chunks.length; i++) {
+      if (aborted) break;
 
-    const chunk = chunks[i];
-    if (onChunkChange) onChunkChange(i);
+      const chunk = chunks[i];
+      if (onChunkChange && !aborted) onChunkChange(i);
 
-    // Lecture du chunk individuel via le moteur Edge TTS Neural ou synthèse haute fidélité
-    await playChineseAudio(chunk.text, rate, gender);
+      // Lecture du chunk individuel via le moteur Edge TTS Neural ou synthèse haute fidélité
+      await playChineseAudio(chunk.text, rate, gender);
 
-    if (aborted) break;
+      if (aborted) break;
 
-    // Détermination de la pause respiratoire selon la ponctuation prosodique
-    let pauseDurationMs = 280; // Micro-souffle standard entre deux 意群 (/)
-    if (chunk.pauseType === 'comma') {
-      pauseDurationMs = 520; // Pause à la virgule (//)
-    } else if (chunk.pauseType === 'period') {
-      pauseDurationMs = 700; // Pause terminale (///)
+      // Détermination de la pause respiratoire selon la ponctuation prosodique
+      let pauseDurationMs = 280; // Micro-souffle standard entre deux 意群 (/)
+      if (chunk.pauseType === 'comma') {
+        pauseDurationMs = 520; // Pause à la virgule (//)
+      } else if (chunk.pauseType === 'period') {
+        pauseDurationMs = 700; // Pause terminale (///)
+      }
+
+      if (i < chunks.length - 1) {
+        await new Promise(r => setTimeout(r, pauseDurationMs));
+      }
+      if (aborted) break;
     }
-
-    if (i < chunks.length - 1) {
-      await new Promise(r => setTimeout(r, pauseDurationMs));
-    }
+  } finally {
+    if (onChunkChange) onChunkChange(null);
+    isRhythmPlaying = false;
+    rhythmAbortController = null;
   }
-
-  if (onChunkChange) onChunkChange(null);
-  isRhythmPlaying = false;
-  rhythmAbortController = null;
 };
 

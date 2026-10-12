@@ -2,8 +2,21 @@ import { Communicate } from 'edge-tts-universal';
 
 let currentAudio: HTMLAudioElement | null = null;
 let currentBlobUrl: string | null = null;
+let pendingResolve: ((val: boolean) => void) | null = null;
+let currentAbortController: { abort: () => void } | null = null;
+let consecutiveFailures = 0;
+let lastFailureTime = 0;
 
+/**
+ * Arrête immédiatement toute lecture Edge TTS en cours et libère les ressources
+ */
 export const stopEdgeAudio = () => {
+  if (currentAbortController) {
+    try {
+      currentAbortController.abort();
+    } catch {}
+    currentAbortController = null;
+  }
   if (currentAudio) {
     try {
       currentAudio.pause();
@@ -17,11 +30,20 @@ export const stopEdgeAudio = () => {
     } catch {}
     currentBlobUrl = null;
   }
+  // Débloque immédiatement toute promesse en attente de terminaison
+  if (pendingResolve) {
+    const resolve = pendingResolve;
+    pendingResolve = null;
+    resolve(false);
+  }
 };
 
 /**
  * Joue une phrase en utilisant la voix neurale Microsoft Yunxi (homme) ou Xiaoxiao (femme)
  * directement via le moteur haute fidélité Edge TTS, avec support du débit ralenti (0.5x, 0.85x, 1.0x).
+ * 
+ * En cas de timeout réseau, d'erreur ou d'interruption, bascule proprement et immédiatement 
+ * vers la synthèse vocale locale (Web Speech API) sans bloquer la lecture de l'histoire.
  */
 export const playEdgeTtsAudio = async (
   text: string,
@@ -33,7 +55,14 @@ export const playEdgeTtsAudio = async (
   const cleanText = text.replace(/[^\u4e00-\u9fa5，。？！、\s]/g, '').trim();
   if (!cleanText) return false;
 
-  // Calcul du paramètre de vitesse pour Edge TTS (ex: '-50%' pour 0.5x, '-15%' pour 0.85x, '+0%' pour 1.0x)
+  // Si Edge TTS a échoué 2 fois consécutivement récemment (ex: bloqué par le réseau/navigateur),
+  // on bascule directement sur la synthèse vocale locale pendant 30s sans faire attendre l'utilisateur
+  const now = Date.now();
+  if (consecutiveFailures >= 2 && now - lastFailureTime < 30000) {
+    return false;
+  }
+
+  // Calcul du paramètre de vitesse pour Edge TTS
   let rateParam = '+0%';
   if (rate <= 0.55) {
     rateParam = '-50%';
@@ -45,23 +74,58 @@ export const playEdgeTtsAudio = async (
     rateParam = '+15%';
   }
 
+  let aborted = false;
+  currentAbortController = {
+    abort: () => {
+      aborted = true;
+    }
+  };
+
   try {
     const communicate = new Communicate(cleanText, {
       voice,
       rate: rateParam,
     });
 
-    const stream = await communicate.stream();
-    const audioChunks: Uint8Array[] = [];
+    // 1. Timeout strict de 3.5 secondes pour initialiser le flux WebSocket
+    const stream = await Promise.race([
+      communicate.stream(),
+      new Promise<never>((_, reject) => 
+        setTimeout(() => reject(new Error('Edge TTS stream timeout')), 3500)
+      )
+    ]);
 
-    for await (const chunk of stream) {
-      if (chunk.type === 'audio' && chunk.data) {
-        audioChunks.push(chunk.data);
+    if (aborted) return false;
+
+    // 2. Récupération des paquets audio avec timeout de sécurité de 4 secondes
+    const audioChunks: Uint8Array[] = [];
+    let chunkTimeoutId: any = null;
+
+    const chunkCollection = (async () => {
+      for await (const chunk of stream) {
+        if (aborted) break;
+        if (chunk.type === 'audio' && chunk.data) {
+          audioChunks.push(chunk.data);
+        }
       }
+    })();
+
+    await Promise.race([
+      chunkCollection,
+      new Promise<never>((_, reject) => {
+        chunkTimeoutId = setTimeout(() => reject(new Error('Edge TTS chunk timeout')), 4000);
+      })
+    ]);
+
+    if (chunkTimeoutId) clearTimeout(chunkTimeoutId);
+
+    if (aborted || audioChunks.length === 0) {
+      consecutiveFailures++;
+      lastFailureTime = Date.now();
+      return false;
     }
 
-    if (audioChunks.length === 0) return false;
-
+    // 3. Création du Blob et lecture audio
     const audioBlob = new Blob(audioChunks as any, { type: 'audio/mpeg' });
     const blobUrl = URL.createObjectURL(audioBlob);
     currentBlobUrl = blobUrl;
@@ -70,21 +134,46 @@ export const playEdgeTtsAudio = async (
     currentAudio = audio;
 
     return new Promise<boolean>((resolve) => {
+      let resolved = false;
+
+      const cleanupAndResolve = (result: boolean) => {
+        if (resolved) return;
+        resolved = true;
+        pendingResolve = null;
+        if (playbackTimeout) clearTimeout(playbackTimeout);
+        stopEdgeAudio();
+        if (result) {
+          consecutiveFailures = 0;
+        } else {
+          consecutiveFailures++;
+          lastFailureTime = Date.now();
+        }
+        resolve(result);
+      };
+
+      pendingResolve = cleanupAndResolve;
+
+      // Timeout max de lecture (longueur de texte * 550ms + 3s de marge) pour ne jamais geler
+      const maxPlaybackMs = Math.max(4000, cleanText.length * 550 + 3000);
+      const playbackTimeout = setTimeout(() => {
+        cleanupAndResolve(true);
+      }, maxPlaybackMs);
+
       audio.onended = () => {
-        stopEdgeAudio();
-        resolve(true);
+        cleanupAndResolve(true);
       };
+
       audio.onerror = () => {
-        stopEdgeAudio();
-        resolve(false);
+        cleanupAndResolve(false);
       };
+
       audio.play().catch(() => {
-        stopEdgeAudio();
-        resolve(false);
+        cleanupAndResolve(false);
       });
     });
   } catch (err) {
-    console.warn("Échec Edge TTS en direct, repli sur synthèse locale :", err);
+    consecutiveFailures++;
+    lastFailureTime = Date.now();
     return false;
   }
 };
