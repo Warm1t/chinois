@@ -10,13 +10,15 @@ import {
   exportWordsToJson,
   checkAnkiConnection,
   syncWordDirectlyToAnkiDesktop,
-  syncAllFluentWordsToAnkiDesktop
+  syncAllFluentWordsToAnkiDesktop,
+  updateWordInLocalAnki
 } from '../utils/ankiConnect';
 import { 
   generateSentencesForWord, 
   generateSentencesForAllPinnedWords, 
   PinnedWordSentenceOption 
 } from '../utils/pinnedSentenceGenerator';
+import { generateAiSentencesForWord } from '../utils/aiSentenceGenerator';
 import { playChineseAudio, stopChineseAudio } from '../utils/speechUtils';
 import { 
   X, 
@@ -42,7 +44,8 @@ import {
   AlertCircle,
   CheckCircle2,
   HelpCircle,
-  RefreshCw
+  RefreshCw,
+  Bookmark
 } from 'lucide-react';
 
 interface PinnedWordsAnkiModalProps {
@@ -82,6 +85,12 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
   const [newHanzi, setNewHanzi] = useState('');
   const [newPinyin, setNewPinyin] = useState('');
   const [newTranslation, setNewTranslation] = useState('');
+
+  // Génération de phrases IA et feedback
+  const [generatingWordHanzi, setGeneratingWordHanzi] = useState<string | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [feedbackToast, setFeedbackToast] = useState<string | null>(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   if (!isOpen) return null;
 
@@ -265,6 +274,43 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
     if (onPracticePhrase) {
       onPracticePhrase(phrase);
       onClose();
+    }
+  };
+
+  // Définir une phrase comme exemple officiel sur la carte Anki
+  const handleSetAsCardExample = (wordHanzi: string, phrase: EverydayPhrase) => {
+    const target = words.find(w => w.hanzi === wordHanzi);
+    if (!target) return;
+    const updated: AnkiWord = {
+      ...target,
+      exampleSentence: phrase.hanzi,
+      examplePinyin: phrase.pinyin,
+      exampleTranslation: phrase.french,
+    };
+    updateWordInLocalAnki(updated);
+    if (onWordsUpdated) {
+      const newWords = words.map(w => w.id === updated.id ? updated : w);
+      onWordsUpdated(newWords);
+    }
+    setFeedbackToast(`📌 Exemple associé à « ${target.hanzi} » ! Il figurera sur ta carte Anki.`);
+    setTimeout(() => setFeedbackToast(null), 3000);
+  };
+
+  // Générer des phrases IA sur mesure pour un mot cible
+  const handleGenerateAiForWord = async (word: AnkiWord) => {
+    setGeneratingWordHanzi(word.hanzi);
+    setAiError(null);
+    try {
+      const entries = await generateAiSentencesForWord(word.hanzi, word.translation);
+      setRefreshTrigger(prev => prev + 1);
+      setSelectedWordFilter(word.hanzi);
+      setFeedbackToast(`✨ ${entries.length} phrase(s) authentique(s) générée(s) pour « ${word.hanzi} » !`);
+      setTimeout(() => setFeedbackToast(null), 3500);
+    } catch (err: any) {
+      setAiError(err?.message || "Erreur lors de la génération IA.");
+      setTimeout(() => setAiError(null), 5000);
+    } finally {
+      setGeneratingWordHanzi(null);
     }
   };
 
@@ -717,11 +763,16 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                           </div>
                           
                           {/* Phrase d'exemple si disponible */}
-                          {word.exampleSentence && (
-                            <p className="text-[11px] text-stone-500 dark:text-stone-400 truncate mt-1">
-                              <span className="font-bold text-[#0284c7]">Exemple : </span>
-                              <span>{word.exampleSentence}</span>
-                              {word.exampleTranslation && <span className="italic ml-1">({word.exampleTranslation})</span>}
+                          {word.exampleSentence ? (
+                            <p className="text-[11px] text-stone-600 dark:text-stone-300 mt-1 flex flex-wrap items-center gap-1.5">
+                              <span className="font-bold text-[#0284c7]">📌 Exemple carte :</span>
+                              <span className="font-medium text-stone-900 dark:text-stone-100 chinese-text">{word.exampleSentence}</span>
+                              {word.examplePinyin && <span className="text-stone-500 font-mono text-[10px]">({word.examplePinyin})</span>}
+                              {word.exampleTranslation && <span className="italic text-stone-500 text-[10px]">« {word.exampleTranslation} »</span>}
+                            </p>
+                          ) : (
+                            <p className="text-[10px] text-stone-400 dark:text-stone-500 italic mt-0.5">
+                              Aucun exemple associé à cette carte
                             </p>
                           )}
                         </div>
@@ -746,11 +797,15 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                             setSelectedWordFilter(word.hanzi);
                             setActiveTab('sentences');
                           }}
-                          className="px-2.5 py-1 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/40 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800 text-[11px] font-bold flex items-center space-x-1 transition-all"
-                          title="Voir les phrases d'entraînement pour ce mot"
+                          className={`px-2.5 py-1 rounded-xl text-[11px] font-bold flex items-center space-x-1 transition-all ${
+                            sentencesCount > 0
+                              ? 'bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/40 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800'
+                              : 'bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700'
+                          }`}
+                          title={sentencesCount > 0 ? "Voir les phrases d'exemples pour ce mot" : "Générer un exemple avec l'IA pour ce mot"}
                         >
                           <Sparkles className="w-3 h-3 text-amber-500" />
-                          <span>{sentencesCount} phrase{sentencesCount > 1 ? 's' : ''}</span>
+                          <span>{sentencesCount > 0 ? `${sentencesCount} phrase${sentencesCount > 1 ? 's' : ''}` : '✨ Générer exemple'}</span>
                         </button>
 
                         {/* Supprimer de la liste */}
@@ -808,22 +863,51 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
 
             {/* LISTE DES PHRASES PROPOSÉES */}
             {filteredSentences.length === 0 ? (
-              <div className="p-8 text-center rounded-2xl bg-stone-50 dark:bg-stone-900/50 border-2 border-dashed border-stone-200 dark:border-stone-800 space-y-2">
+              <div className="p-8 text-center rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border-2 border-dashed border-amber-300 dark:border-amber-800 space-y-3">
                 <span className="text-3xl block">💡</span>
                 <h4 className="text-sm font-bold text-stone-800 dark:text-stone-200">
-                  Aucune phrase à afficher
+                  {selectedWordFilter !== 'all' 
+                    ? `Aucun exemple pré-enregistré pour « ${selectedWordFilter} »`
+                    : "Aucune phrase à afficher"}
                 </h4>
-                <p className="text-xs text-stone-500">
-                  {words.length === 0 
+                <p className="text-xs text-stone-600 dark:text-stone-400 max-w-md mx-auto">
+                  {selectedWordFilter !== 'all'
+                    ? "Chaque mot mérite un exemple authentique propre à son usage. Tu peux générer 1 à 2 phrases concrètes du quotidien grâce à l'IA."
+                    : words.length === 0 
                     ? "Épingle d'abord quelques mots dans l'application pour générer des phrases d'entraînement personnalisées !" 
                     : "Aucune phrase ne correspond au filtre sélectionné."}
                 </p>
+                {selectedWordFilter !== 'all' && (() => {
+                  const target = sourceFilteredWords.find(w => w.hanzi === selectedWordFilter);
+                  if (!target) return null;
+                  return (
+                    <button
+                      onClick={() => handleGenerateAiForWord(target)}
+                      disabled={generatingWordHanzi === target.hanzi}
+                      className="px-4 py-2 rounded-xl bg-[#c23b22] hover:bg-[#a5321d] text-white font-bold text-xs shadow-sm flex items-center space-x-2 mx-auto transition-all disabled:opacity-50"
+                    >
+                      {generatingWordHanzi === target.hanzi ? (
+                        <>
+                          <RefreshCw className="w-4 h-4 animate-spin" />
+                          <span>Génération IA en cours pour « {target.hanzi} »...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="w-4 h-4" />
+                          <span>✨ Générer 1-2 phrases avec l'IA pour « {target.hanzi} »</span>
+                        </>
+                      )}
+                    </button>
+                  );
+                })()}
               </div>
             ) : (
               <div className="space-y-3">
                 {filteredSentences.map((item) => {
                   const isRevealed = revealedTranslations[item.id] || false;
                   const isAudioActive = playingId === item.id;
+                  const targetWord = words.find(w => w.hanzi === item.wordHanzi);
+                  const isCardExample = targetWord?.exampleSentence === item.phrase.hanzi;
 
                   return (
                     <div
@@ -875,8 +959,8 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                         </p>
                       </div>
 
-                      {/* Traduction Française (Masquée par défaut selon la demande de l'utilisateur) */}
-                      <div className="p-3 rounded-xl bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      {/* Traduction Française et Boutons d'action */}
+                      <div className="p-3 rounded-xl bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => toggleTranslation(item.id)}
@@ -907,15 +991,34 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
                           )}
                         </div>
 
-                        {/* Bouton d'action directe : Pratiquer au Labo Vocal */}
-                        <button
-                          onClick={() => handleStartPractice(item.phrase)}
-                          className="px-3.5 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-stone-200 text-white dark:text-stone-900 text-xs font-bold transition-all flex items-center space-x-1.5 self-end sm:self-auto shrink-0 shadow-xs"
-                          title="S'entraîner à prononcer cette phrase au Labo Vocal avec l'IA"
-                        >
-                          <Mic className="w-3.5 h-3.5 text-rose-400 dark:text-[#c23b22]" />
-                          <span>🎙️ Pratiquer au Labo Vocal</span>
-                        </button>
+                        {/* Actions à droite : Définir comme exemple Anki + Pratiquer au Labo Vocal */}
+                        <div className="flex items-center space-x-2 self-end sm:self-auto shrink-0">
+                          {isCardExample ? (
+                            <span className="px-3 py-1.5 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 text-xs font-bold flex items-center space-x-1 shrink-0">
+                              <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                              <span>✓ Exemple actif sur ma carte Anki</span>
+                            </span>
+                          ) : (
+                            <button
+                              onClick={() => handleSetAsCardExample(item.wordHanzi, item.phrase)}
+                              className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/40 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-700 text-xs font-bold transition-all flex items-center space-x-1.5 shrink-0 shadow-2xs"
+                              title="Enregistrer cette phrase d'exemple directement sur ta carte Anki"
+                            >
+                              <Bookmark className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                              <span>📌 Utiliser pour ma carte Anki</span>
+                            </button>
+                          )}
+
+                          {/* Bouton d'action directe : Pratiquer au Labo Vocal */}
+                          <button
+                            onClick={() => handleStartPractice(item.phrase)}
+                            className="px-3 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-stone-200 text-white dark:text-stone-900 text-xs font-bold transition-all flex items-center space-x-1.5 shrink-0 shadow-xs"
+                            title="S'entraîner à prononcer cette phrase au Labo Vocal avec l'IA"
+                          >
+                            <Mic className="w-3.5 h-3.5 text-rose-400 dark:text-[#c23b22]" />
+                            <span>🎙️ Pratiquer</span>
+                          </button>
+                        </div>
                       </div>
 
                     </div>
@@ -940,6 +1043,20 @@ export const PinnedWordsAnkiModal: React.FC<PinnedWordsAnkiModalProps> = ({
             Fermer
           </button>
         </div>
+
+        {/* Notifications Toast */}
+        {feedbackToast && (
+          <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-stone-900 dark:bg-white text-white dark:text-stone-900 shadow-xl flex items-center space-x-2.5 animate-fadeIn border border-stone-700 dark:border-stone-300">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 dark:text-emerald-600 shrink-0" />
+            <span className="text-xs font-bold">{feedbackToast}</span>
+          </div>
+        )}
+        {aiError && (
+          <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-rose-900 text-white shadow-xl flex items-center space-x-2.5 animate-fadeIn border border-rose-700">
+            <AlertCircle className="w-4 h-4 text-rose-300 shrink-0" />
+            <span className="text-xs font-bold">{aiError}</span>
+          </div>
+        )}
 
       </div>
     </div>

@@ -294,7 +294,7 @@ export const copyWordsToClipboardForAnki = async (words: AnkiWord[], format: '3f
         const field1_hanzi = w.hanzi.trim();
         const field2_pinyin = (w.pinyin || lookupPinyinForText(w.hanzi) || '').trim();
         const exampleHtml = w.exampleSentence 
-          ? `<div style="margin-top:6px;font-size:0.9em;color:#0284c7">Exemple : ${w.exampleSentence} (${w.exampleTranslation || ''})</div>`
+          ? `<div style="margin-top:8px;padding-top:6px;border-top:1px dashed #cbd5e1;font-size:0.88em;color:#0284c7"><b>Exemple :</b> ${w.exampleSentence}${w.examplePinyin ? `<br><small style="color:#64748b">${w.examplePinyin}</small>` : ''}${w.exampleTranslation ? `<br><i style="color:#334155">${w.exampleTranslation}</i>` : ''}</div>`
           : '';
         const field3_french = `${(w.translation || '').trim()}${exampleHtml}`;
         // Champ 1: Chinois \t Champ 2: Pinyin \t Champ 3: Français
