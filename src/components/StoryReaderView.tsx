@@ -51,6 +51,7 @@ import {
 } from 'lucide-react';
 import { getCustomStories, saveCustomStory, deleteCustomStory } from '../utils/customStoriesUtils';
 import { GenerateStoryModal } from './GenerateStoryModal';
+import { AudioNovelReaderView } from './AudioNovelReaderView';
 
 interface StoryReaderViewProps {
   syncedAnkiWords: AnkiWord[];
@@ -65,6 +66,16 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   onIncrementStreak,
   onOpenAppleSyncModal,
 }) => {
+  // Mode de lecture : Histoires courtes (short) vs Romans complets 30 pages (novels)
+  const [readingMode, setReadingMode] = useState<'short' | 'novels'>(() => {
+    try {
+      const saved = localStorage.getItem('fluent_reading_mode');
+      return saved === 'novels' ? 'novels' : 'short';
+    } catch {
+      return 'short';
+    }
+  });
+
   // Histoires terminées (sauvegardées en local)
   const [completedStoryIds, setCompletedStoryIds] = useState<string[]>(() => {
     try {
@@ -732,6 +743,22 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
     setTimeout(() => setAnkiToast(null), 3500);
   };
 
+  if (readingMode === 'novels') {
+    return (
+      <AudioNovelReaderView
+        syncedAnkiWords={syncedAnkiWords}
+        onOpenAnkiModal={onOpenAnkiModal}
+        onIncrementStreak={onIncrementStreak}
+        onSwitchToShortStories={() => {
+          setReadingMode('short');
+          try {
+            localStorage.setItem('fluent_reading_mode', 'short');
+          } catch {}
+        }}
+      />
+    );
+  }
+
   return (
     <div className="space-y-6 animate-fadeIn pb-12">
       {/* Toast Notification Anki */}
@@ -741,6 +768,39 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
           <span>{ankiToast}</span>
         </div>
       )}
+
+      {/* COMMUTATEUR PRINCIPAL : HISTOIRES COURTES VS ROMANS AUDIO 30 PAGES */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-stone-900 p-2.5 rounded-3xl border-2 border-stone-200 dark:border-stone-800 shadow-sm">
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => {
+              setReadingMode('short');
+              try { localStorage.setItem('fluent_reading_mode', 'short'); } catch {}
+            }}
+            className="px-4 py-2 rounded-2xl text-xs font-black bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-xs flex items-center space-x-2"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-amber-500" />
+            <span>📖 Histoires Courtes (Short Stories)</span>
+            <span className="px-2 py-0.5 rounded-full bg-stone-700 dark:bg-stone-300 text-white dark:text-stone-900 text-[10px] font-mono">
+              {stories.length}
+            </span>
+          </button>
+
+          <button
+            onClick={() => {
+              setReadingMode('novels');
+              try { localStorage.setItem('fluent_reading_mode', 'novels'); } catch {}
+            }}
+            className="px-4 py-2 rounded-2xl text-xs font-bold transition-all flex items-center space-x-2 bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-200 cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            <span>📚 Romans & Livres Audio (30 pages)</span>
+            <span className="px-2 py-0.5 rounded-full bg-amber-400 text-stone-950 text-[10px] font-black">
+              3 Romans
+            </span>
+          </button>
+        </div>
+      </div>
       
       {/* 1. SÉLECTEUR D'HISTOIRES & CARROUSEL HAUT */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 bg-white border-2 border-stone-900 rounded-3xl shadow-[4px_4px_0px_#1c1917]">
