@@ -7,6 +7,8 @@ let currentAbortController: { abort: () => void } | null = null;
 let consecutiveFailures = 0;
 let lastFailureTime = 0;
 
+const ttsBlobCache = new Map<string, string>();
+
 /**
  * Arrête immédiatement toute lecture Edge TTS en cours et libère les ressources
  */
@@ -24,12 +26,13 @@ export const stopEdgeAudio = () => {
     } catch {}
     currentAudio = null;
   }
-  if (currentBlobUrl) {
+  // Ne pas révoquer les blobs mis en cache pour réécoute instantanée (0ms)
+  if (currentBlobUrl && !Array.from(ttsBlobCache.values()).includes(currentBlobUrl)) {
     try {
       URL.revokeObjectURL(currentBlobUrl);
     } catch {}
-    currentBlobUrl = null;
   }
+  currentBlobUrl = null;
   // Débloque immédiatement toute promesse en attente de terminaison
   if (pendingResolve) {
     const resolve = pendingResolve;
@@ -55,13 +58,6 @@ export const playEdgeTtsAudio = async (
   const cleanText = text.replace(/[^\u4e00-\u9fa5，。？！、\s]/g, '').trim();
   if (!cleanText) return false;
 
-  // Si Edge TTS a échoué 2 fois consécutivement récemment (ex: bloqué par le réseau/navigateur),
-  // on bascule directement sur la synthèse vocale locale pendant 30s sans faire attendre l'utilisateur
-  const now = Date.now();
-  if (consecutiveFailures >= 2 && now - lastFailureTime < 30000) {
-    return false;
-  }
-
   // Calcul du paramètre de vitesse pour Edge TTS
   let rateParam = '+0%';
   if (rate <= 0.55) {
@@ -72,6 +68,38 @@ export const playEdgeTtsAudio = async (
     rateParam = '-15%';
   } else if (rate >= 1.15) {
     rateParam = '+15%';
+  }
+
+  const cacheKey = `${voice}_${rateParam}_${cleanText}`;
+
+  // 1. REPRODUIRE INSTANTANÉMENT DEPUIS LE CACHE MÉMOIRE SI DÉJÀ TÉLÉCHARGÉ (0ms de latence)
+  if (ttsBlobCache.has(cacheKey)) {
+    const cachedBlobUrl = ttsBlobCache.get(cacheKey)!;
+    currentBlobUrl = cachedBlobUrl;
+    const audio = new Audio(cachedBlobUrl);
+    currentAudio = audio;
+
+    return new Promise<boolean>((resolve) => {
+      let resolved = false;
+      const cleanupAndResolve = (result: boolean) => {
+        if (resolved) return;
+        resolved = true;
+        pendingResolve = null;
+        stopEdgeAudio();
+        resolve(result);
+      };
+
+      pendingResolve = cleanupAndResolve;
+      audio.onended = () => cleanupAndResolve(true);
+      audio.onerror = () => cleanupAndResolve(false);
+      audio.play().catch(() => cleanupAndResolve(false));
+    });
+  }
+
+  // Si Edge TTS a échoué consécutivement récemment, basculer immédiatement sur Web Speech API locale sans latence
+  const now = Date.now();
+  if (consecutiveFailures >= 2 && now - lastFailureTime < 30000) {
+    return false;
   }
 
   let aborted = false;
@@ -87,17 +115,17 @@ export const playEdgeTtsAudio = async (
       rate: rateParam,
     });
 
-    // 1. Timeout strict de 3.5 secondes pour initialiser le flux WebSocket
+    // Timeout rapide de 1.2s pour initialiser le flux WebSocket afin de ne pas bloquer l'utilisateur
     const stream = await Promise.race([
       communicate.stream(),
       new Promise<never>((_, reject) => 
-        setTimeout(() => reject(new Error('Edge TTS stream timeout')), 3500)
+        setTimeout(() => reject(new Error('Edge TTS stream timeout')), 1200)
       )
     ]);
 
     if (aborted) return false;
 
-    // 2. Récupération des paquets audio avec timeout de sécurité de 4 secondes
+    // Récupération des paquets audio avec timeout rapide de 1.8s
     const audioChunks: Uint8Array[] = [];
     let chunkTimeoutId: any = null;
 
@@ -113,7 +141,7 @@ export const playEdgeTtsAudio = async (
     await Promise.race([
       chunkCollection,
       new Promise<never>((_, reject) => {
-        chunkTimeoutId = setTimeout(() => reject(new Error('Edge TTS chunk timeout')), 4000);
+        chunkTimeoutId = setTimeout(() => reject(new Error('Edge TTS chunk timeout')), 1800);
       })
     ]);
 
@@ -125,9 +153,10 @@ export const playEdgeTtsAudio = async (
       return false;
     }
 
-    // 3. Création du Blob et lecture audio
+    // Création du Blob et mise en cache
     const audioBlob = new Blob(audioChunks as any, { type: 'audio/mpeg' });
     const blobUrl = URL.createObjectURL(audioBlob);
+    ttsBlobCache.set(cacheKey, blobUrl);
     currentBlobUrl = blobUrl;
 
     const audio = new Audio(blobUrl);

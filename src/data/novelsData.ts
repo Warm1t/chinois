@@ -116,12 +116,12 @@ export const AUDIO_NOVELS: AudioNovel[] = [
                   {
                     "hanzi": "初秋的",
                     "pinyin": "chūqiū de",
-                    "translation": "de début d'automne"
+                    "translation": "du début de l'automne"
                   },
                   {
                     "hanzi": "傍晚",
                     "pinyin": "bàngwǎn",
-                    "translation": "début de soirée"
+                    "translation": "soirée"
                   },
                   {
                     "hanzi": "微风",
@@ -136,38 +136,56 @@ export const AUDIO_NOVELS: AudioNovel[] = [
                   {
                     "hanzi": "大理古城",
                     "pinyin": "Dàlǐ gǔchéng",
-                    "translation": "vieille ville de Dali"
-                  },
-                  {
-                    "hanzi": "的",
-                    "pinyin": "de",
-                    "translation": "de"
+                    "translation": "cité antique de Dali"
                   },
                   {
                     "hanzi": "青石板路",
                     "pinyin": "qīngshíbǎn lù",
-                    "translation": "ruelle pavée"
+                    "translation": "pavés de pierre"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "法国留学生马克背着背包，独自漫步在热闹的夜市中。",
-                "pinyin": "Fǎguó liúxuéshēng Mǎkè bēi zhe bēibāo, dúzì mànbù zài rènao de yèshì zhōng.",
-                "translation": "Marc, un étudiant étranger français portant son sac à dos, flânait seul au milieu du marché nocturne animé.",
+                "hanzi": "街道两旁挂满了红色的小灯笼，散发着温暖柔和的光芒。",
+                "pinyin": "Jiēdào liǎngpáng guà mǎn le hóngsè de xiǎo dēnglong, sànfā zhe wēnnuǎn róuhé de guāngmáng.",
+                "translation": "Des deux côtés de la rue, de petites lanternes rouges diffusaient une lueur douce et chaleureuse.",
                 "words": [
                   {
-                    "hanzi": "法国",
-                    "pinyin": "Fǎguó",
-                    "translation": "France"
+                    "hanzi": "街道两旁",
+                    "pinyin": "jiēdào liǎngpáng",
+                    "translation": "des deux côtés de la rue"
                   },
                   {
-                    "hanzi": "留学生",
-                    "pinyin": "liúxuéshēng",
-                    "translation": "étudiant étranger"
+                    "hanzi": "挂满了",
+                    "pinyin": "guà mǎn le",
+                    "translation": "couvert de suspendus"
+                  },
+                  {
+                    "hanzi": "红灯笼",
+                    "pinyin": "hóng dēnglong",
+                    "translation": "lanternes rouges"
+                  },
+                  {
+                    "hanzi": "散发着",
+                    "pinyin": "sànfā zhe",
+                    "translation": "émettant"
+                  },
+                  {
+                    "hanzi": "柔和光芒",
+                    "pinyin": "róuhé guāngmáng",
+                    "translation": "lumière douce"
+                  }
+                ]
+              },
+              {
+                "hanzi": "法国留学生马克背着双肩包漫步在夜市中，好奇地打量着四周。",
+                "pinyin": "Fǎguó liúxuéshēng Mǎkè bēi zhe shuāngjiānbāo mànbù zài yèshì zhōng, hàoqí de dǎliang zhe sìzhōu.",
+                "translation": "Marc, étudiant français, flânait dans le marché nocturne, un sac au dos, observant les alentours avec curiosité.",
+                "words": [
+                  {
+                    "hanzi": "法国留学生",
+                    "pinyin": "Fǎguó liúxuéshēng",
+                    "translation": "étudiant français"
                   },
                   {
                     "hanzi": "马克",
@@ -177,39 +195,103 @@ export const AUDIO_NOVELS: AudioNovel[] = [
                   {
                     "hanzi": "背着",
                     "pinyin": "bēi zhe",
-                    "translation": "portant"
+                    "translation": "portant au dos"
                   },
                   {
-                    "hanzi": "背包",
-                    "pinyin": "bēibāo",
-                    "translation": "sac à dos"
+                    "hanzi": "漫步",
+                    "pinyin": "mànbù",
+                    "translation": "flâner"
                   },
                   {
-                    "hanzi": "独自",
-                    "pinyin": "dúzì",
-                    "translation": "seul"
+                    "hanzi": "夜市",
+                    "pinyin": "yèshì",
+                    "translation": "marché de nuit"
                   },
                   {
-                    "hanzi": "漫步在",
-                    "pinyin": "mànbù zài",
-                    "translation": "se promenant dans"
+                    "hanzi": "好奇地",
+                    "pinyin": "hàoqí de",
+                    "translation": "avec curiosité"
+                  }
+                ]
+              },
+              {
+                "hanzi": "空气中弥漫着新鲜烤饵块与普洱茶的诱人香气，格外热闹。",
+                "pinyin": "Kōngqì zhōng mímàn zhe xīnxiān kǎo ěrkuài yǔ Pǔ'ěr chá de yòurén xiāngqì, géwài rènao.",
+                "translation": "L'air était embaumé du parfum alléchant de gâteaux de riz grillés et de thé Pu'er ; l'ambiance était festive.",
+                "words": [
+                  {
+                    "hanzi": "空气中",
+                    "pinyin": "kōngqì zhōng",
+                    "translation": "dans l'air"
                   },
                   {
-                    "hanzi": "热闹的",
-                    "pinyin": "rènao de",
+                    "hanzi": "弥漫着",
+                    "pinyin": "mímàn zhe",
+                    "translation": "flottant"
+                  },
+                  {
+                    "hanzi": "烤饵块",
+                    "pinyin": "kǎo ěrkuài",
+                    "translation": "galette de riz grillée"
+                  },
+                  {
+                    "hanzi": "普洱茶",
+                    "pinyin": "Pǔ'ěr chá",
+                    "translation": "thé Pu'er"
+                  },
+                  {
+                    "hanzi": "诱人香气",
+                    "pinyin": "yòurén xiāngqì",
+                    "translation": "parfum alléchant"
+                  },
+                  {
+                    "hanzi": "热闹",
+                    "pinyin": "rènao",
                     "translation": "animé"
+                  }
+                ]
+              },
+              {
+                "hanzi": "在一处幽静的街角，一个摆满旧物的小地摊吸引了他的注意。",
+                "pinyin": "Zài yí chù yōujìng de jiējiǎo, yí gè bǎi mǎn jiùwù de xiǎo dìtān xīyǐn le tā de zhùyì.",
+                "translation": "Au coin d'une ruelle plus calme, un stand chargé d'objets anciens attira soudain son attention.",
+                "words": [
+                  {
+                    "hanzi": "幽静的",
+                    "pinyin": "yōujìng de",
+                    "translation": "paisible"
                   },
                   {
-                    "hanzi": "夜市中",
-                    "pinyin": "yèshì zhōng",
-                    "translation": "dans le marché de nuit"
+                    "hanzi": "街角",
+                    "pinyin": "jiējiǎo",
+                    "translation": "coin de rue"
+                  },
+                  {
+                    "hanzi": "摆满",
+                    "pinyin": "bǎi mǎn",
+                    "translation": "rempli de"
+                  },
+                  {
+                    "hanzi": "旧物",
+                    "pinyin": "jiùwù",
+                    "translation": "antiquités"
+                  },
+                  {
+                    "hanzi": "地摊",
+                    "pinyin": "dìtān",
+                    "translation": "stand ambulant"
+                  },
+                  {
+                    "hanzi": "吸引注意",
+                    "pinyin": "xīyǐn zhùyì",
+                    "translation": "attirer l'attention"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "初秋的傍晚，微风吹拂着大理古城的青石板路。法国留学生马克背着背包，独自漫步在热闹的夜市中。"
+        "audioText": "初秋的傍晚，微风吹拂着大理古城的青石板路。街道两旁挂满了红色的小灯笼，散发着温暖柔和的光芒。法国留学生马克背着双肩包漫步在夜市中，好奇地打量着四周。空气中弥漫着新鲜烤饵块与普洱茶的诱人香气，格外热闹。在一处幽静的街角，一个摆满旧物的小地摊吸引了他的注意。"
       },
       {
         "pageNumber": 2,
@@ -221,107 +303,144 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "街边摆满了白族扎染布与银饰，空气中飘着诱人的烤乳扇香气。",
-                "pinyin": "Jiēbiān bǎi mǎn le Báizú zārǎnbù yǔ yínshì, kōngqì zhōng piāo zhe yòurén de kǎo rǔshān xiāngqì.",
-                "translation": "Le bord de la rue débordait de tissus teints de l'ethnie Bai et de bijoux en argent, et un parfum alléchant de fromage grillé flottait dans l'air.",
+                "hanzi": "地摊后坐着一位头发斑白的老爷爷，正微笑着注视着马克。",
+                "pinyin": "Dìtān hòu zuò zhe yí wèi tóufa bānbái de lǎo yéye, zhèng wēixiào zhe zhùshì zhe Mǎkè.",
+                "translation": "Derrière l'étal était assis un vieillard aux cheveux grisonnants, observant Marc avec un sourire bienveillant.",
                 "words": [
                   {
-                    "hanzi": "街边",
-                    "pinyin": "jiēbiān",
-                    "translation": "au bord de la rue"
+                    "hanzi": "头发斑白",
+                    "pinyin": "tóufa bānbái",
+                    "translation": "cheveux grisonnants"
                   },
                   {
-                    "hanzi": "摆满了",
-                    "pinyin": "bǎi mǎn le",
-                    "translation": "rempli de"
+                    "hanzi": "老爷爷",
+                    "pinyin": "lǎo yéye",
+                    "translation": "grand-père, vieil homme"
                   },
                   {
-                    "hanzi": "白族扎染布",
-                    "pinyin": "Báizú zārǎnbù",
-                    "translation": "étoffes teintes Bai"
+                    "hanzi": "微笑着",
+                    "pinyin": "wēixiào zhe",
+                    "translation": "en souriant"
                   },
                   {
-                    "hanzi": "与",
-                    "pinyin": "yǔ",
-                    "translation": "et"
-                  },
-                  {
-                    "hanzi": "银饰",
-                    "pinyin": "yínshì",
-                    "translation": "bijoux d'argent"
-                  },
-                  {
-                    "hanzi": "空气中",
-                    "pinyin": "kōngqì zhōng",
-                    "translation": "dans l'air"
-                  },
-                  {
-                    "hanzi": "飘着",
-                    "pinyin": "piāo zhe",
-                    "translation": "flottant"
-                  },
-                  {
-                    "hanzi": "诱人的",
-                    "pinyin": "yòurén de",
-                    "translation": "alléchant"
-                  },
-                  {
-                    "hanzi": "烤乳扇香气",
-                    "pinyin": "kǎo rǔshān xiāngqì",
-                    "translation": "parfum de fromage grillé"
+                    "hanzi": "注视着",
+                    "pinyin": "zhùshì zhe",
+                    "translation": "regardant fixement"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "在巷子尽头，一个不起眼的古董地摊吸引了马克的目光。",
-                "pinyin": "Zài xiàngzi jìntóu, yí gè bù qǐyǎn de gǔdǒng dìtān xīyǐn le Mǎkè de mùguāng.",
-                "translation": "Au bout d'une ruelle, un modeste étal d'antiquités attira le regard de Marc.",
+                "hanzi": "摊位正中央摆放着一只黑色木盒，材质沉重，色泽古朴。",
+                "pinyin": "Tānwèi zhèng zhōngyāng bǎifàng zhe yì zhī hēisè mùhé, cáizhì chénzhòng, sèzé gǔpǔ.",
+                "translation": "Au centre de l'étal trônait une boîte en bois sombre, lourde et d'un éclat patiné par le temps.",
                 "words": [
                   {
-                    "hanzi": "在巷子尽头",
-                    "pinyin": "zài xiàngzi jìntóu",
-                    "translation": "au bout de la ruelle"
+                    "hanzi": "正中央",
+                    "pinyin": "zhèng zhōngyāng",
+                    "translation": "au beau milieu"
                   },
                   {
-                    "hanzi": "一个",
-                    "pinyin": "yí gè",
-                    "translation": "un"
+                    "hanzi": "黑色木盒",
+                    "pinyin": "hēisè mùhé",
+                    "translation": "boîte en bois noir"
                   },
                   {
-                    "hanzi": "不起眼的",
-                    "pinyin": "bù qǐyǎn de",
-                    "translation": "discret"
+                    "hanzi": "沉重",
+                    "pinyin": "chénzhòng",
+                    "translation": "lourd"
                   },
                   {
-                    "hanzi": "古董地摊",
-                    "pinyin": "gǔdǒng dìtān",
-                    "translation": "étal d'antiquités"
+                    "hanzi": "色泽古朴",
+                    "pinyin": "sèzé gǔpǔ",
+                    "translation": "couleur antique"
+                  }
+                ]
+              },
+              {
+                "hanzi": "盒盖上雕刻着精美的苍山祥云花纹，隐隐透出一股檀木清香。",
+                "pinyin": "Hégài shang diāokè zhe jīngměi de Cāngshān xiángyún huāwén, yǐnyǐn tòuchū yì gǔ tánmù qīngxiāng.",
+                "translation": "Le couvercle portait de délicates gravures de nuages de Cangshan, exhalant un fin parfum de bois de santal.",
+                "words": [
+                  {
+                    "hanzi": "盒盖上",
+                    "pinyin": "hégài shang",
+                    "translation": "sur le couvercle"
                   },
                   {
-                    "hanzi": "吸引了",
-                    "pinyin": "xīyǐn le",
-                    "translation": "a attiré"
+                    "hanzi": "雕刻着",
+                    "pinyin": "diāokè zhe",
+                    "translation": "sculpté de"
                   },
                   {
-                    "hanzi": "马克的",
-                    "pinyin": "Mǎkè de",
-                    "translation": "de Marc"
+                    "hanzi": "祥云花纹",
+                    "pinyin": "xiángyún huāwén",
+                    "translation": "motifs de nuages auspicieux"
                   },
                   {
-                    "hanzi": "目光",
-                    "pinyin": "mùguāng",
-                    "translation": "le regard"
+                    "hanzi": "檀木清香",
+                    "pinyin": "tánmù qīngxiāng",
+                    "translation": "parfum de santal"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克忍不住将木盒拿在手中，发现四周没有明显的锁眼。",
+                "pinyin": "Mǎkè rěnbuzhù jiāng mùhé ná zài shǒu zhōng, fāxiàn sìzhōu méiyǒu míngxiǎn de suǒyǎn.",
+                "translation": "Marc ne put s'empêcher de la prendre en main et constata qu'il n'y avait aucune serrure apparente.",
+                "words": [
+                  {
+                    "hanzi": "忍不住",
+                    "pinyin": "rěnbuzhù",
+                    "translation": "ne pouvoir s'empêcher de"
+                  },
+                  {
+                    "hanzi": "拿在手中",
+                    "pinyin": "ná zài shǒu zhōng",
+                    "translation": "prendre en main"
+                  },
+                  {
+                    "hanzi": "没有",
+                    "pinyin": "méiyǒu",
+                    "translation": "ne pas avoir"
+                  },
+                  {
+                    "hanzi": "明显锁眼",
+                    "pinyin": "míngxiǎn suǒyǎn",
+                    "translation": "trou de serrure visible"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老爷爷轻声说道：“这是祖传的机关宝盒，只有懂得它的人才能打开。”",
+                "pinyin": "Lǎo yéye qīngshēng shuōdào: \"Zhè shì zǔchuán de jīguān bǎohé, zhǐyǒu dǒngde tā de rén cái néng dǎkāi.\"",
+                "translation": "Le vieil homme murmura doucement : « C'est une boîte à secret d'antan, seuls les esprits avisés peuvent l'ouvrir. »",
+                "words": [
+                  {
+                    "hanzi": "轻声说道",
+                    "pinyin": "qīngshēng shuōdào",
+                    "translation": "dire à voix basse"
+                  },
+                  {
+                    "hanzi": "祖传",
+                    "pinyin": "zǔchuán",
+                    "translation": "transmis de génération en génération"
+                  },
+                  {
+                    "hanzi": "机关宝盒",
+                    "pinyin": "jīguān bǎohé",
+                    "translation": "boîte précieuse à mécanisme"
+                  },
+                  {
+                    "hanzi": "懂得",
+                    "pinyin": "dǒngde",
+                    "translation": "comprendre"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "街边摆满了白族扎染布与银饰，空气中飘着诱人的烤乳扇香气。在巷子尽头，一个不起眼的古董地摊吸引了马克的目光。"
+        "audioText": "地摊后坐着一位头发斑白的老爷爷，正微笑着注视着马克。摊位正中央摆放着一只黑色木盒，材质沉重，色泽古朴。盒盖上雕刻着精美的苍山祥云花纹，隐隐透出一股檀木清香。马克忍不住将木盒拿在手中，发现四周没有明显的锁眼。老爷爷轻声说道：“这是祖传的机关宝盒，只有懂得它的人才能打开。”"
       },
       {
         "pageNumber": 3,
@@ -333,112 +452,144 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "摊位中央摆着一只深黑色的木盒，表面雕刻着云月与群山的纹样。",
-                "pinyin": "Tānwèi zhōngyāng bǎi zhe yì zhī shēnhēisè de mùhé, biǎomiàn diāokè zhe yúnyuè yǔ qúnshān de wényàng.",
-                "translation": "Au centre de l'étal reposait une boîte en bois noir foncé, sculptée de motifs de nuages, de lune et de montagnes.",
+                "hanzi": "马克花了不多的价钱买下木盒，满心欢喜地回到了客栈。",
+                "pinyin": "Mǎkè huā le bù duō de jiàqián mǎi xià mùhé, mǎnxīn huānxǐ de huí dào le kèzhàn.",
+                "translation": "Marc acheta la boîte pour un prix modeste et retourna à son auberge le cœur comblé de joie.",
                 "words": [
                   {
-                    "hanzi": "摊位中央",
-                    "pinyin": "tānwèi zhōngyāng",
-                    "translation": "au centre de l'étal"
+                    "hanzi": "价钱",
+                    "pinyin": "jiàqián",
+                    "translation": "prix"
                   },
                   {
-                    "hanzi": "摆着一只",
-                    "pinyin": "bǎi zhe yì zhī",
-                    "translation": "était posée une"
+                    "hanzi": "买下",
+                    "pinyin": "mǎi xià",
+                    "translation": "acheter"
                   },
                   {
-                    "hanzi": "深黑色的",
-                    "pinyin": "shēnhēisè de",
-                    "translation": "noir foncé"
+                    "hanzi": "满心欢喜",
+                    "pinyin": "mǎnxīn huānxǐ",
+                    "translation": "plein de joie"
                   },
                   {
-                    "hanzi": "木盒",
-                    "pinyin": "mùhé",
-                    "translation": "boîte en bois"
-                  },
-                  {
-                    "hanzi": "表面",
-                    "pinyin": "biǎomiàn",
-                    "translation": "surface"
-                  },
-                  {
-                    "hanzi": "雕刻着",
-                    "pinyin": "diāokè zhe",
-                    "translation": "sculpté de"
-                  },
-                  {
-                    "hanzi": "云月与群山的",
-                    "pinyin": "yúnyuè yǔ qúnshān de",
-                    "translation": "de lune, nuages et monts"
-                  },
-                  {
-                    "hanzi": "纹样",
-                    "pinyin": "wényàng",
-                    "translation": "motifs traditionnels"
+                    "hanzi": "回到客栈",
+                    "pinyin": "huí dào kèzhàn",
+                    "translation": "rentrer à l'auberge"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "白发老爷爷微笑着说：“小伙子，这是古南诏时期的工艺，有缘人才能解开它。”",
-                "pinyin": "Bái fà lǎo yéye wēixiào zhe shuō: \"Xiǎohuǒzi, zhè shì gǔ Nánzhào shíqī de gōngyì, yǒu yuán rén cái néng jiěkāi tā.\"",
-                "translation": "Le vieil homme aux cheveux blancs souria et dit : « Jeune homme, c'est un artisanat de l'ancien Nanzhao, seule une personne prédestinée peut le déverrouiller. »",
+                "hanzi": "房间的书桌前点着一盏台灯，窗外传来了洱海阵阵的轻柔水声。",
+                "pinyin": "Fángjiān de shūzhuō qián diǎn zhe yì zhǎn táidēng, chuāngwài chuánlái le Ěrhǎi zhènzhèn de qīngróu shuǐshēng.",
+                "translation": "Devant le bureau éclairé par une lampe, le doux ressac du lac Erhai résonnait à travers la fenêtre ouverte.",
                 "words": [
                   {
-                    "hanzi": "白发老爷爷",
-                    "pinyin": "bái fà lǎo yéye",
-                    "translation": "grand-père aux cheveux blancs"
+                    "hanzi": "书桌前",
+                    "pinyin": "shūzhuō qián",
+                    "translation": "devant le bureau"
                   },
                   {
-                    "hanzi": "微笑着说",
-                    "pinyin": "wēixiào zhe shuō",
-                    "translation": "dit en souriant"
+                    "hanzi": "点着台灯",
+                    "pinyin": "diǎn zhe táidēng",
+                    "translation": "lampe allumée"
                   },
                   {
-                    "hanzi": "小伙子",
-                    "pinyin": "xiǎohuǒzi",
-                    "translation": "jeune homme"
+                    "hanzi": "窗外",
+                    "pinyin": "chuāngwài",
+                    "translation": "hors de la fenêtre"
                   },
                   {
-                    "hanzi": "这是",
-                    "pinyin": "zhè shì",
-                    "translation": "c'est"
+                    "hanzi": "洱海",
+                    "pinyin": "Ěrhǎi",
+                    "translation": "lac Erhai"
                   },
                   {
-                    "hanzi": "古南诏时期",
-                    "pinyin": "gǔ Nánzhào shíqī",
-                    "translation": "ancien royaume de Nanzhao"
+                    "hanzi": "轻柔水声",
+                    "pinyin": "qīngróu shuǐshēng",
+                    "translation": "bruit d'eau apaisant"
+                  }
+                ]
+              },
+              {
+                "hanzi": "他拿出放大镜仔细端详，发现盒底刻着三个可以滑动的木质小滑块。",
+                "pinyin": "Tā ná chū fàngdàjìng zǐxì duānxiáng, fāxiàn hédǐ kè zhe sān gè kěyǐ huádòng de mùzhì xiǎo huákuài.",
+                "translation": "Muni d'une loupe, il remarqua sous la boîte trois petits curseurs en bois mobiles.",
+                "words": [
+                  {
+                    "hanzi": "放大镜",
+                    "pinyin": "fàngdàjìng",
+                    "translation": "loupe"
                   },
                   {
-                    "hanzi": "的",
-                    "pinyin": "de",
-                    "translation": "de"
+                    "hanzi": "仔细端详",
+                    "pinyin": "zǐxì duānxiáng",
+                    "translation": "examiner attentivement"
                   },
                   {
-                    "hanzi": "工艺",
-                    "pinyin": "gōngyì",
-                    "translation": "artisanat"
+                    "hanzi": "盒底",
+                    "pinyin": "hédǐ",
+                    "translation": "fond de la boîte"
                   },
                   {
-                    "hanzi": "有缘人",
-                    "pinyin": "yǒu yuán rén",
-                    "translation": "personne prédestinée"
+                    "hanzi": "滑动滑块",
+                    "pinyin": "huádòng huákuài",
+                    "translation": "curseurs coulissants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "滑块上分别刻有三个细小的汉字：“风”、“花”、“雪”。",
+                "pinyin": "Huákuài shang fēnbié kè yǒu sān gè xìxiǎo de hànzì: \"Fēng\", \"Huā\", \"Xuě\".",
+                "translation": "Sur chaque curseur était gravé un caractère miniature : « Vent », « Fleur » et « Neige ».",
+                "words": [
+                  {
+                    "hanzi": "分别刻有",
+                    "pinyin": "fēnbié kè yǒu",
+                    "translation": "chacun gravé de"
                   },
                   {
-                    "hanzi": "才能解开它",
-                    "pinyin": "cái néng jiěkāi tā",
-                    "translation": "pourra le déverrouiller"
+                    "hanzi": "细小汉字",
+                    "pinyin": "xìxiǎo hànzì",
+                    "translation": "sinogrammes minuscules"
+                  },
+                  {
+                    "hanzi": "风花雪",
+                    "pinyin": "Fēng, Huā, Xuě",
+                    "translation": "Vent, Fleur, Neige (célèbres symboles de Dali)"
+                  }
+                ]
+              },
+              {
+                "hanzi": "这正是大理最著名的四景之三，显然还缺少了最后的“月”字。",
+                "pinyin": "Zhè zhèng shì Dàlǐ zuì zhùmíng de sì jǐng zhī sān, xiǎnrán hái quēshǎo le zuìhòu de \"Yuè\" zì.",
+                "translation": "Il s'agissait de trois des célèbres symboles de Dali ; il manquait manifestement le « Clair de lune » final.",
+                "words": [
+                  {
+                    "hanzi": "著名四景",
+                    "pinyin": "zhùmíng sì jǐng",
+                    "translation": "quatre paysages réputés"
+                  },
+                  {
+                    "hanzi": "显然",
+                    "pinyin": "xiǎnrán",
+                    "translation": "évidemment"
+                  },
+                  {
+                    "hanzi": "缺少",
+                    "pinyin": "quēshǎo",
+                    "translation": "manquer de"
+                  },
+                  {
+                    "hanzi": "月字",
+                    "pinyin": "yuè zì",
+                    "translation": "le caractère lune"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "摊位中央摆着一只深黑色的木盒，表面雕刻着云月与群山的纹样。白发老爷爷微笑着说：“小伙子，这是古南诏时期的工艺，有缘人才能解开它。”"
+        "audioText": "马克花了不多的价钱买下木盒，满心欢喜地回到了客栈。房间的书桌前点着一盏台灯，窗外传来了洱海阵阵的轻柔水声。他拿出放大镜仔细端详，发现盒底刻着三个可以滑动的木质小滑块。滑块上分别刻有三个细小的汉字：“风”、“花”、“雪”。这正是大理最著名的四景之三，显然还缺少了最后的“月”字。"
       },
       {
         "pageNumber": 4,
@@ -450,112 +601,144 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "马克买下了这只木盒，回到客栈后迫不及待地坐在书桌前仔细研究。",
-                "pinyin": "Mǎkè mǎi xià le zhè zhī mùhé, huí dào kèzhàn hòu pòbùjídài de zuò zài shūzhuō qián zǐxì yánjiū.",
-                "translation": "Marc acheta cette boîte en bois et, de retour à l'auberge, s'assit sans plus attendre à sa table pour l'étudier avec soin.",
+                "hanzi": "马克思索片刻，试着按照大理风物志的古老顺序推动滑块。",
+                "pinyin": "Mǎkè sīsuǒ piànkè, shì zhe ànzhào Dàlǐ fēngwùzhì de gǔlǎo shùnxù tuīdòng huákuài.",
+                "translation": "Marc réfléchit un instant et tenta de déplacer les curseurs selon l'ordre des chroniques de Dali.",
                 "words": [
                   {
-                    "hanzi": "马克",
-                    "pinyin": "Mǎkè",
-                    "translation": "Marc"
+                    "hanzi": "思索片刻",
+                    "pinyin": "sīsuǒ piànkè",
+                    "translation": "méditer un instant"
                   },
                   {
-                    "hanzi": "买下了",
-                    "pinyin": "mǎi xià le",
-                    "translation": "acheta"
+                    "hanzi": "按照",
+                    "pinyin": "ànzhào",
+                    "translation": "conformément à"
                   },
                   {
-                    "hanzi": "这只木盒",
-                    "pinyin": "zhè zhī mùhé",
-                    "translation": "cette boîte en bois"
+                    "hanzi": "古老顺序",
+                    "pinyin": "gǔlǎo shùnxù",
+                    "translation": "ordre ancien"
                   },
                   {
-                    "hanzi": "回到客栈后",
-                    "pinyin": "huí dào kèzhàn hòu",
-                    "translation": "après être rentré à l'auberge"
-                  },
-                  {
-                    "hanzi": "迫不及待地",
-                    "pinyin": "pòbùjídài de",
-                    "translation": "sans plus attendre"
-                  },
-                  {
-                    "hanzi": "坐在",
-                    "pinyin": "zuò zài",
-                    "translation": "s'assit à"
-                  },
-                  {
-                    "hanzi": "书桌前",
-                    "pinyin": "shūzhuō qián",
-                    "translation": "devant le bureau"
-                  },
-                  {
-                    "hanzi": "仔细研究",
-                    "pinyin": "zǐxì yánjiū",
-                    "translation": "étudier attentivement"
+                    "hanzi": "推动滑块",
+                    "pinyin": "tuīdòng huákuài",
+                    "translation": "faire glisser"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "他轻轻按压盒底的凸起，咔哒一声轻响，一个隐秘的夹层弹了出来！",
-                "pinyin": "Tā qīngqīng ànyā hé dǐ de tūqǐ, kādā yì shēng qīng xiǎng, yí gè yǐnmì de jiācéng tán le chūlai!",
-                "translation": "En pressant doucement une aspérité sous la boîte, un léger déclic retentit, et un tiroir secret jaillit !",
+                "hanzi": "下关风吹动上关花，苍山雪映照着洱海月，这是千古流传的美景。",
+                "pinyin": "Xiàguān fēng chuī dòng Shàngguān huā, Cāngshān xuě yìngzhào zhe Ěrhǎi yuè, zhè shì qiāngǔ liúchuán de měijǐng.",
+                "translation": "Le vent de Xiaguan caresse les fleurs, les neiges de Cangshan reflètent la lune sur le lac Erhai.",
                 "words": [
                   {
-                    "hanzi": "他",
-                    "pinyin": "tā",
-                    "translation": "il"
+                    "hanzi": "下关风",
+                    "pinyin": "Xiàguān fēng",
+                    "translation": "vent de Xiaguan"
                   },
                   {
-                    "hanzi": "轻轻按压",
-                    "pinyin": "qīngqīng ànyā",
-                    "translation": "pressa doucement"
+                    "hanzi": "苍山雪",
+                    "pinyin": "Cāngshān xuě",
+                    "translation": "neige de Cangshan"
                   },
                   {
-                    "hanzi": "盒底的",
-                    "pinyin": "hé dǐ de",
-                    "translation": "du fond de la boîte"
+                    "hanzi": "映照",
+                    "pinyin": "yìngzhào",
+                    "translation": "refléter"
                   },
                   {
-                    "hanzi": "凸起",
-                    "pinyin": "tūqǐ",
-                    "translation": "le relief"
+                    "hanzi": "千古流传",
+                    "pinyin": "qiāngǔ liúchuán",
+                    "translation": "transmis depuis des siècles"
+                  }
+                ]
+              },
+              {
+                "hanzi": "当他将第三个滑块推入角落的暗凹时，木盒内部突然传出一声清脆的机簧轻响。",
+                "pinyin": "Dāng tā jiāng dì sān gè huákuài tuī rù jiǎoluò de àn'āo shí, mùhé nèibù tūrán chuánchū yì shēng qīngcuì de jīhuáng qīngxiǎng.",
+                "translation": "Lorsqu'il enclencha le troisième curseur au fond de l'encoche, un clic d'engrenage métallique résonna.",
+                "words": [
+                  {
+                    "hanzi": "推入暗凹",
+                    "pinyin": "tuī rù àn'āo",
+                    "translation": "pousser dans l'encoche secrète"
                   },
                   {
-                    "hanzi": "咔哒一声轻响",
-                    "pinyin": "kādā yì shēng qīng xiǎng",
-                    "translation": "un déclic léger"
+                    "hanzi": "内部",
+                    "pinyin": "nèibù",
+                    "translation": "à l'intérieur"
                   },
                   {
-                    "hanzi": "一个",
-                    "pinyin": "yí gè",
-                    "translation": "un"
+                    "hanzi": "清脆轻响",
+                    "pinyin": "qīngcuì qīngxiǎng",
+                    "translation": "clic cristallin"
                   },
                   {
-                    "hanzi": "隐秘的",
-                    "pinyin": "yǐnmì de",
-                    "translation": "secret"
+                    "hanzi": "机簧",
+                    "pinyin": "jīhuáng",
+                    "translation": "ressort d'horlogerie"
+                  }
+                ]
+              },
+              {
+                "hanzi": "盒身底部的木板缓缓弹开，露出了一个制作隐秘的双层夹隔。",
+                "pinyin": "Héshēn dǐbù de mùbǎn huǎnhuǎn tán kāi, lùchū le yí gè zhìzuò yǐnmì de shuāngcéng jiágé.",
+                "translation": "Le panneau inférieur se souleva lentement, révélant un double fond astucieusement dissimulé.",
+                "words": [
+                  {
+                    "hanzi": "缓缓弹开",
+                    "pinyin": "huǎnhuǎn tán kāi",
+                    "translation": "s'ouvrir doucement"
                   },
                   {
-                    "hanzi": "夹层",
-                    "pinyin": "jiācéng",
-                    "translation": "compartiment"
+                    "hanzi": "露出",
+                    "pinyin": "lùchū",
+                    "translation": "dévoiler"
                   },
                   {
-                    "hanzi": "弹了出来",
-                    "pinyin": "tán le chūlai",
-                    "translation": "a jailli vers l'extérieur"
+                    "hanzi": "制作隐秘",
+                    "pinyin": "zhìzuò yǐnmì",
+                    "translation": "conception secrète"
+                  },
+                  {
+                    "hanzi": "双层夹隔",
+                    "pinyin": "shuāngcéng jiágé",
+                    "translation": "double fond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克的呼吸变得急促起来，他预感到一段尘封的往事即将重现世间。",
+                "pinyin": "Mǎkè de hūxī biàn de jícù qǐlai, tā yùgǎn dào yí duàn chénfēng de wǎngshì jíjiāng chóngxiàn shìjiān.",
+                "translation": "Le souffle de Marc s'accéléra ; il pressentait qu'un pan d'histoire oubliée allait renaître.",
+                "words": [
+                  {
+                    "hanzi": "呼吸急促",
+                    "pinyin": "hūxī jícù",
+                    "translation": "souffle court"
+                  },
+                  {
+                    "hanzi": "预感到",
+                    "pinyin": "yùgǎn dào",
+                    "translation": "pressentir"
+                  },
+                  {
+                    "hanzi": "尘封往事",
+                    "pinyin": "chénfēng wǎngshì",
+                    "translation": "mémoire enfouie"
+                  },
+                  {
+                    "hanzi": "重现世间",
+                    "pinyin": "chóngxiàn shìjiān",
+                    "translation": "revenir au jour"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "马克买下了这只木盒，回到客栈后迫不及待地坐在书桌前仔细研究。他轻轻按压盒底的凸起，咔哒一声轻响，一个隐秘的夹层弹了出来！"
+        "audioText": "马克思索片刻，试着按照大理风物志的古老顺序推动滑块。下关风吹动上关花，苍山雪映照着洱海月，这是千古流传的美景。当他将第三个滑块推入角落的暗凹时，木盒内部突然传出一声清脆的机簧轻响。盒身底部的木板缓缓弹开，露出了一个制作隐秘的双层夹隔。马克的呼吸变得急促起来，他预感到一段尘封的往事即将重现世间。"
       },
       {
         "pageNumber": 5,
@@ -567,112 +750,154 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "夹层内是一把带铜绿的小钥匙，以及一张折叠得整整齐齐的古丝绢。",
-                "pinyin": "Jiācéng nèi shì yì bǎ dài tónglǜ de xiǎo yàoshi, yǐjí yì zhāng zhédié de zhěngzhěngqíqí de gǔ sījùan.",
-                "translation": "Dans le compartiment se trouvaient une petite clé patinée de vert-de-gris ainsi qu'un pan de soie ancienne plié avec une extrême régularité.",
+                "hanzi": "夹层之中静静躺着两件物品，一件是小巧的古铜钥匙，另一件是折叠整齐的黄绸绢布。",
+                "pinyin": "Jiácéng zhī zhōng jìngjìng tǎng zhe liǎng jiàn wùpǐn, yí jiàn shì xiǎoqiǎo de gǔtóng yàoshi, lìng yí jiàn shì zhédié zhěngqí de huángchóu juànbù.",
+                "translation": "Dans la cavité reposaient deux objets : une fine clé en bronze ancien et un carré de soie ocre plié avec soin.",
                 "words": [
                   {
-                    "hanzi": "夹层内",
-                    "pinyin": "jiācéng nèi",
+                    "hanzi": "夹层之中",
+                    "pinyin": "jiácéng zhī zhōng",
                     "translation": "dans le compartiment"
                   },
                   {
-                    "hanzi": "是",
-                    "pinyin": "shì",
-                    "translation": "était"
+                    "hanzi": "古铜钥匙",
+                    "pinyin": "gǔtóng yàoshi",
+                    "translation": "clé de bronze"
                   },
                   {
-                    "hanzi": "一把",
-                    "pinyin": "yì bǎ",
-                    "translation": "une"
+                    "hanzi": "折叠整齐",
+                    "pinyin": "zhédié zhěngqí",
+                    "translation": "plié soigneusement"
                   },
                   {
-                    "hanzi": "带铜绿的",
-                    "pinyin": "dài tónglǜ de",
-                    "translation": "au vert-de-gris"
-                  },
-                  {
-                    "hanzi": "小钥匙",
-                    "pinyin": "xiǎo yàoshi",
-                    "translation": "petite clé"
-                  },
-                  {
-                    "hanzi": "以及",
-                    "pinyin": "yǐjí",
-                    "translation": "ainsi que"
-                  },
-                  {
-                    "hanzi": "一张",
-                    "pinyin": "yì zhāng",
-                    "translation": "une feuille de"
-                  },
-                  {
-                    "hanzi": "折叠得整整齐齐的",
-                    "pinyin": "zhédié de zhěngzhěngqíqí de",
-                    "translation": "pliée soigneusement"
-                  },
-                  {
-                    "hanzi": "古丝绢",
-                    "pinyin": "gǔ sījùan",
-                    "translation": "soie ancienne"
+                    "hanzi": "黄绸绢布",
+                    "pinyin": "huángchóu juànbù",
+                    "translation": "étoffe de soie jaune"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "绢上写着清秀的汉字：“苍山叠翠流水处，月光入室千卷开。”",
-                "pinyin": "Juàn shang xiě zhe qīngxiù de hànzì: \"Cāngshān diécuì liúshuǐ chù, yuèguāng rù shì qiān juǎn kāi.\"",
-                "translation": "Sur la soie étaient calligraphiés d'élégants caractères : « Là où les monts Cangshan rencontrent l'eau vive, le clair de lune dévoile mille rouleaux. »",
+                "hanzi": "铜钥匙表面长着淡淡的青绿锈斑，造型像是一条盘旋腾空的龙。",
+                "pinyin": "Tóng yàoshi biǎomiàn zhǎng zhe dàndàn de qīnglǜ xiùbān, zàoxíng xiàng shì yì tiáo pánxuán téngkōng de lóng.",
+                "translation": "La clé était recouverte d'un vert-de-gris d'époque, taillée à la silhouette d'un dragon volant.",
                 "words": [
                   {
-                    "hanzi": "绢上",
-                    "pinyin": "juàn shang",
-                    "translation": "sur la soie"
+                    "hanzi": "青绿锈斑",
+                    "pinyin": "qīnglǜ xiùbān",
+                    "translation": "patine vert-de-gris"
                   },
                   {
-                    "hanzi": "写着",
-                    "pinyin": "xiě zhe",
-                    "translation": "étaient écrits"
+                    "hanzi": "造型",
+                    "pinyin": "zàoxíng",
+                    "translation": "forme"
                   },
                   {
-                    "hanzi": "清秀的",
-                    "pinyin": "qīngxiù de",
-                    "translation": "élégants, délicats"
+                    "hanzi": "盘旋腾空",
+                    "pinyin": "pánxuán téngkōng",
+                    "translation": "ondulant vers le ciel"
                   },
                   {
-                    "hanzi": "汉字",
-                    "pinyin": "hànzì",
-                    "translation": "caractères chinois"
+                    "hanzi": "龙",
+                    "pinyin": "lóng",
+                    "translation": "dragon"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克戴上手套小心翼翼地展开绢布，上面写着四行苍劲有力的墨笔诗句。",
+                "pinyin": "Mǎkè dài shang shǒutào xiǎoxīnyìyì de zhǎnkāi juànbù, shàngmiàn xiě zhe sì háng cāngjìn yǒulì de mòbǐ shījù.",
+                "translation": "Marc enfila des gants et déplia l'étoffe qui portait quatre vers calligraphiés à l'encre de Chine.",
+                "words": [
+                  {
+                    "hanzi": "戴上手套",
+                    "pinyin": "dài shang shǒutào",
+                    "translation": "enfiler des gants"
                   },
                   {
-                    "hanzi": "苍山叠翠",
-                    "pinyin": "Cāngshān diécuì",
-                    "translation": "monts Cangshan verdoyants"
+                    "hanzi": "小心翼翼",
+                    "pinyin": "xiǎoxīnyìyì",
+                    "translation": "avec précaution"
                   },
                   {
-                    "hanzi": "流水处",
-                    "pinyin": "liúshuǐ chù",
-                    "translation": "lieu de l'eau vive"
+                    "hanzi": "苍劲有力",
+                    "pinyin": "cāngjìn yǒulì",
+                    "translation": "vigoureux et fier"
                   },
                   {
-                    "hanzi": "月光入室",
-                    "pinyin": "yuèguāng rù shì",
-                    "translation": "la lune entrant dans la pièce"
+                    "hanzi": "墨笔诗句",
+                    "pinyin": "mòbǐ shījù",
+                    "translation": "vers calligraphiés"
+                  }
+                ]
+              },
+              {
+                "hanzi": "“苍山龙泉隐玉门，三度月明见书真。莫向尘间争浮名，万卷文章留后人。”",
+                "pinyin": "\"Cāngshān lóngquán yǐn yùmén, sān dù yuè míng jiàn shū zhēn. Mò xiàng chénjiān zhēng fúmíng, wàn juàn wénzhāng liú hòurén.\"",
+                "translation": "« À la Source du Dragon de Cangshan se cache la porte de jade ; trois clairs de lune découvrent la vérité des livres. Ne cherchez point les vaines gloires, dix mille rouleaux attendent les générations futures. »",
+                "words": [
+                  {
+                    "hanzi": "苍山龙泉",
+                    "pinyin": "Cāngshān lóngquán",
+                    "translation": "Source du Dragon de Cangshan"
                   },
                   {
-                    "hanzi": "千卷开",
-                    "pinyin": "qiān juǎn kāi",
-                    "translation": "mille rouleaux s'ouvrent"
+                    "hanzi": "隐玉门",
+                    "pinyin": "yǐn yùmén",
+                    "translation": "cache la porte de jade"
+                  },
+                  {
+                    "hanzi": "月明",
+                    "pinyin": "yuè míng",
+                    "translation": "lune brillante"
+                  },
+                  {
+                    "hanzi": "万卷文章",
+                    "pinyin": "wàn juàn wénzhāng",
+                    "translation": "dix mille rouleaux de textes"
+                  },
+                  {
+                    "hanzi": "留后人",
+                    "pinyin": "liú hòurén",
+                    "translation": "laissés aux successeurs"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克凝视着诗句，意识到这正是通往南诏国失落皇家藏书楼的绝密地图！",
+                "pinyin": "Mǎkè níngshì zhe shījù, yìshí dào zhè zhèng shì tōng wǎng Nánzhàoguó shīluò huángjiā cángshūlóu de juémì dìtú!",
+                "translation": "Marc contempla le poème, comprenant qu'il tenait là la carte secrète menant à la bibliothèque royale de Nanzhao !",
+                "words": [
+                  {
+                    "hanzi": "凝视着",
+                    "pinyin": "níngshì zhe",
+                    "translation": "fixant du regard"
+                  },
+                  {
+                    "hanzi": "意识到",
+                    "pinyin": "yìshí dào",
+                    "translation": "se rendre compte"
+                  },
+                  {
+                    "hanzi": "南诏国",
+                    "pinyin": "Nánzhàoguó",
+                    "translation": "royaume de Nanzhao"
+                  },
+                  {
+                    "hanzi": "皇家藏书楼",
+                    "pinyin": "huángjiā cángshūlóu",
+                    "translation": "bibliothèque royale"
+                  },
+                  {
+                    "hanzi": "绝密地图",
+                    "pinyin": "juémì dìtú",
+                    "translation": "carte secrète"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "夹层内是一把带铜绿的小钥匙，以及一张折叠得整整齐齐的古丝绢。绢上写着清秀的汉字：“苍山叠翠流水处，月光入室千卷开。”"
+        "audioText": "夹层之中静静躺着两件物品，一件是小巧的古铜钥匙，另一件是折叠整齐的黄绸绢布。铜钥匙表面长着淡淡的青绿锈斑，造型像是一条盘旋腾空的龙。马克戴上手套小心翼翼地展开绢布，上面写着四行苍劲有力的墨笔诗句。“苍山龙泉隐玉门，三度月明见书真。莫向尘间争浮名，万卷文章留后人。”马克凝视着诗句，意识到这正是通往南诏国失落皇家藏书楼的绝密地图！"
       },
       {
         "pageNumber": 6,
@@ -684,102 +909,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "次日清晨，大理三塔在薄雾中若隐若现，空气清新湿润。",
-                "pinyin": "Cìrì qīngchén, Dàlǐ sān tǎ zài bówù zhōng ruòyǐnruòxiàn, kōngqì qīngxīn shīrùn.",
-                "translation": "Le lendemain à l'aube, les Trois Pagodes de Dali apparaissaient et disparaissaient dans la brume légère, sous un air frais et humide.",
+                "hanzi": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Fànhuáng gǔshī yǔ Báizú xiàngdǎo de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le vieux poème et le guide Bai\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "次日清晨",
-                    "pinyin": "cìrì qīngchén",
-                    "translation": "le lendemain à l'aube"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "大理三塔",
-                    "pinyin": "Dàlǐ sān tǎ",
-                    "translation": "les Trois Pagodes de Dali"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "在薄雾中",
-                    "pinyin": "zài bówù zhōng",
-                    "translation": "dans la brume fine"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
                   },
                   {
-                    "hanzi": "若隐若现",
-                    "pinyin": "ruòyǐnruòxiàn",
-                    "translation": "apparaissant par intermittence"
-                  },
-                  {
-                    "hanzi": "空气",
-                    "pinyin": "kōngqì",
-                    "translation": "l'air"
-                  },
-                  {
-                    "hanzi": "清新湿润",
-                    "pinyin": "qīngxīn shīrùn",
-                    "translation": "frais et humide"
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "马克拿着丝绢来到了古城著名的文史茶馆，希望能找到懂古文的专家。",
-                "pinyin": "Mǎkè ná zhe sījùan lái dào le gǔchéng zhùmíng de wénshǐ cháguǎn, xīwàng néng zhǎodào dǒng gǔwén de zhuānjiā.",
-                "translation": "Marc apporta la soie dans un célèbre salon de thé historique de la vieille ville, espérant y trouver un érudit.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "马克",
-                    "pinyin": "Mǎkè",
-                    "translation": "Marc"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "拿着丝绢",
-                    "pinyin": "ná zhe sījùan",
-                    "translation": "tenant la soie"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "来到了",
-                    "pinyin": "lái dào le",
-                    "translation": "arriva à"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "古城著名的",
-                    "pinyin": "gǔchéng zhùmíng de",
-                    "translation": "célèbre de la vieille ville"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "文史茶馆",
-                    "pinyin": "wénshǐ cháguǎn",
-                    "translation": "salon de thé d'histoire et littérature"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
                   },
                   {
-                    "hanzi": "希望",
-                    "pinyin": "xīwàng",
-                    "translation": "espérant"
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
                   },
                   {
-                    "hanzi": "能找到",
-                    "pinyin": "néng zhǎodào",
-                    "translation": "pouvoir trouver"
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
                   },
                   {
-                    "hanzi": "懂古文的",
-                    "pinyin": "dǒng gǔwén de",
-                    "translation": "qui comprend le chinois classique"
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
                   },
                   {
-                    "hanzi": "专家",
-                    "pinyin": "zhuānjiā",
-                    "translation": "expert"
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "次日清晨，大理三塔在薄雾中若隐若现，空气清新湿润。马克拿着丝绢来到了古城著名的文史茶馆，希望能找到懂古文的专家。"
+        "audioText": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 7,
@@ -791,127 +1031,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "茶馆里一位名叫阿妹的白族姑娘热情地接待了他，她正巧在大理大学主修历史。",
-                "pinyin": "Cháguǎn lǐ yí wèi míng jiào Āmèi de Báizú gūniang rèqíng de jiēdài le tā, tā zhèngqiǎo zài Dàlǐ Dàxué zhǔxiū lìshǐ.",
-                "translation": "Une jeune femme Bai nommée A-Mei l'accueillit chaleureusement ; il se trouvait qu'elle étudiait l'histoire à l'université de Dali.",
+                "hanzi": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Fànhuáng gǔshī yǔ Báizú xiàngdǎo de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le vieux poème et le guide Bai\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "茶馆里",
-                    "pinyin": "cháguǎn lǐ",
-                    "translation": "dans le salon de thé"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "一位",
-                    "pinyin": "yí wèi",
-                    "translation": "une"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "名叫阿妹的",
-                    "pinyin": "míng jiào Āmèi de",
-                    "translation": "prénommée A-Mei"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
                   },
                   {
-                    "hanzi": "白族姑娘",
-                    "pinyin": "Báizú gūniang",
-                    "translation": "jeune fille Bai"
-                  },
-                  {
-                    "hanzi": "热情地",
-                    "pinyin": "rèqíng de",
-                    "translation": "chaleureusement"
-                  },
-                  {
-                    "hanzi": "接待了他",
-                    "pinyin": "jiēdài le tā",
-                    "translation": "l'a reçu"
-                  },
-                  {
-                    "hanzi": "她",
-                    "pinyin": "tā",
-                    "translation": "elle"
-                  },
-                  {
-                    "hanzi": "正巧",
-                    "pinyin": "zhèngqiǎo",
-                    "translation": "par chance, justement"
-                  },
-                  {
-                    "hanzi": "在大理大学",
-                    "pinyin": "zài Dàlǐ Dàxué",
-                    "translation": "à l'université de Dali"
-                  },
-                  {
-                    "hanzi": "主修历史",
-                    "pinyin": "zhǔxiū lìshǐ",
-                    "translation": "avoir pour spécialité l'histoire"
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阿妹看到丝绢上的古字，惊讶地睁大了双眼：“天哪，这是古南诏的皇家秘藏记事！”",
-                "pinyin": "Āmèi kàn dào sījùan shang de gǔzì, jīngyà de zhēng dà le shuāngyǎn: \"Tiān na, zhè shì gǔ Nánzhào de huángjiā mìcáng jìshì!\"",
-                "translation": "En voyant la calligraphie sur la soie, A-Mei ouvrit de grands yeux stupéfaits : « Ciel, c'est une archive des trésors secrets de la famille royale de Nanzhao ! »",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "阿妹",
-                    "pinyin": "Āmèi",
-                    "translation": "A-Mei"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "看到",
-                    "pinyin": "kàn dào",
-                    "translation": "vit"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "丝绢上的",
-                    "pinyin": "sījùan shang de",
-                    "translation": "sur la soie"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "古字",
-                    "pinyin": "gǔzì",
-                    "translation": "caractères anciens"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "惊讶地",
-                    "pinyin": "jīngyà de",
-                    "translation": "avec surprise"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
                   },
                   {
-                    "hanzi": "睁大了双眼",
-                    "pinyin": "zhēng dà le shuāngyǎn",
-                    "translation": "écarquilla les yeux"
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
                   },
                   {
-                    "hanzi": "天哪",
-                    "pinyin": "tiān na",
-                    "translation": "mon Dieu"
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
                   },
                   {
-                    "hanzi": "这是",
-                    "pinyin": "zhè shì",
-                    "translation": "c'est"
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
                   },
                   {
-                    "hanzi": "古南诏的",
-                    "pinyin": "gǔ Nánzhào de",
-                    "translation": "de l'ancien Nanzhao"
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
                   },
                   {
-                    "hanzi": "皇家秘藏记事",
-                    "pinyin": "huángjiā mìcáng jìshì",
-                    "translation": "registre des trésors royaux"
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "茶馆里一位名叫阿妹的白族姑娘热情地接待了他，她正巧在大理大学主修历史。阿妹看到丝绢上的古字，惊讶地睁大了双眼：“天哪，这是古南诏的皇家秘藏记事！”"
+        "audioText": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 8,
@@ -923,107 +1153,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "阿妹解释道：“苍山有十八溪，流水处指的是‘清碧溪’后山的隐秘瀑布。”",
-                "pinyin": "Āmèi jiěshì dào: \"Cāngshān yǒu shíbā xī, liúshuǐ chù zhǐ de shì 'Qīngbìxī' hòushān de yǐnmì pùbù.\"",
-                "translation": "A-Mei expliqua : « Le mont Cangshan compte 18 ruisseaux ; le \"lieu de l'eau vive\" désigne la cascade cachée derrière le ruisseau Qingbixi. »",
+                "hanzi": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Fànhuáng gǔshī yǔ Báizú xiàngdǎo de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le vieux poème et le guide Bai\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "阿妹解释道",
-                    "pinyin": "Āmèi jiěshì dào",
-                    "translation": "A-Mei expliqua"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "苍山有",
-                    "pinyin": "Cāngshān yǒu",
-                    "translation": "Cangshan possède"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "十八溪",
-                    "pinyin": "shíbā xī",
-                    "translation": "18 ruisseaux"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
                   },
                   {
-                    "hanzi": "流水处",
-                    "pinyin": "liúshuǐ chù",
-                    "translation": "lieu d'eau vive"
-                  },
-                  {
-                    "hanzi": "指的是",
-                    "pinyin": "zhǐ de shì",
-                    "translation": "se réfère à"
-                  },
-                  {
-                    "hanzi": "清碧溪",
-                    "pinyin": "Qīngbìxī",
-                    "translation": "ruisseau Qingbixi"
-                  },
-                  {
-                    "hanzi": "后山的",
-                    "pinyin": "hòushān de",
-                    "translation": "de la montagne arrière"
-                  },
-                  {
-                    "hanzi": "隐秘瀑布",
-                    "pinyin": "yǐnmì pùbù",
-                    "translation": "cascade cachée"
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "“传说在一千多年前，战乱时期学者们把最珍贵的典籍藏进了山腹。”",
-                "pinyin": "“Chuánshuō zài yì qiān duō nián qián, zhànluàn shíqī xuézhěmen bǎ zuì zhēnguì de diǎnjí cáng jìn le shānfù.”",
-                "translation": "« Selon la légende, il y a plus de mille ans, en temps de guerre, des érudits ont caché les manuscrits les plus précieux au cœur de la montagne. »",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "传说在",
-                    "pinyin": "chuánshuō zài",
-                    "translation": "selon la légende il y a"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "一千多年前",
-                    "pinyin": "yì qiān duō nián qián",
-                    "translation": "plus de 1000 ans"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "战乱时期",
-                    "pinyin": "zhànluàn shíqī",
-                    "translation": "période de guerres"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "学者们",
-                    "pinyin": "xuézhěmen",
-                    "translation": "les érudits"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "把最珍贵的",
-                    "pinyin": "bǎ zuì zhēnguì de",
-                    "translation": "les plus précieux"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
                   },
                   {
-                    "hanzi": "典籍",
-                    "pinyin": "diǎnjí",
-                    "translation": "ouvrages classiques anciens"
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
                   },
                   {
-                    "hanzi": "藏进了",
-                    "pinyin": "cáng jìn le",
-                    "translation": "ont dissimulé dans"
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
                   },
                   {
-                    "hanzi": "山腹",
-                    "pinyin": "shānfù",
-                    "translation": "le ventre de la montagne"
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "阿妹解释道：“苍山有十八溪，流水处指的是‘清碧溪’后山的隐秘瀑布。”“传说在一千多年前，战乱时期学者们把最珍贵的典籍藏进了山腹。”"
+        "audioText": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 9,
@@ -1035,107 +1275,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "马克兴奋地提议：“明天是农历十五，正好有圆月，我们一起去探寻这个秘密吧！”",
-                "pinyin": "Mǎkè xīngfèn de tíyì: \"Míngtiān shì nónglì shíwǔ, zhènghǎo yǒu yuányuè, wǒmen yìqǐ qù tànxún zhè gè mìmì ba!\"",
-                "translation": "Marc proposa avec enthousiasme : « Demain c'est le 15 du mois lunaire, il y aura pleine lune, partons explorer ce secret ensemble ! »",
+                "hanzi": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Fànhuáng gǔshī yǔ Báizú xiàngdǎo de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le vieux poème et le guide Bai\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "马克",
-                    "pinyin": "Mǎkè",
-                    "translation": "Marc"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "兴奋地提议",
-                    "pinyin": "xīngfèn de tíyì",
-                    "translation": "proposa avec excitation"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "明天是",
-                    "pinyin": "míngtiān shì",
-                    "translation": "demain c'est"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
                   },
                   {
-                    "hanzi": "农历十五",
-                    "pinyin": "nónglì shíwǔ",
-                    "translation": "le 15e jour du calendrier lunaire"
-                  },
-                  {
-                    "hanzi": "正好有圆月",
-                    "pinyin": "zhènghǎo yǒu yuányuè",
-                    "translation": "il y a précisément pleine lune"
-                  },
-                  {
-                    "hanzi": "我们一起",
-                    "pinyin": "wǒmen yìqǐ",
-                    "translation": "nous ensemble"
-                  },
-                  {
-                    "hanzi": "去探寻",
-                    "pinyin": "qù tànxún",
-                    "translation": "aller explorer"
-                  },
-                  {
-                    "hanzi": "这个秘密吧",
-                    "pinyin": "zhè gè mìmì ba",
-                    "translation": "ce secret"
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阿妹点了点头，答应做马克的向导，两人约定次日午后在苍山索道口汇合。",
-                "pinyin": "Āmèi diǎn le diǎn tóu, dāying zuò Mǎkè de xiàngdǎo, liǎng rén yuēdìng cìrì wǔhòu zài Cāngshān suǒdàokǒu huìhé.",
-                "translation": "A-Mei hocha la tête et accepta d'être son guide ; ils convinrent de se retrouver le lendemain après-midi au départ du téléphérique de Cangshan.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "阿妹",
-                    "pinyin": "Āmèi",
-                    "translation": "A-Mei"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "点了点头",
-                    "pinyin": "diǎn le diǎn tóu",
-                    "translation": "hocha la tête"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "答应做",
-                    "pinyin": "dāying zuò",
-                    "translation": "accepta d'être"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "马克的向导",
-                    "pinyin": "Mǎkè de xiàngdǎo",
-                    "translation": "le guide de Marc"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "两人约定",
-                    "pinyin": "liǎng rén yuēdìng",
-                    "translation": "les deux convinrent"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
                   },
                   {
-                    "hanzi": "次日午后",
-                    "pinyin": "cìrì wǔhòu",
-                    "translation": "le lendemain après-midi"
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
                   },
                   {
-                    "hanzi": "在苍山索道口",
-                    "pinyin": "zài Cāngshān suǒdàokǒu",
-                    "translation": "à l'entrée du téléphérique de Cangshan"
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
                   },
                   {
-                    "hanzi": "汇合",
-                    "pinyin": "huìhé",
-                    "translation": "se retrouver"
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "马克兴奋地提议：“明天是农历十五，正好有圆月，我们一起去探寻这个秘密吧！”阿妹点了点头，答应做马克的向导，两人约定次日午后在苍山索道口汇合。"
+        "audioText": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 10,
@@ -1147,107 +1397,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "回到房间，马克整理好手电筒、绳索与保暖外套，心情久久不能平静。",
-                "pinyin": "Huí dào fángjiān, Mǎkè zhěnglǐ hǎo shǒudiàntǒng, shéngsuǒ yǔ bǎonuǎn wàitào, xīnqíng jiǔjiǔ bù néng píngjìng.",
-                "translation": "De retour dans sa chambre, Marc prépara sa lampe torche, des cordes et une veste chaude, le cœur battant d'impatience.",
+                "hanzi": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Fànhuáng gǔshī yǔ Báizú xiàngdǎo de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le vieux poème et le guide Bai\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "回到房间",
-                    "pinyin": "huí dào fángjiān",
-                    "translation": "de retour dans la chambre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "马克",
-                    "pinyin": "Mǎkè",
-                    "translation": "Marc"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "整理好",
-                    "pinyin": "zhěnglǐ hǎo",
-                    "translation": "rangea avec soin"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
                   },
                   {
-                    "hanzi": "手电筒",
-                    "pinyin": "shǒudiàntǒng",
-                    "translation": "lampe de poche"
-                  },
-                  {
-                    "hanzi": "绳索",
-                    "pinyin": "shéngsuǒ",
-                    "translation": "cordes"
-                  },
-                  {
-                    "hanzi": "与",
-                    "pinyin": "yǔ",
-                    "translation": "et"
-                  },
-                  {
-                    "hanzi": "保暖外套",
-                    "pinyin": "bǎonuǎn wàitào",
-                    "translation": "manteau chaud"
-                  },
-                  {
-                    "hanzi": "心情",
-                    "pinyin": "xīnqíng",
-                    "translation": "son esprit"
-                  },
-                  {
-                    "hanzi": "久久不能平静",
-                    "pinyin": "jiǔjiǔ bù néng píngjìng",
-                    "translation": "ne pouvait trouver le calme"
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "窗外月亮渐渐升起，银白色的光芒静静洒在大理古老的城墙上。",
-                "pinyin": "Chuāngwài yuèliang jiànjiàn shēng qǐ, yínbáisè de guāngmáng jìngjìng sǎ zài Dàlǐ gǔlǎo de chéngqiáng shang.",
-                "translation": "À la fenêtre, la lune montait peu à peu, versant ses reflets argentés sur les remparts antiques de Dali.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "窗外月亮",
-                    "pinyin": "chuāngwài yuèliang",
-                    "translation": "la lune par la fenêtre"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "渐渐升起",
-                    "pinyin": "jiànjiàn shēng qǐ",
-                    "translation": "montant peu à peu"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "银白色的",
-                    "pinyin": "yínbáisè de",
-                    "translation": "d'un blanc argenté"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "光芒",
-                    "pinyin": "guāngmáng",
-                    "translation": "rayons lumineux"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "静静洒在",
-                    "pinyin": "jìngjìng sǎ zài",
-                    "translation": "se déposant doucement sur"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
                   },
                   {
-                    "hanzi": "大理古老的",
-                    "pinyin": "Dàlǐ gǔlǎo de",
-                    "translation": "les antiques"
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
                   },
                   {
-                    "hanzi": "城墙上",
-                    "pinyin": "chéngqiáng shang",
-                    "translation": "remparts de Dali"
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "回到房间，马克整理好手电筒、绳索与保暖外套，心情久久不能平静。窗外月亮渐渐升起，银白色的光芒静静洒在大理古老的城墙上。"
+        "audioText": "在泛黄古诗与白族向导的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 11,
@@ -1259,72 +1519,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "午后两人沿着清碧溪栈道进山，两旁松柏苍翠，溪水清澈见底。",
-                "pinyin": "Wǔhòu liǎng rén yánzhe Qīngbìxī zhàndào jìn shān, liǎngpáng sōngbǎi cāngcuì, xīshuǐ qīngchè jiàndǐ.",
-                "translation": "Dans l'après-midi, ils s'enfoncèrent dans la montagne le long du sentier en bois ; les pins verdoyaient et l'eau du torrent était limpide.",
+                "hanzi": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Cāngshān shēnchù de pùbù zhī shēng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le grondement de la cascade de Cangshan\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "午后两人",
-                    "pinyin": "shānzhōng",
-                    "translation": "en montagne"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "沿着清碧溪栈",
-                    "pinyin": "pùbù",
-                    "translation": "la cascade"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "道进山，两旁松柏苍翠，溪水清澈见底。",
-                    "pinyin": "qiánjìn",
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
+                  }
+                ]
+              },
+              {
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
+                "words": [
+                  {
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
+                  },
+                  {
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
+                  },
+                  {
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
                     "translation": "avancer"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。",
-                "pinyin": "Mǎkè ná chū tóng yàoshi, fāxiàn yánbì zhèngzhōng yǒu yí dào jí xìwēi de yàoshikǒng.",
-                "translation": "Marc sortit la clé de bronze et remarqua au centre de la paroi une fente minuscule.",
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
                 "words": [
                   {
-                    "hanzi": "马克",
-                    "pinyin": "Mǎkè",
-                    "translation": "Marc"
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
                   },
                   {
-                    "hanzi": "拿出铜钥匙",
-                    "pinyin": "ná chū tóng yàoshi",
-                    "translation": "sortit la clé"
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
                   },
                   {
-                    "hanzi": "发现岩壁正中",
-                    "pinyin": "fāxiàn yánbì zhèngzhōng",
-                    "translation": "remarqua au centre du roc"
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
                   },
                   {
-                    "hanzi": "有一道",
-                    "pinyin": "yǒu yí dào",
-                    "translation": "il y avait une"
-                  },
-                  {
-                    "hanzi": "极细微的",
-                    "pinyin": "jí xìwēi de",
-                    "translation": "extrêmement fine"
-                  },
-                  {
-                    "hanzi": "钥匙孔",
-                    "pinyin": "yàoshikǒng",
-                    "translation": "serrure pour clé"
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "午后两人沿着清碧溪栈道进山，两旁松柏苍翠，溪水清澈见底。马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。"
+        "audioText": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 12,
@@ -1336,72 +1641,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "离开主步道后，山路变得格外陡峭，灌木丛中隐约有泉水奔流的声音。",
-                "pinyin": "Líkāi zhǔ bùdào hòu, shānlù biàn de géwài dǒuqiào, guànmùcóng zhōng yǐnyuē yǒu quánshuǐ bēnliú de shēngyīn.",
-                "translation": "En quittant le sentier principal, la pente devint escarpée ; au milieu des buissons résonnait le grondement lointain d'une cascade.",
+                "hanzi": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Cāngshān shēnchù de pùbù zhī shēng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le grondement de la cascade de Cangshan\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "离开主步",
-                    "pinyin": "shānzhōng",
-                    "translation": "en montagne"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "道后，山路变",
-                    "pinyin": "pùbù",
-                    "translation": "la cascade"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "得格外陡峭，灌木丛中隐约有泉水奔流的声音。",
-                    "pinyin": "qiánjìn",
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
+                  }
+                ]
+              },
+              {
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
+                "words": [
+                  {
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
+                  },
+                  {
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
+                  },
+                  {
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
                     "translation": "avancer"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。",
-                "pinyin": "Mǎkè ná chū tóng yàoshi, fāxiàn yánbì zhèngzhōng yǒu yí dào jí xìwēi de yàoshikǒng.",
-                "translation": "Marc sortit la clé de bronze et remarqua au centre de la paroi une fente minuscule.",
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
                 "words": [
                   {
-                    "hanzi": "马克",
-                    "pinyin": "Mǎkè",
-                    "translation": "Marc"
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
                   },
                   {
-                    "hanzi": "拿出铜钥匙",
-                    "pinyin": "ná chū tóng yàoshi",
-                    "translation": "sortit la clé"
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
                   },
                   {
-                    "hanzi": "发现岩壁正中",
-                    "pinyin": "fāxiàn yánbì zhèngzhōng",
-                    "translation": "remarqua au centre du roc"
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
                   },
                   {
-                    "hanzi": "有一道",
-                    "pinyin": "yǒu yí dào",
-                    "translation": "il y avait une"
-                  },
-                  {
-                    "hanzi": "极细微的",
-                    "pinyin": "jí xìwēi de",
-                    "translation": "extrêmement fine"
-                  },
-                  {
-                    "hanzi": "钥匙孔",
-                    "pinyin": "yàoshikǒng",
-                    "translation": "serrure pour clé"
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "离开主步道后，山路变得格外陡峭，灌木丛中隐约有泉水奔流的声音。马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。"
+        "audioText": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 13,
@@ -1413,72 +1763,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "穿过一片古老的杜鹃林，一座隐藏在两座山峰夹缝间的大瀑布赫然出现在眼前！",
-                "pinyin": "Chuānguò yí piàn gǔlǎo de dùjuānlín, yí zuò yǐncáng zài liǎng zuò shānfēng jiāfèng jiān de dà pùbù hèrán chūxiàn zài yǎnqián!",
-                "translation": "Après avoir traversé un bosquet d'azalées centenaires, une majestueuse chute d'eau nichée entre deux falaises apparut sous leurs yeux !",
+                "hanzi": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Cāngshān shēnchù de pùbù zhī shēng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le grondement de la cascade de Cangshan\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "穿过一片",
-                    "pinyin": "shānzhōng",
-                    "translation": "en montagne"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "古老的杜鹃林",
-                    "pinyin": "pùbù",
-                    "translation": "la cascade"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "，一座隐藏在两座山峰夹缝间的大瀑布赫然出现在眼前！",
-                    "pinyin": "qiánjìn",
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
+                  }
+                ]
+              },
+              {
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
+                "words": [
+                  {
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
+                  },
+                  {
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
+                  },
+                  {
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
                     "translation": "avancer"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。",
-                "pinyin": "Mǎkè ná chū tóng yàoshi, fāxiàn yánbì zhèngzhōng yǒu yí dào jí xìwēi de yàoshikǒng.",
-                "translation": "Marc sortit la clé de bronze et remarqua au centre de la paroi une fente minuscule.",
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
                 "words": [
                   {
-                    "hanzi": "马克",
-                    "pinyin": "Mǎkè",
-                    "translation": "Marc"
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
                   },
                   {
-                    "hanzi": "拿出铜钥匙",
-                    "pinyin": "ná chū tóng yàoshi",
-                    "translation": "sortit la clé"
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
                   },
                   {
-                    "hanzi": "发现岩壁正中",
-                    "pinyin": "fāxiàn yánbì zhèngzhōng",
-                    "translation": "remarqua au centre du roc"
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
                   },
                   {
-                    "hanzi": "有一道",
-                    "pinyin": "yǒu yí dào",
-                    "translation": "il y avait une"
-                  },
-                  {
-                    "hanzi": "极细微的",
-                    "pinyin": "jí xìwēi de",
-                    "translation": "extrêmement fine"
-                  },
-                  {
-                    "hanzi": "钥匙孔",
-                    "pinyin": "yàoshikǒng",
-                    "translation": "serrure pour clé"
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "穿过一片古老的杜鹃林，一座隐藏在两座山峰夹缝间的大瀑布赫然出现在眼前！马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。"
+        "audioText": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 14,
@@ -1490,72 +1885,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "水雾弥漫在山谷中，水声如雷，阳光在飞瀑上方映出一道绚丽的彩虹。",
-                "pinyin": "Shuǐwù mímàn zài shāngǔ zhōng, shuǐshēng rú léi, yángguāng zài fēipù shàngfāng yìng chū yí dào xuànlì de cǎihóng.",
-                "translation": "La brume flottait dans la gorge avec un fracas de tonnerre, tandis que le soleil dessinait un arc-en-ciel au-dessus des eaux.",
+                "hanzi": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Cāngshān shēnchù de pùbù zhī shēng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le grondement de la cascade de Cangshan\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "水雾弥漫",
-                    "pinyin": "shānzhōng",
-                    "translation": "en montagne"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "在山谷中，水",
-                    "pinyin": "pùbù",
-                    "translation": "la cascade"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "声如雷，阳光在飞瀑上方映出一道绚丽的彩虹。",
-                    "pinyin": "qiánjìn",
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
+                  }
+                ]
+              },
+              {
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
+                "words": [
+                  {
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
+                  },
+                  {
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
+                  },
+                  {
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
                     "translation": "avancer"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。",
-                "pinyin": "Mǎkè ná chū tóng yàoshi, fāxiàn yánbì zhèngzhōng yǒu yí dào jí xìwēi de yàoshikǒng.",
-                "translation": "Marc sortit la clé de bronze et remarqua au centre de la paroi une fente minuscule.",
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
                 "words": [
                   {
-                    "hanzi": "马克",
-                    "pinyin": "Mǎkè",
-                    "translation": "Marc"
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
                   },
                   {
-                    "hanzi": "拿出铜钥匙",
-                    "pinyin": "ná chū tóng yàoshi",
-                    "translation": "sortit la clé"
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
                   },
                   {
-                    "hanzi": "发现岩壁正中",
-                    "pinyin": "fāxiàn yánbì zhèngzhōng",
-                    "translation": "remarqua au centre du roc"
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
                   },
                   {
-                    "hanzi": "有一道",
-                    "pinyin": "yǒu yí dào",
-                    "translation": "il y avait une"
-                  },
-                  {
-                    "hanzi": "极细微的",
-                    "pinyin": "jí xìwēi de",
-                    "translation": "extrêmement fine"
-                  },
-                  {
-                    "hanzi": "钥匙孔",
-                    "pinyin": "yàoshikǒng",
-                    "translation": "serrure pour clé"
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "水雾弥漫在山谷中，水声如雷，阳光在飞瀑上方映出一道绚丽的彩虹。马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。"
+        "audioText": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 15,
@@ -1567,72 +2007,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "阿妹指着瀑布左侧潮湿的岩壁：“看！那块石壁上雕刻着和木盒上一模一样的云月图！”",
-                "pinyin": "Āmèi zhǐ zhe pùbù zuǒcè cháoshī de yánbì: \"Kàn! Nà kuài shíbì shang diāokè zhe hé mùhé shang yìmúyíyàng de yúnyuè tú!\"",
-                "translation": "A-Mei pointa la falaise humide à gauche de la cascade : « Regarde ! La roche est gravée du même motif de lune et nuages que sur la boîte ! »",
+                "hanzi": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Cāngshān shēnchù de pùbù zhī shēng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Le grondement de la cascade de Cangshan\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "阿妹指着",
-                    "pinyin": "shānzhōng",
-                    "translation": "en montagne"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "瀑布左侧潮湿",
-                    "pinyin": "pùbù",
-                    "translation": "la cascade"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "的岩壁：“看！那块石壁上雕刻着和木盒上一模一样的云月图！”",
-                    "pinyin": "qiánjìn",
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
+                  }
+                ]
+              },
+              {
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
+                "words": [
+                  {
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
+                  },
+                  {
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
+                  },
+                  {
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
                     "translation": "avancer"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。",
-                "pinyin": "Mǎkè ná chū tóng yàoshi, fāxiàn yánbì zhèngzhōng yǒu yí dào jí xìwēi de yàoshikǒng.",
-                "translation": "Marc sortit la clé de bronze et remarqua au centre de la paroi une fente minuscule.",
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
                 "words": [
                   {
-                    "hanzi": "马克",
-                    "pinyin": "Mǎkè",
-                    "translation": "Marc"
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
                   },
                   {
-                    "hanzi": "拿出铜钥匙",
-                    "pinyin": "ná chū tóng yàoshi",
-                    "translation": "sortit la clé"
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
                   },
                   {
-                    "hanzi": "发现岩壁正中",
-                    "pinyin": "fāxiàn yánbì zhèngzhōng",
-                    "translation": "remarqua au centre du roc"
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
                   },
                   {
-                    "hanzi": "有一道",
-                    "pinyin": "yǒu yí dào",
-                    "translation": "il y avait une"
-                  },
-                  {
-                    "hanzi": "极细微的",
-                    "pinyin": "jí xìwēi de",
-                    "translation": "extrêmement fine"
-                  },
-                  {
-                    "hanzi": "钥匙孔",
-                    "pinyin": "yàoshikǒng",
-                    "translation": "serrure pour clé"
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "阿妹指着瀑布左侧潮湿的岩壁：“看！那块石壁上雕刻着和木盒上一模一样的云月图！”马克拿出铜钥匙，发现岩壁正中有一道极细微的钥匙孔。"
+        "audioText": "在苍山深处的瀑布之声的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 16,
@@ -1644,62 +2129,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "马克将钥匙插入孔中轻轻一转，只听轰隆一声，坚硬的岩石缓缓向两侧移开！",
-                "pinyin": "Mǎkè jiāng yàoshi chārù kǒng zhōng qīngqīng yí zhuàn, zhǐ tīng hōnglóng yì shēng, jiānyìng de yánshí huǎnhuǎn xiàng liǎngcè yíkāi!",
-                "translation": "Marc tourna délicatement la clé dans la fente ; dans un grondement sourd, le roc s'écarta lentement de part et d'autre !",
+                "hanzi": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Qīngtóng chángdēng yǔ shímén jīguān de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Les lampes de bronze et la porte de pierre\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "马克将钥匙插",
-                    "pinyin": "shímén",
-                    "translation": "porte de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "入孔中轻轻一",
-                    "pinyin": "tōngdào",
-                    "translation": "couloir secret"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "转，只听轰隆一声，坚硬的岩石缓缓向两侧移开！",
-                    "pinyin": "qiánjìn",
-                    "translation": "s'avancer"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。",
-                "pinyin": "Āmèi gēnjù Báizú tiānwén mínyáo, àn shùnxù tuīyā le duìyìng de sì kē xīngxiù shídiāo, dàmén yìngshēng kāiqǐ.",
-                "translation": "En récitant une comptine astronomique Bai, A-Mei pressa les quatre dalles d'étoiles correspondantes, et la porte s'ouvrit majestueusement.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "阿妹",
-                    "pinyin": "Āmèi",
-                    "translation": "A-Mei"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "根据民谣",
-                    "pinyin": "gēnjù mínyáo",
-                    "translation": "selon la comptine"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "推压了石雕",
-                    "pinyin": "tuīyā le shídiāo",
-                    "translation": "pressa les gravures de pierre"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "大门应声开启",
-                    "pinyin": "dàmén yìngshēng kāiqǐ",
-                    "translation": "la porte s'ouvrit d'elle-même"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "马克将钥匙插入孔中轻轻一转，只听轰隆一声，坚硬的岩石缓缓向两侧移开！阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。"
+        "audioText": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 17,
@@ -1711,62 +2251,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "石门后是一条幽深的石阶通道，一股带有泥土清香的凉气迎面扑来。",
-                "pinyin": "Shímén hòu shì yì tiáo yōushēn de shíjiē tōngdào, yì gǔ dài yǒu nítǔ qīngxiāng de liángqì yíngmiàn pū lái.",
-                "translation": "Derrière la porte de pierre s'ouvrait un escalier secret ; une bouffée d'air frais parfumé de mousse les accueillit.",
+                "hanzi": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Qīngtóng chángdēng yǔ shímén jīguān de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Les lampes de bronze et la porte de pierre\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "石门后是一条",
-                    "pinyin": "shímén",
-                    "translation": "porte de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "幽深的石阶通",
-                    "pinyin": "tōngdào",
-                    "translation": "couloir secret"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "道，一股带有泥土清香的凉气迎面扑来。",
-                    "pinyin": "qiánjìn",
-                    "translation": "s'avancer"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。",
-                "pinyin": "Āmèi gēnjù Báizú tiānwén mínyáo, àn shùnxù tuīyā le duìyìng de sì kē xīngxiù shídiāo, dàmén yìngshēng kāiqǐ.",
-                "translation": "En récitant une comptine astronomique Bai, A-Mei pressa les quatre dalles d'étoiles correspondantes, et la porte s'ouvrit majestueusement.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "阿妹",
-                    "pinyin": "Āmèi",
-                    "translation": "A-Mei"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "根据民谣",
-                    "pinyin": "gēnjù mínyáo",
-                    "translation": "selon la comptine"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "推压了石雕",
-                    "pinyin": "tuīyā le shídiāo",
-                    "translation": "pressa les gravures de pierre"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "大门应声开启",
-                    "pinyin": "dàmén yìngshēng kāiqǐ",
-                    "translation": "la porte s'ouvrit d'elle-même"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "石门后是一条幽深的石阶通道，一股带有泥土清香的凉气迎面扑来。阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。"
+        "audioText": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 18,
@@ -1778,62 +2373,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "两人打开手电筒小心迈入通道，通道两侧伫立着雕工古拙的青铜灯台。",
-                "pinyin": "Liǎng rén dǎkāi shǒudiàntǒng xiǎoxīn màirù tōngdào, tōngdào liǎngcè zhùlì zhe diāogōng gǔzhuō de qīngtóng dēngtái.",
-                "translation": "Ils allumèrent leurs lampes et s'avancèrent ; des lampes de bronze séculaires bordaient les murs.",
+                "hanzi": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Qīngtóng chángdēng yǔ shímén jīguān de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Les lampes de bronze et la porte de pierre\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "两人打开手电",
-                    "pinyin": "shímén",
-                    "translation": "porte de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "筒小心迈入通",
-                    "pinyin": "tōngdào",
-                    "translation": "couloir secret"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "道，通道两侧伫立着雕工古拙的青铜灯台。",
-                    "pinyin": "qiánjìn",
-                    "translation": "s'avancer"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。",
-                "pinyin": "Āmèi gēnjù Báizú tiānwén mínyáo, àn shùnxù tuīyā le duìyìng de sì kē xīngxiù shídiāo, dàmén yìngshēng kāiqǐ.",
-                "translation": "En récitant une comptine astronomique Bai, A-Mei pressa les quatre dalles d'étoiles correspondantes, et la porte s'ouvrit majestueusement.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "阿妹",
-                    "pinyin": "Āmèi",
-                    "translation": "A-Mei"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "根据民谣",
-                    "pinyin": "gēnjù mínyáo",
-                    "translation": "selon la comptine"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "推压了石雕",
-                    "pinyin": "tuīyā le shídiāo",
-                    "translation": "pressa les gravures de pierre"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "大门应声开启",
-                    "pinyin": "dàmén yìngshēng kāiqǐ",
-                    "translation": "la porte s'ouvrit d'elle-même"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "两人打开手电筒小心迈入通道，通道两侧伫立着雕工古拙的青铜灯台。阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。"
+        "audioText": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 19,
@@ -1845,62 +2495,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "石壁上绘有色彩斑斓的壁画，记录着千年前茶马古道上商队穿行于雪山的盛景。",
-                "pinyin": "Shíbì shang huì yǒu sècǎi bānlán de bìhuà, jìlù zhe qiānnián qián Chámǎ Gǔdào shang shāngduì chuānxíng yú xuěshān de shèngjǐng.",
-                "translation": "Les fresques polychromes dépeignaient les caravanes de la Route du Thé et des Chevaux franchissant les cimes enneigées il y a mille ans.",
+                "hanzi": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Qīngtóng chángdēng yǔ shímén jīguān de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Les lampes de bronze et la porte de pierre\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "石壁上绘有色",
-                    "pinyin": "shímén",
-                    "translation": "porte de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "彩斑斓的壁画",
-                    "pinyin": "tōngdào",
-                    "translation": "couloir secret"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "，记录着千年前茶马古道上商队穿行于雪山的盛景。",
-                    "pinyin": "qiánjìn",
-                    "translation": "s'avancer"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。",
-                "pinyin": "Āmèi gēnjù Báizú tiānwén mínyáo, àn shùnxù tuīyā le duìyìng de sì kē xīngxiù shídiāo, dàmén yìngshēng kāiqǐ.",
-                "translation": "En récitant une comptine astronomique Bai, A-Mei pressa les quatre dalles d'étoiles correspondantes, et la porte s'ouvrit majestueusement.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "阿妹",
-                    "pinyin": "Āmèi",
-                    "translation": "A-Mei"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "根据民谣",
-                    "pinyin": "gēnjù mínyáo",
-                    "translation": "selon la comptine"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "推压了石雕",
-                    "pinyin": "tuīyā le shídiāo",
-                    "translation": "pressa les gravures de pierre"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "大门应声开启",
-                    "pinyin": "dàmén yìngshēng kāiqǐ",
-                    "translation": "la porte s'ouvrit d'elle-même"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "石壁上绘有色彩斑斓的壁画，记录着千年前茶马古道上商队穿行于雪山的盛景。阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。"
+        "audioText": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 20,
@@ -1912,62 +2617,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "前方的台阶突然到达尽头，出现了一道雕有二十八星宿的巨大青石大门。",
-                "pinyin": "Qiánfāng de táijiē tūrán dàodá jìntóu, chūxiàn le yí dào diāo yǒu èrshíbā xīngxiù de jùdà qīngshí dàmén.",
-                "translation": "Les marches atteignirent une fin abrupte, ouvrant sur une immense porte de granit ornée des 28 constellations stellaires.",
+                "hanzi": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Qīngtóng chángdēng yǔ shímén jīguān de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"Les lampes de bronze et la porte de pierre\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "前方的台阶突",
-                    "pinyin": "shímén",
-                    "translation": "porte de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "然到达尽头，",
-                    "pinyin": "tōngdào",
-                    "translation": "couloir secret"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "出现了一道雕有二十八星宿的巨大青石大门。",
-                    "pinyin": "qiánjìn",
-                    "translation": "s'avancer"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。",
-                "pinyin": "Āmèi gēnjù Báizú tiānwén mínyáo, àn shùnxù tuīyā le duìyìng de sì kē xīngxiù shídiāo, dàmén yìngshēng kāiqǐ.",
-                "translation": "En récitant une comptine astronomique Bai, A-Mei pressa les quatre dalles d'étoiles correspondantes, et la porte s'ouvrit majestueusement.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "阿妹",
-                    "pinyin": "Āmèi",
-                    "translation": "A-Mei"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "根据民谣",
-                    "pinyin": "gēnjù mínyáo",
-                    "translation": "selon la comptine"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "推压了石雕",
-                    "pinyin": "tuīyā le shídiāo",
-                    "translation": "pressa les gravures de pierre"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "大门应声开启",
-                    "pinyin": "dàmén yìngshēng kāiqǐ",
-                    "translation": "la porte s'ouvrit d'elle-même"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "前方的台阶突然到达尽头，出现了一道雕有二十八星宿的巨大青石大门。阿妹根据白族天文民谣，按顺序推压了对应的四颗星宿石雕，大门应声开启。"
+        "audioText": "在青铜长灯与石门机关的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 21,
@@ -1979,57 +2739,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "大门后是一间开阔无比的天然石厅，穹顶上方竟然有一个直通山顶的天窗！",
-                "pinyin": "Dàmén hòu shì yì jiān kāikuò wúbǐ de tiānrán shítīng, qióngdǐng shàngfāng jìngrán yǒu yí gè zhítōng shāndǐng de tiānchuāng!",
-                "translation": "Derrière s'étendait une vaste salle souterraine, dotée d'une ouverture zénithale débouchant sous le ciel étoilé !",
+                "hanzi": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Yuèguāng zhàoliàng de shūjuàn zhī gé de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La bibliothèque au clair de lune\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "大门后是一间",
-                    "pinyin": "shítīng",
-                    "translation": "salle de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "开阔无比的天",
-                    "pinyin": "yuèguāng",
-                    "translation": "clair de lune"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "然石厅，穹顶上方竟然有一个直通山顶的天窗！",
-                    "pinyin": "shūjuàn",
-                    "translation": "anciens parchemins"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。",
-                "pinyin": "Zhè yí kè, liǎng gè niánqīngrén dōu bèi gǔrén shǒuhù zhīshi yǔ hépíng de wěidà zhìhuì shēnshēn zhènhàn.",
-                "translation": "À cet instant, les deux jeunes gens furent bouleversés par la grandeur d'esprit des anciens protégeant le savoir.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "这一刻",
-                    "pinyin": "zhè yí kè",
-                    "translation": "à cet instant"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "两个年轻人",
-                    "pinyin": "liǎng gè niánqīngrén",
-                    "translation": "les deux jeunes"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "深深震撼",
-                    "pinyin": "shēnshēn zhènhàn",
-                    "translation": "profondément émus"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "大门后是一间开阔无比的天然石厅，穹顶上方竟然有一个直通山顶的天窗！这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。"
+        "audioText": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 22,
@@ -2041,57 +2861,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "时值深夜，一轮皎洁的满月正好升到天窗中央，清冷的月光如银河倾泻而下。",
-                "pinyin": "Shí zhí shēnyè, yì lún jiǎojié de mǎnyuè zhènghǎo shēng dào tiānchuāng zhōngyāng, qīnglěng de yuèguāng rú yínhé qīngxiè ér xià.",
-                "translation": "En cette nuit de pleine lune, la lumière blanche s'engouffrait par l'ouverture comme une cascade d'étoiles.",
+                "hanzi": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Yuèguāng zhàoliàng de shūjuàn zhī gé de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La bibliothèque au clair de lune\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "时值深夜，一",
-                    "pinyin": "shítīng",
-                    "translation": "salle de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "轮皎洁的满月",
-                    "pinyin": "yuèguāng",
-                    "translation": "clair de lune"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "正好升到天窗中央，清冷的月光如银河倾泻而下。",
-                    "pinyin": "shūjuàn",
-                    "translation": "anciens parchemins"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。",
-                "pinyin": "Zhè yí kè, liǎng gè niánqīngrén dōu bèi gǔrén shǒuhù zhīshi yǔ hépíng de wěidà zhìhuì shēnshēn zhènhàn.",
-                "translation": "À cet instant, les deux jeunes gens furent bouleversés par la grandeur d'esprit des anciens protégeant le savoir.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "这一刻",
-                    "pinyin": "zhè yí kè",
-                    "translation": "à cet instant"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "两个年轻人",
-                    "pinyin": "liǎng gè niánqīngrén",
-                    "translation": "les deux jeunes"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "深深震撼",
-                    "pinyin": "shēnshēn zhènhàn",
-                    "translation": "profondément émus"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "时值深夜，一轮皎洁的满月正好升到天窗中央，清冷的月光如银河倾泻而下。这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。"
+        "audioText": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 23,
@@ -2103,57 +2983,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "月光照耀之处，数排石架整齐排列，上面整整齐齐码放着数以千计的竹简与丝卷！",
-                "pinyin": "Yuèguāng zhàoyào zhī chù, shù pái shíjià zhěngqí páiliè, shàngmiàn zhěngzhěngqíqí mǎfàng zhe shù yǐ qiān jì de zhújiǎn yǔ sījuàn!",
-                "translation": "Là où tombait le clair de lune, des milliers de rouleaux de bambou et de soieries reposaient intacts sur des étagères de pierre !",
+                "hanzi": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Yuèguāng zhàoliàng de shūjuàn zhī gé de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La bibliothèque au clair de lune\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "月光照耀之处",
-                    "pinyin": "shítīng",
-                    "translation": "salle de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "，数排石架整",
-                    "pinyin": "yuèguāng",
-                    "translation": "clair de lune"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "齐排列，上面整整齐齐码放着数以千计的竹简与丝卷！",
-                    "pinyin": "shūjuàn",
-                    "translation": "anciens parchemins"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。",
-                "pinyin": "Zhè yí kè, liǎng gè niánqīngrén dōu bèi gǔrén shǒuhù zhīshi yǔ hépíng de wěidà zhìhuì shēnshēn zhènhàn.",
-                "translation": "À cet instant, les deux jeunes gens furent bouleversés par la grandeur d'esprit des anciens protégeant le savoir.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "这一刻",
-                    "pinyin": "zhè yí kè",
-                    "translation": "à cet instant"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "两个年轻人",
-                    "pinyin": "liǎng gè niánqīngrén",
-                    "translation": "les deux jeunes"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "深深震撼",
-                    "pinyin": "shēnshēn zhènhàn",
-                    "translation": "profondément émus"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "月光照耀之处，数排石架整齐排列，上面整整齐齐码放着数以千计的竹简与丝卷！这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。"
+        "audioText": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 24,
@@ -2165,57 +3105,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "原来古诗中说的“月光入室千卷开”，指的就是满月之夜为藏经阁提供天然照亮！",
-                "pinyin": "Yuánlái gǔshī zhōng shuō de \"yuèguāng rù shì qiān juǎn kāi\", zhǐ de jiù shì mǎnyuè zhī yè wèi cángjīnggé tígōng tiānrán zhàoliàng!",
-                "translation": "Le vers « le clair de lune dévoile mille rouleaux » signifiait que la pleine lune illuminait naturellement la bibliothèque sacrée !",
+                "hanzi": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Yuèguāng zhàoliàng de shūjuàn zhī gé de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La bibliothèque au clair de lune\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "原来古诗中说",
-                    "pinyin": "shítīng",
-                    "translation": "salle de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "的“月光入室",
-                    "pinyin": "yuèguāng",
-                    "translation": "clair de lune"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "千卷开”，指的就是满月之夜为藏经阁提供天然照亮！",
-                    "pinyin": "shūjuàn",
-                    "translation": "anciens parchemins"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。",
-                "pinyin": "Zhè yí kè, liǎng gè niánqīngrén dōu bèi gǔrén shǒuhù zhīshi yǔ hépíng de wěidà zhìhuì shēnshēn zhènhàn.",
-                "translation": "À cet instant, les deux jeunes gens furent bouleversés par la grandeur d'esprit des anciens protégeant le savoir.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "这一刻",
-                    "pinyin": "zhè yí kè",
-                    "translation": "à cet instant"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "两个年轻人",
-                    "pinyin": "liǎng gè niánqīngrén",
-                    "translation": "les deux jeunes"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "深深震撼",
-                    "pinyin": "shēnshēn zhènhàn",
-                    "translation": "profondément émus"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "原来古诗中说的“月光入室千卷开”，指的就是满月之夜为藏经阁提供天然照亮！这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。"
+        "audioText": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 25,
@@ -2227,57 +3227,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "马克轻轻拿起一卷记录，上面工整地记述着一千年前各民族人民友好往来的历史。",
-                "pinyin": "Mǎkè qīngqīng ná qǐ yí juàn jìlù, shàngmiàn gōngzhěng de jìshù zhe yì qiān nián qián gè mínzú rénmín yǒuhǎo wǎnglái de lìshǐ.",
-                "translation": "Marc souleva délicatement un rouleau narrant les amitiés et échanges culturels entre les peuples il y a mille ans.",
+                "hanzi": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Yuèguāng zhàoliàng de shūjuàn zhī gé de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La bibliothèque au clair de lune\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "马克轻轻拿起",
-                    "pinyin": "shítīng",
-                    "translation": "salle de pierre"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "一卷记录，上",
-                    "pinyin": "yuèguāng",
-                    "translation": "clair de lune"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "面工整地记述着一千年前各民族人民友好往来的历史。",
-                    "pinyin": "shūjuàn",
-                    "translation": "anciens parchemins"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。",
-                "pinyin": "Zhè yí kè, liǎng gè niánqīngrén dōu bèi gǔrén shǒuhù zhīshi yǔ hépíng de wěidà zhìhuì shēnshēn zhènhàn.",
-                "translation": "À cet instant, les deux jeunes gens furent bouleversés par la grandeur d'esprit des anciens protégeant le savoir.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "这一刻",
-                    "pinyin": "zhè yí kè",
-                    "translation": "à cet instant"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "两个年轻人",
-                    "pinyin": "liǎng gè niánqīngrén",
-                    "translation": "les deux jeunes"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "深深震撼",
-                    "pinyin": "shēnshēn zhènhàn",
-                    "translation": "profondément émus"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
+                  },
+                  {
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
+                  },
+                  {
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "马克轻轻拿起一卷记录，上面工整地记述着一千年前各民族人民友好往来的历史。这一刻，两个年轻人都被古人守护知识与和平的伟大智慧深深震撼。"
+        "audioText": "在月光照亮的书卷之阁的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 26,
@@ -2289,67 +3349,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "两人没有触碰任何文物，而是用手机记录下洞穴的坐标与文献照片，然后原样锁好了石门。",
-                "pinyin": "Liǎng rén méiyǒu chùpèng rènhé wénwù, ér shì yòng shǒujī jìlù xià dòngxué de zuòbiāo yǔ wénxiàn zhàopiàn, ránhòu yuányàng suǒ hǎo le shímén.",
-                "translation": "Sans déplacer le moindre artefact, ils photographièrent les lieux, notèrent les coordonnées GPS et refermèrent soigneusement la porte de pierre.",
+                "hanzi": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Shǒuhù qiānnián de lìshǐ huíxiǎng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La mémoire gardée depuis mille ans\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "两人没有触碰",
-                    "pinyin": "wénwù",
-                    "translation": "patrimoine"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "任何文物，而",
-                    "pinyin": "bǎohù",
-                    "translation": "protéger"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "是用手机记录下洞穴的坐标与文献照片，然后原样锁好了石门。",
-                    "pinyin": "lìshǐ",
-                    "translation": "histoire"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。",
-                "pinyin": "Gǔchéng de chénguāng sǎ zài qīngshílù shang, xīn de gùshi zhèngzài zhè piàn měilì de tǔdì shang jìxù shūxiě.",
-                "translation": "La lumière dorée du matin baignait les pavés de la cité ; de nouvelles pages continuaient de s'écrire sur cette terre enchanteresse.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "古城的",
-                    "pinyin": "gǔchéng de",
-                    "translation": "de la cité ancienne"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "晨光洒在",
-                    "pinyin": "chénguāng sǎ zài",
-                    "translation": "lumière du matin baignant"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "青石路上",
-                    "pinyin": "qīngshílù shang",
-                    "translation": "la route de pierres"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "新的故事",
-                    "pinyin": "xīn de gùshi",
-                    "translation": "une nouvelle histoire"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "继续书写",
-                    "pinyin": "jìxù shūxiě",
-                    "translation": "continue de s'écrire"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "两人没有触碰任何文物，而是用手机记录下洞穴的坐标与文献照片，然后原样锁好了石门。古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。"
+        "audioText": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 27,
@@ -2361,67 +3471,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "黎明时分他们回到了大理古城，直接来到云南省文物考古研究所提交了这一重要发现。",
-                "pinyin": "Límíng shífēn tāmen huí dào le Dàlǐ gǔchéng, zhíjiē lái dào Yúnnán shěng wénwù kǎogǔ yánjiūsuǒ tíjiāo le zhè yí zhòngyào fāxiàn.",
-                "translation": "À l'aube, rentrés à Dali, ils présentèrent immédiatement cette découverte capitale à l'Institut d'Archéologie du Yunnan.",
+                "hanzi": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Shǒuhù qiānnián de lìshǐ huíxiǎng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La mémoire gardée depuis mille ans\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "黎明时分他们",
-                    "pinyin": "wénwù",
-                    "translation": "patrimoine"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "回到了大理古",
-                    "pinyin": "bǎohù",
-                    "translation": "protéger"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "城，直接来到云南省文物考古研究所提交了这一重要发现。",
-                    "pinyin": "lìshǐ",
-                    "translation": "histoire"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。",
-                "pinyin": "Gǔchéng de chénguāng sǎ zài qīngshílù shang, xīn de gùshi zhèngzài zhè piàn měilì de tǔdì shang jìxù shūxiě.",
-                "translation": "La lumière dorée du matin baignait les pavés de la cité ; de nouvelles pages continuaient de s'écrire sur cette terre enchanteresse.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "古城的",
-                    "pinyin": "gǔchéng de",
-                    "translation": "de la cité ancienne"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "晨光洒在",
-                    "pinyin": "chénguāng sǎ zài",
-                    "translation": "lumière du matin baignant"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "青石路上",
-                    "pinyin": "qīngshílù shang",
-                    "translation": "la route de pierres"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "新的故事",
-                    "pinyin": "xīn de gùshi",
-                    "translation": "une nouvelle histoire"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "继续书写",
-                    "pinyin": "jìxù shūxiě",
-                    "translation": "continue de s'écrire"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "黎明时分他们回到了大理古城，直接来到云南省文物考古研究所提交了这一重要发现。古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。"
+        "audioText": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 28,
@@ -2433,67 +3593,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "老专家们经过勘察激动不已，证实这是迄今为止西南地区保存最完好的南诏国皇家书库。",
-                "pinyin": "Lǎo zhuānjiāmen jīngguò kānchá jīdòng bùyǐ, zhèngshí zhè shì qìjīnwéizhǐ xīnán dìqū bǎocún zuì wánhǎo de Nánzhàoguó huángjiā shūkù.",
-                "translation": "Les archéologues, saisis d'émotion, confirmèrent qu'il s'agissait de la bibliothèque de Nanzhao la mieux préservée jamais découverte.",
+                "hanzi": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Shǒuhù qiānnián de lìshǐ huíxiǎng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La mémoire gardée depuis mille ans\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "老专家们经过",
-                    "pinyin": "wénwù",
-                    "translation": "patrimoine"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "勘察激动不已",
-                    "pinyin": "bǎohù",
-                    "translation": "protéger"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "，证实这是迄今为止西南地区保存最完好的南诏国皇家书库。",
-                    "pinyin": "lìshǐ",
-                    "translation": "histoire"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。",
-                "pinyin": "Gǔchéng de chénguāng sǎ zài qīngshílù shang, xīn de gùshi zhèngzài zhè piàn měilì de tǔdì shang jìxù shūxiě.",
-                "translation": "La lumière dorée du matin baignait les pavés de la cité ; de nouvelles pages continuaient de s'écrire sur cette terre enchanteresse.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "古城的",
-                    "pinyin": "gǔchéng de",
-                    "translation": "de la cité ancienne"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "晨光洒在",
-                    "pinyin": "chénguāng sǎ zài",
-                    "translation": "lumière du matin baignant"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "青石路上",
-                    "pinyin": "qīngshílù shang",
-                    "translation": "la route de pierres"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "新的故事",
-                    "pinyin": "xīn de gùshi",
-                    "translation": "une nouvelle histoire"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "继续书写",
-                    "pinyin": "jìxù shūxiě",
-                    "translation": "continue de s'écrire"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "老专家们经过勘察激动不已，证实这是迄今为止西南地区保存最完好的南诏国皇家书库。古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。"
+        "audioText": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 29,
@@ -2505,67 +3715,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "马克和阿妹因保护珍贵文化遗产荣获了大理市的荣誉市民勋章，两人的友谊也愈发深厚。",
-                "pinyin": "Mǎkè hé Āmèi yīn bǎohù zhēnguì wénhuà yíchǎn rónghuò le Dàlǐ shì de róngyù shìmín xūnzhāng, liǎng rén de yǒuyì yě yùfā shēnhòu.",
-                "translation": "Marc et A-Mei reçurent la médaille d'honneur de Dali pour leur civisme, et leur amitié en devint inaltérable.",
+                "hanzi": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Shǒuhù qiānnián de lìshǐ huíxiǎng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La mémoire gardée depuis mille ans\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "马克和阿妹因",
-                    "pinyin": "wénwù",
-                    "translation": "patrimoine"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "保护珍贵文化",
-                    "pinyin": "bǎohù",
-                    "translation": "protéger"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "遗产荣获了大理市的荣誉市民勋章，两人的友谊也愈发深厚。",
-                    "pinyin": "lìshǐ",
-                    "translation": "histoire"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。",
-                "pinyin": "Gǔchéng de chénguāng sǎ zài qīngshílù shang, xīn de gùshi zhèngzài zhè piàn měilì de tǔdì shang jìxù shūxiě.",
-                "translation": "La lumière dorée du matin baignait les pavés de la cité ; de nouvelles pages continuaient de s'écrire sur cette terre enchanteresse.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "古城的",
-                    "pinyin": "gǔchéng de",
-                    "translation": "de la cité ancienne"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "晨光洒在",
-                    "pinyin": "chénguāng sǎ zài",
-                    "translation": "lumière du matin baignant"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "青石路上",
-                    "pinyin": "qīngshílù shang",
-                    "translation": "la route de pierres"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "新的故事",
-                    "pinyin": "xīn de gùshi",
-                    "translation": "une nouvelle histoire"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "继续书写",
-                    "pinyin": "jìxù shūxiě",
-                    "translation": "continue de s'écrire"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "马克和阿妹因保护珍贵文化遗产荣获了大理市的荣誉市民勋章，两人的友谊也愈发深厚。古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。"
+        "audioText": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       },
       {
         "pageNumber": 30,
@@ -2577,82 +3837,132 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "站在洱海边眺望苍山，马克心中满是敬畏：文字让跨越千年的声音，在今天依然清晰回荡。",
-                "pinyin": "Zhàn zài Ěrhǎi biān tiàowàng Cāngshān, Mǎkè xīn zhōng mǎn shì jìngwèi: wénzì ràng kuàyuè qiānnián de shēngyīn, zài jīntiān yīrán qīngxī huídàng.",
-                "translation": "Contemplant Cangshan depuis les rives d'Erhai, Marc songea avec émotion : l'écriture fait résonner la voix des siècles au présent.",
+                "hanzi": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。",
+                "pinyin": "Zài Shǒuhù qiānnián de lìshǐ huíxiǎng de tànsuǒ túzhōng, Mǎkè yǔ Āmèi jǐnmì pèihé, zǐxì fēnxī gǔjí yǔ shíkè de měi yí chù xìjié.",
+                "translation": "Durant l'exploration du chapitre \"La mémoire gardée depuis mille ans\", Marc et A-Mei collaborèrent étroitement pour déchiffrer chaque indice gravé.",
                 "words": [
                   {
-                    "hanzi": "站在洱海边眺",
-                    "pinyin": "wénwù",
-                    "translation": "patrimoine"
+                    "hanzi": "探索途中",
+                    "pinyin": "tànsuǒ túzhōng",
+                    "translation": "au fil de l'exploration"
                   },
                   {
-                    "hanzi": "望苍山，马克",
-                    "pinyin": "bǎohù",
-                    "translation": "protéger"
+                    "hanzi": "紧密配合",
+                    "pinyin": "jǐnmì pèihé",
+                    "translation": "collaborer étroitement"
                   },
                   {
-                    "hanzi": "心中满是敬畏：文字让跨越千年的声音，在今天依然清晰回荡。",
-                    "pinyin": "lìshǐ",
-                    "translation": "histoire"
+                    "hanzi": "仔细分析",
+                    "pinyin": "zǐxì fēnxī",
+                    "translation": "analyser avec soin"
+                  },
+                  {
+                    "hanzi": "细节",
+                    "pinyin": "xìjié",
+                    "translation": "détail"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。",
-                "pinyin": "Gǔchéng de chénguāng sǎ zài qīngshílù shang, xīn de gùshi zhèngzài zhè piàn měilì de tǔdì shang jìxù shūxiě.",
-                "translation": "La lumière dorée du matin baignait les pavés de la cité ; de nouvelles pages continuaient de s'écrire sur cette terre enchanteresse.",
+                "hanzi": "古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。",
+                "pinyin": "Gǔdào páng de qīngcuì línmù zài wēifēng zhōng shāshā zuòxiǎng, yángguāng chuānguò shùyè fèngxì zài dìmiàn sǎ xià bānbó de guāngyǐng.",
+                "translation": "Les arbres verdoyants bruissaient dans le vent frais, la lumière tamisée par les feuillages dessinant des ombres dorées au sol.",
                 "words": [
                   {
-                    "hanzi": "古城的",
-                    "pinyin": "gǔchéng de",
-                    "translation": "de la cité ancienne"
+                    "hanzi": "青翠林木",
+                    "pinyin": "qīngcuì línmù",
+                    "translation": "arbres luxuriants"
                   },
                   {
-                    "hanzi": "晨光洒在",
-                    "pinyin": "chénguāng sǎ zài",
-                    "translation": "lumière du matin baignant"
+                    "hanzi": "微风",
+                    "pinyin": "wēifēng",
+                    "translation": "brise"
                   },
                   {
-                    "hanzi": "青石路上",
-                    "pinyin": "qīngshílù shang",
-                    "translation": "la route de pierres"
+                    "hanzi": "沙沙作响",
+                    "pinyin": "shāshā zuòxiǎng",
+                    "translation": "bruisser"
                   },
                   {
-                    "hanzi": "新的故事",
-                    "pinyin": "xīn de gùshi",
-                    "translation": "une nouvelle histoire"
+                    "hanzi": "斑驳光影",
+                    "pinyin": "bānbó guāngyǐng",
+                    "translation": "ombres et lumières"
+                  }
+                ]
+              },
+              {
+                "hanzi": "阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。",
+                "pinyin": "Āmèi shúliàn de zhǐrèn zhe shānjiān yánbì shang de gǔlǎo fúhào, zhèngshí tāmen zhèng yánzhe zhèngquè de lìshǐ hángjì qiánxíng.",
+                "translation": "A-Mei identifiait avec assurance les symboles millénaires gravés sur les parois, attestant qu'ils suivaient la bonne voie.",
+                "words": [
+                  {
+                    "hanzi": "熟练地",
+                    "pinyin": "shúliàn de",
+                    "translation": "avec assurance"
                   },
                   {
-                    "hanzi": "继续书写",
-                    "pinyin": "jìxù shūxiě",
-                    "translation": "continue de s'écrire"
+                    "hanzi": "古老符号",
+                    "pinyin": "gǔlǎo fúhào",
+                    "translation": "symboles antiques"
+                  },
+                  {
+                    "hanzi": "证实",
+                    "pinyin": "zhèngshí",
+                    "translation": "confirmer"
+                  },
+                  {
+                    "hanzi": "前行",
+                    "pinyin": "qiánxíng",
+                    "translation": "avancer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。",
+                "pinyin": "Mǎkè zài rìjìběn shang jì xià xīndé, gǔdài Dàlǐ gè zú rénmín héxié gòngshēng de shēnhòu zhìhuì shēnshēn dǎdòng zhe tā.",
+                "translation": "Marc nota ses réflexions dans son carnet, profondément touché par l'harmonie et la sagesse des peuples de Dali.",
+                "words": [
+                  {
+                    "hanzi": "日记本",
+                    "pinyin": "rìjìběn",
+                    "translation": "carnet de notes"
+                  },
+                  {
+                    "hanzi": "和谐共生",
+                    "pinyin": "héxié gòngshēng",
+                    "translation": "coexistence harmonieuse"
+                  },
+                  {
+                    "hanzi": "深厚智慧",
+                    "pinyin": "shēnhòu zhìhuì",
+                    "translation": "sagesse profonde"
+                  },
+                  {
+                    "hanzi": "打动",
+                    "pinyin": "dǎdòng",
+                    "translation": "émouvoir"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "站在洱海边眺望苍山，马克心中满是敬畏：文字让跨越千年的声音，在今天依然清晰回荡。古城的晨光洒在青石路上，新的故事正在这片美丽的土地上继续书写。"
+        "audioText": "在守护千年的历史回响的探索途中，马克与阿妹紧密配合，仔细分析古籍与石刻的每一处细节。古道旁的青翠林木在微风中沙沙作响，阳光穿过树叶缝隙在地面洒下斑驳的光影。阿妹熟练地指认着山间岩壁上的古老符号，证实他们正沿着正确的历史航迹前行。马克在日记本上记下心得，古代大理各族人民和谐共生的深厚智慧深深打动着他。"
       }
     ]
   },
   {
-    "id": "novel-sanlitun-rain",
+    "id": "novel-rainy-sanlitun",
     "title": "三里屯雨夜的神秘来信",
     "titlePinyin": "Sānlǐtún yǔyè de shénmì láixìn",
     "titleTranslation": "La Mystérieuse Lettre d'une Nuit de Pluie à Sanlitun",
     "level": "HSK 4",
-    "genre": "Enquête & Polar Urbain",
-    "coverEmoji": "🕵️‍♂️",
-    "coverColor": "from-slate-700 to-indigo-950",
+    "genre": "Polar & Enquête Urbaine",
+    "coverEmoji": "🌧️",
+    "coverColor": "from-blue-700 to-indigo-950",
     "totalPages": 30,
     "totalChapters": 6,
-    "estimatedListeningTime": "40 min",
+    "estimatedListeningTime": "38 min",
     "wordCount": 2980,
     "synopsis": "一个暴雨倾盆的周五夜，青年翻译员林峰在三里屯一家咖啡馆里意外拾得一只遗落的信封。里面藏着通往北京南站储物柜的代码钥匙，牵扯出一项关乎城市未来的水环保重大发明与背叛谜案。在记者好友周晓雅与警方的配合下，他们穿行于夜雨下的胡同与高楼，揭开了惊心动魄的真相。",
     "synopsisTranslation": "Par une nuit d'orage à Sanlitun, Lin Feng trouve une enveloppe oubliée contenant une clé de consigne de la gare de Pékin Sud. Il se retrouve plongé dans une affaire palpitante de vol de brevet écologique...",
@@ -2693,7 +4003,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 1,
         "title": "暴雨中的转角咖啡馆",
         "titlePinyin": "Bàoyǔ zhōng de zhuǎnjiǎo kāfēiguǎn",
-        "titleTranslation": "Le café d'angle sous la pluie",
+        "titleTranslation": "Le café d'angle sous la pluie battante",
         "startPage": 1,
         "endPage": 5
       },
@@ -2701,7 +4011,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 2,
         "title": "数字谜题与十号线地铁",
         "titlePinyin": "Shùzì mǐtí yǔ Shíhàoxiàn dìtiě",
-        "titleTranslation": "L'énigme chiffrée et le métro",
+        "titleTranslation": "L'énigme chiffrée et la ligne 10",
         "startPage": 6,
         "endPage": 10
       },
@@ -2709,7 +4019,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 3,
         "title": "北京南站的四号储物柜",
         "titlePinyin": "Běijīng nánzhàn de sìhào chǔwùguì",
-        "titleTranslation": "Le casier de la gare du Sud",
+        "titleTranslation": "Le casier n°4 de la gare du Sud",
         "startPage": 11,
         "endPage": 15
       },
@@ -2717,7 +4027,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 4,
         "title": "穿过胡同的夜色追踪",
         "titlePinyin": "Chuānguò hútòng de yèsè zhuīzōng",
-        "titleTranslation": "La poursuite dans les hutongs",
+        "titleTranslation": "La poursuite nocturne dans les hutongs",
         "startPage": 16,
         "endPage": 20
       },
@@ -2725,7 +4035,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 5,
         "title": "钟楼下的真相反转",
         "titlePinyin": "Zhōnglóu xià de zhēnxiàng fǎnzhuǎn",
-        "titleTranslation": "Le dénouement sous la tour",
+        "titleTranslation": "Le retournement sous la Tour de la Cloche",
         "startPage": 21,
         "endPage": 25
       },
@@ -2733,7 +4043,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 6,
         "title": "拂晓前的城市天际线",
         "titlePinyin": "Fúxiǎo qián de chéngshì tiānjìxiàn",
-        "titleTranslation": "L'horizon avant l'aube",
+        "titleTranslation": "L'horizon de la ville avant l'aube",
         "startPage": 26,
         "endPage": 30
       }
@@ -2749,57 +4059,132 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "初夏的一个周五傍晚，一场突如其来的暴雨笼罩了北京三里屯的街道。",
-                "pinyin": "Chūxià de yí gè zhōuwǔ bàngwǎn, yì chǎng tūrúqílái de bàoyǔ lǒngzhào le Běijīng Sānlǐtún de jiēdào.",
-                "translation": "Un vendredi soir au début de l'été, un violent orage soudain s'abattit sur les rues animées de Sanlitun à Pékin.",
+                "hanzi": "星期五傍晚七点，一场突如其来的罕见暴雨笼罩了整个北京三里屯。",
+                "pinyin": "Xīngqīwǔ bàngwǎn qī diǎn, yì chǎng tūrúqílái de hǎnjiàn bàoyǔ lǒngzhào le zhěnggè Běijīng Sānlǐtún.",
+                "translation": "Un vendredi à 19 heures, un violent orage d'été s'abattit soudainement sur le quartier de Sanlitun à Pékin.",
                 "words": [
                   {
-                    "hanzi": "初夏的一个周",
+                    "hanzi": "星期五傍晚",
+                    "pinyin": "xīngqīwǔ bàngwǎn",
+                    "translation": "vendredi soir"
+                  },
+                  {
+                    "hanzi": "突如其来",
+                    "pinyin": "tūrúqílái",
+                    "translation": "soudain, impromptu"
+                  },
+                  {
+                    "hanzi": "罕见暴雨",
+                    "pinyin": "hǎnjiàn bàoyǔ",
+                    "translation": "pluie torrentielle rare"
+                  },
+                  {
+                    "hanzi": "笼罩",
+                    "pinyin": "lǒngzhào",
+                    "translation": "envelopper"
+                  },
+                  {
+                    "hanzi": "三里屯",
                     "pinyin": "Sānlǐtún",
                     "translation": "Sanlitun"
-                  },
-                  {
-                    "hanzi": "五傍晚，一场",
-                    "pinyin": "bàoyǔ",
-                    "translation": "la tempête"
-                  },
-                  {
-                    "hanzi": "突如其来的暴雨笼罩了北京三里屯的街道。",
-                    "pinyin": "kāfēiguǎn",
-                    "translation": "le café"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。",
-                "pinyin": "Lín Fēng zhèng xiǎng zhuī chūqù hǎn zhù tā, dàn wàimiàn de bàoyǔ yǔ yèsè zǎoyǐ jiāng nà rén de shēnyǐng wánquán tūnmò.",
-                "translation": "Lin Feng voulut le rattraper, mais la pluie torrentielle et l'obscurité avaient déjà englouti la silhouette de l'inconnu.",
+                "hanzi": "闪电划破灰蒙蒙的天空，狂风卷着豆大的雨点猛烈地敲打着沿街的玻璃橱窗。",
+                "pinyin": "Shǎndiàn huàpò huīméngméng de tiānkōng, kuángfēng juǎn zhe dòudà de yǔdiǎn měngliè de qiāodǎ zhe yánjiē de bōli chúchuāng.",
+                "translation": "Des éclairs fendaient le ciel de plomb, et le vent cinglait les vitrines des boutiques de grosses gouttes d'eau.",
                 "words": [
+                  {
+                    "hanzi": "闪电",
+                    "pinyin": "shǎndiàn",
+                    "translation": "éclair"
+                  },
+                  {
+                    "hanzi": "灰蒙蒙",
+                    "pinyin": "huīméngméng",
+                    "translation": "grisâtre, brumeux"
+                  },
+                  {
+                    "hanzi": "狂风",
+                    "pinyin": "kuángfēng",
+                    "translation": "vent violent"
+                  },
+                  {
+                    "hanzi": "猛烈敲打",
+                    "pinyin": "měngliè qiāodǎ",
+                    "translation": "frapper violemment"
+                  },
+                  {
+                    "hanzi": "玻璃橱窗",
+                    "pinyin": "bōli chúchuāng",
+                    "translation": "vitrines en verre"
+                  }
+                ]
+              },
+              {
+                "hanzi": "青年科技翻译员林峰抱着笔记本电脑包，急匆匆地冲进转角处的一家暖黄色咖啡馆。",
+                "pinyin": "Niánqīng kējì fānyìyuán Lín Fēng bào zhe bǐjìběn diànnǎo bāo, jícōngcōng de chōng jìn zhuǎnjiǎo chù de yì jiā nuǎnhuángsè kāfēiguǎn.",
+                "translation": "Le jeune traducteur Lin Feng, serrant sa sacoche d'ordinateur, courut s'abriter dans un café aux lumières tamisées.",
+                "words": [
+                  {
+                    "hanzi": "科技翻译员",
+                    "pinyin": "kējì fānyìyuán",
+                    "translation": "traducteur technique"
+                  },
                   {
                     "hanzi": "林峰",
                     "pinyin": "Lín Fēng",
                     "translation": "Lin Feng"
                   },
                   {
-                    "hanzi": "想追出去",
-                    "pinyin": "xiǎng zhuī chūqù",
-                    "translation": "voulut courir après"
+                    "hanzi": "急匆匆地",
+                    "pinyin": "jícōngcōng de",
+                    "translation": "à la hâte"
                   },
                   {
-                    "hanzi": "已被夜色吞没",
-                    "pinyin": "yǐ bèi yèsè tūnmò",
-                    "translation": "déjà englouti dans la nuit"
+                    "hanzi": "转角处",
+                    "pinyin": "zhuǎnjiǎo chù",
+                    "translation": "au coin de la rue"
+                  },
+                  {
+                    "hanzi": "暖黄色咖啡馆",
+                    "pinyin": "nuǎnhuángsè kāfēiguǎn",
+                    "translation": "café aux tons chauds"
+                  }
+                ]
+              },
+              {
+                "hanzi": "推开厚重的木门，伴随着铜铃的叮咚清响，香浓的咖啡豆香气立刻驱散了浑身的寒意。",
+                "pinyin": "Tuī kāi hòuzhòng de mùmén, bànsuí zhe tónglíng de dīngdōng qīngxiǎng, xiāngnóng de kāfēidòu xiāngqì lìkè qūsàn le húnshēn de hányì.",
+                "translation": "En poussant la lourde porte sous le tintement d'un carillon, l'arôme du café torréfié chassa aussitôt la fraîcheur de la pluie.",
+                "words": [
+                  {
+                    "hanzi": "厚重木门",
+                    "pinyin": "hòuzhòng mùmén",
+                    "translation": "lourde porte en bois"
+                  },
+                  {
+                    "hanzi": "铜铃",
+                    "pinyin": "tónglíng",
+                    "translation": "clochette de cuivre"
+                  },
+                  {
+                    "hanzi": "香浓气味",
+                    "pinyin": "xiāngnóng qìwèi",
+                    "translation": "arôme intense"
+                  },
+                  {
+                    "hanzi": "驱散寒意",
+                    "pinyin": "qūsàn hányì",
+                    "translation": "dissiper le froid"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "初夏的一个周五傍晚，一场突如其来的暴雨笼罩了北京三里屯的街道。林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。"
+        "audioText": "星期五傍晚七点，一场突如其来的罕见暴雨笼罩了整个北京三里屯。闪电划破灰蒙蒙的天空，狂风卷着豆大的雨点猛烈地敲打着沿街的玻璃橱窗。青年科技翻译员林峰抱着笔记本电脑包，急匆匆地冲进转角处的一家暖黄色咖啡馆。推开厚重的木门，伴随着铜铃的叮咚清响，香浓的咖啡豆香气立刻驱散了浑身的寒意。"
       },
       {
         "pageNumber": 2,
@@ -2811,57 +4196,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "霓虹灯在湿漉漉的路面上泛着五彩斑斓的光晕，街上的行人们纷纷寻找避雨的去处。",
-                "pinyin": "Níhóngdēng zài shīlùlù de lùmiàn shang fàn zhe wǔcǎibānlán de guāngyùn, jiē shang de xíngrénmen fēnfēn xúnzhǎo bìyǔ de qùchù.",
-                "translation": "Les néons scintillaient en reflets multicolores sur le bitume mouillé tandis que les passants couraient s'abriter.",
+                "hanzi": "咖啡馆里客人不多，轻柔的爵士乐在温暖的灯光下静静流淌。",
+                "pinyin": "Kāfēiguǎn lǐ kèrén bù duō, qīngróu de juéshìyuè zài wēnnuǎn de dēngguāng xià jìngjìng liútǎng.",
+                "translation": "Le café était paisible, une mélodie de jazz s'élevant doucement sous les suspensions dorées.",
                 "words": [
                   {
-                    "hanzi": "霓虹灯在湿漉",
-                    "pinyin": "Sānlǐtún",
-                    "translation": "Sanlitun"
+                    "hanzi": "客人不多",
+                    "pinyin": "kèrén bù duō",
+                    "translation": "peu de clients"
                   },
                   {
-                    "hanzi": "漉的路面上泛",
-                    "pinyin": "bàoyǔ",
-                    "translation": "la tempête"
+                    "hanzi": "轻柔爵士乐",
+                    "pinyin": "qīngróu juéshìyuè",
+                    "translation": "jazz apaisant"
                   },
                   {
-                    "hanzi": "着五彩斑斓的光晕，街上的行人们纷纷寻找避雨的去处。",
-                    "pinyin": "kāfēiguǎn",
-                    "translation": "le café"
+                    "hanzi": "温暖灯光",
+                    "pinyin": "wēnnuǎn dēngguāng",
+                    "translation": "lumière chaleureuse"
+                  },
+                  {
+                    "hanzi": "静静流淌",
+                    "pinyin": "jìngjìng liútǎng",
+                    "translation": "s'écoulant doucement"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。",
-                "pinyin": "Lín Fēng zhèng xiǎng zhuī chūqù hǎn zhù tā, dàn wàimiàn de bàoyǔ yǔ yèsè zǎoyǐ jiāng nà rén de shēnyǐng wánquán tūnmò.",
-                "translation": "Lin Feng voulut le rattraper, mais la pluie torrentielle et l'obscurité avaient déjà englouti la silhouette de l'inconnu.",
+                "hanzi": "林峰在靠窗的一张深棕色皮质沙发上坐下，要了一杯热腾腾的美式黑咖啡。",
+                "pinyin": "Lín Fēng zài kàochuāng de yì zhāng shēnzōngsè pízhì shāfā shang zuò xià, yào le yì bēi rèténgténg de měishì hēikāfēi.",
+                "translation": "Lin Feng s'assit sur un fauteuil de cuir brun près de la vitre et commanda un café noir bien chaud.",
                 "words": [
                   {
-                    "hanzi": "林峰",
-                    "pinyin": "Lín Fēng",
-                    "translation": "Lin Feng"
+                    "hanzi": "靠窗",
+                    "pinyin": "kàochuāng",
+                    "translation": "près de la fenêtre"
                   },
                   {
-                    "hanzi": "想追出去",
-                    "pinyin": "xiǎng zhuī chūqù",
-                    "translation": "voulut courir après"
+                    "hanzi": "皮质沙发",
+                    "pinyin": "pízhì shāfā",
+                    "translation": "canapé en cuir"
                   },
                   {
-                    "hanzi": "已被夜色吞没",
-                    "pinyin": "yǐ bèi yèsè tūnmò",
-                    "translation": "déjà englouti dans la nuit"
+                    "hanzi": "热腾腾",
+                    "pinyin": "rèténgténg",
+                    "translation": "fument et chaud"
+                  },
+                  {
+                    "hanzi": "美式咖啡",
+                    "pinyin": "měishì kāfēi",
+                    "translation": "café américain"
+                  }
+                ]
+              },
+              {
+                "hanzi": "这时，旁边座位一位神色匆忙的中年男子站起身，低头快步推门走进了雨幕。",
+                "pinyin": "Zhè shí, pángbiān zuòwèi yí wèi shénsè cōngmáng de zhōngnián nánzǐ zhàn qǐ shēn, dītóu kuàibù tuī mén zǒu jìn le yǔmù.",
+                "translation": "À cet instant, un homme d'âge mûr à l'allure pressée quitta sa table et s'engouffra tête baissée dans l'averse.",
+                "words": [
+                  {
+                    "hanzi": "神色匆忙",
+                    "pinyin": "shénsè cōngmáng",
+                    "translation": "air précipité"
+                  },
+                  {
+                    "hanzi": "中年男子",
+                    "pinyin": "zhōngnián nánzǐ",
+                    "translation": "homme d'âge mûr"
+                  },
+                  {
+                    "hanzi": "推门走入",
+                    "pinyin": "tuī mén zǒu rù",
+                    "translation": "pousser la porte"
+                  },
+                  {
+                    "hanzi": "雨幕",
+                    "pinyin": "yǔmù",
+                    "translation": "rideau de pluie"
+                  }
+                ]
+              },
+              {
+                "hanzi": "那人走得极其仓促，竟将一只用牛皮纸紧紧封存的厚信封遗落在了沙发缝隙里。",
+                "pinyin": "Nà rén zǒu de jíqí cāngcù, jìng jiāng yì zhī yòng niúpíjǐ jǐnjǐn fēngcún de hòu xìnfēng yíluò zài le shāfā fèngxì lǐ.",
+                "translation": "Dans sa précipitation, il avait oublié une grosse enveloppe en papier kraft coincée dans le coussin.",
+                "words": [
+                  {
+                    "hanzi": "极其仓促",
+                    "pinyin": "jíqí cāngcù",
+                    "translation": "extrêmement hâtif"
+                  },
+                  {
+                    "hanzi": "牛皮纸",
+                    "pinyin": "niúpíjǐ",
+                    "translation": "papier kraft"
+                  },
+                  {
+                    "hanzi": "封存信封",
+                    "pinyin": "fēngcún xìnfēng",
+                    "translation": "enveloppe scellée"
+                  },
+                  {
+                    "hanzi": "遗落",
+                    "pinyin": "yíluò",
+                    "translation": "oublier, égarer"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "霓虹灯在湿漉漉的路面上泛着五彩斑斓的光晕，街上的行人们纷纷寻找避雨的去处。林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。"
+        "audioText": "咖啡馆里客人不多，轻柔的爵士乐在温暖的灯光下静静流淌。林峰在靠窗的一张深棕色皮质沙发上坐下，要了一杯热腾腾的美式黑咖啡。这时，旁边座位一位神色匆忙的中年男子站起身，低头快步推门走进了雨幕。那人走得极其仓促，竟将一只用牛皮纸紧紧封存的厚信封遗落在了沙发缝隙里。"
       },
       {
         "pageNumber": 3,
@@ -2873,57 +4318,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "自由翻译员林峰推开一家安静小咖啡馆的木门，找了一个靠窗的角落坐下。",
-                "pinyin": "Zìyóu fānyìyuán Lín Fēng tuī kāi yì jiā ānjìng xiǎo kāfēiguǎn de mùmén, zhǎo le yí gè kào chuāng de jiǎoluò zuò xià.",
-                "translation": "Lin Feng, un jeune traducteur indépendant, poussa la porte d'un café calme et s'assit à une table près de la fenêtre.",
+                "hanzi": "在暴雨中的转角咖啡馆的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Bàoyǔ zhōng de zhuǎnjiǎo kāfēiguǎn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le café d'angle sous la pluie battante\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "自由翻译员林",
-                    "pinyin": "Sānlǐtún",
-                    "translation": "Sanlitun"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "峰推开一家安",
-                    "pinyin": "bàoyǔ",
-                    "translation": "la tempête"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "静小咖啡馆的木门，找了一个靠窗的角落坐下。",
-                    "pinyin": "kāfēiguǎn",
-                    "translation": "le café"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。",
-                "pinyin": "Lín Fēng zhèng xiǎng zhuī chūqù hǎn zhù tā, dàn wàimiàn de bàoyǔ yǔ yèsè zǎoyǐ jiāng nà rén de shēnyǐng wánquán tūnmò.",
-                "translation": "Lin Feng voulut le rattraper, mais la pluie torrentielle et l'obscurité avaient déjà englouti la silhouette de l'inconnu.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "林峰",
-                    "pinyin": "Lín Fēng",
-                    "translation": "Lin Feng"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "想追出去",
-                    "pinyin": "xiǎng zhuī chūqù",
-                    "translation": "voulut courir après"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "已被夜色吞没",
-                    "pinyin": "yǐ bèi yèsè tūnmò",
-                    "translation": "déjà englouti dans la nuit"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "自由翻译员林峰推开一家安静小咖啡馆的木门，找了一个靠窗的角落坐下。林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。"
+        "audioText": "在暴雨中的转角咖啡馆的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 4,
@@ -2935,57 +4440,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "邻桌坐着一位神色匆忙的中年男子，不时看着手表，像是在焦急地等待着什么人。",
-                "pinyin": "Lín zhuō zuò zhe yí wèi shénsè cōngmáng de zhōngnián nánzǐ, bùshí kàn zhe shǒubiǎo, xiàng shì zài jiāojí de děngdài zhe shénme rén.",
-                "translation": "À la table voisine, un homme d'âge mûr à l'allure pressée consultait sa montre avec anxiété, comme s'il attendait quelqu'un.",
+                "hanzi": "在暴雨中的转角咖啡馆的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Bàoyǔ zhōng de zhuǎnjiǎo kāfēiguǎn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le café d'angle sous la pluie battante\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "邻桌坐着一位",
-                    "pinyin": "Sānlǐtún",
-                    "translation": "Sanlitun"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "神色匆忙的中",
-                    "pinyin": "bàoyǔ",
-                    "translation": "la tempête"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "年男子，不时看着手表，像是在焦急地等待着什么人。",
-                    "pinyin": "kāfēiguǎn",
-                    "translation": "le café"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。",
-                "pinyin": "Lín Fēng zhèng xiǎng zhuī chūqù hǎn zhù tā, dàn wàimiàn de bàoyǔ yǔ yèsè zǎoyǐ jiāng nà rén de shēnyǐng wánquán tūnmò.",
-                "translation": "Lin Feng voulut le rattraper, mais la pluie torrentielle et l'obscurité avaient déjà englouti la silhouette de l'inconnu.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "林峰",
-                    "pinyin": "Lín Fēng",
-                    "translation": "Lin Feng"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "想追出去",
-                    "pinyin": "xiǎng zhuī chūqù",
-                    "translation": "voulut courir après"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "已被夜色吞没",
-                    "pinyin": "yǐ bèi yèsè tūnmò",
-                    "translation": "déjà englouti dans la nuit"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "邻桌坐着一位神色匆忙的中年男子，不时看着手表，像是在焦急地等待着什么人。林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。"
+        "audioText": "在暴雨中的转角咖啡馆的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 5,
@@ -2997,57 +4562,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "突然男子接到一通电话，脸色瞬间大变，慌忙抓起雨伞冲进雨幕，却将一只牛皮纸信封遗忘在沙发上。",
-                "pinyin": "Tūrán nánzǐ jiē dào yì tōng diànhuà, liǎnsè shùnjiān dà biàn, huāngmáng zhuā qǐ yǔsǎn chōng jìn yǔmù, què jiāng yì zhī niúpízhǐ xìnfēng yíwàng zài shāfā shang.",
-                "translation": "Soudain, l'homme reçut un appel ; blêmissant aussitôt, il attrapa son parapluie et s'enfuit sous la pluie, laissant une enveloppe en papier kraft sur la banquette.",
+                "hanzi": "在暴雨中的转角咖啡馆的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Bàoyǔ zhōng de zhuǎnjiǎo kāfēiguǎn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le café d'angle sous la pluie battante\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "突然男子接到",
-                    "pinyin": "Sānlǐtún",
-                    "translation": "Sanlitun"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "一通电话，脸",
-                    "pinyin": "bàoyǔ",
-                    "translation": "la tempête"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "色瞬间大变，慌忙抓起雨伞冲进雨幕，却将一只牛皮纸信封遗忘在沙发上。",
-                    "pinyin": "kāfēiguǎn",
-                    "translation": "le café"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。",
-                "pinyin": "Lín Fēng zhèng xiǎng zhuī chūqù hǎn zhù tā, dàn wàimiàn de bàoyǔ yǔ yèsè zǎoyǐ jiāng nà rén de shēnyǐng wánquán tūnmò.",
-                "translation": "Lin Feng voulut le rattraper, mais la pluie torrentielle et l'obscurité avaient déjà englouti la silhouette de l'inconnu.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "林峰",
-                    "pinyin": "Lín Fēng",
-                    "translation": "Lin Feng"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "想追出去",
-                    "pinyin": "xiǎng zhuī chūqù",
-                    "translation": "voulut courir après"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "已被夜色吞没",
-                    "pinyin": "yǐ bèi yèsè tūnmò",
-                    "translation": "déjà englouti dans la nuit"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "突然男子接到一通电话，脸色瞬间大变，慌忙抓起雨伞冲进雨幕，却将一只牛皮纸信封遗忘在沙发上。林峰正想追出去喊住他，但外面的暴雨与夜色早已将那人的身影完全吞没。"
+        "audioText": "在暴雨中的转角咖啡馆的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 6,
@@ -3059,57 +4684,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "林峰走回桌前拾起信封，封口未封，里面只有一张写满数字的便签与一枚储物柜钥匙。",
-                "pinyin": "Lín Fēng zǒu huí zhuō qián shí qǐ xìnfēng, fēngkǒu wèi fēng, lǐmiàn zhǐyǒu yì zhāng xiě mǎn shùzì de biànqiān yǔ yì méi chǔwùguì yàoshi.",
-                "translation": "Lin Feng ramassa l'enveloppe entrouverte ; elle contenait une note couverte de chiffres et une clé de casier métallique.",
+                "hanzi": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Shùzì mǐtí yǔ Shíhàoxiàn dìtiě de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'énigme chiffrée et la ligne 10\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "林峰走回桌前",
-                    "pinyin": "shùzì mǐtí",
-                    "translation": "énigme chiffrée"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "拾起信封，封",
-                    "pinyin": "dìtiě zhàn",
-                    "translation": "station de métro"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "口未封，里面只有一张写满数字的便签与一枚储物柜钥匙。",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。",
-                "pinyin": "Dìtiě chēxiāng zài dìxià suìdào zhōng fēisù jíchí, chēchuāng dàoyìng zhe liǎng rén níngzhòng ér jiāndìng de miànróng.",
-                "translation": "Le train filait dans le tunnel souterrain, reflétant sur les vitres leurs visages graves et résolus.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "地铁列车",
-                    "pinyin": "dìtiě lièchē",
-                    "translation": "train de métro"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "地下隧道",
-                    "pinyin": "dìxià suìdào",
-                    "translation": "tunnel souterrain"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "坚定面容",
-                    "pinyin": "jiāndìng miànróng",
-                    "translation": "visages déterminés"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "林峰走回桌前拾起信封，封口未封，里面只有一张写满数字的便签与一枚储物柜钥匙。地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。"
+        "audioText": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 7,
@@ -3121,57 +4806,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "便签顶端写着工整的一行字：“若我未能按时归来，请将它送交朝阳分局张警官。”",
-                "pinyin": "Biànqiān dǐngduān xiě zhe gōngzhěng de yì háng zì: \"Ruò wǒ wèinéng ànshí guīlái, qǐng jiāng tā sòngjiāo Cháoyáng fēnjú Zhāng jǐngguān.\"",
-                "translation": "En haut du papier figurait une phrase soignée : « Si je ne revenais pas à temps, remettez ceci à l'officier Zhang du commissariat de Chaoyang. »",
+                "hanzi": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Shùzì mǐtí yǔ Shíhàoxiàn dìtiě de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'énigme chiffrée et la ligne 10\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "便签顶端写着",
-                    "pinyin": "shùzì mǐtí",
-                    "translation": "énigme chiffrée"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "工整的一行字",
-                    "pinyin": "dìtiě zhàn",
-                    "translation": "station de métro"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "：“若我未能按时归来，请将它送交朝阳分局张警官。”",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。",
-                "pinyin": "Dìtiě chēxiāng zài dìxià suìdào zhōng fēisù jíchí, chēchuāng dàoyìng zhe liǎng rén níngzhòng ér jiāndìng de miànróng.",
-                "translation": "Le train filait dans le tunnel souterrain, reflétant sur les vitres leurs visages graves et résolus.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "地铁列车",
-                    "pinyin": "dìtiě lièchē",
-                    "translation": "train de métro"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "地下隧道",
-                    "pinyin": "dìxià suìdào",
-                    "translation": "tunnel souterrain"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "坚定面容",
-                    "pinyin": "jiāndìng miànróng",
-                    "translation": "visages déterminés"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "便签顶端写着工整的一行字：“若我未能按时归来，请将它送交朝阳分局张警官。”地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。"
+        "audioText": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 8,
@@ -3183,57 +4928,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "这时，林峰的高中好友、在法制报社担任记者的周晓雅恰好走进咖啡馆避雨。",
-                "pinyin": "Zhè shí, Lín Fēng de gāozhōng hǎoyǒu, zài fǎzhì bàoshè dānrèn jìzhě de Zhōu Xiǎoyǎ qiàhǎo zǒu jìn kāfēiguǎn bìyǔ.",
-                "translation": "C'est alors que Zhou Xiaoya, son amie de lycée travaillant comme journaliste judiciaire, entra justement s'abriter.",
+                "hanzi": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Shùzì mǐtí yǔ Shíhàoxiàn dìtiě de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'énigme chiffrée et la ligne 10\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "这时，林峰的",
-                    "pinyin": "shùzì mǐtí",
-                    "translation": "énigme chiffrée"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "高中好友、在",
-                    "pinyin": "dìtiě zhàn",
-                    "translation": "station de métro"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "法制报社担任记者的周晓雅恰好走进咖啡馆避雨。",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。",
-                "pinyin": "Dìtiě chēxiāng zài dìxià suìdào zhōng fēisù jíchí, chēchuāng dàoyìng zhe liǎng rén níngzhòng ér jiāndìng de miànróng.",
-                "translation": "Le train filait dans le tunnel souterrain, reflétant sur les vitres leurs visages graves et résolus.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "地铁列车",
-                    "pinyin": "dìtiě lièchē",
-                    "translation": "train de métro"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "地下隧道",
-                    "pinyin": "dìxià suìdào",
-                    "translation": "tunnel souterrain"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "坚定面容",
-                    "pinyin": "jiāndìng miànróng",
-                    "translation": "visages déterminés"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "这时，林峰的高中好友、在法制报社担任记者的周晓雅恰好走进咖啡馆避雨。地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。"
+        "audioText": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 9,
@@ -3245,57 +5050,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "晓雅仔细查看数字便签：“这串代码是地铁十号线的站点编号，结尾指向北京南站！”",
-                "pinyin": "Xiǎoyǎ zǐxì chákàn shùzì biànqiān: \"Zhè chuàn dàimǎ shì dìtiě Shíhàoxiàn de zhàndiǎn biānhào, jiéwěi zhǐxiàng Běijīng nánzhàn!\"",
-                "translation": "Xiaoya examina la note codée : « Ces chiffres correspondent aux stations de la ligne 10 du métro, et la fin pointe vers la gare de Pékin Sud ! »",
+                "hanzi": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Shùzì mǐtí yǔ Shíhàoxiàn dìtiě de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'énigme chiffrée et la ligne 10\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "晓雅仔细查看",
-                    "pinyin": "shùzì mǐtí",
-                    "translation": "énigme chiffrée"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "数字便签：“",
-                    "pinyin": "dìtiě zhàn",
-                    "translation": "station de métro"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "这串代码是地铁十号线的站点编号，结尾指向北京南站！”",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。",
-                "pinyin": "Dìtiě chēxiāng zài dìxià suìdào zhōng fēisù jíchí, chēchuāng dàoyìng zhe liǎng rén níngzhòng ér jiāndìng de miànróng.",
-                "translation": "Le train filait dans le tunnel souterrain, reflétant sur les vitres leurs visages graves et résolus.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "地铁列车",
-                    "pinyin": "dìtiě lièchē",
-                    "translation": "train de métro"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "地下隧道",
-                    "pinyin": "dìxià suìdào",
-                    "translation": "tunnel souterrain"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "坚定面容",
-                    "pinyin": "jiāndìng miànróng",
-                    "translation": "visages déterminés"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "晓雅仔细查看数字便签：“这串代码是地铁十号线的站点编号，结尾指向北京南站！”地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。"
+        "audioText": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 10,
@@ -3307,57 +5172,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "两人意识到事态紧急，立刻决定乘上十号线列车前往南站，查明事情的真相。",
-                "pinyin": "Liǎng rén yìshí dào shìtài jǐnjí, lìkè juédìng chéng shàng Shíhàoxiàn lièchē qiánwǎng Nánzhàn, chámíng shìqing de zhēnxiàng.",
-                "translation": "Comprenant la gravité de la situation, ils montèrent sans tarder dans la rame de métro filant vers la gare du Sud.",
+                "hanzi": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Shùzì mǐtí yǔ Shíhàoxiàn dìtiě de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'énigme chiffrée et la ligne 10\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "两人意识到事",
-                    "pinyin": "shùzì mǐtí",
-                    "translation": "énigme chiffrée"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "态紧急，立刻",
-                    "pinyin": "dìtiě zhàn",
-                    "translation": "station de métro"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "决定乘上十号线列车前往南站，查明事情的真相。",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。",
-                "pinyin": "Dìtiě chēxiāng zài dìxià suìdào zhōng fēisù jíchí, chēchuāng dàoyìng zhe liǎng rén níngzhòng ér jiāndìng de miànróng.",
-                "translation": "Le train filait dans le tunnel souterrain, reflétant sur les vitres leurs visages graves et résolus.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "地铁列车",
-                    "pinyin": "dìtiě lièchē",
-                    "translation": "train de métro"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "地下隧道",
-                    "pinyin": "dìxià suìdào",
-                    "translation": "tunnel souterrain"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "坚定面容",
-                    "pinyin": "jiāndìng miànróng",
-                    "translation": "visages déterminés"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "两人意识到事态紧急，立刻决定乘上十号线列车前往南站，查明事情的真相。地铁车厢在地下隧道中飞速疾驰，车窗倒映着两人凝重而坚定的面容。"
+        "audioText": "在数字谜题与十号线地铁的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 11,
@@ -3369,57 +5294,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "午夜前的北京南站依然灯火通明，巨大的穹顶下奔走着天南地北的旅人。",
-                "pinyin": "Wǔyè qián de Běijīng Nánzhàn yīrán dēnghuǒ tōngmíng, jùdà de qióngdǐng xià bēnzǒu zhe tiānnánděiběi de lǚrén.",
-                "translation": "Peu avant minuit, la gare de Pékin Sud était éclatante de lumières, traversée par des voyageurs venus des quatre coins du pays.",
+                "hanzi": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Běijīng nánzhàn de sìhào chǔwùguì de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le casier n°4 de la gare du Sud\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "午夜前的北京",
-                    "pinyin": "Nánzhàn",
-                    "translation": "gare du Sud"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "南站依然灯火",
-                    "pinyin": "chǔwùguì",
-                    "translation": "casier automatique"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "通明，巨大的穹顶下奔走着天南地北的旅人。",
-                    "pinyin": "yìngpán",
-                    "translation": "disque dur"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！",
-                "pinyin": "Zhè shí yuǎnchù zǒuláng tūrán chuán lái chénzhòng de píxié jiǎobù shēng, liǎng míng kěyí hēiyīrén zhèng cháo tāmen kuàisù bījìn!",
-                "translation": "Soudain, des bruits de pas lourds résonnèrent dans le hall ; deux hommes en noir s'avançaient d'un pas pressant vers eux !",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "远处走廊",
-                    "pinyin": "yuǎnchù zǒuláng",
-                    "translation": "le couloir au loin"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "脚步声",
-                    "pinyin": "jiǎobù shēng",
-                    "translation": "bruits de pas"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "黑衣人逼近",
-                    "pinyin": "hēiyīrén bījìn",
-                    "translation": "hommes en noir s'approchant"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "午夜前的北京南站依然灯火通明，巨大的穹顶下奔走着天南地北的旅人。这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！"
+        "audioText": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 12,
@@ -3431,57 +5416,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "他们快步来到候车大厅西侧的自动储物区，找到了写有数字四十七的储物柜。",
-                "pinyin": "Tāmen kuàibù lái dào hòuchē dàtīng xīcè de zìdòng chǔwùqū, zhǎodào le xiě yǒu shùzì sìshíqī de chǔwùguì.",
-                "translation": "Ils marchèrent d'un pas rapide vers les casiers automatiques et repérèrent le numéro 47.",
+                "hanzi": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Běijīng nánzhàn de sìhào chǔwùguì de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le casier n°4 de la gare du Sud\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "他们快步来到",
-                    "pinyin": "Nánzhàn",
-                    "translation": "gare du Sud"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "候车大厅西侧",
-                    "pinyin": "chǔwùguì",
-                    "translation": "casier automatique"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "的自动储物区，找到了写有数字四十七的储物柜。",
-                    "pinyin": "yìngpán",
-                    "translation": "disque dur"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！",
-                "pinyin": "Zhè shí yuǎnchù zǒuláng tūrán chuán lái chénzhòng de píxié jiǎobù shēng, liǎng míng kěyí hēiyīrén zhèng cháo tāmen kuàisù bījìn!",
-                "translation": "Soudain, des bruits de pas lourds résonnèrent dans le hall ; deux hommes en noir s'avançaient d'un pas pressant vers eux !",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "远处走廊",
-                    "pinyin": "yuǎnchù zǒuláng",
-                    "translation": "le couloir au loin"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "脚步声",
-                    "pinyin": "jiǎobù shēng",
-                    "translation": "bruits de pas"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "黑衣人逼近",
-                    "pinyin": "hēiyīrén bījìn",
-                    "translation": "hommes en noir s'approchant"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "他们快步来到候车大厅西侧的自动储物区，找到了写有数字四十七的储物柜。这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！"
+        "audioText": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 13,
@@ -3493,57 +5538,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "林峰插进钥匙轻轻旋转，柜门咔哒一声弹开，里面静静放着一只银色移动硬盘与一份绝密图纸。",
-                "pinyin": "Lín Fēng chā jìn yàoshi qīngqīng xuánzhuǎn, guìmén kādā yì shēng tán kāi, lǐmiàn jìngjìng fàng zhe yì zhī yínsè yídòng yìngpán yǔ yí fèn juémì túzhǐ.",
-                "translation": "Lin Feng tourna la clé ; le casier s'ouvrit, révélant un disque dur argenté et des plans techniques confidentiels.",
+                "hanzi": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Běijīng nánzhàn de sìhào chǔwùguì de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le casier n°4 de la gare du Sud\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "林峰插进钥匙",
-                    "pinyin": "Nánzhàn",
-                    "translation": "gare du Sud"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "轻轻旋转，柜",
-                    "pinyin": "chǔwùguì",
-                    "translation": "casier automatique"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "门咔哒一声弹开，里面静静放着一只银色移动硬盘与一份绝密图纸。",
-                    "pinyin": "yìngpán",
-                    "translation": "disque dur"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！",
-                "pinyin": "Zhè shí yuǎnchù zǒuláng tūrán chuán lái chénzhòng de píxié jiǎobù shēng, liǎng míng kěyí hēiyīrén zhèng cháo tāmen kuàisù bījìn!",
-                "translation": "Soudain, des bruits de pas lourds résonnèrent dans le hall ; deux hommes en noir s'avançaient d'un pas pressant vers eux !",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "远处走廊",
-                    "pinyin": "yuǎnchù zǒuláng",
-                    "translation": "le couloir au loin"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "脚步声",
-                    "pinyin": "jiǎobù shēng",
-                    "translation": "bruits de pas"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "黑衣人逼近",
-                    "pinyin": "hēiyīrén bījìn",
-                    "translation": "hommes en noir s'approchant"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "林峰插进钥匙轻轻旋转，柜门咔哒一声弹开，里面静静放着一只银色移动硬盘与一份绝密图纸。这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！"
+        "audioText": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 14,
@@ -3555,57 +5660,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "图纸标题写着“城市地下清洁水循环系统发明原稿”，正是近期学术界备受瞩目的重大科技突破！",
-                "pinyin": "Túzhǐ biāotí xiě zhe \"Chéngshì dìxià qīngjié shuǐxúnhuán xìtǒng fāmíng yuángǎo\", zhèng shì jìnqī xuéshùjiè bèishòu zhǔmù de zhòngdà kējì tūpò!",
-                "translation": "Le titre indiquait « Système écologique de purification d'eau urbaine », une invention capitale très convoitée !",
+                "hanzi": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Běijīng nánzhàn de sìhào chǔwùguì de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le casier n°4 de la gare du Sud\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "图纸标题写着",
-                    "pinyin": "Nánzhàn",
-                    "translation": "gare du Sud"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "“城市地下清",
-                    "pinyin": "chǔwùguì",
-                    "translation": "casier automatique"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "洁水循环系统发明原稿”，正是近期学术界备受瞩目的重大科技突破！",
-                    "pinyin": "yìngpán",
-                    "translation": "disque dur"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！",
-                "pinyin": "Zhè shí yuǎnchù zǒuláng tūrán chuán lái chénzhòng de píxié jiǎobù shēng, liǎng míng kěyí hēiyīrén zhèng cháo tāmen kuàisù bījìn!",
-                "translation": "Soudain, des bruits de pas lourds résonnèrent dans le hall ; deux hommes en noir s'avançaient d'un pas pressant vers eux !",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "远处走廊",
-                    "pinyin": "yuǎnchù zǒuláng",
-                    "translation": "le couloir au loin"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "脚步声",
-                    "pinyin": "jiǎobù shēng",
-                    "translation": "bruits de pas"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "黑衣人逼近",
-                    "pinyin": "hēiyīrén bījìn",
-                    "translation": "hommes en noir s'approchant"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "图纸标题写着“城市地下清洁水循环系统发明原稿”，正是近期学术界备受瞩目的重大科技突破！这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！"
+        "audioText": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 15,
@@ -3617,57 +5782,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "晓雅恍然大悟：“失主就是发明者陈教授，有人企图窃取这项造福民众的科技专利！”",
-                "pinyin": "Xiǎoyǎ huǎngrándàwù: \"Shīzhǔ jiù shì fāmíngzhě Chén jiàoshòu, yǒu rén qǐtú qièqǔ zhè xiàng zàofú mínzhòng de kējì zhuānlì!\"",
-                "translation": "Xiaoya comprit aussitôt : « L'inconnu est le professeur Chen ! Quelqu'un essaie de lui dérober son brevet écologique ! »",
+                "hanzi": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Běijīng nánzhàn de sìhào chǔwùguì de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le casier n°4 de la gare du Sud\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "晓雅恍然大悟",
-                    "pinyin": "Nánzhàn",
-                    "translation": "gare du Sud"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "：“失主就是",
-                    "pinyin": "chǔwùguì",
-                    "translation": "casier automatique"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "发明者陈教授，有人企图窃取这项造福民众的科技专利！”",
-                    "pinyin": "yìngpán",
-                    "translation": "disque dur"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！",
-                "pinyin": "Zhè shí yuǎnchù zǒuláng tūrán chuán lái chénzhòng de píxié jiǎobù shēng, liǎng míng kěyí hēiyīrén zhèng cháo tāmen kuàisù bījìn!",
-                "translation": "Soudain, des bruits de pas lourds résonnèrent dans le hall ; deux hommes en noir s'avançaient d'un pas pressant vers eux !",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "远处走廊",
-                    "pinyin": "yuǎnchù zǒuláng",
-                    "translation": "le couloir au loin"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "脚步声",
-                    "pinyin": "jiǎobù shēng",
-                    "translation": "bruits de pas"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "黑衣人逼近",
-                    "pinyin": "hēiyīrén bījìn",
-                    "translation": "hommes en noir s'approchant"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "晓雅恍然大悟：“失主就是发明者陈教授，有人企图窃取这项造福民众的科技专利！”这时远处走廊突然传来沉重的皮鞋脚步声，两名可疑黑衣人正朝他们快速逼近！"
+        "audioText": "在北京南站的四号储物柜的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 16,
@@ -3679,57 +5904,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "林峰拉起晓雅的手穿过闸机，迅速混入刚到站的出站人群中，甩开了跟踪者。",
-                "pinyin": "Lín Fēng lā qǐ Xiǎoyǎ de shǒu chuānguò zhájī, xùnsù hùnrù gāng dào zhàn de chūzhàn rénqún zhōng, shuǎi kāi le gēnzōngzhě.",
-                "translation": "Lin Feng prit la main de Xiaoya et se faufila parmi la foule des voyageurs descendant du train, semant leurs poursuivants.",
+                "hanzi": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Chuānguò hútòng de yèsè zhuīzōng de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"La poursuite nocturne dans les hutongs\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "林峰拉起晓雅",
-                    "pinyin": "hútòng",
-                    "translation": "les ruelles hutong"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "的手穿过闸机",
-                    "pinyin": "yèsè",
-                    "translation": "la nuit"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "，迅速混入刚到站的出站人群中，甩开了跟踪者。",
-                    "pinyin": "zhuīzōng",
-                    "translation": "la poursuite"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。",
-                "pinyin": "Xiǎoyǎ lìkè bōtōng le Cháoyáng fēnjú Zhāng jǐngguān de diànhuà, jiāng qiányīnhòuguǒ xiàng jǐngfāng zuò le xiángjìn shuōmíng.",
-                "translation": "Xiaoya contacta aussitôt la police pour exposer l'ensemble de l'affaire avec une parfaite précision.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "拨通电话",
-                    "pinyin": "bōtōng diànhuà",
-                    "translation": "passer un appel"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "向警方说明",
-                    "pinyin": "xiàng jǐngfāng shuōmíng",
-                    "translation": "expliquer à la police"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "详尽说明",
-                    "pinyin": "xiángjìn shuōmíng",
-                    "translation": "explication détaillée"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "林峰拉起晓雅的手穿过闸机，迅速混入刚到站的出站人群中，甩开了跟踪者。晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。"
+        "audioText": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 17,
@@ -3741,57 +6026,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "他们拦下一辆出租车直奔旧城区，在雨后的鼓楼东大街隐入错综复杂的胡同小巷。",
-                "pinyin": "Tāmen lán xià yì liàng chūzūchē zhí bèn jiùchéngqū, zài yǔ hòu de Gǔlóu dōngdàjiē yǐn rù cuòzōngfùzá de hútòng xiǎoxiàng.",
-                "translation": "Ils sautèrent dans un taxi vers les vieux quartiers et trouvèrent refuge dans le dédale des ruelles autour de la Tour du Tambour.",
+                "hanzi": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Chuānguò hútòng de yèsè zhuīzōng de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"La poursuite nocturne dans les hutongs\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "他们拦下一辆",
-                    "pinyin": "hútòng",
-                    "translation": "les ruelles hutong"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "出租车直奔旧",
-                    "pinyin": "yèsè",
-                    "translation": "la nuit"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "城区，在雨后的鼓楼东大街隐入错综复杂的胡同小巷。",
-                    "pinyin": "zhuīzōng",
-                    "translation": "la poursuite"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。",
-                "pinyin": "Xiǎoyǎ lìkè bōtōng le Cháoyáng fēnjú Zhāng jǐngguān de diànhuà, jiāng qiányīnhòuguǒ xiàng jǐngfāng zuò le xiángjìn shuōmíng.",
-                "translation": "Xiaoya contacta aussitôt la police pour exposer l'ensemble de l'affaire avec une parfaite précision.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "拨通电话",
-                    "pinyin": "bōtōng diànhuà",
-                    "translation": "passer un appel"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "向警方说明",
-                    "pinyin": "xiàng jǐngfāng shuōmíng",
-                    "translation": "expliquer à la police"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "详尽说明",
-                    "pinyin": "xiángjìn shuōmíng",
-                    "translation": "explication détaillée"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "他们拦下一辆出租车直奔旧城区，在雨后的鼓楼东大街隐入错综复杂的胡同小巷。晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。"
+        "audioText": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 18,
@@ -3803,57 +6148,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "夜风吹过四合院的灰瓦屋顶，老槐树的雨滴在青砖地面上发出清脆的滴答声。",
-                "pinyin": "Yèfēng chuī guò sìhéyuàn de huīwǎ wūdǐng, lǎo huáishù de yǔdī zài qīngzhuān dìmiàn shang fāchū qīngcuì de dīdā shēng.",
-                "translation": "Le vent nocturne soufflait sur les toits de tuiles grises des siheyuan ; les gouttes d'eau tombaient des acacias sur le sol pavé.",
+                "hanzi": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Chuānguò hútòng de yèsè zhuīzōng de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"La poursuite nocturne dans les hutongs\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "夜风吹过四合",
-                    "pinyin": "hútòng",
-                    "translation": "les ruelles hutong"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "院的灰瓦屋顶",
-                    "pinyin": "yèsè",
-                    "translation": "la nuit"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "，老槐树的雨滴在青砖地面上发出清脆的滴答声。",
-                    "pinyin": "zhuīzōng",
-                    "translation": "la poursuite"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。",
-                "pinyin": "Xiǎoyǎ lìkè bōtōng le Cháoyáng fēnjú Zhāng jǐngguān de diànhuà, jiāng qiányīnhòuguǒ xiàng jǐngfāng zuò le xiángjìn shuōmíng.",
-                "translation": "Xiaoya contacta aussitôt la police pour exposer l'ensemble de l'affaire avec une parfaite précision.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "拨通电话",
-                    "pinyin": "bōtōng diànhuà",
-                    "translation": "passer un appel"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "向警方说明",
-                    "pinyin": "xiàng jǐngfāng shuōmíng",
-                    "translation": "expliquer à la police"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "详尽说明",
-                    "pinyin": "xiángjìn shuōmíng",
-                    "translation": "explication détaillée"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "夜风吹过四合院的灰瓦屋顶，老槐树的雨滴在青砖地面上发出清脆的滴答声。晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。"
+        "audioText": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 19,
@@ -3865,57 +6270,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "晓雅利用手机加密网络将硬盘数据备份上传至国家专利保护中心的紧急审核平台。",
-                "pinyin": "Xiǎoyǎ lìyòng shǒujī jiāmì wǎngluò jiāng yìngpán shùjù bèifèn shàngchuán zhì guójiā zhuānlì bǎohù zhōngxīn de jǐnjí shěnhé píngtái.",
-                "translation": "Xiaoya utilisa un réseau chiffré pour sauvegarder les données sur la plateforme officielle de protection des brevets.",
+                "hanzi": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Chuānguò hútòng de yèsè zhuīzōng de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"La poursuite nocturne dans les hutongs\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "晓雅利用手机",
-                    "pinyin": "hútòng",
-                    "translation": "les ruelles hutong"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "加密网络将硬",
-                    "pinyin": "yèsè",
-                    "translation": "la nuit"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "盘数据备份上传至国家专利保护中心的紧急审核平台。",
-                    "pinyin": "zhuīzōng",
-                    "translation": "la poursuite"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。",
-                "pinyin": "Xiǎoyǎ lìkè bōtōng le Cháoyáng fēnjú Zhāng jǐngguān de diànhuà, jiāng qiányīnhòuguǒ xiàng jǐngfāng zuò le xiángjìn shuōmíng.",
-                "translation": "Xiaoya contacta aussitôt la police pour exposer l'ensemble de l'affaire avec une parfaite précision.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "拨通电话",
-                    "pinyin": "bōtōng diànhuà",
-                    "translation": "passer un appel"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "向警方说明",
-                    "pinyin": "xiàng jǐngfāng shuōmíng",
-                    "translation": "expliquer à la police"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "详尽说明",
-                    "pinyin": "xiángjìn shuōmíng",
-                    "translation": "explication détaillée"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "晓雅利用手机加密网络将硬盘数据备份上传至国家专利保护中心的紧急审核平台。晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。"
+        "audioText": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 20,
@@ -3927,57 +6392,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "在图纸最后一页，他们发现了陈教授亲笔留下的暗号：“若逢险境，钟楼古树下见。”",
-                "pinyin": "Zài túzhǐ zuìhòu yí yè, tāmen fāxiàn le Chén jiàoshòu qīnbǐ liú xià de ànhào: \"Ruò féng xiǎnjìng, Zhōnglóu gǔshù xià jiàn.\"",
-                "translation": "Sur la dernière page des plans, ils découvrirent une note manuscrite du professeur : « En cas de péril, rendez-vous au vieil arbre de la Tour de la Cloche. »",
+                "hanzi": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Chuānguò hútòng de yèsè zhuīzōng de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"La poursuite nocturne dans les hutongs\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "在图纸最后一",
-                    "pinyin": "hútòng",
-                    "translation": "les ruelles hutong"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "页，他们发现",
-                    "pinyin": "yèsè",
-                    "translation": "la nuit"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "了陈教授亲笔留下的暗号：“若逢险境，钟楼古树下见。”",
-                    "pinyin": "zhuīzōng",
-                    "translation": "la poursuite"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。",
-                "pinyin": "Xiǎoyǎ lìkè bōtōng le Cháoyáng fēnjú Zhāng jǐngguān de diànhuà, jiāng qiányīnhòuguǒ xiàng jǐngfāng zuò le xiángjìn shuōmíng.",
-                "translation": "Xiaoya contacta aussitôt la police pour exposer l'ensemble de l'affaire avec une parfaite précision.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "拨通电话",
-                    "pinyin": "bōtōng diànhuà",
-                    "translation": "passer un appel"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "向警方说明",
-                    "pinyin": "xiàng jǐngfāng shuōmíng",
-                    "translation": "expliquer à la police"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "详尽说明",
-                    "pinyin": "xiángjìn shuōmíng",
-                    "translation": "explication détaillée"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "在图纸最后一页，他们发现了陈教授亲笔留下的暗号：“若逢险境，钟楼古树下见。”晓雅立刻拨通了朝阳分局张警官的电话，将前因后果向警方做了详尽说明。"
+        "audioText": "在穿过胡同的夜色追踪的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 21,
@@ -3989,57 +6514,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "凌晨两点，钟楼广场上一片静谧，古老的红墙在路灯映照下显得庄严神秘。",
-                "pinyin": "Língchén liǎng diǎn, Zhōnglóu guǎngchǎng shang yí piàn jìngmì, gǔlǎo de hóngqiáng zài lùdēng yìngzhào xià xiǎnde zhuāngyán shénmì.",
-                "translation": "À deux heures du matin, la place de la Tour de la Cloche était silencieuse ; les vieux murs rouges se dressaient avec majesté.",
+                "hanzi": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Zhōnglóu xià de zhēnxiàng fǎnzhuǎn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le retournement sous la Tour de la Cloche\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "凌晨两点，钟",
-                    "pinyin": "Zhōnglóu",
-                    "translation": "Tour de la Cloche"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "楼广场上一片",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "静谧，古老的红墙在路灯映照下显得庄严神秘。",
-                    "pinyin": "zhèngyì",
-                    "translation": "la justice"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。",
-                "pinyin": "Jǐngdēng zài yǔyè hòu de jiētóu shǎnshuò, qūsàn le lǒngzhào zài chéngshì shàngkōng de suǒyǒu yīnmái yǔ bù'ān.",
-                "translation": "Les gyrophares bleus scintillaient dans la nuit lavée par la pluie, chassant toute trace de doute et de crainte.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "警灯闪烁",
-                    "pinyin": "jǐngdēng shǎnshuò",
-                    "translation": "gyrophares clignotants"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "驱散阴霾",
-                    "pinyin": "qūsàn yīnmái",
-                    "translation": "dissiper la pénombre"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "恢复平静",
-                    "pinyin": "huìfù píngjìng",
-                    "translation": "retrouver le calme"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "凌晨两点，钟楼广场上一片静谧，古老的红墙在路灯映照下显得庄严神秘。警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。"
+        "audioText": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 22,
@@ -4051,57 +6636,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "一棵巨大的古柏树下，浑身湿透的陈教授正焦灼地徘徊着，双眼满是忧虑。",
-                "pinyin": "Yì kē jùdà de gǔ bǎishù xià, húnshēn shītòu de Chén jiàoshòu zhèng jiāozhuó de páihuái zhe, shuāngyǎn mǎn shì yōulǜ.",
-                "translation": "Sous un vieux cyprès imposant, le professeur Chen, trempé par la pluie, faisait les cent pas avec anxiété.",
+                "hanzi": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Zhōnglóu xià de zhēnxiàng fǎnzhuǎn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le retournement sous la Tour de la Cloche\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "一棵巨大的古",
-                    "pinyin": "Zhōnglóu",
-                    "translation": "Tour de la Cloche"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "柏树下，浑身",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "湿透的陈教授正焦灼地徘徊着，双眼满是忧虑。",
-                    "pinyin": "zhèngyì",
-                    "translation": "la justice"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。",
-                "pinyin": "Jǐngdēng zài yǔyè hòu de jiētóu shǎnshuò, qūsàn le lǒngzhào zài chéngshì shàngkōng de suǒyǒu yīnmái yǔ bù'ān.",
-                "translation": "Les gyrophares bleus scintillaient dans la nuit lavée par la pluie, chassant toute trace de doute et de crainte.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "警灯闪烁",
-                    "pinyin": "jǐngdēng shǎnshuò",
-                    "translation": "gyrophares clignotants"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "驱散阴霾",
-                    "pinyin": "qūsàn yīnmái",
-                    "translation": "dissiper la pénombre"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "恢复平静",
-                    "pinyin": "huìfù píngjìng",
-                    "translation": "retrouver le calme"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "一棵巨大的古柏树下，浑身湿透的陈教授正焦灼地徘徊着，双眼满是忧虑。警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。"
+        "audioText": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 23,
@@ -4113,57 +6758,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "林峰和晓雅快步走上前去：“教授，您的硬盘与图纸安全无恙，我们已经保护好了！”",
-                "pinyin": "Lín Fēng hé Xiǎoyǎ kuàibù zǒu shàngqián qù: \"Jiàoshòu, nín de yìngpán yǔ túzhǐ ānquán wúyàng, wǒmen yǐjīng bǎohù hǎo le!\"",
-                "translation": "Lin Feng et Xiaoya s'avancèrent prestement : « Professeur, votre disque dur et vos plans sont en parfaite sécurité ! »",
+                "hanzi": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Zhōnglóu xià de zhēnxiàng fǎnzhuǎn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le retournement sous la Tour de la Cloche\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "林峰和晓雅快",
-                    "pinyin": "Zhōnglóu",
-                    "translation": "Tour de la Cloche"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "步走上前去：",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "“教授，您的硬盘与图纸安全无恙，我们已经保护好了！”",
-                    "pinyin": "zhèngyì",
-                    "translation": "la justice"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。",
-                "pinyin": "Jǐngdēng zài yǔyè hòu de jiētóu shǎnshuò, qūsàn le lǒngzhào zài chéngshì shàngkōng de suǒyǒu yīnmái yǔ bù'ān.",
-                "translation": "Les gyrophares bleus scintillaient dans la nuit lavée par la pluie, chassant toute trace de doute et de crainte.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "警灯闪烁",
-                    "pinyin": "jǐngdēng shǎnshuò",
-                    "translation": "gyrophares clignotants"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "驱散阴霾",
-                    "pinyin": "qūsàn yīnmái",
-                    "translation": "dissiper la pénombre"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "恢复平静",
-                    "pinyin": "huìfù píngjìng",
-                    "translation": "retrouver le calme"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "林峰和晓雅快步走上前去：“教授，您的硬盘与图纸安全无恙，我们已经保护好了！”警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。"
+        "audioText": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 24,
@@ -4175,57 +6880,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "陈教授激动得热泪盈眶，原来一直威胁他的正是贪图巨资试图私下倒卖专利的副院长！",
-                "pinyin": "Chén jiàoshòu jīdòng de rèlèi yíngkuàng, yuánlái yìzhí wēixié tā de zhèng shì tàntú jùzī shìtú sīxià dǎomài zhuānlì de fù-yuànzhǎng!",
-                "translation": "Le professeur eut les larmes aux yeux en apprenant la nouvelle : son persécuteur était son adjoint avide d'argent !",
+                "hanzi": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Zhōnglóu xià de zhēnxiàng fǎnzhuǎn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le retournement sous la Tour de la Cloche\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "陈教授激动得",
-                    "pinyin": "Zhōnglóu",
-                    "translation": "Tour de la Cloche"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "热泪盈眶，原",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "来一直威胁他的正是贪图巨资试图私下倒卖专利的副院长！",
-                    "pinyin": "zhèngyì",
-                    "translation": "la justice"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。",
-                "pinyin": "Jǐngdēng zài yǔyè hòu de jiētóu shǎnshuò, qūsàn le lǒngzhào zài chéngshì shàngkōng de suǒyǒu yīnmái yǔ bù'ān.",
-                "translation": "Les gyrophares bleus scintillaient dans la nuit lavée par la pluie, chassant toute trace de doute et de crainte.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "警灯闪烁",
-                    "pinyin": "jǐngdēng shǎnshuò",
-                    "translation": "gyrophares clignotants"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "驱散阴霾",
-                    "pinyin": "qūsàn yīnmái",
-                    "translation": "dissiper la pénombre"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "恢复平静",
-                    "pinyin": "huìfù píngjìng",
-                    "translation": "retrouver le calme"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "陈教授激动得热泪盈眶，原来一直威胁他的正是贪图巨资试图私下倒卖专利的副院长！警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。"
+        "audioText": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 25,
@@ -4237,57 +7002,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "暗中埋伏的便衣警察迅速出击，当场抓获了追踪而来的不法分子，正义得以伸张！",
-                "pinyin": "Ànzhōng máifú de biànyī jǐngchá xùnsù chūjī, dāngchǎng zhuāhuò le zhuīzōng ér lái de bùfǎ fènzǐ, zhèngyì déyǐ shēnzhāng!",
-                "translation": "Des policiers en civil embusqués intervinrent promptement et arrêtèrent les malfaiteurs sur-le-champ !",
+                "hanzi": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Zhōnglóu xià de zhēnxiàng fǎnzhuǎn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"Le retournement sous la Tour de la Cloche\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "暗中埋伏的便",
-                    "pinyin": "Zhōnglóu",
-                    "translation": "Tour de la Cloche"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "衣警察迅速出",
-                    "pinyin": "zhēnxiàng",
-                    "translation": "la vérité"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "击，当场抓获了追踪而来的不法分子，正义得以伸张！",
-                    "pinyin": "zhèngyì",
-                    "translation": "la justice"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。",
-                "pinyin": "Jǐngdēng zài yǔyè hòu de jiētóu shǎnshuò, qūsàn le lǒngzhào zài chéngshì shàngkōng de suǒyǒu yīnmái yǔ bù'ān.",
-                "translation": "Les gyrophares bleus scintillaient dans la nuit lavée par la pluie, chassant toute trace de doute et de crainte.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "警灯闪烁",
-                    "pinyin": "jǐngdēng shǎnshuò",
-                    "translation": "gyrophares clignotants"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "驱散阴霾",
-                    "pinyin": "qūsàn yīnmái",
-                    "translation": "dissiper la pénombre"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "恢复平静",
-                    "pinyin": "huìfù píngjìng",
-                    "translation": "retrouver le calme"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "暗中埋伏的便衣警察迅速出击，当场抓获了追踪而来的不法分子，正义得以伸张！警灯在雨夜后的街头闪烁，驱散了笼罩在城市上空的所有阴霾与不安。"
+        "audioText": "在钟楼下的真相反转的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 26,
@@ -4299,57 +7124,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "案件水落石出，清晨第一缕阳光穿透薄雾，将北京城镀上了一层耀眼的金色。",
-                "pinyin": "Ànjiàn shuǐluòshíchū, qīngchén dì yī lǚ yángguāng chuāntòu bówù, jiāng Běijīng chéng dù shàng le yì céng yàoyǎn de jīnsè.",
-                "translation": "L'affaire élucidée, le premier rayon de soleil transperça la brume matinale, parant la capitale d'un éclat doré.",
+                "hanzi": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Fúxiǎo qián de chéngshì tiānjìxiàn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'horizon de la ville avant l'aube\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "案件水落石出",
-                    "pinyin": "chéngshì",
-                    "translation": "la ville"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "，清晨第一缕",
-                    "pinyin": "yángguāng",
-                    "translation": "la lumière"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "阳光穿透薄雾，将北京城镀上了一层耀眼的金色。",
-                    "pinyin": "xīntiān",
-                    "translation": "un nouveau jour"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。",
-                "pinyin": "Yángguāng sǎ zài yǔ hòu de línyīn dàdào shang, shēnghuó de xīwàng zài zhè zuò chéngshì lǐ yǒng bù tíngxī.",
-                "translation": "Le soleil baignait les avenues arborées lavées par la pluie ; l'espérance continue d'animer cette ville pour toujours.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "阳光洒在",
-                    "pinyin": "yángguāng sǎ zài",
-                    "translation": "le soleil se répandant"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "林荫大道",
-                    "pinyin": "línyīn dàdào",
-                    "translation": "avenue ombragée"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "希望永不停息",
-                    "pinyin": "xīwàng yǒng bù tíngxī",
-                    "translation": "l'espoir ne s'arrête jamais"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "案件水落石出，清晨第一缕阳光穿透薄雾，将北京城镀上了一层耀眼的金色。阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。"
+        "audioText": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 27,
@@ -4361,57 +7246,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "陈教授在派出所前紧紧握住两人的手：“感谢你们的正直与勇敢，这项专利属于所有人。”",
-                "pinyin": "Chén jiàoshòu zài pàichūsuǒ qián jǐnjǐn wò zhù liǎng rén de shǒu: \"Gǎnxiè nǐmen de zhèngzhí yǔ yǒnggǎn, zhè xiàng zhuānlì shǔyú suǒyǒu rén.\"",
-                "translation": "Le professeur serra chaleureusement la main des deux jeunes : « Merci pour votre courage ; cette technologie sera publique. »",
+                "hanzi": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Fúxiǎo qián de chéngshì tiānjìxiàn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'horizon de la ville avant l'aube\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "陈教授在派出",
-                    "pinyin": "chéngshì",
-                    "translation": "la ville"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "所前紧紧握住",
-                    "pinyin": "yángguāng",
-                    "translation": "la lumière"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "两人的手：“感谢你们的正直与勇敢，这项专利属于所有人。”",
-                    "pinyin": "xīntiān",
-                    "translation": "un nouveau jour"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。",
-                "pinyin": "Yángguāng sǎ zài yǔ hòu de línyīn dàdào shang, shēnghuó de xīwàng zài zhè zuò chéngshì lǐ yǒng bù tíngxī.",
-                "translation": "Le soleil baignait les avenues arborées lavées par la pluie ; l'espérance continue d'animer cette ville pour toujours.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "阳光洒在",
-                    "pinyin": "yángguāng sǎ zài",
-                    "translation": "le soleil se répandant"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "林荫大道",
-                    "pinyin": "línyīn dàdào",
-                    "translation": "avenue ombragée"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "希望永不停息",
-                    "pinyin": "xīwàng yǒng bù tíngxī",
-                    "translation": "l'espoir ne s'arrête jamais"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "陈教授在派出所前紧紧握住两人的手：“感谢你们的正直与勇敢，这项专利属于所有人。”阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。"
+        "audioText": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 28,
@@ -4423,57 +7368,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "周晓雅连夜写好了独家深度报道，将科研工作者默默奉献的故事传递给千家万户。",
-                "pinyin": "Zhōu Xiǎoyǎ liányè xiě hǎo le dújiā shēndù bàodào, jiāng kēyán gōngzuòzhě mòmò fèngxiàn de gùshi chuándì gěi qiānjiāwànhù.",
-                "translation": "Xiaoya rédigea un grand reportage exclusif saluant le dévouement et l'honnêteté des chercheurs.",
+                "hanzi": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Fúxiǎo qián de chéngshì tiānjìxiàn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'horizon de la ville avant l'aube\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "周晓雅连夜写",
-                    "pinyin": "chéngshì",
-                    "translation": "la ville"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "好了独家深度",
-                    "pinyin": "yángguāng",
-                    "translation": "la lumière"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "报道，将科研工作者默默奉献的故事传递给千家万户。",
-                    "pinyin": "xīntiān",
-                    "translation": "un nouveau jour"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。",
-                "pinyin": "Yángguāng sǎ zài yǔ hòu de línyīn dàdào shang, shēnghuó de xīwàng zài zhè zuò chéngshì lǐ yǒng bù tíngxī.",
-                "translation": "Le soleil baignait les avenues arborées lavées par la pluie ; l'espérance continue d'animer cette ville pour toujours.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "阳光洒在",
-                    "pinyin": "yángguāng sǎ zài",
-                    "translation": "le soleil se répandant"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "林荫大道",
-                    "pinyin": "línyīn dàdào",
-                    "translation": "avenue ombragée"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "希望永不停息",
-                    "pinyin": "xīwàng yǒng bù tíngxī",
-                    "translation": "l'espoir ne s'arrête jamais"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "周晓雅连夜写好了独家深度报道，将科研工作者默默奉献的故事传递给千家万户。阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。"
+        "audioText": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 29,
@@ -4485,57 +7490,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "林峰和晓雅在街角的小摊吃着热腾腾的豆浆油条，体会着历经风雨后的惬意与安宁。",
-                "pinyin": "Lín Fēng hé Xiǎoyǎ zài jiējiǎo de xiǎotān chī zhe rèténgténg de dòujiāng yóutiáo, tǐhuì zhe lìjīng fēngyǔ hòu de qièyì yǔ ānníng.",
-                "translation": "Lin Feng et Xiaoya savouraient un lait de soja chaud et des beignets à un stand de rue, goûtant à la paix retrouvée.",
+                "hanzi": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Fúxiǎo qián de chéngshì tiānjìxiàn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'horizon de la ville avant l'aube\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "林峰和晓雅在",
-                    "pinyin": "chéngshì",
-                    "translation": "la ville"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "街角的小摊吃",
-                    "pinyin": "yángguāng",
-                    "translation": "la lumière"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "着热腾腾的豆浆油条，体会着历经风雨后的惬意与安宁。",
-                    "pinyin": "xīntiān",
-                    "translation": "un nouveau jour"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。",
-                "pinyin": "Yángguāng sǎ zài yǔ hòu de línyīn dàdào shang, shēnghuó de xīwàng zài zhè zuò chéngshì lǐ yǒng bù tíngxī.",
-                "translation": "Le soleil baignait les avenues arborées lavées par la pluie ; l'espérance continue d'animer cette ville pour toujours.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "阳光洒在",
-                    "pinyin": "yángguāng sǎ zài",
-                    "translation": "le soleil se répandant"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "林荫大道",
-                    "pinyin": "línyīn dàdào",
-                    "translation": "avenue ombragée"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "希望永不停息",
-                    "pinyin": "xīwàng yǒng bù tíngxī",
-                    "translation": "l'espoir ne s'arrête jamais"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "林峰和晓雅在街角的小摊吃着热腾腾的豆浆油条，体会着历经风雨后的惬意与安宁。阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。"
+        "audioText": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       },
       {
         "pageNumber": 30,
@@ -4547,73 +7612,133 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "车流渐渐喧闹，这座拥有三千年历史的古老都市迎来了崭新的一天，每个人都在为梦想前行。",
-                "pinyin": "Chēliú jiànjiàn xuānnào, zhè zuò yǒngyǒu sānqiān nián lìshǐ de gǔlǎo dūshì yínglái le zhǎnxīn de yì tiān, měi gè rén dōu zài wèi mèngxiǎng qiánxíng.",
-                "translation": "La circulation s'éveillait doucement ; la cité multimillénaire inaugurait un jour neuf, où chacun marche vers ses rêves.",
+                "hanzi": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。",
+                "pinyin": "Zài Fúxiǎo qián de chéngshì tiānjìxiàn de guānjiàn xiànsuǒ zhǐyǐn xià, Lín Fēng yǔ jìzhě Zhōu Xiǎoyǎ jǐngēn kējì mǐ'àn de fāzhǎn jièzòu.",
+                "translation": "Guidés par les indices du chapitre \"L'horizon de la ville avant l'aube\", Lin Feng et la journaliste Zhou Xiaoya progressaient au cœur de l'affaire.",
                 "words": [
                   {
-                    "hanzi": "车流渐渐喧闹",
-                    "pinyin": "chéngshì",
-                    "translation": "la ville"
+                    "hanzi": "关键线索",
+                    "pinyin": "guānjiàn xiànsuǒ",
+                    "translation": "indices clés"
                   },
                   {
-                    "hanzi": "，这座拥有三",
-                    "pinyin": "yángguāng",
-                    "translation": "la lumière"
+                    "hanzi": "周晓雅",
+                    "pinyin": "Zhōu Xiǎoyǎ",
+                    "translation": "Zhou Xiaoya"
                   },
                   {
-                    "hanzi": "千年历史的古老都市迎来了崭新的一天，每个人都在为梦想前行。",
-                    "pinyin": "xīntiān",
-                    "translation": "un nouveau jour"
+                    "hanzi": "紧跟节奏",
+                    "pinyin": "jǐngēn jièzòu",
+                    "translation": "suivre le rythme"
+                  },
+                  {
+                    "hanzi": "科技迷案",
+                    "pinyin": "kējì mǐ'àn",
+                    "translation": "enquête technologique"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。",
-                "pinyin": "Yángguāng sǎ zài yǔ hòu de línyīn dàdào shang, shēnghuó de xīwàng zài zhè zuò chéngshì lǐ yǒng bù tíngxī.",
-                "translation": "Le soleil baignait les avenues arborées lavées par la pluie ; l'espérance continue d'animer cette ville pour toujours.",
+                "hanzi": "窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。",
+                "pinyin": "Chuāngwài de yǔsī bànsuí zhe shǎndiàn yìngzhào zài jiēdēng shang, chéngshì de gāolóu dàshà zài yèmù zhōng xiǎnde géwài shēnsuì.",
+                "translation": "La pluie fine et les éclairs se reflétaient sur les réverbères, les gratte-ciels se découpant sur la nuit d'encre.",
                 "words": [
                   {
-                    "hanzi": "阳光洒在",
-                    "pinyin": "yángguāng sǎ zài",
-                    "translation": "le soleil se répandant"
+                    "hanzi": "窗外雨丝",
+                    "pinyin": "chuāngwài yǔsī",
+                    "translation": "filaments de pluie"
                   },
                   {
-                    "hanzi": "林荫大道",
-                    "pinyin": "línyīn dàdào",
-                    "translation": "avenue ombragée"
+                    "hanzi": "街灯",
+                    "pinyin": "jiēdēng",
+                    "translation": "lampadaires"
                   },
                   {
-                    "hanzi": "希望永不停息",
-                    "pinyin": "xīwàng yǒng bù tíngxī",
-                    "translation": "l'espoir ne s'arrête jamais"
+                    "hanzi": "高楼大厦",
+                    "pinyin": "gāolóu dàshà",
+                    "translation": "immeubles gratte-ciel"
+                  },
+                  {
+                    "hanzi": "格外深邃",
+                    "pinyin": "géwài shēnsuì",
+                    "translation": "particulièrement profond"
+                  }
+                ]
+              },
+              {
+                "hanzi": "两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。",
+                "pinyin": "Liǎng rén píngjiè mǐnruì de guānchálì yǔ yánjǐn de luóji tuīdǎo, céngcéng bōkāi shùzì mìmǎ bèihòu de jīngrén nèimù.",
+                "translation": "Armés d'un sens aigu de l'observation et d'une logique rigoureuse, ils découvrirent les secrets du code chiffré.",
+                "words": [
+                  {
+                    "hanzi": "敏锐观察力",
+                    "pinyin": "mǐnruì guānchálì",
+                    "translation": "sens aigu de l'observation"
+                  },
+                  {
+                    "hanzi": "逻辑推导",
+                    "pinyin": "luóji tuīdǎo",
+                    "translation": "déduction logique"
+                  },
+                  {
+                    "hanzi": "数字密码",
+                    "pinyin": "shùzì mìmǎ",
+                    "translation": "code chiffré"
+                  },
+                  {
+                    "hanzi": "惊人内幕",
+                    "pinyin": "jīngrén nèimù",
+                    "translation": "dessous surprenants"
+                  }
+                ]
+              },
+              {
+                "hanzi": "为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。",
+                "pinyin": "Wèile bǎohù guójiā héxīn lǜsè shuǐyuán jìshù de zhīshi chǎnquán, tāmen xiàdìng juéxīn yídìng yào yǔ zhèngyì tóngxíng.",
+                "translation": "Résolus à préserver le brevet écologique de dépollution des eaux, ils s'engagèrent fermement pour la justice.",
+                "words": [
+                  {
+                    "hanzi": "绿色水源",
+                    "pinyin": "lǜsè shuǐyuán",
+                    "translation": "sources d'eau écologiques"
+                  },
+                  {
+                    "hanzi": "知识产权",
+                    "pinyin": "zhīshi chǎnquán",
+                    "translation": "propriété intellectuelle"
+                  },
+                  {
+                    "hanzi": "下定决心",
+                    "pinyin": "xiàdìng juéxīn",
+                    "translation": "prendre la ferme résolution"
+                  },
+                  {
+                    "hanzi": "正义同行",
+                    "pinyin": "zhèngyì tóngxíng",
+                    "translation": "marcher avec la justice"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "车流渐渐喧闹，这座拥有三千年历史的古老都市迎来了崭新的一天，每个人都在为梦想前行。阳光洒在雨后的林荫大道上，生活的希望在这座城市里永不停息。"
+        "audioText": "在拂晓前的城市天际线的关键线索指引下，林峰与记者周晓雅紧跟科技迷案的发展节奏。窗外的雨丝伴随着闪电映照在街灯上，城市的高楼大厦在夜幕中显得格外深邃。两人凭借敏锐的观察力和严谨的逻辑推导，层层剥开数字密码背后的惊人内幕。为了保护国家核心绿色水源技术的知识产权，他们下定决心一定要与正义同行。"
       }
     ]
   },
   {
-    "id": "novel-tea-scent-dream",
+    "id": "novel-tea-legacy",
     "title": "茶香旧梦：爷爷的时光茶馆",
     "titlePinyin": "Cháxiāng jiùmèng: yéye de shíguāng cháguǎn",
     "titleTranslation": "Rêves au Parfum de Thé : La Maison de Thé du Temps de Grand-père",
     "level": "HSK 3",
     "genre": "Saga Familiale & Tradition",
     "coverEmoji": "🍵",
-    "coverColor": "from-emerald-700 to-stone-900",
+    "coverColor": "from-emerald-700 to-teal-950",
     "totalPages": 30,
     "totalChapters": 6,
-    "estimatedListeningTime": "38 min",
-    "wordCount": 2900,
+    "estimatedListeningTime": "36 min",
+    "wordCount": 2920,
     "synopsis": "在上海法租界梧桐掩映的弄堂深处，七十五岁的陈爷爷经营着一家承载半生回忆的老茶馆。当面临商业拆迁危急关头，孙女小月在阁楼泛黄的旧笔记中发现了一九七二年失传的武夷岩茶古法配方“云雾旧梦”。她毅然背起行囊远赴武夷仙境，踏上了一段寻根、制茶与守护家族温度的温情旅程。",
     "synopsisTranslation": "Au fond d'une ruelle de Shanghai, le salon de thé de grand-père Chen risque de fermer. Sa petite-fille Xiao Yue découvre la recette perdue d'un thé légendaire et part au mont Wuyi pour faire revivre cette tradition...",
     "keyVocabulary": [
@@ -4653,7 +7778,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 1,
         "title": "弄堂深处的老茶馆",
         "titlePinyin": "Lòngtáng shēnchù de lǎo cháguǎn",
-        "titleTranslation": "Le salon de thé de la ruelle",
+        "titleTranslation": "La maison de thé au cœur de la ruelle",
         "startPage": 1,
         "endPage": 5
       },
@@ -4669,7 +7794,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 3,
         "title": "驶向武夷山的高铁",
         "titlePinyin": "Shǐ xiàng Wǔyíshān de gāotiě",
-        "titleTranslation": "Le TGV pour les monts Wuyi",
+        "titleTranslation": "Le train vers les monts Wuyi",
         "startPage": 11,
         "endPage": 15
       },
@@ -4677,7 +7802,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 4,
         "title": "悬崖茶园与采摘古法",
         "titlePinyin": "Xuányá cháyuán yǔ cǎizhāi gǔfǎ",
-        "titleTranslation": "Les théiers des falaises",
+        "titleTranslation": "Les théiers sauvages des falaises",
         "startPage": 16,
         "endPage": 20
       },
@@ -4685,7 +7810,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 5,
         "title": "炭火烘焙的真正秘密",
         "titlePinyin": "Tànhuǒ hōngbèi de zhēnzhèng mìmì",
-        "titleTranslation": "Le secret de la torréfaction",
+        "titleTranslation": "Le secret de la torréfaction au charbon",
         "startPage": 21,
         "endPage": 25
       },
@@ -4693,7 +7818,7 @@ export const AUDIO_NOVELS: AudioNovel[] = [
         "chapterNumber": 6,
         "title": "茶香归来与新生",
         "titlePinyin": "Cháxiāng guīlái yǔ xīnshēng",
-        "titleTranslation": "Le renouveau du parfum",
+        "titleTranslation": "Le retour du parfum et le renouveau",
         "startPage": 26,
         "endPage": 30
       }
@@ -4714,52 +7839,112 @@ export const AUDIO_NOVELS: AudioNovel[] = [
                 "translation": "Au fond d'une allée paisible bordée de platanes dans l'ancienne concession de Shanghai, reposait un salon de thé nommé « La Pause du Temps ».",
                 "words": [
                   {
-                    "hanzi": "上海法租界一",
-                    "pinyin": "lòngtáng",
-                    "translation": "la ruelle shanghaienne"
+                    "hanzi": "法租界",
+                    "pinyin": "Fǎzūjiè",
+                    "translation": "concession française"
                   },
                   {
-                    "hanzi": "条宁静的梧桐",
-                    "pinyin": "cháguǎn",
-                    "translation": "le salon de thé"
+                    "hanzi": "梧桐树",
+                    "pinyin": "wútóngshù",
+                    "translation": "platanes"
                   },
                   {
-                    "hanzi": "树弄堂深处，坐落着一家名为“时光小憩”的老茶馆。",
-                    "pinyin": "suìyuè",
-                    "translation": "les années passées"
+                    "hanzi": "弄堂深处",
+                    "pinyin": "lòngtáng shēnchù",
+                    "translation": "au fond de la ruelle"
+                  },
+                  {
+                    "hanzi": "老茶馆",
+                    "pinyin": "lǎo cháguǎn",
+                    "translation": "vieux salon de thé"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。",
-                "pinyin": "Xīyáng de jīnguāng chuāntòu chuānglíng sǎ zài chátái shang, shuǐqì zhēngténg zhōng mǎn shì yīyībùshě de juànliàn.",
-                "translation": "L'or du couchant traversait les croisillons de bois, et la vapeur du thé portait une infinie tendresse empreinte de nostalgie.",
+                "hanzi": "茶馆陈设古色古香，实木长桌被岁月磨得油亮光滑，柜台上摆着大大小小的紫砂壶。",
+                "pinyin": "Cháguǎn chénshè gǔsègǔxiāng, shímù chángzhuō bèi suìyuè mó de yóuliàng guānghua, guìtái shang bǎi zhe dàdàxiǎoxiǎo de zǐshāhú.",
+                "translation": "Le salon était meublé avec tradition ; les longues tables de bois sombre luisaient d'une patine douce, et des théières d'Yixing ornaient le comptoir.",
                 "words": [
                   {
-                    "hanzi": "夕阳金光",
-                    "pinyin": "xīyáng jīnguāng",
-                    "translation": "lumière dorée du soir"
+                    "hanzi": "古色古香",
+                    "pinyin": "gǔsègǔxiāng",
+                    "translation": "de style antique"
                   },
                   {
-                    "hanzi": "水汽蒸腾",
-                    "pinyin": "shuǐqì zhēngténg",
-                    "translation": "vapeur d'eau qui s'élève"
+                    "hanzi": "实木长桌",
+                    "pinyin": "shímù chángzhuō",
+                    "translation": "longues tables en bois massif"
                   },
                   {
-                    "hanzi": "温暖眷恋",
-                    "pinyin": "wēnnuǎn juànliàn",
-                    "translation": "tendre attachement"
+                    "hanzi": "岁月",
+                    "pinyin": "suìyuè",
+                    "translation": "les années"
+                  },
+                  {
+                    "hanzi": "紫砂壶",
+                    "pinyin": "zǐshāhú",
+                    "translation": "théières en terre d'Yixing"
+                  }
+                ]
+              },
+              {
+                "hanzi": "七十五岁的陈爷爷独自经营这家茶馆已有整整五十年，每逢黄昏都有老街坊聚在这里喝茶聊天。",
+                "pinyin": "Qīshíwǔ suì de Chén yéye dúzì jīngyíng zhè jiā cháguǎn yǐ yǒu zhěngzhěng wǔshí nián, měi féng huánghūn dōu yǒu lǎo jiēfang jù zài zhèlǐ hēchá liáotiān.",
+                "translation": "Le grand-père Chen, âgé de 75 ans, tenait ce lieu depuis un demi-siècle ; chaque soir, de vieux voisins s'y réunissaient pour partager une infusion.",
+                "words": [
+                  {
+                    "hanzi": "独自经营",
+                    "pinyin": "dúzì jīngyíng",
+                    "translation": "gérer seul"
+                  },
+                  {
+                    "hanzi": "整整五十年",
+                    "pinyin": "zhěngzhěng wǔshí nián",
+                    "translation": "cinquante pleines années"
+                  },
+                  {
+                    "hanzi": "老街坊",
+                    "pinyin": "lǎo jiēfang",
+                    "translation": "vieux voisins"
+                  },
+                  {
+                    "hanzi": "喝茶聊天",
+                    "pinyin": "hēchá liáotiān",
+                    "translation": "boire du thé et bavarder"
+                  }
+                ]
+              },
+              {
+                "hanzi": "然而，一纸商业拆迁改建通知打破了这份平静，由于租金飞涨，老茶馆面临着下个月被迫关闭的危机。",
+                "pinyin": "Rán'ér, yì zhǐ shāngyè chāiqiān gǎijiàn tōngzhī dǎpò le zhè fèn píngjìng, yóuyú zūjīn fēizhǎng, lǎo cháguǎn miànlín zhe xià gè yuè bèi pò guānbì de wēijī.",
+                "translation": "Pourtant, un avis de rénovation commerciale brisa ce havre de paix : face à l'explosion des loyers, le salon risquait d'être fermé le mois prochain.",
+                "words": [
+                  {
+                    "hanzi": "然而",
+                    "pinyin": "rán'ér",
+                    "translation": "pourtant, cependant"
+                  },
+                  {
+                    "hanzi": "商业拆迁",
+                    "pinyin": "shāngyè chāiqiān",
+                    "translation": "démolition commerciale"
+                  },
+                  {
+                    "hanzi": "租金飞涨",
+                    "pinyin": "zūjīn fēizhǎng",
+                    "translation": "loyer qui flambe"
+                  },
+                  {
+                    "hanzi": "面临危机",
+                    "pinyin": "miànlín wēijī",
+                    "translation": "faire face à une crise"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "上海法租界一条宁静的梧桐树弄堂深处，坐落着一家名为“时光小憩”的老茶馆。夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。"
+        "audioText": "上海法租界一条宁静的梧桐树弄堂深处，坐落着一家名为“时光小憩”的老茶馆。茶馆陈设古色古香，实木长桌被岁月磨得油亮光滑，柜台上摆着大大小小的紫砂壶。七十五岁的陈爷爷独自经营这家茶馆已有整整五十年，每逢黄昏都有老街坊聚在这里喝茶聊天。然而，一纸商业拆迁改建通知打破了这份平静，由于租金飞涨，老茶馆面临着下个月被迫关闭的危机。"
       },
       {
         "pageNumber": 2,
@@ -4771,35 +7956,90 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "茶馆陈设古色古香，实木长桌被岁月磨得油亮光滑，柜台上摆着大大小小的紫砂壶。",
-                "pinyin": "Cháguǎn chénshè gǔsègǔxiāng, shímù chángzhuō bèi suìyuè mó de yóuliàng guānghua, guìtái shang bǎi zhe dàdàxiǎoxiǎo de zǐshāhú.",
-                "translation": "Le salon était meublé avec tradition ; les longues tables de bois sombre luisaient d'une patine douce, et des théières en terre d'Yixing ornaient le comptoir.",
+                "hanzi": "刚从美术学院毕业的孙女小月看着爷爷暗自叹气的背影，心中十分难受。",
+                "pinyin": "Gāng cóng Měishù Xuéyuàn bìyè de sūnnǚ Xiǎoyuè kàn zhe yéye ànzì tànqì de bèiyǐng, xīn zhōng shífēn nánshòu.",
+                "translation": "Sa petite-fille Xiao Yue, diplômée des Beaux-Arts, contemplait avec peine son grand-père soupirer en silence.",
                 "words": [
                   {
-                    "hanzi": "茶馆陈设古色",
-                    "pinyin": "lòngtáng",
-                    "translation": "la ruelle shanghaienne"
+                    "hanzi": "美术学院",
+                    "pinyin": "Měishù Xuéyuàn",
+                    "translation": "École des Beaux-Arts"
                   },
                   {
-                    "hanzi": "古香，实木长",
-                    "pinyin": "cháguǎn",
-                    "translation": "le salon de thé"
+                    "hanzi": "孙女小月",
+                    "pinyin": "sūnnǚ Xiǎoyuè",
+                    "translation": "la petite-fille Xiao Yue"
                   },
                   {
-                    "hanzi": "桌被岁月磨得油亮光滑，柜台上摆着大大小小的紫砂壶。",
-                    "pinyin": "suìyuè",
-                    "translation": "les années passées"
+                    "hanzi": "暗自叹气",
+                    "pinyin": "ànzì tànqì",
+                    "translation": "soupirer en secret"
+                  },
+                  {
+                    "hanzi": "十分难受",
+                    "pinyin": "shífēn nánshòu",
+                    "translation": "très peinée"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。",
-                "pinyin": "Xīyáng de jīnguāng chuāntòu chuānglíng sǎ zài chátái shang, shuǐqì zhēngténg zhōng mǎn shì yīyībùshě de juànliàn.",
-                "translation": "L'or du couchant traversait les croisillons de bois, et la vapeur du thé portait une infinie tendresse empreinte de nostalgie.",
+                "hanzi": "这间茶馆陪伴了她整个童年，每一个雕花木窗下都藏着欢声笑语的回忆。",
+                "pinyin": "Zhè jiān cháguǎn péibàn le tā zhěnggè tóngnián, měi yí gè diāohuā mùchuāng xià dōu cáng zhe huānshēng xiàoyǔ de huíyì.",
+                "translation": "Ce salon de thé avait bercé toute son enfance ; sous chaque fenêtre sculptée dormaient des éclats de rire.",
+                "words": [
+                  {
+                    "hanzi": "陪伴",
+                    "pinyin": "péibàn",
+                    "translation": "accompagner"
+                  },
+                  {
+                    "hanzi": "整个童年",
+                    "pinyin": "zhěnggè tóngnián",
+                    "translation": "toute l'enfance"
+                  },
+                  {
+                    "hanzi": "雕花木窗",
+                    "pinyin": "diāohuā mùchuāng",
+                    "translation": "fenêtres en bois ciselé"
+                  },
+                  {
+                    "hanzi": "欢声笑语",
+                    "pinyin": "huānshēng xiàoyǔ",
+                    "translation": "rires et gaieté"
+                  }
+                ]
+              },
+              {
+                "hanzi": "小月暗下决心，一定要找到一种方法，保住这片承载了几代人温情的心灵家园。",
+                "pinyin": "Xiǎoyuè àn xià juéxīn, yídìng yào zhǎodào yì zhǒng fāngfǎ, bǎozhù zhè piàn chéngzài le jǐ dài rén wēnqíng de xīnlíng jiāyuán.",
+                "translation": "Xiao Yue se fit la promesse de trouver une solution pour sauvegarder ce refuge d'humanité.",
+                "words": [
+                  {
+                    "hanzi": "暗下决心",
+                    "pinyin": "àn xià juéxīn",
+                    "translation": "prendre une résolution"
+                  },
+                  {
+                    "hanzi": "保住",
+                    "pinyin": "bǎozhù",
+                    "translation": "préserver, maintenir"
+                  },
+                  {
+                    "hanzi": "几代人",
+                    "pinyin": "jǐ dài rén",
+                    "translation": "plusieurs générations"
+                  },
+                  {
+                    "hanzi": "心灵家园",
+                    "pinyin": "xīnlíng jiāyuán",
+                    "translation": "havre spirituel"
+                  }
+                ]
+              },
+              {
+                "hanzi": "夕阳的金光穿透窗棂洒在茶台上，蒸腾的水汽中满是依依不舍的眷恋。",
+                "pinyin": "Xīyáng de jīnguāng chuāntòu chuānglíng sǎ zài chátái shang, zhēngténg de shuǐqì zhōng mǎn shì yīyībùshě de juànliàn.",
+                "translation": "L'or du couchant traversait les croisillons de bois, et la vapeur du thé portait une infinie tendresse.",
                 "words": [
                   {
                     "hanzi": "夕阳金光",
@@ -4807,21 +8047,26 @@ export const AUDIO_NOVELS: AudioNovel[] = [
                     "translation": "lumière dorée du soir"
                   },
                   {
-                    "hanzi": "水汽蒸腾",
-                    "pinyin": "shuǐqì zhēngténg",
-                    "translation": "vapeur d'eau qui s'élève"
+                    "hanzi": "穿透窗棂",
+                    "pinyin": "chuāntòu chuānglíng",
+                    "translation": "traverser les croisillons"
                   },
                   {
-                    "hanzi": "温暖眷恋",
-                    "pinyin": "wēnnuǎn juànliàn",
-                    "translation": "tendre attachement"
+                    "hanzi": "水汽蒸腾",
+                    "pinyin": "shuǐqì zhēngténg",
+                    "translation": "vapeur d'eau"
+                  },
+                  {
+                    "hanzi": "依依不舍",
+                    "pinyin": "yīyībùshě",
+                    "translation": "attachement ému"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "茶馆陈设古色古香，实木长桌被岁月磨得油亮光滑，柜台上摆着大大小小的紫砂壶。夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。"
+        "audioText": "刚从美术学院毕业的孙女小月看着爷爷暗自叹气的背影，心中十分难受。这间茶馆陪伴了她整个童年，每一个雕花木窗下都藏着欢声笑语的回忆。小月暗下决心，一定要找到一种方法，保住这片承载了几代人温情的心灵家园。夕阳的金光穿透窗棂洒在茶台上，蒸腾的水汽中满是依依不舍的眷恋。"
       },
       {
         "pageNumber": 3,
@@ -4833,57 +8078,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "七十五岁的陈爷爷独自经营这家茶馆已有整整五十年，每逢黄昏都有老街坊聚在这里喝茶聊天。",
-                "pinyin": "Qīshíwǔ suì de Chén yéye dúzì jīngyíng zhè jiā cháguǎn yǐ yǒu zhěngzhěng wǔshí nián, měi féng huánghūn dōu yǒu lǎo jiēfang jù zài zhèlǐ hēchá liáotiān.",
-                "translation": "Le grand-père Chen, âgé de 75 ans, tenait ce lieu depuis un demi-siècle ; chaque soir, de vieux voisins s'y réunissaient pour partager une infusion.",
+                "hanzi": "在弄堂深处的老茶馆的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Lòngtáng shēnchù de lǎo cháguǎn de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"La maison de thé au cœur de la ruelle\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "七十五岁的陈",
-                    "pinyin": "lòngtáng",
-                    "translation": "la ruelle shanghaienne"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "爷爷独自经营",
-                    "pinyin": "cháguǎn",
-                    "translation": "le salon de thé"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "这家茶馆已有整整五十年，每逢黄昏都有老街坊聚在这里喝茶聊天。",
-                    "pinyin": "suìyuè",
-                    "translation": "les années passées"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。",
-                "pinyin": "Xīyáng de jīnguāng chuāntòu chuānglíng sǎ zài chátái shang, shuǐqì zhēngténg zhōng mǎn shì yīyībùshě de juànliàn.",
-                "translation": "L'or du couchant traversait les croisillons de bois, et la vapeur du thé portait une infinie tendresse empreinte de nostalgie.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "夕阳金光",
-                    "pinyin": "xīyáng jīnguāng",
-                    "translation": "lumière dorée du soir"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "水汽蒸腾",
-                    "pinyin": "shuǐqì zhēngténg",
-                    "translation": "vapeur d'eau qui s'élève"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温暖眷恋",
-                    "pinyin": "wēnnuǎn juànliàn",
-                    "translation": "tendre attachement"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "七十五岁的陈爷爷独自经营这家茶馆已有整整五十年，每逢黄昏都有老街坊聚在这里喝茶聊天。夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。"
+        "audioText": "在弄堂深处的老茶馆的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 4,
@@ -4895,57 +8200,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "然而，一纸商业拆迁改建通知打破了这份平静，由于租金飞涨，老茶馆面临着下个月被迫关闭的危机。",
-                "pinyin": "Rán'ér, yì zhǐ shāngyè chāiqiān gǎijiàn tōngzhī dǎpò le zhè fèn píngjìng, yóuyú zūjīn fēizhǎng, lǎo cháguǎn miànlín zhe xià gè yuè bèi pò guānbì de wēijī.",
-                "translation": "Pourtant, un avis de démolition commerciale brisa ce havre de paix : face à l'explosion des loyers, le salon risquait d'être fermé le mois prochain.",
+                "hanzi": "在弄堂深处的老茶馆的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Lòngtáng shēnchù de lǎo cháguǎn de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"La maison de thé au cœur de la ruelle\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "然而，一纸商",
-                    "pinyin": "lòngtáng",
-                    "translation": "la ruelle shanghaienne"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "业拆迁改建通",
-                    "pinyin": "cháguǎn",
-                    "translation": "le salon de thé"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "知打破了这份平静，由于租金飞涨，老茶馆面临着下个月被迫关闭的危机。",
-                    "pinyin": "suìyuè",
-                    "translation": "les années passées"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。",
-                "pinyin": "Xīyáng de jīnguāng chuāntòu chuānglíng sǎ zài chátái shang, shuǐqì zhēngténg zhōng mǎn shì yīyībùshě de juànliàn.",
-                "translation": "L'or du couchant traversait les croisillons de bois, et la vapeur du thé portait une infinie tendresse empreinte de nostalgie.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "夕阳金光",
-                    "pinyin": "xīyáng jīnguāng",
-                    "translation": "lumière dorée du soir"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "水汽蒸腾",
-                    "pinyin": "shuǐqì zhēngténg",
-                    "translation": "vapeur d'eau qui s'élève"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温暖眷恋",
-                    "pinyin": "wēnnuǎn juànliàn",
-                    "translation": "tendre attachement"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "然而，一纸商业拆迁改建通知打破了这份平静，由于租金飞涨，老茶馆面临着下个月被迫关闭的危机。夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。"
+        "audioText": "在弄堂深处的老茶馆的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 5,
@@ -4957,57 +8322,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "刚从美术学院毕业的孙女小月看着爷爷暗自叹气的背影，暗下决心一定要保住这个承载了几代人回忆的温暖角落。",
-                "pinyin": "Gāng cóng Měishù Xuéyuàn bìyè de sūnnǚ Xiǎoyuè kàn zhe yéye ànzì tànqì de bèiyǐng, àn xià juéxīn yídìng yào bǎozhù zhè gè chéngzài le jǐ dài rén huíyì de wēnnuǎn jiǎoluò.",
-                "translation": "Sa petite-fille Xiao Yue, diplômée des Beaux-Arts, contempla avec peine son grand-père soupirer en silence et se jura de sauver ce sanctuaire de mémoire.",
+                "hanzi": "在弄堂深处的老茶馆的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Lòngtáng shēnchù de lǎo cháguǎn de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"La maison de thé au cœur de la ruelle\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "刚从美术学院",
-                    "pinyin": "lòngtáng",
-                    "translation": "la ruelle shanghaienne"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "毕业的孙女小",
-                    "pinyin": "cháguǎn",
-                    "translation": "le salon de thé"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "月看着爷爷暗自叹气的背影，暗下决心一定要保住这个承载了几代人回忆的温暖角落。",
-                    "pinyin": "suìyuè",
-                    "translation": "les années passées"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。",
-                "pinyin": "Xīyáng de jīnguāng chuāntòu chuānglíng sǎ zài chátái shang, shuǐqì zhēngténg zhōng mǎn shì yīyībùshě de juànliàn.",
-                "translation": "L'or du couchant traversait les croisillons de bois, et la vapeur du thé portait une infinie tendresse empreinte de nostalgie.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "夕阳金光",
-                    "pinyin": "xīyáng jīnguāng",
-                    "translation": "lumière dorée du soir"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "水汽蒸腾",
-                    "pinyin": "shuǐqì zhēngténg",
-                    "translation": "vapeur d'eau qui s'élève"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温暖眷恋",
-                    "pinyin": "wēnnuǎn juànliàn",
-                    "translation": "tendre attachement"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "刚从美术学院毕业的孙女小月看着爷爷暗自叹气的背影，暗下决心一定要保住这个承载了几代人回忆的温暖角落。夕阳的金光穿透窗棂洒在茶台上，水汽蒸腾中满是依依不舍的眷恋。"
+        "audioText": "在弄堂深处的老茶馆的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 6,
@@ -5019,57 +8444,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "为了给茶馆整理历史档案以申请非物质文化遗产保护，小月爬上了茶馆顶层常年上锁的木阁楼。",
-                "pinyin": "Wèile gěi cháguǎn zhěnglǐ lìshǐ dàng'àn yǐ shēnqǐng fēiwùzhí wénhuà yíchǎn bǎohù, Xiǎoyuè pá shàng le cháguǎn dǐngcéng chángnián shàngsuǒ de mù gélóu.",
-                "translation": "Pour constituer un dossier de sauvegarde du patrimoine immatériel, Xiao Yue monta dans le grenier en bois verrouillé depuis des années.",
+                "hanzi": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Gélóu shang de fànhuáng bǐjì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le carnet jauni du grenier\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "为了给茶馆整",
-                    "pinyin": "gélóu",
-                    "translation": "le grenier"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "理历史档案以",
-                    "pinyin": "bǐjì",
-                    "translation": "le carnet secret"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "申请非物质文化遗产保护，小月爬上了茶馆顶层常年上锁的木阁楼。",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "monts Wuyi"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！",
-                "pinyin": "Xiǎoyuè xīn zhōng rán qǐ xīwàng de huǒmiáo: rúguǒ néng chóngxīn bèizhì chū zhè kuǎn juépǐn lǎo chá, cháguǎn jiù yǒu jiù le!",
-                "translation": "Une flamme d'espoir s'alluma en Xiao Yue : si elle parvenait à ressusciter ce thé d'exception, le salon serait sauvé !",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "希望的火苗",
-                    "pinyin": "xīwàng de huǒmiáo",
-                    "translation": "l'étincelle d'espoir"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "焙制老茶",
-                    "pinyin": "bèizhì lǎo chá",
-                    "translation": "torréfier le thé ancien"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "拯救茶馆",
-                    "pinyin": "zhěngjiù cháguǎn",
-                    "translation": "sauver le salon"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "为了给茶馆整理历史档案以申请非物质文化遗产保护，小月爬上了茶馆顶层常年上锁的木阁楼。小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！"
+        "audioText": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 7,
@@ -5081,57 +8566,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "阁楼里堆放着老樟木箱和成捆的旧画卷，在一只生锈的铁皮盒底部，她翻出了一本用蓝布包裹的小册子。",
-                "pinyin": "Gélóu lǐ duīfàng zhe lǎo zhāngmùxiāng hé chéng kǔn de jiù huàjuàn, zài yì zhī shēngxiù de tiěpíhé dǐbù, tā fān chū le yì běn yòng lánbù bāoguǒ de xiǎo cèzi.",
-                "translation": "Entre malles de camphrier et rouleaux peints, elle dénicha au fond d'une boîte en fer rouillée un carnet enveloppé d'étoffe bleue.",
+                "hanzi": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Gélóu shang de fànhuáng bǐjì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le carnet jauni du grenier\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "阁楼里堆放着",
-                    "pinyin": "gélóu",
-                    "translation": "le grenier"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "老樟木箱和成",
-                    "pinyin": "bǐjì",
-                    "translation": "le carnet secret"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "捆的旧画卷，在一只生锈的铁皮盒底部，她翻出了一本用蓝布包裹的小册子。",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "monts Wuyi"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！",
-                "pinyin": "Xiǎoyuè xīn zhōng rán qǐ xīwàng de huǒmiáo: rúguǒ néng chóngxīn bèizhì chū zhè kuǎn juépǐn lǎo chá, cháguǎn jiù yǒu jiù le!",
-                "translation": "Une flamme d'espoir s'alluma en Xiao Yue : si elle parvenait à ressusciter ce thé d'exception, le salon serait sauvé !",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "希望的火苗",
-                    "pinyin": "xīwàng de huǒmiáo",
-                    "translation": "l'étincelle d'espoir"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "焙制老茶",
-                    "pinyin": "bèizhì lǎo chá",
-                    "translation": "torréfier le thé ancien"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "拯救茶馆",
-                    "pinyin": "zhěngjiù cháguǎn",
-                    "translation": "sauver le salon"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "阁楼里堆放着老樟木箱和成捆的旧画卷，在一只生锈的铁皮盒底部，她翻出了一本用蓝布包裹的小册子。小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！"
+        "audioText": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 8,
@@ -5143,57 +8688,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "翻开泛黄的书页，上面用钢笔详细记录着一九七二年春季陈爷爷在福建武夷山的采茶见闻。",
-                "pinyin": "Fānkāi fànhuáng de shūyè, shàngmiàn yòng gāngbǐ xiángxì jìlù zhe yī-jiǔ-qī-èr nián chūnjì Chén yéye zài Fújiàn Wǔyíshān de cǎichá jiànwén.",
-                "translation": "Sur les pages jaunies, le grand-père avait consigné à la plume ses observations de cueillette aux monts Wuyi au printemps 1972.",
+                "hanzi": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Gélóu shang de fànhuáng bǐjì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le carnet jauni du grenier\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "翻开泛黄的书",
-                    "pinyin": "gélóu",
-                    "translation": "le grenier"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "页，上面用钢",
-                    "pinyin": "bǐjì",
-                    "translation": "le carnet secret"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "笔详细记录着一九七二年春季陈爷爷在福建武夷山的采茶见闻。",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "monts Wuyi"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！",
-                "pinyin": "Xiǎoyuè xīn zhōng rán qǐ xīwàng de huǒmiáo: rúguǒ néng chóngxīn bèizhì chū zhè kuǎn juépǐn lǎo chá, cháguǎn jiù yǒu jiù le!",
-                "translation": "Une flamme d'espoir s'alluma en Xiao Yue : si elle parvenait à ressusciter ce thé d'exception, le salon serait sauvé !",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "希望的火苗",
-                    "pinyin": "xīwàng de huǒmiáo",
-                    "translation": "l'étincelle d'espoir"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "焙制老茶",
-                    "pinyin": "bèizhì lǎo chá",
-                    "translation": "torréfier le thé ancien"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "拯救茶馆",
-                    "pinyin": "zhěngjiù cháguǎn",
-                    "translation": "sauver le salon"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "翻开泛黄的书页，上面用钢笔详细记录着一九七二年春季陈爷爷在福建武夷山的采茶见闻。小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！"
+        "audioText": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 9,
@@ -5205,57 +8810,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "最后一页记载着一种独一无二的岩茶古法配方：“云雾旧梦，炭火慢煨九日，甘冽沁骨，品之忘忧。”",
-                "pinyin": "Zuìhòu yí yè jìzǎi zhe yì zhǒng dúyīwú'èr de yánchá gǔfǎ pèifāng: \"Yúnwù Jiùmèng, tànhuǒ màn wēi jiǔ rì, gānliè qìn gǔ, pǐn zhī wàngyōu.\"",
-                "translation": "La dernière page révélait la formule d'un thé de roche légendaire : « Rêve de Nuage, mijoté au charbon neuf jours, doux et apaisant toute peine. »",
+                "hanzi": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Gélóu shang de fànhuáng bǐjì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le carnet jauni du grenier\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "最后一页记载",
-                    "pinyin": "gélóu",
-                    "translation": "le grenier"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "着一种独一无",
-                    "pinyin": "bǐjì",
-                    "translation": "le carnet secret"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "二的岩茶古法配方：“云雾旧梦，炭火慢煨九日，甘冽沁骨，品之忘忧。”",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "monts Wuyi"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！",
-                "pinyin": "Xiǎoyuè xīn zhōng rán qǐ xīwàng de huǒmiáo: rúguǒ néng chóngxīn bèizhì chū zhè kuǎn juépǐn lǎo chá, cháguǎn jiù yǒu jiù le!",
-                "translation": "Une flamme d'espoir s'alluma en Xiao Yue : si elle parvenait à ressusciter ce thé d'exception, le salon serait sauvé !",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "希望的火苗",
-                    "pinyin": "xīwàng de huǒmiáo",
-                    "translation": "l'étincelle d'espoir"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "焙制老茶",
-                    "pinyin": "bèizhì lǎo chá",
-                    "translation": "torréfier le thé ancien"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "拯救茶馆",
-                    "pinyin": "zhěngjiù cháguǎn",
-                    "translation": "sauver le salon"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "最后一页记载着一种独一无二的岩茶古法配方：“云雾旧梦，炭火慢煨九日，甘冽沁骨，品之忘忧。”小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！"
+        "audioText": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 10,
@@ -5267,57 +8932,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "笔记末尾还贴着一张年轻爷爷与茶山老友的黑白合影，背面写着一个武夷山星村镇的地址。",
-                "pinyin": "Bǐjì mòwěi hái tiē zhe yì zhāng niánqīng yéye yǔ cháshān lǎoyǒu de hēibái héyǐng, bèimiàn xiě zhe yí gè Wǔyíshān Xīngcūn zhèn de dìzhǐ.",
-                "translation": "Au dos d'une photo en noir et blanc de son grand-père avec un ami cueilleur figurait une adresse au village de Xingcun.",
+                "hanzi": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Gélóu shang de fànhuáng bǐjì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le carnet jauni du grenier\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "笔记末尾还贴",
-                    "pinyin": "gélóu",
-                    "translation": "le grenier"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "着一张年轻爷",
-                    "pinyin": "bǐjì",
-                    "translation": "le carnet secret"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "爷与茶山老友的黑白合影，背面写着一个武夷山星村镇的地址。",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "monts Wuyi"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！",
-                "pinyin": "Xiǎoyuè xīn zhōng rán qǐ xīwàng de huǒmiáo: rúguǒ néng chóngxīn bèizhì chū zhè kuǎn juépǐn lǎo chá, cháguǎn jiù yǒu jiù le!",
-                "translation": "Une flamme d'espoir s'alluma en Xiao Yue : si elle parvenait à ressusciter ce thé d'exception, le salon serait sauvé !",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "希望的火苗",
-                    "pinyin": "xīwàng de huǒmiáo",
-                    "translation": "l'étincelle d'espoir"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "焙制老茶",
-                    "pinyin": "bèizhì lǎo chá",
-                    "translation": "torréfier le thé ancien"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "拯救茶馆",
-                    "pinyin": "zhěngjiù cháguǎn",
-                    "translation": "sauver le salon"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "笔记末尾还贴着一张年轻爷爷与茶山老友的黑白合影，背面写着一个武夷山星村镇的地址。小月心中燃起希望的火苗：如果能重新焙制出这款绝品老茶，茶馆就有救了！"
+        "audioText": "在阁楼上的泛黄笔记的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 11,
@@ -5329,57 +9054,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "次日清晨，小月背起画板与行囊，坐上了从上海虹桥开往福建武夷山的高铁列车。",
-                "pinyin": "Cìrì qīngchén, Xiǎoyuè bēi qǐ huàbǎn yǔ xíngnáng, zuò shàng le cóng Shànghǎi Hóngqiáo kāi wǎng Fújiàn Wǔyíshān de gāotiě lièchē.",
-                "translation": "Le lendemain à l'aube, Xiao Yue emporta son carton à dessin et monta dans le TGV reliant Shanghai aux monts Wuyi.",
+                "hanzi": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Shǐ xiàng Wǔyíshān de gāotiě de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le train vers les monts Wuyi\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "次日清晨，小",
-                    "pinyin": "gāotiě",
-                    "translation": "le train TGV"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "月背起画板与",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "montagnes Wuyi"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "行囊，坐上了从上海虹桥开往福建武夷山的高铁列车。",
-                    "pinyin": "cházhuāng",
-                    "translation": "domaine de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。",
-                "pinyin": "Lǎo liǎng bèi rén de shēnhòu qíngyì chuānyuè bàn gè shìjì de shíguāng, zài zhè yí kè dédào le zuì wēnnuǎn de chóngféng yǔ yánxù.",
-                "translation": "Les liens d'amitié par-delà un demi-siècle trouvèrent dans ces retrouvailles une douce et émouvante continuité.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "深厚情谊",
-                    "pinyin": "shēnhòu qíngyì",
-                    "translation": "profonde amitié"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "穿越时光",
-                    "pinyin": "chuānyuè shíguāng",
-                    "translation": "traverser le temps"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温暖重逢",
-                    "pinyin": "wēnnuǎn chóngféng",
-                    "translation": "chaleureuses retrouvailles"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "次日清晨，小月背起画板与行囊，坐上了从上海虹桥开往福建武夷山的高铁列车。老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。"
+        "audioText": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 12,
@@ -5391,57 +9176,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "列车穿行在苍翠的山峦与清流之间，窗外的风景宛如一幅徐徐展开的泼墨山水长卷。",
-                "pinyin": "Lièchē chuānxíng zài cāngcuì de shānluán yǔ qīngliú zhī jiān, chuāngwài de fēngjǐng wǎnrú yì fú xúxú zhǎnkāi de pōmò shānshuǐ chángjuàn.",
-                "translation": "Le train filait entre crêtes verdoyantes et cours d'eau cristallins, tel un rouleau de peinture de paysage à l'encre de Chine.",
+                "hanzi": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Shǐ xiàng Wǔyíshān de gāotiě de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le train vers les monts Wuyi\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "列车穿行在苍",
-                    "pinyin": "gāotiě",
-                    "translation": "le train TGV"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "翠的山峦与清",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "montagnes Wuyi"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "流之间，窗外的风景宛如一幅徐徐展开的泼墨山水长卷。",
-                    "pinyin": "cházhuāng",
-                    "translation": "domaine de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。",
-                "pinyin": "Lǎo liǎng bèi rén de shēnhòu qíngyì chuānyuè bàn gè shìjì de shíguāng, zài zhè yí kè dédào le zuì wēnnuǎn de chóngféng yǔ yánxù.",
-                "translation": "Les liens d'amitié par-delà un demi-siècle trouvèrent dans ces retrouvailles une douce et émouvante continuité.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "深厚情谊",
-                    "pinyin": "shēnhòu qíngyì",
-                    "translation": "profonde amitié"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "穿越时光",
-                    "pinyin": "chuānyuè shíguāng",
-                    "translation": "traverser le temps"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温暖重逢",
-                    "pinyin": "wēnnuǎn chóngféng",
-                    "translation": "chaleureuses retrouvailles"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "列车穿行在苍翠的山峦与清流之间，窗外的风景宛如一幅徐徐展开的泼墨山水长卷。老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。"
+        "audioText": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 13,
@@ -5453,57 +9298,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "下午时分她抵达了武夷山脚下，空气中弥漫着清凉的水汽与淡淡的焙火茶香。",
-                "pinyin": "Xiàwǔ shífēn tā dǐdá le Wǔyíshān jiǎoxià, kōngqì zhōng mímàn zhe qīngliáng de shuǐqì yǔ dàndàn de bèihuǒ cháxiāng.",
-                "translation": "Dans l'après-midi, elle gagna le pied de la montagne, où l'air s'embaumait d'effluves frais et de thé délicatement torréfié.",
+                "hanzi": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Shǐ xiàng Wǔyíshān de gāotiě de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le train vers les monts Wuyi\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "下午时分她抵",
-                    "pinyin": "gāotiě",
-                    "translation": "le train TGV"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "达了武夷山脚",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "montagnes Wuyi"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "下，空气中弥漫着清凉的水汽与淡淡的焙火茶香。",
-                    "pinyin": "cházhuāng",
-                    "translation": "domaine de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。",
-                "pinyin": "Lǎo liǎng bèi rén de shēnhòu qíngyì chuānyuè bàn gè shìjì de shíguāng, zài zhè yí kè dédào le zuì wēnnuǎn de chóngféng yǔ yánxù.",
-                "translation": "Les liens d'amitié par-delà un demi-siècle trouvèrent dans ces retrouvailles une douce et émouvante continuité.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "深厚情谊",
-                    "pinyin": "shēnhòu qíngyì",
-                    "translation": "profonde amitié"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "穿越时光",
-                    "pinyin": "chuānyuè shíguāng",
-                    "translation": "traverser le temps"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温暖重逢",
-                    "pinyin": "wēnnuǎn chóngféng",
-                    "translation": "chaleureuses retrouvailles"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "下午时分她抵达了武夷山脚下，空气中弥漫着清凉的水汽与淡淡的焙火茶香。老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。"
+        "audioText": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 14,
@@ -5515,57 +9420,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "按笔记上的地址，小月穿过青竹掩映的幽深石径，终于寻到了那座古朴的黄家茶庄。",
-                "pinyin": "Àn bǐjì shang de dìzhǐ, Xiǎoyuè chuānguò qīngzhú yǎnyìng de yōushēn shíjìng, zhōngyú xún dào le nà zuò gǔpǔ de Huángjiā cházhuāng.",
-                "translation": "En suivant l'adresse du carnet à travers des allées de bambous, elle trouva enfin l'ancestral domaine de la famille Huang.",
+                "hanzi": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Shǐ xiàng Wǔyíshān de gāotiě de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le train vers les monts Wuyi\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "按笔记上的地",
-                    "pinyin": "gāotiě",
-                    "translation": "le train TGV"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "址，小月穿过",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "montagnes Wuyi"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "青竹掩映的幽深石径，终于寻到了那座古朴的黄家茶庄。",
-                    "pinyin": "cházhuāng",
-                    "translation": "domaine de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。",
-                "pinyin": "Lǎo liǎng bèi rén de shēnhòu qíngyì chuānyuè bàn gè shìjì de shíguāng, zài zhè yí kè dédào le zuì wēnnuǎn de chóngféng yǔ yánxù.",
-                "translation": "Les liens d'amitié par-delà un demi-siècle trouvèrent dans ces retrouvailles une douce et émouvante continuité.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "深厚情谊",
-                    "pinyin": "shēnhòu qíngyì",
-                    "translation": "profonde amitié"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "穿越时光",
-                    "pinyin": "chuānyuè shíguāng",
-                    "translation": "traverser le temps"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温暖重逢",
-                    "pinyin": "wēnnuǎn chóngféng",
-                    "translation": "chaleureuses retrouvailles"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "按笔记上的地址，小月穿过青竹掩映的幽深石径，终于寻到了那座古朴的黄家茶庄。老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。"
+        "audioText": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 15,
@@ -5577,57 +9542,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "白发苍苍的黄伯伯见到老照片热泪盈眶：“这是五十年前我和你爷爷亲手种下的茶树啊！”",
-                "pinyin": "Báifà cāngcāng de Huáng bóbó jiàn dào lǎo zhàopiàn rèlèi yíngkuàng: \"Zhè shì wǔshí nián qián wǒ hé nǐ yéye qīnshǒu zhòng xià de cháshù a!\"",
-                "translation": "L'oncle Huang, ému aux larmes devant la photo, s'exclama : « Ce sont les théiers que ton grand-père et moi avons plantés de nos mains il y a cinquante ans ! »",
+                "hanzi": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Shǐ xiàng Wǔyíshān de gāotiě de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le train vers les monts Wuyi\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "白发苍苍的黄",
-                    "pinyin": "gāotiě",
-                    "translation": "le train TGV"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "伯伯见到老照",
-                    "pinyin": "Wǔyíshān",
-                    "translation": "montagnes Wuyi"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "片热泪盈眶：“这是五十年前我和你爷爷亲手种下的茶树啊！”",
-                    "pinyin": "cházhuāng",
-                    "translation": "domaine de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。",
-                "pinyin": "Lǎo liǎng bèi rén de shēnhòu qíngyì chuānyuè bàn gè shìjì de shíguāng, zài zhè yí kè dédào le zuì wēnnuǎn de chóngféng yǔ yánxù.",
-                "translation": "Les liens d'amitié par-delà un demi-siècle trouvèrent dans ces retrouvailles une douce et émouvante continuité.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "深厚情谊",
-                    "pinyin": "shēnhòu qíngyì",
-                    "translation": "profonde amitié"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "穿越时光",
-                    "pinyin": "chuānyuè shíguāng",
-                    "translation": "traverser le temps"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温暖重逢",
-                    "pinyin": "wēnnuǎn chóngféng",
-                    "translation": "chaleureuses retrouvailles"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "白发苍苍的黄伯伯见到老照片热泪盈眶：“这是五十年前我和你爷爷亲手种下的茶树啊！”老两辈人的深厚情谊穿越半个世纪的时光，在这一刻得到了最温暖的重逢与延续。"
+        "audioText": "在驶向武夷山的高铁的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 16,
@@ -5639,57 +9664,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "天刚蒙蒙亮，黄伯伯便带着小月攀上九龙窠陡峭的红岩峭壁，探访古茶树的秘境。",
-                "pinyin": "Tiān gāng méngméngliàng, Huáng bóbó biàn dài zhe Xiǎoyuè pān shàng Jiǔlóngkē dǒuqiào de hóngyán qiàobì, tànfǎng gǔ cháshù de mìjìng.",
-                "translation": "Dès les premières lueurs du jour, l'oncle Huang guida Xiao Yue sur les falaises de grès rouge pour visiter les théiers ancestraux.",
+                "hanzi": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Xuányá cháyuán yǔ cǎizhāi gǔfǎ de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Les théiers sauvages des falaises\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "天刚蒙蒙亮，",
-                    "pinyin": "cháyuán",
-                    "translation": "la plantation"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "黄伯伯便带着",
-                    "pinyin": "cǎizhāi",
-                    "translation": "la cueillette"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "小月攀上九龙窠陡峭的红岩峭壁，探访古茶树的秘境。",
-                    "pinyin": "cháyè",
-                    "translation": "feuilles de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。",
-                "pinyin": "Kàn zhe zhǎngxīn jiāonèn de cháqīng, Xiǎoyuè dì yī cì tǐhuì dào le láozuò yǔ zìrán rónghé de chúncuì zhī měi.",
-                "translation": "Contemplant les jeunes pousses dans sa paume, Xiao Yue ressentit la beauté pure de l'harmonie entre l'homme et la nature.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "娇嫩茶青",
-                    "pinyin": "jiāonèn cháqīng",
-                    "translation": "tendres feuilles fraîches"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "自然融合",
-                    "pinyin": "zìrán rónghé",
-                    "translation": "communion avec la nature"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "纯粹之美",
-                    "pinyin": "chúncuì zhī měi",
-                    "translation": "beauté pure"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "天刚蒙蒙亮，黄伯伯便带着小月攀上九龙窠陡峭的红岩峭壁，探访古茶树的秘境。看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。"
+        "audioText": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 17,
@@ -5701,57 +9786,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "晨雾缭绕在丹霞绝壁之间，峭壁缝隙中生长着数株历经百年的野生肉桂茶树。",
-                "pinyin": "Chénwù liáorào zài dānxiá juébì zhī jiān, qiàobì fèngxì zhōng shēngzhǎng zhe shù zhū lìjīng bǎinián de yěshēng ròuguì cháshù.",
-                "translation": "La brume matinale enveloppait les falaises abruptes où s'épanouissaient des théiers sauvages séculaires.",
+                "hanzi": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Xuányá cháyuán yǔ cǎizhāi gǔfǎ de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Les théiers sauvages des falaises\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "晨雾缭绕在丹",
-                    "pinyin": "cháyuán",
-                    "translation": "la plantation"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "霞绝壁之间，",
-                    "pinyin": "cǎizhāi",
-                    "translation": "la cueillette"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "峭壁缝隙中生长着数株历经百年的野生肉桂茶树。",
-                    "pinyin": "cháyè",
-                    "translation": "feuilles de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。",
-                "pinyin": "Kàn zhe zhǎngxīn jiāonèn de cháqīng, Xiǎoyuè dì yī cì tǐhuì dào le láozuò yǔ zìrán rónghé de chúncuì zhī měi.",
-                "translation": "Contemplant les jeunes pousses dans sa paume, Xiao Yue ressentit la beauté pure de l'harmonie entre l'homme et la nature.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "娇嫩茶青",
-                    "pinyin": "jiāonèn cháqīng",
-                    "translation": "tendres feuilles fraîches"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "自然融合",
-                    "pinyin": "zìrán rónghé",
-                    "translation": "communion avec la nature"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "纯粹之美",
-                    "pinyin": "chúncuì zhī měi",
-                    "translation": "beauté pure"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "晨雾缭绕在丹霞绝壁之间，峭壁缝隙中生长着数株历经百年的野生肉桂茶树。看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。"
+        "audioText": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 18,
@@ -5763,57 +9908,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "黄伯伯耐心地传授采茶口诀：“开面采，三叶留一芽，轻捏慢放，不伤嫩梗。”",
-                "pinyin": "Huáng bóbó nàixīn de chuánshòu cǎichá kǒujué: \"Kāimiàn cǎi, sān yè liú yí yá, qīng niē màn fàng, bù shāng nèn gěng.\"",
-                "translation": "L'oncle Huang lui transmit le secret traditionnel : « Cueillir à maturité, préserver le bourgeon, cueillir d'un geste léger sans blesser la tige. »",
+                "hanzi": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Xuányá cháyuán yǔ cǎizhāi gǔfǎ de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Les théiers sauvages des falaises\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "黄伯伯耐心地",
-                    "pinyin": "cháyuán",
-                    "translation": "la plantation"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "传授采茶口诀",
-                    "pinyin": "cǎizhāi",
-                    "translation": "la cueillette"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "：“开面采，三叶留一芽，轻捏慢放，不伤嫩梗。”",
-                    "pinyin": "cháyè",
-                    "translation": "feuilles de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。",
-                "pinyin": "Kàn zhe zhǎngxīn jiāonèn de cháqīng, Xiǎoyuè dì yī cì tǐhuì dào le láozuò yǔ zìrán rónghé de chúncuì zhī měi.",
-                "translation": "Contemplant les jeunes pousses dans sa paume, Xiao Yue ressentit la beauté pure de l'harmonie entre l'homme et la nature.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "娇嫩茶青",
-                    "pinyin": "jiāonèn cháqīng",
-                    "translation": "tendres feuilles fraîches"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "自然融合",
-                    "pinyin": "zìrán rónghé",
-                    "translation": "communion avec la nature"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "纯粹之美",
-                    "pinyin": "chúncuì zhī měi",
-                    "translation": "beauté pure"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "黄伯伯耐心地传授采茶口诀：“开面采，三叶留一芽，轻捏慢放，不伤嫩梗。”看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。"
+        "audioText": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 19,
@@ -5825,57 +10030,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "小月双手被晨露浸湿，学着老茶人的指法，小心翼翼地采摘下一片片青翠欲滴的鲜叶。",
-                "pinyin": "Xiǎoyuè shuāngshǒu bèi chénlù jìnshī, xué zhe lǎo chárén de zhǐfǎ, xiǎoxīnyìyì de cǎizhāi xià yí piànpiàn qīngcuì yù dī de xiānyè.",
-                "translation": "Les mains mouillées de rosée, Xiao Yue imitait les gestes ancestraux, récoltant avec délicatesse chaque feuille d'émeraude.",
+                "hanzi": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Xuányá cháyuán yǔ cǎizhāi gǔfǎ de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Les théiers sauvages des falaises\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "小月双手被晨",
-                    "pinyin": "cháyuán",
-                    "translation": "la plantation"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "露浸湿，学着",
-                    "pinyin": "cǎizhāi",
-                    "translation": "la cueillette"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "老茶人的指法，小心翼翼地采摘下一片片青翠欲滴的鲜叶。",
-                    "pinyin": "cháyè",
-                    "translation": "feuilles de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。",
-                "pinyin": "Kàn zhe zhǎngxīn jiāonèn de cháqīng, Xiǎoyuè dì yī cì tǐhuì dào le láozuò yǔ zìrán rónghé de chúncuì zhī měi.",
-                "translation": "Contemplant les jeunes pousses dans sa paume, Xiao Yue ressentit la beauté pure de l'harmonie entre l'homme et la nature.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "娇嫩茶青",
-                    "pinyin": "jiāonèn cháqīng",
-                    "translation": "tendres feuilles fraîches"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "自然融合",
-                    "pinyin": "zìrán rónghé",
-                    "translation": "communion avec la nature"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "纯粹之美",
-                    "pinyin": "chúncuì zhī měi",
-                    "translation": "beauté pure"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "小月双手被晨露浸湿，学着老茶人的指法，小心翼翼地采摘下一片片青翠欲滴的鲜叶。看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。"
+        "audioText": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 20,
@@ -5887,57 +10152,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "夕阳西下时，竹匾里装满了新鲜采下的茶叶，在微风中散发着独特的野山兰花冷香。",
-                "pinyin": "Xīyáng xīxià shí, zhúbiǎn lǐ zhuāng mǎn le xīnxiān cǎi xià de cháyè, zài wēifēng zhōng piàosàn zhe dútè de yěshān lánhuā lěngxiāng.",
-                "translation": "Au couchant, les plateaux de bambou étaient garnis de feuilles fraîches exhalant un parfum subtil d'orchidée sauvage.",
+                "hanzi": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Xuányá cháyuán yǔ cǎizhāi gǔfǎ de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Les théiers sauvages des falaises\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "夕阳西下时，",
-                    "pinyin": "cháyuán",
-                    "translation": "la plantation"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "竹匾里装满了",
-                    "pinyin": "cǎizhāi",
-                    "translation": "la cueillette"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "新鲜采下的茶叶，在微风中散发着独特的野山兰花冷香。",
-                    "pinyin": "cháyè",
-                    "translation": "feuilles de thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。",
-                "pinyin": "Kàn zhe zhǎngxīn jiāonèn de cháqīng, Xiǎoyuè dì yī cì tǐhuì dào le láozuò yǔ zìrán rónghé de chúncuì zhī měi.",
-                "translation": "Contemplant les jeunes pousses dans sa paume, Xiao Yue ressentit la beauté pure de l'harmonie entre l'homme et la nature.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "娇嫩茶青",
-                    "pinyin": "jiāonèn cháqīng",
-                    "translation": "tendres feuilles fraîches"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "自然融合",
-                    "pinyin": "zìrán rónghé",
-                    "translation": "communion avec la nature"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "纯粹之美",
-                    "pinyin": "chúncuì zhī měi",
-                    "translation": "beauté pure"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "夕阳西下时，竹匾里装满了新鲜采下的茶叶，在微风中散发着独特的野山兰花冷香。看着掌心娇嫩的茶青，小月第一次体会到了劳作与自然融合的纯粹之美。"
+        "audioText": "在悬崖茶园与采摘古法的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 21,
@@ -5949,57 +10274,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "晒青与做青之后，制作“云雾旧梦”最关键的一道工序是深坑炭火的慢火精焙。",
-                "pinyin": "Shàiqīng yǔ zuòqīng zhī hòu, zhìzuò \"Yúnwù Jiùmèng\" zuì guānjiàn de yí dào gōngxù shì shēnkēng tànhuǒ de mànhuǒ jīngbèi.",
-                "translation": "Après le flétrissement et la fermentation, l'étape décisive résidait dans la torréfaction lente sur braises de charbon.",
+                "hanzi": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Tànhuǒ hōngbèi de zhēnzhèng mìmì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le secret de la torréfaction au charbon\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "晒青与做青之",
-                    "pinyin": "tànhuǒ",
-                    "translation": "le charbon"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "后，制作“云",
-                    "pinyin": "hōngbèi",
-                    "translation": "la torréfaction"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "雾旧梦”最关键的一道工序是深坑炭火的慢火精焙。",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。",
-                "pinyin": "Chū kēng de nà yí kè, zhěng gè gōngfāng dōu bèi yì zhǒng lìng rén xīnzùishénmí de nóngyù qīngxiāng chèdǐ tiánmǎn.",
-                "translation": "À l'instant où le thé quitta le foyer, l'atelier fut envahi d'un parfum envoûtant et somptueux.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "出坑一刻",
-                    "pinyin": "chū kēng yí kè",
-                    "translation": "sortie du foyer"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "工坊填满",
-                    "pinyin": "gōngfāng tiánmǎn",
-                    "translation": "l'atelier empli"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "心醉神迷",
-                    "pinyin": "xīnzùishénmí",
-                    "translation": "envoûté et émerveillé"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "晒青与做青之后，制作“云雾旧梦”最关键的一道工序是深坑炭火的慢火精焙。出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。"
+        "audioText": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 22,
@@ -6011,57 +10396,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "烘房内铺满了无烟荔枝炭，覆以厚厚的白稻草灰，将温度精准控制在温热柔和的微光下。",
-                "pinyin": "Hōngfáng nèi pū mǎn le wúyān lìzhī tàn, fù yǐ hòuhòu de bái dàocǎohuī, jiāng wēndù jīngzhǔn kòngzhì zài wēnrè róuhé de wēiguāng xià.",
-                "translation": "La salle était chauffée au charbon de litchi sans fumée, recouvert de cendres de riz blanc pour adoucir la chaleur.",
+                "hanzi": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Tànhuǒ hōngbèi de zhēnzhèng mìmì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le secret de la torréfaction au charbon\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "烘房内铺满了",
-                    "pinyin": "tànhuǒ",
-                    "translation": "le charbon"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "无烟荔枝炭，",
-                    "pinyin": "hōngbèi",
-                    "translation": "la torréfaction"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "覆以厚厚的白稻草灰，将温度精准控制在温热柔和的微光下。",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。",
-                "pinyin": "Chū kēng de nà yí kè, zhěng gè gōngfāng dōu bèi yì zhǒng lìng rén xīnzùishénmí de nóngyù qīngxiāng chèdǐ tiánmǎn.",
-                "translation": "À l'instant où le thé quitta le foyer, l'atelier fut envahi d'un parfum envoûtant et somptueux.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "出坑一刻",
-                    "pinyin": "chū kēng yí kè",
-                    "translation": "sortie du foyer"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "工坊填满",
-                    "pinyin": "gōngfāng tiánmǎn",
-                    "translation": "l'atelier empli"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "心醉神迷",
-                    "pinyin": "xīnzùishénmí",
-                    "translation": "envoûté et émerveillé"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "烘房内铺满了无烟荔枝炭，覆以厚厚的白稻草灰，将温度精准控制在温热柔和的微光下。出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。"
+        "audioText": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 23,
@@ -6073,57 +10518,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "黄伯伯指着火堆：“炭火虽暗却力透骨，泡茶也是一样，做人贵在一份沉稳恒心。”",
-                "pinyin": "Huáng bóbó zhǐ zhe huǒduī: \"Tànhuǒ suī àn què lì tòu gǔ, pào chá yě shì yíyàng, zuò rén guì zài yí fèn chénwěn héngxīn.\"",
-                "translation": "L'oncle Huang lui dit : « La braise semble douce mais sa chaleur pénètre jusqu'au cœur ; faire du thé comme mener sa vie exige constance et patience. »",
+                "hanzi": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Tànhuǒ hōngbèi de zhēnzhèng mìmì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le secret de la torréfaction au charbon\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "黄伯伯指着火",
-                    "pinyin": "tànhuǒ",
-                    "translation": "le charbon"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "堆：“炭火虽",
-                    "pinyin": "hōngbèi",
-                    "translation": "la torréfaction"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "暗却力透骨，泡茶也是一样，做人贵在一份沉稳恒心。”",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。",
-                "pinyin": "Chū kēng de nà yí kè, zhěng gè gōngfāng dōu bèi yì zhǒng lìng rén xīnzùishénmí de nóngyù qīngxiāng chèdǐ tiánmǎn.",
-                "translation": "À l'instant où le thé quitta le foyer, l'atelier fut envahi d'un parfum envoûtant et somptueux.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "出坑一刻",
-                    "pinyin": "chū kēng yí kè",
-                    "translation": "sortie du foyer"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "工坊填满",
-                    "pinyin": "gōngfāng tiánmǎn",
-                    "translation": "l'atelier empli"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "心醉神迷",
-                    "pinyin": "xīnzùishénmí",
-                    "translation": "envoûté et émerveillé"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "黄伯伯指着火堆：“炭火虽暗却力透骨，泡茶也是一样，做人贵在一份沉稳恒心。”出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。"
+        "audioText": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 24,
@@ -6135,57 +10640,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "小月守护在焙笼旁寸步不离，按照笔记上的时间翻动竹笼，任由汗水打湿了衣襟。",
-                "pinyin": "Xiǎoyuè shǒuhù zài bèilóng páng cùnbùbùlí, ànzhào bǐjì shang de shíjiān fāndòng zhúlóng, rèn yóu hànshuǐ dǎshī le yījīn.",
-                "translation": "Xiao Yue veilla sans faillir auprès des paniers de bambou, retournant le thé aux heures précises du carnet.",
+                "hanzi": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Tànhuǒ hōngbèi de zhēnzhèng mìmì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le secret de la torréfaction au charbon\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "小月守护在焙",
-                    "pinyin": "tànhuǒ",
-                    "translation": "le charbon"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "笼旁寸步不离",
-                    "pinyin": "hōngbèi",
-                    "translation": "la torréfaction"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "，按照笔记上的时间翻动竹笼，任由汗水打湿了衣襟。",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。",
-                "pinyin": "Chū kēng de nà yí kè, zhěng gè gōngfāng dōu bèi yì zhǒng lìng rén xīnzùishénmí de nóngyù qīngxiāng chèdǐ tiánmǎn.",
-                "translation": "À l'instant où le thé quitta le foyer, l'atelier fut envahi d'un parfum envoûtant et somptueux.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "出坑一刻",
-                    "pinyin": "chū kēng yí kè",
-                    "translation": "sortie du foyer"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "工坊填满",
-                    "pinyin": "gōngfāng tiánmǎn",
-                    "translation": "l'atelier empli"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "心醉神迷",
-                    "pinyin": "xīnzùishénmí",
-                    "translation": "envoûté et émerveillé"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "小月守护在焙笼旁寸步不离，按照笔记上的时间翻动竹笼，任由汗水打湿了衣襟。出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。"
+        "audioText": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 25,
@@ -6197,57 +10762,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "经历了九天的日夜淬炼，茶叶渐渐由青翠变为油润的鳝鱼皮色，茶香如陈年佳酿般醇厚悠长。",
-                "pinyin": "Jīnglì le jiǔ tiān de rìyè cuìliàn, cháyè jiànjiàn yóu qīngcuì biàn wéi yóurùn de shànyúpísè, cháxiāng rú chénnián jiāniàng bān chúnhòu yōucháng.",
-                "translation": "Au terme de neuf jours et nuits d'affinage, les feuilles prirent une teinte ambrée, exhalant un parfum capiteux de grand cru.",
+                "hanzi": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Tànhuǒ hōngbèi de zhēnzhèng mìmì de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le secret de la torréfaction au charbon\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "经历了九天的",
-                    "pinyin": "tànhuǒ",
-                    "translation": "le charbon"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "日夜淬炼，茶",
-                    "pinyin": "hōngbèi",
-                    "translation": "la torréfaction"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "叶渐渐由青翠变为油润的鳝鱼皮色，茶香如陈年佳酿般醇厚悠长。",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。",
-                "pinyin": "Chū kēng de nà yí kè, zhěng gè gōngfāng dōu bèi yì zhǒng lìng rén xīnzùishénmí de nóngyù qīngxiāng chèdǐ tiánmǎn.",
-                "translation": "À l'instant où le thé quitta le foyer, l'atelier fut envahi d'un parfum envoûtant et somptueux.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "出坑一刻",
-                    "pinyin": "chū kēng yí kè",
-                    "translation": "sortie du foyer"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "工坊填满",
-                    "pinyin": "gōngfāng tiánmǎn",
-                    "translation": "l'atelier empli"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "心醉神迷",
-                    "pinyin": "xīnzùishénmí",
-                    "translation": "envoûté et émerveillé"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "经历了九天的日夜淬炼，茶叶渐渐由青翠变为油润的鳝鱼皮色，茶香如陈年佳酿般醇厚悠长。出坑的那一刻，整个工坊都被一种令人心醉神迷的浓郁清香彻底填满。"
+        "audioText": "在炭火烘焙的真正秘密的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 26,
@@ -6259,57 +10884,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "小月捧着封存完好的“云雾旧梦”特级岩茶，满怀信心地踏上了返回上海的高铁列车。",
-                "pinyin": "Xiǎoyuè pěng zhe fēngcún wánhǎo de \"Yúnwù Jiùmèng\" tèjí yánchá, mǎnhuái xìnxīn de tà shàng le fǎnhuí Shànghǎi de gāotiě lièchē.",
-                "translation": "Tenant le précieux thé « Rêve de Nuage » scellé, Xiao Yue reprit le train vers Shanghai, le cœur gonflé d'espoir.",
+                "hanzi": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Cháxiāng guīlái yǔ xīnshēng de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le retour du parfum et le renouveau\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "小月捧着封存",
-                    "pinyin": "guīlái",
-                    "translation": "le retour"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "完好的“云雾",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "旧梦”特级岩茶，满怀信心地踏上了返回上海的高铁列车。",
-                    "pinyin": "xīnshēng",
-                    "translation": "la renaissance"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。",
-                "pinyin": "Lǎo lòngtáng lǐ cháxiāng yīnyūn, niánqīng de kèrénmen zài cǐ zhùzú pǐnwèi, chuántǒng de wēndù zài shíguāng zhōng yǒng bù sàn qù.",
-                "translation": "Le thé embaume à nouveau la ruelle ; de jeunes visiteurs s'y arrêtent pour déguster, et la chaleur de la tradition traverse le temps.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "茶香氤氲",
-                    "pinyin": "cháxiāng yīnyūn",
-                    "translation": "le parfum de thé envoûtant"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "年轻客人",
-                    "pinyin": "niánqīng kèrén",
-                    "translation": "jeunes visiteurs"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温度永存",
-                    "pinyin": "wēndù yǒngcún",
-                    "translation": "chaleur éternelle"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "小月捧着封存完好的“云雾旧梦”特级岩茶，满怀信心地踏上了返回上海的高铁列车。老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。"
+        "audioText": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 27,
@@ -6321,57 +11006,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "回到老茶馆，她为陈爷爷烧开清泉水，将几缕乌褐色的茶叶小心投进陪伴爷爷半生的紫砂古壶中。",
-                "pinyin": "Huí dào lǎo cháguǎn, tā wèi Chén yéye shāokāi qīngquánshuǐ, jiāng jǐ lǚ wūhèsè de cháyè xiǎoxīn tóu jìn péibàn yéye bànshēng de zǐshā gǔhú zhōng.",
-                "translation": "De retour au salon, elle fit frémir une eau de source et déposa les feuilles torsadées dans la théière séculaire de son grand-père.",
+                "hanzi": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Cháxiāng guīlái yǔ xīnshēng de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le retour du parfum et le renouveau\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "回到老茶馆，",
-                    "pinyin": "guīlái",
-                    "translation": "le retour"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "她为陈爷爷烧",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "开清泉水，将几缕乌褐色的茶叶小心投进陪伴爷爷半生的紫砂古壶中。",
-                    "pinyin": "xīnshēng",
-                    "translation": "la renaissance"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。",
-                "pinyin": "Lǎo lòngtáng lǐ cháxiāng yīnyūn, niánqīng de kèrénmen zài cǐ zhùzú pǐnwèi, chuántǒng de wēndù zài shíguāng zhōng yǒng bù sàn qù.",
-                "translation": "Le thé embaume à nouveau la ruelle ; de jeunes visiteurs s'y arrêtent pour déguster, et la chaleur de la tradition traverse le temps.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "茶香氤氲",
-                    "pinyin": "cháxiāng yīnyūn",
-                    "translation": "le parfum de thé envoûtant"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "年轻客人",
-                    "pinyin": "niánqīng kèrén",
-                    "translation": "jeunes visiteurs"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温度永存",
-                    "pinyin": "wēndù yǒngcún",
-                    "translation": "chaleur éternelle"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "回到老茶馆，她为陈爷爷烧开清泉水，将几缕乌褐色的茶叶小心投进陪伴爷爷半生的紫砂古壶中。老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。"
+        "audioText": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 28,
@@ -6383,57 +11128,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "沸水注入的瞬间，一种温润深沉、带有高山松烟与兰花蜜韵的绝美茶气喷薄而出！",
-                "pinyin": "Fèishuǐ zhùrù de shùnjiān, yì zhǒng wēnrùn shēnchén, dài yǒu gāoshān sōngyān yǔ lánhuā mìyùn de juéměi cháqì pēnbó ér chū!",
-                "translation": "Dès que l'eau bouillante toucha les feuilles, une fragrance sublime de pin des cimes et de miel d'orchidée s'éleva magnifiquement !",
+                "hanzi": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Cháxiāng guīlái yǔ xīnshēng de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le retour du parfum et le renouveau\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "沸水注入的瞬",
-                    "pinyin": "guīlái",
-                    "translation": "le retour"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "间，一种温润",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "深沉、带有高山松烟与兰花蜜韵的绝美茶气喷薄而出！",
-                    "pinyin": "xīnshēng",
-                    "translation": "la renaissance"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。",
-                "pinyin": "Lǎo lòngtáng lǐ cháxiāng yīnyūn, niánqīng de kèrénmen zài cǐ zhùzú pǐnwèi, chuántǒng de wēndù zài shíguāng zhōng yǒng bù sàn qù.",
-                "translation": "Le thé embaume à nouveau la ruelle ; de jeunes visiteurs s'y arrêtent pour déguster, et la chaleur de la tradition traverse le temps.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "茶香氤氲",
-                    "pinyin": "cháxiāng yīnyūn",
-                    "translation": "le parfum de thé envoûtant"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "年轻客人",
-                    "pinyin": "niánqīng kèrén",
-                    "translation": "jeunes visiteurs"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温度永存",
-                    "pinyin": "wēndù yǒngcún",
-                    "translation": "chaleur éternelle"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "沸水注入的瞬间，一种温润深沉、带有高山松烟与兰花蜜韵的绝美茶气喷薄而出！老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。"
+        "audioText": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 29,
@@ -6445,57 +11250,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "爷爷颤抖着端起茶杯轻抿一口，眼眶湿润：“是它……这就是当年我和黄兄一起焙制的味道啊！”",
-                "pinyin": "Yéye chàndǒu zhe duān qǐ chábēi qīng mǐn yì kǒu, yǎnkuàng shīrùn: \"Shì tā... zhè jiù shì dāngnián wǒ hé Huáng xiōng yìqǐ bèizhì de wèidao a!\"",
-                "translation": "Le grand-père porta la tasse à ses lèvres d'une main tremblante et versa une larme : « C'est lui... c'est le goût d'il y a cinquante ans ! »",
+                "hanzi": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Cháxiāng guīlái yǔ xīnshēng de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le retour du parfum et le renouveau\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "爷爷颤抖着端",
-                    "pinyin": "guīlái",
-                    "translation": "le retour"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "起茶杯轻抿一",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "口，眼眶湿润：“是它……这就是当年我和黄兄一起焙制的味道啊！”",
-                    "pinyin": "xīnshēng",
-                    "translation": "la renaissance"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。",
-                "pinyin": "Lǎo lòngtáng lǐ cháxiāng yīnyūn, niánqīng de kèrénmen zài cǐ zhùzú pǐnwèi, chuántǒng de wēndù zài shíguāng zhōng yǒng bù sàn qù.",
-                "translation": "Le thé embaume à nouveau la ruelle ; de jeunes visiteurs s'y arrêtent pour déguster, et la chaleur de la tradition traverse le temps.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "茶香氤氲",
-                    "pinyin": "cháxiāng yīnyūn",
-                    "translation": "le parfum de thé envoûtant"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "年轻客人",
-                    "pinyin": "niánqīng kèrén",
-                    "translation": "jeunes visiteurs"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温度永存",
-                    "pinyin": "wēndù yǒngcún",
-                    "translation": "chaleur éternelle"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "爷爷颤抖着端起茶杯轻抿一口，眼眶湿润：“是它……这就是当年我和黄兄一起焙制的味道啊！”老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。"
+        "audioText": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       },
       {
         "pageNumber": 30,
@@ -6507,57 +11372,117 @@ export const AUDIO_NOVELS: AudioNovel[] = [
           {
             "sentences": [
               {
-                "hanzi": "小月为老茶馆重新设计了充满雅致东方美学的空间品牌，并顺利入选上海市历史文化保护名录。",
-                "pinyin": "Xiǎoyuè wèi lǎo cháguǎn chóngxīn shèjì le chōngmǎn yǎzhì dōngfāng měixué de kōngjiān pǐnpái, bìng shùnlì rùxuǎn Shànghǎi shì lìshǐ wénhuà bǎohù mínglù.",
-                "translation": "Xiao Yue repensa l'aménagement avec une esthétique épurée, et le salon fut officiellement inscrit au patrimoine culturel de Shanghai.",
+                "hanzi": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。",
+                "pinyin": "Zài Cháxiāng guīlái yǔ xīnshēng de shíguāng liúzhuǎn zhōng, Xiǎoyuè gǎnshòu dào le chuántǒng chádào suǒ yùnhán de bódà yǔ jìngmì.",
+                "translation": "Au gré du chapitre \"Le retour du parfum et le renouveau\", Xiao Yue mesurait la grandeur et la sérénité infinie de l'art du thé.",
                 "words": [
                   {
-                    "hanzi": "小月为老茶馆",
-                    "pinyin": "guīlái",
-                    "translation": "le retour"
+                    "hanzi": "时光流转",
+                    "pinyin": "shíguāng liúzhuǎn",
+                    "translation": "au fil du temps"
                   },
                   {
-                    "hanzi": "重新设计了充",
-                    "pinyin": "cháxiāng",
-                    "translation": "le parfum du thé"
+                    "hanzi": "传统茶道",
+                    "pinyin": "chuántǒng chádào",
+                    "translation": "art traditionnel du thé"
                   },
                   {
-                    "hanzi": "满雅致东方美学的空间品牌，并顺利入选上海市历史文化保护名录。",
-                    "pinyin": "xīnshēng",
-                    "translation": "la renaissance"
+                    "hanzi": "博大",
+                    "pinyin": "bódà",
+                    "translation": "vaste et profond"
+                  },
+                  {
+                    "hanzi": "静谧",
+                    "pinyin": "jìngmì",
+                    "translation": "calme et serein"
                   }
                 ]
-              }
-            ]
-          },
-          {
-            "sentences": [
+              },
               {
-                "hanzi": "老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。",
-                "pinyin": "Lǎo lòngtáng lǐ cháxiāng yīnyūn, niánqīng de kèrénmen zài cǐ zhùzú pǐnwèi, chuántǒng de wēndù zài shíguāng zhōng yǒng bù sàn qù.",
-                "translation": "Le thé embaume à nouveau la ruelle ; de jeunes visiteurs s'y arrêtent pour déguster, et la chaleur de la tradition traverse le temps.",
+                "hanzi": "武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。",
+                "pinyin": "Wǔyíshān jiān de yúnwù yǔ xīliú huánrào zhe cōngyù de cháshān, wǎnrú yì fú tiānrán liúdòng de shānshuǐ huàjuàn.",
+                "translation": "Les brumes et ruisseaux des monts Wuyi ceignaient les monts verdoyants, comme une peinture vivante.",
                 "words": [
                   {
-                    "hanzi": "茶香氤氲",
-                    "pinyin": "cháxiāng yīnyūn",
-                    "translation": "le parfum de thé envoûtant"
+                    "hanzi": "云雾溪流",
+                    "pinyin": "yúnwù xīliú",
+                    "translation": "brumes et ruisseaux"
                   },
                   {
-                    "hanzi": "年轻客人",
-                    "pinyin": "niánqīng kèrén",
-                    "translation": "jeunes visiteurs"
+                    "hanzi": "茶山",
+                    "pinyin": "cháshān",
+                    "translation": "montagnes de théiers"
                   },
                   {
-                    "hanzi": "温度永存",
-                    "pinyin": "wēndù yǒngcún",
-                    "translation": "chaleur éternelle"
+                    "hanzi": "天然山水",
+                    "pinyin": "tiānrán shānshuǐ",
+                    "translation": "paysage naturel"
+                  },
+                  {
+                    "hanzi": "画卷",
+                    "pinyin": "huàjuàn",
+                    "translation": "rouleau de peinture"
+                  }
+                ]
+              },
+              {
+                "hanzi": "老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。",
+                "pinyin": "Lǎoyíbèi zhìchá shīfu shǒu shang de lǎojiǎn yǔ yánjǐn zhuānzhù de shénqíng, quánshì zhe yìshēng zé yí shì de jiàngxīn jīngshén.",
+                "translation": "Les mains calleuses des vieux maîtres et leur regard concentré incarnaient la passion de toute une vie d'artisanat.",
+                "words": [
+                  {
+                    "hanzi": "老一辈师傅",
+                    "pinyin": "lǎoyíbèi shīfu",
+                    "translation": "maîtres anciens"
+                  },
+                  {
+                    "hanzi": "严谨专注",
+                    "pinyin": "yánjǐn zhuānzhù",
+                    "translation": "rigueur et concentration"
+                  },
+                  {
+                    "hanzi": "匠心精神",
+                    "pinyin": "jiàngxīn jīngshén",
+                    "translation": "esprit artisanal"
+                  },
+                  {
+                    "hanzi": "诠释",
+                    "pinyin": "quánshì",
+                    "translation": "illustrer"
+                  }
+                ]
+              },
+              {
+                "hanzi": "随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。",
+                "pinyin": "Suízhe tànhuǒ mànbèi de nóngyù cháxiāng zài kōngqì zhōng sànkāi, bīnlín xiāoshī de gǔlǎo jìyì zhōngyú chóngxīn huànfā shēngjī.",
+                "translation": "Tandis que le parfum boisé de la torréfaction au charbon s'élevait, la recette oubliée renaissait avec vigueur.",
+                "words": [
+                  {
+                    "hanzi": "炭火慢焙",
+                    "pinyin": "tànhuǒ mànbèi",
+                    "translation": "torréfaction lente au charbon"
+                  },
+                  {
+                    "hanzi": "浓郁茶香",
+                    "pinyin": "nóngyù cháxiāng",
+                    "translation": "arôme intense de thé"
+                  },
+                  {
+                    "hanzi": "濒临消失",
+                    "pinyin": "bīnlín xiāoshī",
+                    "translation": "au bord de l'oubli"
+                  },
+                  {
+                    "hanzi": "焕发生机",
+                    "pinyin": "huànfā shēngjī",
+                    "translation": "retrouver une nouvelle vie"
                   }
                 ]
               }
             ]
           }
         ],
-        "audioText": "小月为老茶馆重新设计了充满雅致东方美学的空间品牌，并顺利入选上海市历史文化保护名录。老弄堂里茶香氤氲，年轻的客人们在此驻足品味，传统的温度在时光中永不散去。"
+        "audioText": "在茶香归来与新生的时光流转中，小月感受到了传统茶道所蕴含的博大与静谧。武夷山间的云雾与溪流环绕着葱郁的茶山，宛如一幅天然流动的山水画卷。老一辈制茶师傅手上的老茧与严谨专注的神情，诠释着一生择一事的匠心精神。随着炭火慢焙的浓郁茶香在空气中散开，濒临消失的古老记忆终于重新焕发生机。"
       }
     ]
   }

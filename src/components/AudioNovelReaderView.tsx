@@ -6,8 +6,15 @@ import {
   playChineseAudio, 
   playChineseStoryAudio, 
   stopChineseAudio, 
-  playNativeWordAudio 
+  playNativeWordAudio,
+  evaluatePronunciation,
+  isSpeechRecognitionSupported
 } from '../utils/speechUtils';
+import { 
+  analyzeSentenceRhythm, 
+  playSentenceWithProsodicPauses, 
+  stopSentenceRhythmAudio 
+} from '../utils/chineseRhythmEngine';
 import { saveWordToLocalAnki, isWordInLocalAnki } from '../utils/ankiConnect';
 import { triggerAutoSyncToCloud } from '../utils/cloudSyncUtils';
 import { WordDefinitionBanner } from './WordDefinitionBanner';
@@ -25,7 +32,6 @@ import {
   Bookmark, 
   BookmarkCheck, 
   Sparkles, 
-  Layers, 
   Clock, 
   Eye, 
   EyeOff, 
@@ -33,9 +39,11 @@ import {
   Library, 
   Check, 
   X,
-  Compass,
-  Headphones,
-  FileText
+  FileText,
+  Music,
+  Info,
+  Mic,
+  Square
 } from 'lucide-react';
 
 interface AudioNovelReaderViewProps {
@@ -93,22 +101,37 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
     }
   });
 
-  // Préférences de lecture
+  // Préférences du lecteur immersif (identiques à StoryReaderView)
   const [showPinyin, setShowPinyin] = useState<boolean>(true);
   const [showTranslation, setShowTranslation] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(0.85);
-  const [autoAdvancePage, setAutoAdvancePage] = useState<boolean>(false);
+  const [readerMode, setReaderMode] = useState<'rhythm' | 'words'>('rhythm');
+  const [showRhythmGuide, setShowRhythmGuide] = useState<boolean>(false);
 
   // Audio playback state
   const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
   const [activeSpeakerGender, setActiveSpeakerGender] = useState<'female' | 'male' | null>(null);
   const [playingSentenceIndex, setPlayingSentenceIndex] = useState<number | null>(null);
   const [playingSingleSentenceIdx, setPlayingSingleSentenceIdx] = useState<number | null>(null);
+  const [playingRhythmSentenceIdx, setPlayingRhythmSentenceIdx] = useState<number | null>(null);
+  const [activeRhythmChunkIdx, setActiveRhythmChunkIdx] = useState<number | null>(null);
 
-  // Modale Sommaire / Table des matières
+  // Studio interactif de Shadowing
+  const [shadowingGlobalIdx, setShadowingGlobalIdx] = useState<number | null>(null);
+  const [shadowingSentence, setShadowingSentence] = useState<StorySentence | null>(null);
+  const [shadowingRecording, setShadowingRecording] = useState<boolean>(false);
+  const [shadowingAudioUrl, setShadowingAudioUrl] = useState<string | null>(null);
+  const [shadowingSpokenText, setShadowingSpokenText] = useState<string>('');
+  const [shadowingEvaluation, setShadowingEvaluation] = useState<any | null>(null);
+  const [isPlayingShadowUserAudio, setIsPlayingShadowUserAudio] = useState<boolean>(false);
+
+  const shadowMediaStreamRef = useRef<MediaStream | null>(null);
+  const shadowMediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const shadowAudioChunksRef = useRef<Blob[]>([]);
+  const shadowUserAudioPlayerRef = useRef<HTMLAudioElement | null>(null);
+
+  // Modales
   const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
-
-  // Modale de sélection de romans (Bibliothèque)
   const [isLibraryOpen, setIsLibraryOpen] = useState<boolean>(false);
 
   // Dictionnaire / Token de mot actif
@@ -122,12 +145,26 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
   // Récupérer la page active
   const currentPage: NovelPage = activeNovel.pages.find(p => p.pageNumber === currentPageNumber) || activeNovel.pages[0];
 
-  // Chapitre correspondant à la page actuelle
-  const currentChapter: NovelChapterMeta | undefined = activeNovel.chaptersMeta.find(
-    c => currentPageNumber >= c.startPage && currentPageNumber <= c.endPage
-  );
+  // Nettoyage enregistrement Shadowing
+  const cleanupShadowRecording = () => {
+    if (shadowMediaRecorderRef.current) {
+      try {
+        if (shadowMediaRecorderRef.current.state === 'recording') {
+          shadowMediaRecorderRef.current.stop();
+        }
+      } catch (e) {}
+      shadowMediaRecorderRef.current = null;
+    }
+    if (shadowMediaStreamRef.current) {
+      try {
+        shadowMediaStreamRef.current.getTracks().forEach(t => t.stop());
+      } catch (e) {}
+      shadowMediaStreamRef.current = null;
+    }
+    setShadowingRecording(false);
+  };
 
-  // Sauvegarder la progression à chaque changement de page ou de roman
+  // Sauvegarder la progression
   useEffect(() => {
     try {
       localStorage.setItem('fluent_last_selected_novel_id', activeNovel.id);
@@ -138,14 +175,20 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
     } catch {}
   }, [activeNovel.id, currentPageNumber]);
 
-  // Synchroniser la page sauvegardée lors du changement de roman
+  // Synchroniser lors du changement de roman
   const handleSelectNovel = (novelId: string) => {
     stopChineseAudio();
+    stopSentenceRhythmAudio();
     setIsPlayingAudio(false);
     setSelectedWord(null);
     setSelectedWordSentenceIdx(null);
     setPlayingSentenceIndex(null);
     setPlayingSingleSentenceIdx(null);
+    setPlayingRhythmSentenceIdx(null);
+    setActiveRhythmChunkIdx(null);
+    setShadowingGlobalIdx(null);
+    setShadowingSentence(null);
+    cleanupShadowRecording();
 
     setSelectedNovelId(novelId);
     const targetNovel = novels.find(n => n.id === novelId);
@@ -166,19 +209,36 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
   // Arrêter l'audio lors du changement de page ou démontage
   useEffect(() => {
     stopChineseAudio();
+    stopSentenceRhythmAudio();
     setIsPlayingAudio(false);
     setActiveSpeakerGender(null);
     setPlayingSentenceIndex(null);
     setPlayingSingleSentenceIdx(null);
+    setPlayingRhythmSentenceIdx(null);
+    setActiveRhythmChunkIdx(null);
     setSelectedWord(null);
     setSelectedWordSentenceIdx(null);
+    setShadowingGlobalIdx(null);
+    setShadowingSentence(null);
+    cleanupShadowRecording();
+
+    if (shadowUserAudioPlayerRef.current) {
+      try { shadowUserAudioPlayerRef.current.pause(); } catch (e) {}
+      setIsPlayingShadowUserAudio(false);
+    }
+    if (shadowingAudioUrl) {
+      URL.revokeObjectURL(shadowingAudioUrl);
+      setShadowingAudioUrl(null);
+    }
 
     return () => {
       stopChineseAudio();
+      stopSentenceRhythmAudio();
+      cleanupShadowRecording();
     };
   }, [currentPageNumber, selectedNovelId]);
 
-  // Écouter les changements dans le stockage Anki local
+  // Écouter les changements Anki
   useEffect(() => {
     const handleAnkiChange = () => setLocalAnkiVersion(v => v + 1);
     window.addEventListener('fluent_anki_words_changed', handleAnkiChange);
@@ -188,7 +248,6 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
   // Déplacement clavier (flèche gauche / droite)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ignorer si l'utilisateur tape dans un input
       if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
 
       if (e.key === 'ArrowLeft') {
@@ -201,16 +260,12 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
         if (currentPageNumber < activeNovel.totalPages) {
           setCurrentPageNumber(p => p + 1);
         }
-      } else if (e.key === ' ' && !e.repeat) {
-        // Barre d'espace pour Play / Pause
-        e.preventDefault();
-        handleToggleAudio();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentPageNumber, activeNovel.totalPages, isPlayingAudio]);
+  }, [currentPageNumber, activeNovel.totalPages]);
 
   // Vérifier si un mot est déjà dans Anki
   const isWordInUserAnki = useCallback((hanzi: string) => {
@@ -244,10 +299,11 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
     setTimeout(() => setAnkiToast(null), 3800);
   };
 
-  // Lecture audio complète de la page actuelle
+  // Lecture audio complète de la page actuelle (raconter la page)
   const handleToggleAudio = async () => {
     if (isPlayingAudio) {
       stopChineseAudio();
+      stopSentenceRhythmAudio();
       setIsPlayingAudio(false);
       setActiveSpeakerGender(null);
       setPlayingSentenceIndex(null);
@@ -255,7 +311,10 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
     }
 
     stopChineseAudio();
+    stopSentenceRhythmAudio();
     setPlayingSingleSentenceIdx(null);
+    setPlayingRhythmSentenceIdx(null);
+    setActiveRhythmChunkIdx(null);
     setIsPlayingAudio(true);
 
     const pageSentences = currentPage.paragraphs.flatMap(p => p.sentences.map(s => s.hanzi));
@@ -269,13 +328,6 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
           setPlayingSentenceIndex(idx);
         }
       );
-
-      // Auto-avance optionnelle si activée et pas sur la dernière page
-      if (autoAdvancePage && currentPageNumber < activeNovel.totalPages) {
-        setTimeout(() => {
-          setCurrentPageNumber(p => p + 1);
-        }, 1200);
-      }
     } finally {
       setIsPlayingAudio(false);
       setActiveSpeakerGender(null);
@@ -287,14 +339,18 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
   const handlePlaySingleSentence = async (sentence: StorySentence, globalIdx: number) => {
     if (playingSingleSentenceIdx === globalIdx) {
       stopChineseAudio();
+      stopSentenceRhythmAudio();
       setPlayingSingleSentenceIdx(null);
       return;
     }
 
     stopChineseAudio();
+    stopSentenceRhythmAudio();
     setIsPlayingAudio(false);
     setActiveSpeakerGender(null);
     setPlayingSentenceIndex(null);
+    setPlayingRhythmSentenceIdx(null);
+    setActiveRhythmChunkIdx(null);
     setPlayingSingleSentenceIdx(globalIdx);
 
     try {
@@ -302,6 +358,140 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
     } finally {
       setPlayingSingleSentenceIdx(null);
     }
+  };
+
+  // Lecture de la cadence rythmée avec micro-pauses
+  const handlePlaySentenceRhythmCadence = async (sentence: StorySentence, globalIdx: number) => {
+    if (playingRhythmSentenceIdx === globalIdx) {
+      stopSentenceRhythmAudio();
+      stopChineseAudio();
+      setPlayingRhythmSentenceIdx(null);
+      setActiveRhythmChunkIdx(null);
+      return;
+    }
+
+    stopChineseAudio();
+    stopSentenceRhythmAudio();
+    setIsPlayingAudio(false);
+    setActiveSpeakerGender(null);
+    setPlayingSentenceIndex(null);
+    setPlayingSingleSentenceIdx(null);
+    setPlayingRhythmSentenceIdx(globalIdx);
+
+    const analysis = analyzeSentenceRhythm(sentence);
+    try {
+      await playSentenceWithProsodicPauses(
+        analysis.chunks,
+        playbackSpeed,
+        'female',
+        (chunkIdx) => {
+          setActiveRhythmChunkIdx(chunkIdx);
+        }
+      );
+    } finally {
+      setPlayingRhythmSentenceIdx(null);
+      setActiveRhythmChunkIdx(null);
+    }
+  };
+
+  // Shadowing : enregistrement micro
+  const handleToggleShadowRecording = async (targetSentence: StorySentence) => {
+    if (!isSpeechRecognitionSupported()) {
+      alert("La reconnaissance vocale n'est pas disponible sur ce navigateur. Essaie sur Google Chrome ou Edge !");
+      return;
+    }
+
+    if (shadowingRecording) {
+      cleanupShadowRecording();
+      return;
+    }
+
+    if (shadowUserAudioPlayerRef.current) {
+      try { shadowUserAudioPlayerRef.current.pause(); } catch (e) {}
+      setIsPlayingShadowUserAudio(false);
+    }
+    if (shadowingAudioUrl) {
+      URL.revokeObjectURL(shadowingAudioUrl);
+      setShadowingAudioUrl(null);
+    }
+    setShadowingEvaluation(null);
+    setShadowingSpokenText('');
+    shadowAudioChunksRef.current = [];
+
+    try {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        shadowMediaStreamRef.current = stream;
+        const mimeType = 'audio/webm';
+        const recorder = new MediaRecorder(stream);
+
+        recorder.ondataavailable = (event: BlobEvent) => {
+          if (event.data && event.data.size > 0) {
+            shadowAudioChunksRef.current.push(event.data);
+          }
+        };
+
+        recorder.onstop = () => {
+          if (shadowAudioChunksRef.current.length > 0) {
+            const audioBlob = new Blob(shadowAudioChunksRef.current, { type: 'audio/webm' });
+            if (audioBlob.size > 0) {
+              const url = URL.createObjectURL(audioBlob);
+              setShadowingAudioUrl(url);
+            }
+          }
+        };
+
+        shadowMediaRecorderRef.current = recorder;
+        recorder.start(100);
+      }
+    } catch (err) {
+      console.warn("Capture MediaRecorder :", err);
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'zh-CN';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    setShadowingRecording(true);
+
+    recognition.onresult = (event: any) => {
+      let spoken = '';
+      for (let i = 0; i < event.results.length; ++i) {
+        spoken += event.results[i][0].transcript;
+      }
+      spoken = spoken.trim();
+      setShadowingSpokenText(spoken);
+      cleanupShadowRecording();
+
+      const evalRes = evaluatePronunciation(spoken, targetSentence.hanzi);
+      setShadowingEvaluation(evalRes);
+    };
+
+    recognition.onerror = () => cleanupShadowRecording();
+    recognition.onend = () => cleanupShadowRecording();
+    recognition.start();
+  };
+
+  const handleTogglePlayShadowUserAudio = () => {
+    if (!shadowingAudioUrl) return;
+
+    if (isPlayingShadowUserAudio) {
+      if (shadowUserAudioPlayerRef.current) {
+        shadowUserAudioPlayerRef.current.pause();
+      }
+      setIsPlayingShadowUserAudio(false);
+      return;
+    }
+
+    const audio = new Audio(shadowingAudioUrl);
+    shadowUserAudioPlayerRef.current = audio;
+    setIsPlayingShadowUserAudio(true);
+
+    audio.onended = () => setIsPlayingShadowUserAudio(false);
+    audio.onerror = () => setIsPlayingShadowUserAudio(false);
+    audio.play().catch(() => setIsPlayingShadowUserAudio(false));
   };
 
   // Prononcer un mot au clic
@@ -323,10 +513,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
     }
   };
 
-  // Liste de toutes les phrases de la page pour indexation globale
   let sentenceCounter = 0;
-
-  // Calcul du pourcentage de lecture du roman
   const progressPercent = Math.round((currentPageNumber / activeNovel.totalPages) * 100);
 
   return (
@@ -341,12 +528,12 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
       )}
 
       {/* 1. BARRE DE COMMUTATION SUPÉRIEURE (Histoires courtes vs Romans longs) */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-stone-900 p-3 rounded-3xl border-2 border-stone-200 dark:border-stone-800 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-stone-900 p-2.5 rounded-3xl border-2 border-stone-200 dark:border-stone-800 shadow-sm">
         <div className="flex items-center space-x-2">
           {onSwitchToShortStories && (
             <button
               onClick={onSwitchToShortStories}
-              className="px-4 py-2 rounded-2xl text-xs font-bold transition-all flex items-center space-x-2 bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-200"
+              className="px-4 py-2 rounded-2xl text-xs font-bold transition-all flex items-center space-x-2 bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-200 cursor-pointer"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>📖 Histoires Courtes (Short Stories)</span>
@@ -362,7 +549,6 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
           </div>
         </div>
 
-        {/* Bouton pour changer de roman dans la bibliothèque */}
         <button
           onClick={() => setIsLibraryOpen(true)}
           className="px-3.5 py-2 rounded-2xl text-xs font-bold border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all flex items-center space-x-2 self-start sm:self-auto cursor-pointer"
@@ -417,7 +603,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
             </p>
           </div>
 
-          {/* Badge & Jauge de progression */}
+          {/* Jauge de progression */}
           <div className="shrink-0 bg-black/30 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/15 flex flex-col items-center justify-center min-w-[170px] space-y-2">
             <span className="text-[11px] font-bold uppercase tracking-wider text-amber-200">
               Progression du roman
@@ -427,7 +613,6 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
               <span className="text-sm text-stone-300">/ 30</span>
             </div>
             
-            {/* Barre de progression miniature */}
             <div className="w-full bg-white/20 h-2 rounded-full overflow-hidden">
               <div 
                 className="bg-amber-400 h-full rounded-full transition-all duration-300"
@@ -441,154 +626,224 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
         </div>
       </div>
 
-      {/* 3. BARRE DE CONTRÔLE DU LECTEUR & SOMMAIRE */}
-      <div className="sticky top-16 z-30 bg-[#fdfcf9]/95 dark:bg-[#0e0d0c]/95 backdrop-blur-md p-3 sm:p-4 rounded-3xl border-2 border-stone-200 dark:border-stone-800 shadow-sm transition-colors">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+      {/* 3. TOOLBAR IMMERSIVE IDENTIQUE À STORYREADERVIEW (IMAGE 1) */}
+      <div className="sticky top-16 z-30 bg-[#fdfcf9]/95 dark:bg-[#0e0d0c]/95 backdrop-blur-md p-3 sm:p-4 rounded-3xl border-2 border-stone-200 dark:border-stone-800 shadow-sm transition-colors space-y-3">
+        
+        {/* Ligne 1 : Contrôles d'affichage & Audio (Exactement comme Image 1) */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
           
-          {/* Section Gauche : Indicateur de Chapitre & Bouton Sommaire */}
-          <div className="flex items-center space-x-3">
+          {/* Groupe Gauche : Pinyin, Traduction, Mode Rythme vs Mots */}
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Toggle Pinyin */}
             <button
-              onClick={() => setIsTocOpen(true)}
-              className="px-3.5 py-2 rounded-2xl bg-amber-100 dark:bg-amber-950/60 hover:bg-amber-200 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800 text-xs font-bold flex items-center space-x-2 transition-all cursor-pointer shadow-2xs shrink-0"
-              title="Ouvrir la table des matières (6 chapitres / 30 pages)"
+              onClick={() => setShowPinyin(!showPinyin)}
+              className={`px-3 py-1.5 rounded-xl font-bold flex items-center space-x-1.5 border transition-all text-xs cursor-pointer ${
+                showPinyin
+                  ? 'bg-amber-100 dark:bg-amber-950/70 border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 shadow-2xs'
+                  : 'bg-white dark:bg-stone-900 border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:bg-stone-50'
+              }`}
+              title="Afficher ou masquer la transcription en pinyin au-dessus des sinogrammes"
             >
-              <ListOrdered className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-              <span>Sommaire (Chapitre {currentPage.chapterNumber})</span>
+              {showPinyin ? <Eye className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" /> : <EyeOff className="w-3.5 h-3.5" />}
+              <span>Pinyin</span>
             </button>
 
-            <div className="truncate min-w-0">
-              <div className="flex items-center space-x-2 truncate">
-                <span className="px-2 py-0.5 rounded-md bg-stone-200 dark:bg-stone-800 text-stone-800 dark:text-stone-200 font-bold text-[10px] shrink-0">
-                  Ch. {currentPage.chapterNumber}/6
-                </span>
-                <span className="font-serif font-black text-sm text-stone-900 dark:text-stone-100 truncate">
-                  {currentPage.chapterTitle}
-                </span>
-              </div>
-              <p className="text-[11px] text-stone-500 dark:text-stone-400 truncate italic">
-                {currentPage.chapterTitleTranslation}
-              </p>
+            {/* Toggle Traduction Française */}
+            <button
+              onClick={() => setShowTranslation(!showTranslation)}
+              className={`px-3 py-1.5 rounded-xl font-bold flex items-center space-x-1.5 border transition-all text-xs cursor-pointer ${
+                showTranslation
+                  ? 'bg-indigo-50 dark:bg-indigo-950/70 border-indigo-300 dark:border-indigo-700 text-indigo-900 dark:text-indigo-200 shadow-2xs'
+                  : 'bg-white dark:bg-stone-900 border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:bg-stone-50'
+              }`}
+              title="Afficher ou masquer la traduction française sous chaque phrase"
+            >
+              <Languages className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+              <span>Traduction Française</span>
+            </button>
+
+            {/* Commutateur Mode Rythme (意群) vs Mots seuls */}
+            <div className="flex items-center bg-stone-100 dark:bg-stone-800 rounded-xl p-0.5 border border-stone-200 dark:border-stone-700 text-xs font-bold">
+              <button
+                onClick={() => setReaderMode('rhythm')}
+                className={`flex items-center space-x-1.5 px-3 py-1 rounded-lg transition-all ${
+                  readerMode === 'rhythm'
+                    ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-2xs font-black'
+                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
+                }`}
+                title="Découpage en groupes de sens (意群) avec pauses de souffle (/)"
+              >
+                <Music className="w-3 h-3 text-amber-400" />
+                <span>Mode Rythme (意群)</span>
+              </button>
+
+              <button
+                onClick={() => setReaderMode('words')}
+                className={`px-2.5 py-1 rounded-lg transition-all ${
+                  readerMode === 'words'
+                    ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 shadow-2xs font-bold'
+                    : 'text-stone-500 hover:text-stone-900 dark:hover:text-stone-200'
+                }`}
+                title="Mots isolés classiques"
+              >
+                <span>Mots seuls</span>
+              </button>
             </div>
+
+            {/* Bouton Info Guide du Rythme */}
+            <button
+              onClick={() => setShowRhythmGuide(!showRhythmGuide)}
+              className="p-1.5 rounded-xl text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+              title="Guide : Comment le rythme chinois élimine la récitation mécanique"
+            >
+              <Info className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+            </button>
           </div>
 
-          {/* Section Droite : Toolbar Audio & Toggles de lecture */}
-          <div className="flex flex-wrap items-center gap-2">
-            
-            {/* Bouton Principal de Lecture Audio */}
-            <button
-              onClick={handleToggleAudio}
-              className={`px-4 py-2.5 rounded-2xl font-black text-xs flex items-center space-x-2 transition-all shadow-md cursor-pointer ${
-                isPlayingAudio
-                  ? 'bg-rose-600 hover:bg-rose-700 text-white animate-pulse'
-                  : 'bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-white dark:text-stone-900'
-              }`}
-            >
-              {isPlayingAudio ? (
-                <>
-                  <Pause className="w-4 h-4 fill-current" />
-                  <span>Pause (Page {currentPageNumber})</span>
-                </>
-              ) : (
-                <>
-                  <Play className="w-4 h-4 fill-current" />
-                  <span>Écouter la Page {currentPageNumber}</span>
-                </>
-              )}
-            </button>
+          {/* Groupe Droite : Voix, Vitesse et Raconter la page */}
+          <div className="flex flex-wrap items-center gap-2.5 text-xs">
+            {isPlayingAudio && activeSpeakerGender && (
+              <span className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-xl text-[11px] font-bold border animate-pulse ${
+                activeSpeakerGender === 'female'
+                  ? 'bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-200 border-rose-300 dark:border-rose-700'
+                  : 'bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-200 border-blue-300 dark:border-blue-700'
+              }`}>
+                <span>{activeSpeakerGender === 'female' ? '👩 Voix Chinoise (Femme)' : '👨 Voix Chinoise (Homme)'}</span>
+              </span>
+            )}
 
-            {/* Vitesse de lecture */}
-            <div className="flex items-center bg-stone-100 dark:bg-stone-800 rounded-2xl p-1 border border-stone-200 dark:border-stone-700 text-xs font-bold">
-              {[0.75, 0.85, 1.0, 1.25].map(speed => (
+            {/* Sélecteur de voix Homme / Femme / Alterné */}
+            <VoiceSelector compact />
+
+            {/* Sélecteur de vitesse */}
+            <div className="flex items-center bg-stone-100 dark:bg-stone-800 rounded-xl p-0.5 border border-stone-200 dark:border-stone-700 text-[11px] font-bold">
+              {[0.5, 0.75, 0.85, 1.0].map(speed => (
                 <button
                   key={speed}
                   onClick={() => setPlaybackSpeed(speed)}
-                  className={`px-2 py-1 rounded-xl transition-all ${
+                  className={`px-2 py-1 rounded-lg transition-all ${
                     playbackSpeed === speed
                       ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 shadow-2xs font-black'
                       : 'text-stone-500 hover:text-stone-900 dark:hover:text-stone-200'
                   }`}
+                  title={`${speed}x`}
                 >
-                  {speed}x
+                  {speed === 0.5 ? '🐢 0.5x' : `${speed}x`}
                 </button>
               ))}
             </div>
 
-            {/* Toggle Pinyin */}
+            {/* Bouton Raconter la Page */}
             <button
-              onClick={() => setShowPinyin(!showPinyin)}
-              className={`px-3 py-2 rounded-2xl text-xs font-bold border transition-all flex items-center space-x-1.5 cursor-pointer ${
-                showPinyin
-                  ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border-amber-300 dark:border-amber-800'
-                  : 'bg-stone-100 dark:bg-stone-800 text-stone-500 border-stone-200 dark:border-stone-700'
+              onClick={handleToggleAudio}
+              className={`px-4 py-2 rounded-xl font-bold flex items-center space-x-2 border transition-all cursor-pointer ${
+                isPlayingAudio
+                  ? 'bg-rose-600 hover:bg-rose-700 text-white border-rose-700 animate-pulse'
+                  : 'bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-white dark:text-stone-900 border-stone-900'
               }`}
-              title="Afficher ou masquer la transcription en pinyin"
             >
-              {showPinyin ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
-              <span>Pinyin</span>
+              {isPlayingAudio ? (
+                <>
+                  <VolumeX className="w-3.5 h-3.5" />
+                  <span>Arrêter la lecture</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-3.5 h-3.5" />
+                  <span>Raconter la Page {currentPageNumber}</span>
+                </>
+              )}
             </button>
-
-            {/* Toggle Traduction */}
-            <button
-              onClick={() => setShowTranslation(!showTranslation)}
-              className={`px-3 py-2 rounded-2xl text-xs font-bold border transition-all flex items-center space-x-1.5 cursor-pointer ${
-                showTranslation
-                  ? 'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-900 dark:text-indigo-200 border-indigo-300 dark:border-indigo-800'
-                  : 'bg-stone-100 dark:bg-stone-800 text-stone-500 border-stone-200 dark:border-stone-700'
-              }`}
-              title="Afficher ou masquer les traductions en français"
-            >
-              <Languages className="w-3.5 h-3.5" />
-              <span>Traduction</span>
-            </button>
-
-            {/* Sélecteur de voix Homme / Femme */}
-            <VoiceSelector compact />
           </div>
 
         </div>
 
-        {/* Barre de défilement horizontal des 30 pages pour saut rapide */}
-        <div className="mt-3 pt-2.5 border-t border-stone-200 dark:border-stone-800/80 flex items-center space-x-1 overflow-x-auto pb-1 scrollbar-thin">
-          <span className="text-[11px] font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider shrink-0 mr-1.5">
-            Pages :
-          </span>
-          {activeNovel.pages.map((p) => {
-            const isCurrent = p.pageNumber === currentPageNumber;
-            const isRead = p.pageNumber < currentPageNumber;
-            return (
-              <button
-                key={p.pageNumber}
-                onClick={() => setCurrentPageNumber(p.pageNumber)}
-                className={`w-7 h-7 rounded-xl text-xs font-mono font-bold shrink-0 transition-all cursor-pointer flex items-center justify-center ${
-                  isCurrent
-                    ? 'bg-stone-900 dark:bg-amber-400 text-white dark:text-stone-950 shadow-xs scale-105 ring-2 ring-amber-400/50'
-                    : isRead
-                    ? 'bg-amber-100/70 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 hover:bg-amber-200'
-                    : 'bg-stone-100 dark:bg-stone-800/80 text-stone-500 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700'
-                }`}
-                title={`Page ${p.pageNumber} (${p.chapterTitle})`}
-              >
-                {p.pageNumber}
-              </button>
-            );
-          })}
+        {/* Ligne 2 : Bandeau Défilement des 30 pages + Bouton Sommaire */}
+        <div className="pt-2 border-t border-stone-200 dark:border-stone-800/80 flex items-center justify-between gap-3">
+          <button
+            onClick={() => setIsTocOpen(true)}
+            className="px-3 py-1.5 rounded-xl bg-amber-100 dark:bg-amber-950/60 hover:bg-amber-200 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800 text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer shrink-0 shadow-2xs"
+            title="Ouvrir la table des matières (6 chapitres / 30 pages)"
+          >
+            <ListOrdered className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+            <span>Sommaire (Ch. {currentPage.chapterNumber}/6)</span>
+          </button>
+
+          <div className="flex items-center space-x-1 overflow-x-auto pb-0.5 scrollbar-thin">
+            {activeNovel.pages.map((p) => {
+              const isCurrent = p.pageNumber === currentPageNumber;
+              const isRead = p.pageNumber < currentPageNumber;
+              return (
+                <button
+                  key={p.pageNumber}
+                  onClick={() => setCurrentPageNumber(p.pageNumber)}
+                  className={`w-7 h-7 rounded-xl text-xs font-mono font-bold shrink-0 transition-all cursor-pointer flex items-center justify-center ${
+                    isCurrent
+                      ? 'bg-stone-900 dark:bg-amber-400 text-white dark:text-stone-950 shadow-xs scale-105 ring-2 ring-amber-400/50'
+                      : isRead
+                      ? 'bg-amber-100/70 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 hover:bg-amber-200'
+                      : 'bg-stone-100 dark:bg-stone-800/80 text-stone-500 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700'
+                  }`}
+                  title={`Page ${p.pageNumber} (${p.chapterTitle})`}
+                >
+                  {p.pageNumber}
+                </button>
+              );
+            })}
+          </div>
         </div>
+
+        {/* GUIDE PÉDAGOGIQUE DU RYTHME VOCAL (Collapsible) */}
+        {showRhythmGuide && (
+          <div className="p-4 rounded-2xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-xs text-stone-800 dark:text-stone-200 space-y-2 animate-fadeIn shadow-2xs">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Music className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                <h4 className="font-bold text-stone-900 dark:text-stone-100 font-serif">
+                  Le Secret du Rythme Chinois : Ne plus Répéter Machinalement
+                </h4>
+              </div>
+              <button 
+                onClick={() => setShowRhythmGuide(false)} 
+                className="text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 text-[11px] font-bold"
+              >
+                ✕ Fermer
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1 text-[11px] leading-relaxed">
+              <div className="p-2.5 rounded-xl bg-white/80 dark:bg-stone-900/80 border border-amber-200 dark:border-amber-800">
+                <strong className="block text-amber-950 dark:text-amber-300 font-bold mb-0.5">1. 意群 (Groupes de sens) :</strong>
+                Ne lis jamais mot à mot. Les caractères d'une même capsule forment un seul souffle ininterrompu.
+              </div>
+              <div className="p-2.5 rounded-xl bg-white/80 dark:bg-stone-900/80 border border-amber-200 dark:border-amber-800">
+                <strong className="block text-amber-950 dark:text-amber-300 font-bold mb-0.5">2. 停顿 (Barres de souffle / ) :</strong>
+                Respire uniquement aux séparateurs (/ pour micro-pause, // pour virgule). Entre deux barres, garde le même élan.
+              </div>
+              <div className="p-2.5 rounded-xl bg-white/80 dark:bg-stone-900/80 border border-amber-200 dark:border-amber-800">
+                <strong className="block text-amber-950 dark:text-amber-300 font-bold mb-0.5">3. 重音 (Accent d'insistance) :</strong>
+                Les capsules dorées portent l'accent logique. Prononce-les avec plus de corps sans crier.
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
 
-      {/* 4. CONTENU DE LA PAGE : TEXTE IMMERSIF */}
-      <div className="bg-white dark:bg-stone-900/90 rounded-3xl p-6 sm:p-10 border-2 border-stone-200 dark:border-stone-800 shadow-sm space-y-8">
+      {/* 4. CONTENU PRINCIPAL DE LA PAGE (Paragraphes riches avec affichage identique à Image 1) */}
+      <div className="bg-white dark:bg-stone-900/90 rounded-3xl p-6 sm:p-10 border-2 border-stone-200 dark:border-stone-800 shadow-sm space-y-6">
         
-        {/* Titre et repère de la page */}
+        {/* Titre & Repère de Page */}
         <div className="border-b border-stone-200 dark:border-stone-800 pb-4 flex items-center justify-between">
           <div>
-            <div className="flex items-center space-x-2">
-              <span className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">
-                Chapitre {currentPage.chapterNumber} • Page {currentPage.pageNumber} / {activeNovel.totalPages}
-              </span>
-            </div>
-            <h3 className="text-lg sm:text-xl font-serif font-black text-stone-900 dark:text-stone-100 mt-0.5">
+            <span className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest">
+              Chapitre {currentPage.chapterNumber} • Page {currentPage.pageNumber} / {activeNovel.totalPages}
+            </span>
+            <h3 className="text-xl sm:text-2xl font-serif font-black text-stone-900 dark:text-stone-100 mt-0.5">
               {currentPage.chapterTitle}
             </h3>
+            <p className="text-xs text-stone-500 dark:text-stone-400 italic">
+              « {currentPage.chapterTitleTranslation} »
+            </p>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -600,7 +855,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="text-xs font-mono font-bold text-stone-500 px-1">
+            <span className="text-xs font-mono font-bold text-stone-500 dark:text-stone-400 px-1">
               {currentPageNumber} / {activeNovel.totalPages}
             </span>
             <button
@@ -614,130 +869,364 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
           </div>
         </div>
 
-        {/* Paragraphes de la page */}
-        <div className="space-y-6 sm:space-y-8 text-stone-800 dark:text-stone-200">
+        {/* Phrases de la page sous forme de cartes structurées (EXACTEMENT COMME IMAGE 1) */}
+        <div className="space-y-6 text-stone-800 dark:text-stone-200">
           {currentPage.paragraphs.map((para, pIdx) => (
-            <div key={pIdx} className="space-y-4">
+            <div key={pIdx} className="space-y-5">
               {para.sentences.map((sentence) => {
                 const globalIdx = sentenceCounter++;
                 const isCurrentAudioPlaying = isPlayingAudio && playingSentenceIndex === globalIdx;
                 const isCurrentSinglePlaying = playingSingleSentenceIdx === globalIdx;
-                const isHighlighted = isCurrentAudioPlaying || isCurrentSinglePlaying;
+                const isCurrentRhythmPlaying = playingRhythmSentenceIdx === globalIdx;
+                const isHighlighted = isCurrentAudioPlaying || isCurrentSinglePlaying || isCurrentRhythmPlaying;
+                const isShadowingActive = shadowingGlobalIdx === globalIdx;
+
+                const analysis = analyzeSentenceRhythm(sentence);
 
                 return (
                   <div
                     key={globalIdx}
-                    className={`p-4 sm:p-5 rounded-2xl transition-all border ${
+                    className={`p-5 rounded-3xl transition-all border-2 shadow-xs ${
                       isHighlighted
-                        ? 'bg-amber-50/90 dark:bg-amber-950/30 border-amber-400 dark:border-amber-600 shadow-md ring-2 ring-amber-400/40'
-                        : 'bg-stone-50/50 dark:bg-stone-800/30 border-transparent hover:border-stone-200 dark:hover:border-stone-700'
+                        ? 'bg-amber-50/60 dark:bg-amber-950/30 border-amber-400 dark:border-amber-600 ring-2 ring-amber-400/30'
+                        : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700'
                     }`}
                   >
-                    {/* Header de la phrase avec bouton d'écoute isolée */}
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-[10px] font-mono text-stone-400 dark:text-stone-500 font-bold">
-                          #{globalIdx + 1}
-                        </span>
-                        {isHighlighted && (
-                          <span className="px-2 py-0.5 rounded-full bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-200 text-[10px] font-bold flex items-center space-x-1 animate-pulse">
-                            <Headphones className="w-2.5 h-2.5" />
-                            <span>En cours d'écoute {activeSpeakerGender === 'female' ? '(Voix Féminine)' : activeSpeakerGender === 'male' ? '(Voix Masculine)' : ''}</span>
-                          </span>
-                        )}
+                    {/* Header de la Phrase : Badge "Phrase X" + 3 Boutons d'action (Écouter / Cadence / Répéter) */}
+                    <div className="flex items-center justify-between pb-3 mb-2 border-b border-stone-100 dark:border-stone-800/80">
+                      <span className="px-2.5 py-1 rounded-xl bg-stone-100 dark:bg-stone-800 font-bold font-mono text-xs text-stone-600 dark:text-stone-300">
+                        Phrase {globalIdx + 1}
+                      </span>
+
+                      <div className="flex items-center space-x-1.5">
+                        {/* 1. Écouter la phrase */}
+                        <button
+                          onClick={() => handlePlaySingleSentence(sentence, globalIdx)}
+                          className={`px-2.5 py-1 rounded-xl font-bold flex items-center space-x-1 transition-all text-xs cursor-pointer ${
+                            isCurrentSinglePlaying
+                              ? 'bg-stone-900 text-white shadow-2xs'
+                              : 'bg-stone-100 hover:bg-stone-200 text-stone-700 dark:bg-stone-800 dark:text-stone-300 dark:hover:bg-stone-700'
+                          }`}
+                          title="Écouter cette phrase avec son intonation naturelle"
+                        >
+                          {isCurrentSinglePlaying ? (
+                            <VolumeX className="w-3 h-3 text-rose-300" />
+                          ) : (
+                            <Play className="w-3 h-3 fill-current text-stone-700 dark:text-stone-300" />
+                          )}
+                          <span className="text-[11px]">Écouter</span>
+                        </button>
+
+                        {/* 2. Décomposer le rythme avec pauses de souffle */}
+                        <button
+                          onClick={() => handlePlaySentenceRhythmCadence(sentence, globalIdx)}
+                          className={`px-2.5 py-1 rounded-xl font-bold flex items-center space-x-1 transition-all text-xs cursor-pointer ${
+                            isCurrentRhythmPlaying
+                              ? 'bg-amber-600 text-white shadow-2xs animate-pulse'
+                              : 'bg-amber-100/70 hover:bg-amber-200 text-amber-900 border border-amber-300/60 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800'
+                          }`}
+                          title="Décomposer le rythme : écoute avec micro-pauses entre chaque groupe de sens (意群)"
+                        >
+                          <Music className="w-3 h-3 text-amber-700 dark:text-amber-400" />
+                          <span className="text-[11px]">Cadence & Pauses</span>
+                        </button>
+
+                        {/* 3. Répéter / Shadowing */}
+                        <button
+                          onClick={() => {
+                            if (isShadowingActive) {
+                              setShadowingGlobalIdx(null);
+                              setShadowingSentence(null);
+                              cleanupShadowRecording();
+                            } else {
+                              setShadowingGlobalIdx(globalIdx);
+                              setShadowingSentence(sentence);
+                              setShadowingEvaluation(null);
+                              setShadowingSpokenText('');
+                            }
+                          }}
+                          className={`px-2.5 py-1 rounded-xl font-bold flex items-center space-x-1 transition-all text-xs cursor-pointer ${
+                            isShadowingActive
+                              ? 'bg-[#c23b22] text-white shadow-2xs'
+                              : 'bg-stone-100 hover:bg-stone-200 text-stone-700 dark:bg-stone-800 dark:text-stone-300 dark:hover:bg-stone-700'
+                          }`}
+                          title="Répéter cette phrase et calibrer ton rythme avec l'IA"
+                        >
+                          <Mic className="w-3 h-3 text-[#c23b22]" />
+                          <span className="text-[11px]">{isShadowingActive ? 'Fermer studio' : 'Répéter'}</span>
+                        </button>
                       </div>
-
-                      <button
-                        onClick={() => handlePlaySingleSentence(sentence, globalIdx)}
-                        className={`px-2.5 py-1 rounded-xl text-xs font-bold flex items-center space-x-1 transition-all ${
-                          isCurrentSinglePlaying
-                            ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900'
-                            : 'bg-stone-200/70 hover:bg-stone-300 dark:bg-stone-700 dark:hover:bg-stone-600 text-stone-700 dark:text-stone-300'
-                        }`}
-                        title="Écouter uniquement cette phrase"
-                      >
-                        {isCurrentSinglePlaying ? (
-                          <VolumeX className="w-3 h-3 text-rose-300" />
-                        ) : (
-                          <Play className="w-3 h-3 fill-current text-stone-700 dark:text-stone-300" />
-                        )}
-                        <span className="text-[11px]">Écouter</span>
-                      </button>
                     </div>
 
-                    {/* Mots chinois interactifs et cliquables */}
-                    <div className="flex flex-wrap items-end gap-x-1.5 gap-y-3 py-1">
-                      {sentence.words.map((word, wIdx) => {
-                        const isSelected = selectedWord?.hanzi === word.hanzi && selectedWordSentenceIdx === globalIdx;
-                        const inAnki = isWordInUserAnki(word.hanzi);
+                    {/* CORPS DE LA PHRASE : MODE RYTHME (意群) OU MOTS ISOLÉS (EXACTEMENT COMME IMAGE 1) */}
+                    {readerMode === 'rhythm' ? (
+                      /* CAPSULES DE SOUFFLE PROSODIQUES */
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-3.5 py-1.5">
+                        {analysis.chunks.map((chunk, cIdx) => {
+                          const isChunkActive = isCurrentRhythmPlaying && activeRhythmChunkIdx === cIdx;
 
-                        return (
-                          <span
-                            key={wIdx}
-                            onClick={() => {
-                              if (isSelected) {
-                                setSelectedWord(null);
-                                setSelectedWordSentenceIdx(null);
-                              } else {
-                                setSelectedWord(word);
-                                setSelectedWordSentenceIdx(globalIdx);
-                              }
-                            }}
-                            className={`group inline-flex flex-col items-center cursor-pointer rounded-xl px-1.5 py-0.5 transition-all select-none ${
-                              isSelected
-                                ? 'bg-amber-200 dark:bg-amber-900/80 shadow-xs ring-2 ring-amber-400'
-                                : inAnki
-                                ? 'hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
-                                : 'hover:bg-stone-200/80 dark:hover:bg-stone-700/60'
-                            }`}
-                            title={`Cliquer pour voir la traduction et ajouter à Anki (${word.pinyin})`}
-                          >
-                            {/* Pinyin au-dessus du caractère */}
-                            {showPinyin && (
-                              <span
-                                data-pinyin
-                                className="text-xs sm:text-sm font-mono tracking-wide pinyin-text transition-colors text-stone-600 dark:text-amber-300 group-hover:text-amber-800 dark:group-hover:text-amber-200"
+                          return (
+                            <React.Fragment key={chunk.id || cIdx}>
+                              <div
+                                className={`inline-flex flex-wrap items-end rounded-2xl p-1.5 px-3 transition-all border ${
+                                  isChunkActive
+                                    ? 'bg-amber-400 text-stone-950 border-stone-900 shadow-md scale-105 ring-2 ring-amber-300'
+                                    : chunk.stressLevel === 'prominent'
+                                    ? 'bg-amber-50/90 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700/60 shadow-2xs'
+                                    : chunk.stressLevel === 'light'
+                                    ? 'bg-stone-50/50 dark:bg-stone-900/60 border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300'
+                                    : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800'
+                                }`}
+                                title={chunk.stressLevel === 'prominent' ? "Groupe avec emphase ou intensité prosodique" : undefined}
                               >
-                                {word.pinyin}
-                              </span>
-                            )}
+                                <div className="flex items-end gap-x-1.5">
+                                  {chunk.words.map((word, wIdx) => {
+                                    const isSelected = selectedWord?.hanzi === word.hanzi && selectedWordSentenceIdx === globalIdx;
+                                    const inAnki = isWordInUserAnki(word.hanzi);
 
-                            {/* Sinogramme Chinois */}
-                            <span className="text-xl sm:text-2xl font-serif font-black chinese-text tracking-wide relative text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] dark:group-hover:text-amber-400">
-                              {word.hanzi}
-                              {inAnki && (
-                                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white dark:ring-stone-900" title="Déjà dans Anki" />
+                                    return (
+                                      <span
+                                        key={wIdx}
+                                        onClick={() => {
+                                          if (isSelected) {
+                                            setSelectedWord(null);
+                                            setSelectedWordSentenceIdx(null);
+                                          } else {
+                                            setSelectedWord(word);
+                                            setSelectedWordSentenceIdx(globalIdx);
+                                          }
+                                        }}
+                                        className={`group inline-flex flex-col items-center cursor-pointer rounded-lg px-1 py-0.5 transition-all select-none ${
+                                          isSelected
+                                            ? 'bg-amber-300 text-stone-950 font-bold ring-2 ring-stone-900'
+                                            : inAnki
+                                            ? 'hover:bg-rose-50 dark:hover:bg-rose-950/40'
+                                            : 'hover:bg-stone-200/80 dark:hover:bg-stone-800'
+                                        }`}
+                                      >
+                                        {showPinyin && (
+                                          <span data-pinyin className="text-[11px] sm:text-xs font-mono tracking-wide pinyin-text text-stone-600 dark:text-amber-300 font-bold">
+                                            {word.pinyin}
+                                          </span>
+                                        )}
+                                        <span className={`text-xl sm:text-2xl font-serif font-black chinese-text tracking-wide relative text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] dark:group-hover:text-amber-400 ${
+                                          inAnki ? 'border-b-2 border-[#c23b22]' : ''
+                                        }`}>
+                                          {word.hanzi}
+                                          {inAnki && (
+                                            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white dark:ring-stone-900" title="Déjà dans Anki" />
+                                          )}
+                                        </span>
+                                      </span>
+                                    );
+                                  })}
+                                </div>
+
+                                {chunk.sandhiHint && (
+                                  <span 
+                                    className="ml-1.5 text-[9px] font-mono px-1.5 py-0.2 rounded-md bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 font-bold cursor-help"
+                                    title={chunk.sandhiHint}
+                                  >
+                                    ⚡ ton
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* SÉPARATEURS PROSODIQUES (// ou /) */}
+                              {cIdx < analysis.chunks.length - 1 && (
+                                <span className="inline-flex items-center select-none" title={
+                                  chunk.pauseType === 'comma' 
+                                    ? 'Pause de virgule (pause respiratoire moyenne)' 
+                                    : 'Micro-souffle respiratoire (/)'
+                                }>
+                                  {chunk.pauseType === 'comma' ? (
+                                    <span className="text-stone-400 font-mono font-black text-sm px-1.5">//</span>
+                                  ) : (
+                                    <span className="text-amber-500 font-mono font-black text-xs px-1.5">/</span>
+                                  )}
+                                </span>
                               )}
-                            </span>
-                          </span>
-                        );
-                      })}
-                    </div>
+                            </React.Fragment>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      /* MODE CLASSIQUE MOT PAR MOT */
+                      <div className="flex flex-wrap items-end gap-x-1.5 gap-y-3 py-1">
+                        {sentence.words.map((word, wIdx) => {
+                          const isSelected = selectedWord?.hanzi === word.hanzi && selectedWordSentenceIdx === globalIdx;
+                          const inAnki = isWordInUserAnki(word.hanzi);
 
-                    {/* Traduction de la phrase */}
+                          return (
+                            <span
+                              key={wIdx}
+                              onClick={() => {
+                                if (isSelected) {
+                                  setSelectedWord(null);
+                                  setSelectedWordSentenceIdx(null);
+                                } else {
+                                  setSelectedWord(word);
+                                  setSelectedWordSentenceIdx(globalIdx);
+                                }
+                              }}
+                              className={`group inline-flex flex-col items-center cursor-pointer rounded-lg px-1.5 py-0.5 transition-all select-none ${
+                                isSelected
+                                  ? 'bg-amber-300 text-stone-950 font-bold ring-2 ring-stone-900'
+                                  : inAnki
+                                  ? 'border-b-2 border-[#c23b22]'
+                                  : 'hover:bg-stone-200/80 dark:hover:bg-stone-800'
+                              }`}
+                            >
+                              {showPinyin && (
+                                <span data-pinyin className="text-[11px] sm:text-xs font-mono tracking-wide pinyin-text text-stone-600 dark:text-amber-300 font-bold">
+                                  {word.pinyin}
+                                </span>
+                              )}
+                              <span className="text-xl sm:text-2xl font-serif font-black chinese-text tracking-wide text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] dark:group-hover:text-amber-400 relative">
+                                {word.hanzi}
+                                {inAnki && (
+                                  <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white" />
+                                )}
+                              </span>
+                            </span>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* TRADUCTION FRANÇAISE */}
                     {showTranslation && sentence.translation && (
-                      <p className="text-xs sm:text-sm font-sans text-stone-500 dark:text-stone-400 italic pl-2 border-l-2 border-amber-400 dark:border-amber-600 mt-2">
+                      <p className="text-xs sm:text-sm font-sans text-stone-500 dark:text-stone-400 italic pl-2 border-l-2 border-amber-300 dark:border-amber-600 mt-2">
                         {sentence.translation}
                       </p>
                     )}
 
-                    {/* Dictionnaire interactif popup pour le mot cliqué */}
+                    {/* POP-UP DICTIONNAIRE & ANKI */}
                     {selectedWord && selectedWordSentenceIdx === globalIdx && (
-                      <div className="mt-3 pt-2 border-t border-amber-200 dark:border-amber-800/80">
-                        <WordDefinitionBanner
-                          selectedWord={selectedWord}
-                          currentSentence={sentence}
-                          playbackSpeed={playbackSpeed}
-                          isWordInAnki={isWordInUserAnki(selectedWord.hanzi)}
-                          onPronounceWord={handlePronounceWord}
-                          onSaveWordToAnki={handleSaveWordToAnki}
-                          onClose={() => {
-                            setSelectedWord(null);
-                            setSelectedWordSentenceIdx(null);
-                          }}
-                        />
+                      <WordDefinitionBanner
+                        selectedWord={selectedWord}
+                        currentSentence={sentence}
+                        playbackSpeed={playbackSpeed}
+                        isWordInAnki={isWordInUserAnki(selectedWord.hanzi)}
+                        onPronounceWord={handlePronounceWord}
+                        onSaveWordToAnki={handleSaveWordToAnki}
+                        onClose={() => {
+                          setSelectedWord(null);
+                          setSelectedWordSentenceIdx(null);
+                        }}
+                      />
+                    )}
+
+                    {/* STUDIO INTERACTIF DE SHADOWING */}
+                    {isShadowingActive && (
+                      <div className="mt-3 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-stone-900 to-stone-950 text-white space-y-4 animate-fadeIn border-2 border-stone-800 shadow-lg font-sans">
+                        <div className="flex items-center justify-between border-b border-stone-800 pb-2.5">
+                          <div className="flex items-center space-x-2">
+                            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" />
+                            <h4 className="font-serif font-black text-sm text-amber-300">
+                              Studio de Shadowing : Phrase {globalIdx + 1}
+                            </h4>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setShadowingGlobalIdx(null);
+                              setShadowingSentence(null);
+                              cleanupShadowRecording();
+                            }}
+                            className="text-xs font-bold text-stone-400 hover:text-white"
+                          >
+                            ✕ Fermer
+                          </button>
+                        </div>
+
+                        <div className="space-y-1.5 text-center">
+                          <p data-pinyin className="text-xs text-stone-400 dark:text-amber-200 font-mono pinyin-text">
+                            {sentence.pinyin}
+                          </p>
+                          <p className="text-xl sm:text-2xl font-black font-serif text-white chinese-text">
+                            {sentence.hanzi}
+                          </p>
+                          <p className="text-xs text-stone-400 italic">
+                            « {sentence.translation} »
+                          </p>
+                        </div>
+
+                        <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1">
+                          <button
+                            onClick={() => handlePlaySentenceRhythmCadence(sentence, globalIdx)}
+                            className="px-3.5 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-300 text-xs font-bold border border-stone-700 flex items-center space-x-1.5 transition-all"
+                          >
+                            <Music className="w-3.5 h-3.5 text-amber-400" />
+                            <span>1. Réécouter la cadence</span>
+                          </button>
+
+                          <button
+                            onClick={() => handleToggleShadowRecording(sentence)}
+                            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition-all shadow-md ${
+                              shadowingRecording
+                                ? 'bg-rose-600 text-white animate-pulse'
+                                : 'bg-gradient-to-r from-[#c23b22] to-amber-600 hover:from-[#a8331e] hover:to-amber-700 text-white'
+                            }`}
+                          >
+                            {shadowingRecording ? <Square className="w-3.5 h-3.5 fill-current" /> : <Mic className="w-3.5 h-3.5" />}
+                            <span>{shadowingRecording ? 'Terminer & Analyser' : '2. Enregistrer ma voix'}</span>
+                          </button>
+
+                          {shadowingAudioUrl && (
+                            <button
+                              onClick={handleTogglePlayShadowUserAudio}
+                              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 border transition-all ${
+                                isPlayingShadowUserAudio
+                                  ? 'bg-blue-600 text-white border-blue-500'
+                                  : 'bg-stone-800 hover:bg-stone-700 text-stone-200 border-stone-700'
+                              }`}
+                            >
+                              {isPlayingShadowUserAudio ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                              <span>3. Écouter mon enregistrement</span>
+                            </button>
+                          )}
+
+                          <button
+                            onClick={() => handleSaveWordToAnki({
+                              hanzi: sentence.hanzi,
+                              pinyin: sentence.pinyin,
+                              translation: sentence.translation
+                            })}
+                            className={`px-3 py-2 rounded-xl text-xs font-bold border flex items-center space-x-1.5 transition-all ${
+                              isWordInUserAnki(sentence.hanzi)
+                                ? 'bg-emerald-950/80 text-emerald-300 border-emerald-700'
+                                : 'bg-stone-800 hover:bg-stone-700 text-stone-300 border-stone-700'
+                            }`}
+                            title="Ajouter cette phrase d'histoire directement à Anki"
+                          >
+                            <Bookmark className="w-3.5 h-3.5 text-amber-400" />
+                            <span>Ajouter la phrase à Anki</span>
+                          </button>
+                        </div>
+
+                        {shadowingEvaluation && (
+                          <div className="p-3.5 rounded-xl bg-stone-800/80 border border-stone-700 text-xs space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="font-bold text-amber-300">Résultat de la répétition :</span>
+                              <span className={`px-2 py-0.5 rounded-md font-mono font-bold ${
+                                shadowingEvaluation.accuracyScore >= 80 ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'
+                              }`}>
+                                Score : {shadowingEvaluation.accuracyScore}%
+                              </span>
+                            </div>
+                            {shadowingSpokenText && (
+                              <p className="text-stone-400 font-mono text-[11px]">
+                                Capté : « {shadowingSpokenText} »
+                              </p>
+                            )}
+                            <p className="text-stone-300 leading-snug">
+                              {shadowingEvaluation.feedbackMessage}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     )}
+
                   </div>
                 );
               })}
@@ -763,7 +1252,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
           {currentPageNumber < activeNovel.totalPages ? (
             <button
               onClick={() => setCurrentPageNumber(currentPageNumber + 1)}
-              className="w-full sm:w-auto px-6 py-3 rounded-2xl font-black text-xs bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-white dark:text-stone-900 transition-all flex items-center justify-center space-x-2 shadow-sm"
+              className="w-full sm:w-auto px-6 py-3 rounded-2xl font-black text-xs bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-white dark:text-stone-900 transition-all flex items-center justify-center space-x-2 shadow-sm cursor-pointer"
             >
               <span>Page suivante (Page {currentPageNumber + 1})</span>
               <ChevronRight className="w-4 h-4" />
@@ -771,7 +1260,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
           ) : (
             <button
               onClick={handleMarkNovelCompleted}
-              className={`w-full sm:w-auto px-6 py-3 rounded-2xl font-black text-xs transition-all flex items-center justify-center space-x-2 shadow-md ${
+              className={`w-full sm:w-auto px-6 py-3 rounded-2xl font-black text-xs transition-all flex items-center justify-center space-x-2 shadow-md cursor-pointer ${
                 completedNovelIds.includes(activeNovel.id)
                   ? 'bg-emerald-600 text-white hover:bg-emerald-700'
                   : 'bg-amber-500 hover:bg-amber-600 text-stone-950'
@@ -844,13 +1333,10 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
         </div>
       </div>
 
-      {/* ======================================================== */}
-      {/* MODALE 1 : TABLE DES MATIÈRES / SOMMAIRE DU ROMAN        */}
-      {/* ======================================================== */}
+      {/* MODALE SOMMAIRE DU ROMAN */}
       {isTocOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
           <div className="bg-white dark:bg-stone-900 rounded-3xl max-w-xl w-full max-h-[85vh] overflow-hidden flex flex-col border-2 border-stone-300 dark:border-stone-700 shadow-2xl">
-            {/* Header Sommaire */}
             <div className="p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between bg-stone-50 dark:bg-stone-800/50">
               <div className="flex items-center space-x-2.5">
                 <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-700 dark:text-amber-300 flex items-center justify-center">
@@ -873,7 +1359,6 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
               </button>
             </div>
 
-            {/* Liste des Chapitres et Pages */}
             <div className="p-5 overflow-y-auto space-y-4">
               {activeNovel.chaptersMeta.map((chap) => {
                 const isCurrentChap = currentPageNumber >= chap.startPage && currentPageNumber <= chap.endPage;
@@ -904,7 +1389,6 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                       {chap.titleTranslation}
                     </p>
 
-                    {/* Grille des boutons de pages pour ce chapitre */}
                     <div className="flex items-center space-x-2">
                       {Array.from({ length: chap.endPage - chap.startPage + 1 }, (_, i) => chap.startPage + i).map(pNum => {
                         const isCurrentPage = pNum === currentPageNumber;
@@ -934,13 +1418,10 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
         </div>
       )}
 
-      {/* ======================================================== */}
-      {/* MODALE 2 : BIBLIOTHÈQUE DES 3 ROMANS AUDIO DISPONIBLES    */}
-      {/* ======================================================== */}
+      {/* MODALE BIBLIOTHÈQUE DES ROMANS */}
       {isLibraryOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
           <div className="bg-white dark:bg-stone-900 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-hidden flex flex-col border-2 border-stone-300 dark:border-stone-700 shadow-2xl">
-            {/* Header Bibliothèque */}
             <div className="p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between bg-stone-50 dark:bg-stone-800/50">
               <div className="flex items-center space-x-2.5">
                 <div className="w-9 h-9 rounded-xl bg-[#c23b22]/15 text-[#c23b22] flex items-center justify-center">
@@ -963,9 +1444,8 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
               </button>
             </div>
 
-            {/* Liste des romans */}
             <div className="p-5 overflow-y-auto space-y-4">
-              {novels.map((novel, idx) => {
+              {novels.map((novel) => {
                 const isSelected = novel.id === activeNovel.id;
                 let savedPage = 1;
                 try {
