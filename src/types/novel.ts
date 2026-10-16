@@ -42,3 +42,4 @@ export interface AudioNovel {
   chaptersMeta: NovelChapterMeta[];
   pages: NovelPage[];
 }
+

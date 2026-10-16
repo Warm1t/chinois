@@ -4,7 +4,11 @@ import {
   UserProfileBackup, 
   applyProfileBackupToStorage, 
   mergeProfileBackups,
-  createProfileBackup
+  createProfileBackup,
+  saveUserScopedBackup,
+  loadUserScopedBackup,
+  clearActiveProfileFromStorage,
+  ACTIVE_AUTH_UID_KEY
 } from './profileSyncUtils';
 
 const SYNC_USER_ID_KEY = 'fluent_sync_user_id';
@@ -57,6 +61,10 @@ export const signUpWithEmail = async (
       return { success: false, error: error.message };
     }
 
+    if (data.user?.id) {
+      localStorage.setItem(ACTIVE_AUTH_UID_KEY, data.user.id);
+    }
+
     return { 
       success: true, 
       user: data.user || undefined, 
@@ -85,6 +93,10 @@ export const signInWithEmail = async (
       return { success: false, error: error.message };
     }
 
+    if (data.user?.id) {
+      localStorage.setItem(ACTIVE_AUTH_UID_KEY, data.user.id);
+    }
+
     return { 
       success: true, 
       user: data.user || undefined, 
@@ -96,16 +108,29 @@ export const signInWithEmail = async (
 };
 
 /**
- * Déconnexion du compte
+ * Déconnexion du compte :
+ * 1. Sauvegarde la progression du compte courant dans son cache scopé et sur le Cloud
+ * 2. Déconnecte la session Supabase
+ * 3. Nettoie les données actives pour que l'interface hors-connexion affiche 0 progression
  */
 export const signOutUser = async (): Promise<{ success: boolean; error?: string }> => {
   try {
+    const currentUser = await getAuthUser();
+    if (currentUser?.id) {
+      const currentProfile = createProfileBackup();
+      saveUserScopedBackup(currentUser.id, currentProfile);
+      await pushProfileToCloud(currentProfile, currentUser.id).catch(() => {});
+    }
+
     const { error } = await supabase.auth.signOut();
+    clearActiveProfileFromStorage();
+
     if (error) {
       return { success: false, error: error.message };
     }
     return { success: true };
   } catch (err: any) {
+    clearActiveProfileFromStorage();
     return { success: false, error: err.message || 'Erreur lors de la déconnexion' };
   }
 };
@@ -136,10 +161,13 @@ export const sendMagicLink = async (
 // ==========================================
 
 /**
- * Récupère l'identifiant synchrone stocké en local (défaut 'warm1t')
+ * Récupère l'identifiant manuel s'il a été explicitement configuré par l'utilisateur
  */
 export const getSyncUserId = (): string => {
-  return localStorage.getItem(SYNC_USER_ID_KEY) || 'warm1t';
+  const val = localStorage.getItem(SYNC_USER_ID_KEY);
+  // Ignorer l'ancien identifiant par défaut 'warm1t' qui polluait les sessions non connectées
+  if (!val || val === 'warm1t') return '';
+  return val;
 };
 
 /**
@@ -147,17 +175,21 @@ export const getSyncUserId = (): string => {
  */
 export const setSyncUserId = (userId: string) => {
   const clean = userId.trim().toLowerCase().replace(/[^a-z0-9_@-]/g, '');
-  localStorage.setItem(SYNC_USER_ID_KEY, clean || 'warm1t');
+  if (clean && clean !== 'warm1t') {
+    localStorage.setItem(SYNC_USER_ID_KEY, clean);
+  } else {
+    localStorage.removeItem(SYNC_USER_ID_KEY);
+  }
 };
 
 /**
  * Détermine l'identifiant effectif :
- * 1. customUserId si spécifié
+ * 1. customUserId si spécifié explicitement
  * 2. ID de l'utilisateur authentifié (Supabase Auth UID) si connecté
- * 3. Pseudo local stocké en dernier recours
+ * 3. Chaîne vide si non connecté (aucune synchronisation fantôme !)
  */
 export const resolveEffectiveUserId = async (customUserId?: string): Promise<string> => {
-  if (customUserId && customUserId.trim()) {
+  if (customUserId && customUserId.trim() && customUserId.trim() !== 'warm1t') {
     return customUserId.trim().toLowerCase();
   }
 
@@ -166,7 +198,7 @@ export const resolveEffectiveUserId = async (customUserId?: string): Promise<str
     return authUser.id;
   }
 
-  return getSyncUserId();
+  return '';
 };
 
 // ==========================================
@@ -175,7 +207,7 @@ export const resolveEffectiveUserId = async (customUserId?: string): Promise<str
 
 export const isAutoSyncEnabled = (): boolean => {
   const val = localStorage.getItem(AUTO_SYNC_ENABLED_KEY);
-  return val === null ? true : val === 'true'; // activé par défaut
+  return val === null ? true : val === 'true'; // activé par défaut quand connecté
 };
 
 export const setAutoSyncEnabled = (enabled: boolean) => {
@@ -191,7 +223,7 @@ export const setLastSyncTime = (timestamp: string) => {
 };
 
 /**
- * Lire le profil local actuel depuis localStorage (comprend exercices, streak, mots Anki, ancrage, histoires et labo vocal)
+ * Lire le profil local actuel depuis localStorage
  */
 export const getCurrentLocalProfile = (): UserProfileBackup => {
   return createProfileBackup();
@@ -200,8 +232,8 @@ export const getCurrentLocalProfile = (): UserProfileBackup => {
 let autoSyncTimeout: any = null;
 
 /**
- * Déclenche une synchronisation automatique transparente vers Supabase Cloud
- * (immédiate ou debouncée pour grouper les ajouts rapides de cartes Anki ou d'exercices)
+ * Déclenche une synchronisation automatique vers Supabase Cloud
+ * UNIQUEMENT si un utilisateur est connecté à son compte !
  */
 export const triggerAutoSyncToCloud = (immediate = false): Promise<void> => {
   if (autoSyncTimeout) {
@@ -209,23 +241,28 @@ export const triggerAutoSyncToCloud = (immediate = false): Promise<void> => {
     autoSyncTimeout = null;
   }
 
-  if (immediate) {
-    if (!isAutoSyncEnabled()) return Promise.resolve();
+  const runSync = async () => {
+    const authUser = await getAuthUser();
+    if (!authUser || !authUser.id) {
+      // Non connecté : ne jamais envoyer sur un compte partagé
+      return;
+    }
     const profile = getCurrentLocalProfile();
-    return pushProfileToCloud(profile).then(() => {}).catch(err => {
+    saveUserScopedBackup(authUser.id, profile);
+    if (!isAutoSyncEnabled()) return;
+    await pushProfileToCloud(profile, authUser.id);
+  };
+
+  if (immediate) {
+    return runSync().catch((err) => {
       console.warn('Auto-sync cloud immédiat :', err);
     });
   }
 
   return new Promise((resolve) => {
     autoSyncTimeout = setTimeout(async () => {
-      if (!isAutoSyncEnabled()) {
-        resolve();
-        return;
-      }
       try {
-        const profile = getCurrentLocalProfile();
-        await pushProfileToCloud(profile);
+        await runSync();
       } catch (err) {
         console.warn('Auto-sync cloud débouncé :', err);
       }
@@ -247,10 +284,12 @@ export const pushProfileToCloud = async (
 ): Promise<{ success: boolean; effectiveUserId?: string; error?: string }> => {
   const userId = await resolveEffectiveUserId(customUserId);
   if (!userId) {
-    return { success: false, error: 'Identifiant de synchronisation manquant.' };
+    return { success: false, error: 'Connectez-vous à votre compte pour sauvegarder dans le Cloud.' };
   }
 
   try {
+    saveUserScopedBackup(userId, profile);
+
     const { error } = await supabase
       .from('fluent_profiles')
       .upsert(
@@ -277,15 +316,17 @@ export const pushProfileToCloud = async (
 };
 
 /**
- * Récupérer et fusionner la progression depuis Supabase
+ * Récupérer et restaurer la progression depuis Supabase pour l'utilisateur connecté
  */
 export const pullProfileFromCloud = async (
   customUserId?: string
 ): Promise<{ success: boolean; data?: UserProfileBackup; effectiveUserId?: string; error?: string }> => {
   const userId = await resolveEffectiveUserId(customUserId);
   if (!userId) {
-    return { success: false, error: 'Identifiant de synchronisation manquant.' };
+    return { success: false, error: 'Aucun compte connecté.' };
   }
+
+  localStorage.setItem(ACTIVE_AUTH_UID_KEY, userId);
 
   try {
     const { data, error } = await supabase
@@ -299,22 +340,30 @@ export const pullProfileFromCloud = async (
       return { success: false, error: error.message };
     }
 
+    const scopedLocal = loadUserScopedBackup(userId);
+    const activeLocal = getCurrentLocalProfile();
+    const baseLocal = scopedLocal ? mergeProfileBackups(scopedLocal, activeLocal) : activeLocal;
+
     if (!data || !data.data) {
+      // Si aucune sauvegarde cloud n'existe encore pour ce compte, appliquer son cache scopé ou sauvegarder sa session actuelle
+      applyProfileBackupToStorage(baseLocal);
+      saveUserScopedBackup(userId, baseLocal);
+      await pushProfileToCloud(baseLocal, userId).catch(() => {});
       return {
-        success: false,
-        error: `Aucune sauvegarde trouvée dans le Cloud pour ce compte. Enregistrez votre progression d’abord !`,
+        success: true,
+        data: baseLocal,
+        effectiveUserId: userId,
       };
     }
 
     const cloudProfile = data.data as UserProfileBackup;
-    const localProfile = getCurrentLocalProfile();
 
-    // Fusion intelligente : conserve les cartes Anki et progrès des deux côtés sans perte
-    const mergedProfile = mergeProfileBackups(localProfile, cloudProfile);
+    // Fusion intelligente entre le profil du compte (scopé + session) et le Cloud
+    const mergedProfile = mergeProfileBackups(baseLocal, cloudProfile);
     applyProfileBackupToStorage(mergedProfile);
+    saveUserScopedBackup(userId, mergedProfile);
     setLastSyncTime(data.updated_at || new Date().toISOString());
 
-    // Si le local avait du contenu nouveau qui a enrichi le profil (cartes Anki, histoires, labo vocal, exercices ou histoires personnalisées), le renvoyer silencieusement vers Supabase
     const cloudWords = cloudProfile.syncedAnkiWords?.length || 0;
     const cloudExercises = cloudProfile.completedExercises?.length || 0;
     const cloudStories = cloudProfile.completedStories?.length || 0;

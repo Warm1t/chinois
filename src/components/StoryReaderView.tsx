@@ -47,10 +47,13 @@ import {
   Info,
   Square,
   Award,
-  Trash2
+  Trash2,
+  FileDown,
+  FileText
 } from 'lucide-react';
 import { getCustomStories, saveCustomStory, deleteCustomStory } from '../utils/customStoriesUtils';
 import { GenerateStoryModal } from './GenerateStoryModal';
+import { PdfExportModal } from './PdfExportModal';
 import { AudioNovelReaderView } from './AudioNovelReaderView';
 
 interface StoryReaderViewProps {
@@ -91,6 +94,8 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
   });
 
   const [isGenerateModalOpen, setIsGenerateModalOpen] = useState<boolean>(false);
+  const [generateModalMode, setGenerateModalMode] = useState<'generate' | 'import'>('generate');
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState<boolean>(false);
 
   // Sélectionne par défaut la PREMIÈRE histoire NON validée (au lieu de toujours la première)
   const [selectedStoryId, setSelectedStoryId] = useState<string>(() => {
@@ -692,10 +697,10 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
         setCompletedStoryIds(customEvent.detail.completedStoryIds);
       } else {
         const saved = localStorage.getItem('fluent_completed_stories');
-        if (saved) {
-          try {
-            setCompletedStoryIds(JSON.parse(saved));
-          } catch {}
+        try {
+          setCompletedStoryIds(saved ? JSON.parse(saved) : []);
+        } catch {
+          setCompletedStoryIds([]);
         }
       }
     };
@@ -821,11 +826,11 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           {onOpenAppleSyncModal && (
             <button
               onClick={onOpenAppleSyncModal}
-              className="px-3.5 py-3 rounded-2xl bg-white hover:bg-stone-100 text-stone-800 font-bold text-xs shadow-xs border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 shrink-0 hover:-translate-y-0.5"
+              className="px-3.5 py-2.5 rounded-2xl bg-white hover:bg-stone-100 text-stone-800 font-bold text-xs shadow-xs border-2 border-stone-900 transition-all flex items-center justify-center space-x-1.5 shrink-0 hover:-translate-y-0.5"
               title="Exporter les histoires vers le Calendrier / Widget Apple"
             >
               <Smartphone className="w-4 h-4 text-amber-500" />
@@ -833,23 +838,49 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
             </button>
           )}
 
+          {/* Bouton Exporter en PDF */}
+          <button
+            onClick={() => setIsPdfModalOpen(true)}
+            className="px-3.5 py-2.5 rounded-2xl bg-white hover:bg-stone-100 text-stone-900 font-black text-xs shadow-xs border-2 border-stone-900 transition-all flex items-center justify-center space-x-1.5 shrink-0 hover:-translate-y-0.5 cursor-pointer"
+            title="Exporter cette histoire ou toutes les histoires générées en PDF A4 imprimable"
+          >
+            <FileDown className="w-4 h-4 text-[#c23b22]" />
+            <span>📄 Exporter PDF</span>
+          </button>
+
+          {/* Bouton Importer un texte chinois */}
+          <button
+            onClick={() => {
+              setGenerateModalMode('import');
+              setIsGenerateModalOpen(true);
+            }}
+            className="px-3.5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-xs border-2 border-stone-900 transition-all flex items-center justify-center space-x-1.5 shrink-0 hover:-translate-y-0.5 cursor-pointer"
+            title="Coller votre propre histoire en chinois pour la convertir au format interactif du site"
+          >
+            <FileText className="w-4 h-4 text-amber-200" />
+            <span>📥 Importer mon texte</span>
+          </button>
+
           {/* Bouton Générer avec IA */}
           <button
-            onClick={() => setIsGenerateModalOpen(true)}
-            className="px-4 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-rose-500 to-indigo-600 hover:from-amber-400 hover:via-rose-400 hover:to-indigo-500 text-white font-black text-xs shadow-md border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 shrink-0 hover:-translate-y-0.5 cursor-pointer"
+            onClick={() => {
+              setGenerateModalMode('generate');
+              setIsGenerateModalOpen(true);
+            }}
+            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 via-rose-500 to-indigo-600 hover:from-amber-400 hover:via-rose-400 hover:to-indigo-500 text-white font-black text-xs shadow-md border-2 border-stone-900 transition-all flex items-center justify-center space-x-1.5 shrink-0 hover:-translate-y-0.5 cursor-pointer"
           >
             <Sparkles className="w-4 h-4 text-yellow-300" />
-            <span>✨ Générer une Histoire IA</span>
+            <span>✨ Générer IA</span>
           </button>
 
           {/* Bouton Générer rapide avec mes mots Anki */}
           <button
             onClick={handleGenerateAnkiStory}
-            className="px-4 py-3 rounded-2xl bg-white hover:bg-stone-100 text-stone-800 font-bold text-xs shadow-xs border-2 border-stone-900 transition-all flex items-center justify-center space-x-2 shrink-0 hover:-translate-y-0.5 cursor-pointer"
+            className="px-3.5 py-2.5 rounded-2xl bg-white hover:bg-stone-100 text-stone-800 font-bold text-xs shadow-xs border-2 border-stone-900 transition-all flex items-center justify-center space-x-1.5 shrink-0 hover:-translate-y-0.5 cursor-pointer"
             title="Génération instantanée basée sur vos cartes Anki"
           >
             <Wand2 className="w-4 h-4 text-amber-500" />
-            <span>Mode Rapide Anki</span>
+            <span>Rapide Anki</span>
           </button>
         </div>
       </div>
@@ -919,6 +950,15 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
                   <span>Histoire lue & validée</span>
                 </span>
               )}
+
+              <button
+                onClick={() => setIsPdfModalOpen(true)}
+                className="px-2.5 py-1 text-xs text-stone-800 hover:text-stone-950 bg-stone-100 hover:bg-stone-200 border border-stone-300 rounded-xl font-bold flex items-center space-x-1 transition-all cursor-pointer"
+                title="Exporter cette histoire en PDF"
+              >
+                <FileDown className="w-3.5 h-3.5 text-[#c23b22]" />
+                <span>PDF</span>
+              </button>
 
               {activeStory.id.startsWith('custom-') && (
                 <button
@@ -1824,15 +1864,24 @@ export const StoryReaderView: React.FC<StoryReaderViewProps> = ({
 
       </div>
 
-      {/* Modale de génération d'histoire personnalisée IA */}
+      {/* Modale de génération ou d'importation d'histoire personnalisée IA */}
       <GenerateStoryModal
         isOpen={isGenerateModalOpen}
         onClose={() => setIsGenerateModalOpen(false)}
         syncedAnkiWords={syncedAnkiWords}
+        initialMode={generateModalMode}
         onStoryGenerated={(newStory) => {
           saveCustomStory(newStory);
           setSelectedStoryId(newStory.id);
         }}
+      />
+
+      {/* Modale d'export PDF de l'histoire actuelle ou des histoires générées */}
+      <PdfExportModal
+        isOpen={isPdfModalOpen}
+        onClose={() => setIsPdfModalOpen(false)}
+        story={activeStory}
+        customStories={stories.filter(s => s.id.startsWith('custom-'))}
       />
 
     </div>

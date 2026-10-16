@@ -43,8 +43,10 @@ import {
   Music,
   Info,
   Mic,
-  Square
+  Square,
+  FileDown
 } from 'lucide-react';
+import { PdfExportModal } from './PdfExportModal';
 
 interface AudioNovelReaderViewProps {
   syncedAnkiWords: AnkiWord[];
@@ -75,7 +77,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
 
   const activeNovel: AudioNovel = novels.find(n => n.id === selectedNovelId) || novels[0];
 
-  // Page actuelle dans le roman sélectionné (1 à 30)
+  // Page actuelle dans le roman sélectionné (1 à 12)
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(() => {
     try {
       const saved = localStorage.getItem(`fluent_novel_progress_${selectedNovelId}`);
@@ -103,10 +105,26 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
 
   // Préférences du lecteur immersif (identiques à StoryReaderView)
   const [showPinyin, setShowPinyin] = useState<boolean>(true);
-  const [showTranslation, setShowTranslation] = useState<boolean>(false);
+  const [showTranslation, setShowTranslation] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('fluent_show_translation') !== 'false';
+    } catch {
+      return true;
+    }
+  });
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(0.85);
   const [readerMode, setReaderMode] = useState<'rhythm' | 'words'>('rhythm');
   const [showRhythmGuide, setShowRhythmGuide] = useState<boolean>(false);
+
+  const toggleTranslation = () => {
+    setShowTranslation(prev => {
+      const next = !prev;
+      try {
+        localStorage.setItem('fluent_show_translation', String(next));
+      } catch {}
+      return next;
+    });
+  };
 
   // Audio playback state
   const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
@@ -133,6 +151,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
   // Modales
   const [isTocOpen, setIsTocOpen] = useState<boolean>(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState<boolean>(false);
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState<boolean>(false);
 
   // Dictionnaire / Token de mot actif
   const [selectedWord, setSelectedWord] = useState<StoryWordToken | null>(null);
@@ -174,6 +193,30 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
       }));
     } catch {}
   }, [activeNovel.id, currentPageNumber]);
+
+  // Synchroniser la progression lors d'une connexion / déconnexion
+  useEffect(() => {
+    const handleNovelProgressChange = () => {
+      try {
+        const savedCompleted = localStorage.getItem('fluent_completed_novels');
+        setCompletedNovelIds(savedCompleted ? JSON.parse(savedCompleted) : []);
+        const savedPage = localStorage.getItem(`fluent_novel_progress_${activeNovel.id}`);
+        if (savedPage) {
+          const parsed = JSON.parse(savedPage);
+          if (parsed.currentPage && parsed.currentPage >= 1 && parsed.currentPage <= activeNovel.totalPages) {
+            setCurrentPageNumber(parsed.currentPage);
+            return;
+          }
+        }
+        setCurrentPageNumber(1);
+      } catch {
+        setCompletedNovelIds([]);
+        setCurrentPageNumber(1);
+      }
+    };
+    window.addEventListener('fluent_novel_progress_changed', handleNovelProgressChange);
+    return () => window.removeEventListener('fluent_novel_progress_changed', handleNovelProgressChange);
+  }, [activeNovel.id, activeNovel.totalPages]);
 
   // Synchroniser lors du changement de roman
   const handleSelectNovel = (novelId: string) => {
@@ -542,21 +585,32 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
 
           <div className="px-4 py-2 rounded-2xl text-xs font-black bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-xs flex items-center space-x-2">
             <BookOpen className="w-3.5 h-3.5 text-amber-400" />
-            <span>📚 Romans & Livres Audio (30 pages)</span>
+            <span>📚 Grands Romans & Récits Audio</span>
             <span className="px-2 py-0.5 rounded-full bg-amber-400 text-stone-950 text-[10px] font-black">
               3 Romans
             </span>
           </div>
         </div>
 
-        <button
-          onClick={() => setIsLibraryOpen(true)}
-          className="px-3.5 py-2 rounded-2xl text-xs font-bold border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all flex items-center space-x-2 self-start sm:self-auto cursor-pointer"
-        >
-          <Library className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-          <span>Changer de Roman ({novels.findIndex(n => n.id === activeNovel.id) + 1}/3)</span>
-          <ChevronRight className="w-3.5 h-3.5 opacity-60" />
-        </button>
+        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+          <button
+            onClick={() => setIsPdfModalOpen(true)}
+            className="px-3.5 py-2 rounded-2xl text-xs font-black border-2 border-stone-900 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-700 transition-all flex items-center space-x-1.5 cursor-pointer shadow-2xs"
+            title="Exporter ce roman complet, le chapitre ou la page actuelle en PDF"
+          >
+            <FileDown className="w-3.5 h-3.5 text-[#c23b22]" />
+            <span>📄 Exporter PDF</span>
+          </button>
+
+          <button
+            onClick={() => setIsLibraryOpen(true)}
+            className="px-3.5 py-2 rounded-2xl text-xs font-bold border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all flex items-center space-x-2 cursor-pointer"
+          >
+            <Library className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+            <span>Changer de Roman ({novels.findIndex(n => n.id === activeNovel.id) + 1}/3)</span>
+            <ChevronRight className="w-3.5 h-3.5 opacity-60" />
+          </button>
+        </div>
       </div>
 
       {/* 2. EN-TÊTE DU ROMAN ACTIF : BANNIÈRE ÉLÉGANTE */}
@@ -575,7 +629,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                 <span>{activeNovel.estimatedListeningTime} d'écoute</span>
               </span>
               <span className="px-3 py-1 rounded-full text-xs font-medium bg-black/20 text-white/90">
-                {activeNovel.wordCount} mots • 30 pages
+                {activeNovel.wordCount} mots • {activeNovel.totalPages} pages
               </span>
               {completedNovelIds.includes(activeNovel.id) && (
                 <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/90 text-white flex items-center space-x-1">
@@ -610,7 +664,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
             </span>
             <div className="text-3xl font-black font-serif text-white flex items-baseline space-x-1">
               <span>Page {currentPageNumber}</span>
-              <span className="text-sm text-stone-300">/ 30</span>
+              <span className="text-sm text-stone-300">/ {activeNovel.totalPages}</span>
             </div>
             
             <div className="w-full bg-white/20 h-2 rounded-full overflow-hidden">
@@ -650,7 +704,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
 
             {/* Toggle Traduction Française */}
             <button
-              onClick={() => setShowTranslation(!showTranslation)}
+              onClick={toggleTranslation}
               className={`px-3 py-1.5 rounded-xl font-bold flex items-center space-x-1.5 border transition-all text-xs cursor-pointer ${
                 showTranslation
                   ? 'bg-indigo-50 dark:bg-indigo-950/70 border-indigo-300 dark:border-indigo-700 text-indigo-900 dark:text-indigo-200 shadow-2xs'
@@ -659,7 +713,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
               title="Afficher ou masquer la traduction française sous chaque phrase"
             >
               <Languages className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              <span>Traduction Française</span>
+              <span>Traduction</span>
             </button>
 
             {/* Commutateur Mode Rythme (意群) vs Mots seuls */}
@@ -763,10 +817,10 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
           <button
             onClick={() => setIsTocOpen(true)}
             className="px-3 py-1.5 rounded-xl bg-amber-100 dark:bg-amber-950/60 hover:bg-amber-200 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800 text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer shrink-0 shadow-2xs"
-            title="Ouvrir la table des matières (6 chapitres / 30 pages)"
+            title={`Ouvrir la table des matières (${activeNovel.totalChapters} chapitres / ${activeNovel.totalPages} pages)`}
           >
             <ListOrdered className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-            <span>Sommaire (Ch. {currentPage.chapterNumber}/6)</span>
+            <span>Sommaire (Ch. {currentPage.chapterNumber}/{activeNovel.totalChapters})</span>
           </button>
 
           <div className="flex items-center space-x-1 overflow-x-auto pb-0.5 scrollbar-thin">
@@ -958,17 +1012,17 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                       </div>
                     </div>
 
-                    {/* CORPS DE LA PHRASE : MODE RYTHME (意群) OU MOTS ISOLÉS (EXACTEMENT COMME IMAGE 1) */}
+                    {/* CORPS DE LA PHRASE : MODE RYTHME (意群) OU MOTS ISOLÉS (EXPLOITATION OPTIMALE DE L'ESPACE) */}
                     {readerMode === 'rhythm' ? (
-                      /* CAPSULES DE SOUFFLE PROSODIQUES */
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-3.5 py-1.5">
+                      /* CAPSULES DE SOUFFLE PROSODIQUES AVEC TAILLE CONFORTABLE */
+                      <div className="flex flex-wrap items-center gap-x-2.5 sm:gap-x-3.5 gap-y-3.5 sm:gap-y-4 py-2 sm:py-2.5 w-full">
                         {analysis.chunks.map((chunk, cIdx) => {
                           const isChunkActive = isCurrentRhythmPlaying && activeRhythmChunkIdx === cIdx;
 
                           return (
                             <React.Fragment key={chunk.id || cIdx}>
                               <div
-                                className={`inline-flex flex-wrap items-end rounded-2xl p-1.5 px-3 transition-all border ${
+                                className={`inline-flex flex-wrap items-end rounded-2xl p-2 sm:p-2.5 px-3.5 sm:px-4.5 transition-all border shadow-2xs ${
                                   isChunkActive
                                     ? 'bg-amber-400 text-stone-950 border-stone-900 shadow-md scale-105 ring-2 ring-amber-300'
                                     : chunk.stressLevel === 'prominent'
@@ -979,7 +1033,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                                 }`}
                                 title={chunk.stressLevel === 'prominent' ? "Groupe avec emphase ou intensité prosodique" : undefined}
                               >
-                                <div className="flex items-end gap-x-1.5">
+                                <div className="flex items-end gap-x-1.5 sm:gap-x-2">
                                   {chunk.words.map((word, wIdx) => {
                                     const isSelected = selectedWord?.hanzi === word.hanzi && selectedWordSentenceIdx === globalIdx;
                                     const inAnki = isWordInUserAnki(word.hanzi);
@@ -996,7 +1050,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                                             setSelectedWordSentenceIdx(globalIdx);
                                           }
                                         }}
-                                        className={`group inline-flex flex-col items-center cursor-pointer rounded-lg px-1 py-0.5 transition-all select-none ${
+                                        className={`group inline-flex flex-col items-center cursor-pointer rounded-lg px-1 sm:px-1.5 py-0.5 transition-all select-none ${
                                           isSelected
                                             ? 'bg-amber-300 text-stone-950 font-bold ring-2 ring-stone-900'
                                             : inAnki
@@ -1005,11 +1059,11 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                                         }`}
                                       >
                                         {showPinyin && (
-                                          <span data-pinyin className="text-[11px] sm:text-xs font-mono tracking-wide pinyin-text text-stone-600 dark:text-amber-300 font-bold">
+                                          <span data-pinyin className="text-xs sm:text-[13px] font-mono tracking-wide pinyin-text text-stone-600 dark:text-amber-300 font-bold">
                                             {word.pinyin}
                                           </span>
                                         )}
-                                        <span className={`text-xl sm:text-2xl font-serif font-black chinese-text tracking-wide relative text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] dark:group-hover:text-amber-400 ${
+                                        <span className={`text-2xl sm:text-[27px] font-serif font-black chinese-text tracking-wide relative text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] dark:group-hover:text-amber-400 ${
                                           inAnki ? 'border-b-2 border-[#c23b22]' : ''
                                         }`}>
                                           {word.hanzi}
@@ -1024,7 +1078,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
 
                                 {chunk.sandhiHint && (
                                   <span 
-                                    className="ml-1.5 text-[9px] font-mono px-1.5 py-0.2 rounded-md bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 font-bold cursor-help"
+                                    className="ml-2 text-[9px] font-mono px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 font-bold cursor-help"
                                     title={chunk.sandhiHint}
                                   >
                                     ⚡ ton
@@ -1040,9 +1094,9 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                                     : 'Micro-souffle respiratoire (/)'
                                 }>
                                   {chunk.pauseType === 'comma' ? (
-                                    <span className="text-stone-400 font-mono font-black text-sm px-1.5">//</span>
+                                    <span className="text-stone-400 font-mono font-black text-sm sm:text-base px-2">//</span>
                                   ) : (
-                                    <span className="text-amber-500 font-mono font-black text-xs px-1.5">/</span>
+                                    <span className="text-amber-500 font-mono font-black text-xs sm:text-sm px-2">/</span>
                                   )}
                                 </span>
                               )}
@@ -1052,8 +1106,8 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                       </div>
                     ) : (
                       /* MODE CLASSIQUE MOT PAR MOT */
-                      <div className="flex flex-wrap items-end gap-x-1.5 gap-y-3 py-1">
-                        {sentence.words.map((word, wIdx) => {
+                      <div className="flex flex-wrap items-end gap-x-2 sm:gap-x-3 gap-y-3.5 py-2 w-full">
+                        {analysis.chunks.flatMap(c => c.words).map((word, wIdx) => {
                           const isSelected = selectedWord?.hanzi === word.hanzi && selectedWordSentenceIdx === globalIdx;
                           const inAnki = isWordInUserAnki(word.hanzi);
 
@@ -1069,7 +1123,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                                   setSelectedWordSentenceIdx(globalIdx);
                                 }
                               }}
-                              className={`group inline-flex flex-col items-center cursor-pointer rounded-lg px-1.5 py-0.5 transition-all select-none ${
+                              className={`group inline-flex flex-col items-center cursor-pointer rounded-lg px-2 py-1 transition-all select-none ${
                                 isSelected
                                   ? 'bg-amber-300 text-stone-950 font-bold ring-2 ring-stone-900'
                                   : inAnki
@@ -1078,11 +1132,11 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                               }`}
                             >
                               {showPinyin && (
-                                <span data-pinyin className="text-[11px] sm:text-xs font-mono tracking-wide pinyin-text text-stone-600 dark:text-amber-300 font-bold">
+                                <span data-pinyin className="text-xs sm:text-[13px] font-mono tracking-wide pinyin-text text-stone-600 dark:text-amber-300 font-bold">
                                   {word.pinyin}
                                 </span>
                               )}
-                              <span className="text-xl sm:text-2xl font-serif font-black chinese-text tracking-wide text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] dark:group-hover:text-amber-400 relative">
+                              <span className="text-2xl sm:text-[27px] font-serif font-black chinese-text tracking-wide text-stone-900 dark:text-stone-100 group-hover:text-[#c23b22] dark:group-hover:text-amber-400 relative">
                                 {word.hanzi}
                                 {inAnki && (
                                   <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white" />
@@ -1094,11 +1148,23 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                       </div>
                     )}
 
-                    {/* TRADUCTION FRANÇAISE */}
+                    {/* TRADUCTION FRANÇAISE & CONSEIL PROSODIQUE */}
                     {showTranslation && sentence.translation && (
-                      <p className="text-xs sm:text-sm font-sans text-stone-500 dark:text-stone-400 italic pl-2 border-l-2 border-amber-300 dark:border-amber-600 mt-2">
-                        {sentence.translation}
-                      </p>
+                      <div className="mt-3.5 pt-3 border-t border-stone-100 dark:border-stone-800/80 flex items-start gap-2.5">
+                        <span className="text-[10px] sm:text-[11px] font-mono uppercase font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 px-2.5 py-0.5 rounded-lg border border-amber-200 dark:border-amber-800 shrink-0 select-none">
+                          Sens
+                        </span>
+                        <p className="text-sm sm:text-base font-serif italic text-stone-700 dark:text-stone-300 leading-relaxed">
+                          « {sentence.translation} »
+                        </p>
+                      </div>
+                    )}
+
+                    {readerMode === 'rhythm' && analysis.rhythmAdvice && (
+                      <div className="mt-2.5 flex items-center gap-2 text-xs text-amber-900/90 dark:text-amber-300/90 bg-amber-50/70 dark:bg-amber-950/40 px-3 py-1.5 rounded-xl border border-amber-200/60 dark:border-amber-800/60">
+                        <Music className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                        <span className="font-sans text-[11px] sm:text-xs">{analysis.rhythmAdvice}</span>
+                      </div>
                     )}
 
                     {/* POP-UP DICTIONNAIRE & ANKI */}
@@ -1347,7 +1413,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                     Table des matières
                   </h3>
                   <p className="text-xs text-stone-500 dark:text-stone-400">
-                    {activeNovel.title} • 6 Chapitres • 30 Pages
+                    {activeNovel.title} • {activeNovel.totalChapters} Chapitres • {activeNovel.totalPages} Pages
                   </p>
                 </div>
               </div>
@@ -1429,10 +1495,10 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                 </div>
                 <div>
                   <h3 className="font-serif font-black text-base text-stone-900 dark:text-stone-100">
-                    Bibliothèque de Romans Audio (HSK 3 - 4)
+                    Bibliothèque de Grands Récits Audio (HSK 3 - 4)
                   </h3>
                   <p className="text-xs text-stone-500 dark:text-stone-400">
-                    Choisis un roman complet de 30 pages à lire et écouter
+                    Choisis un chef-d'œuvre classique à lire et écouter
                   </p>
                 </div>
               </div>
@@ -1505,7 +1571,7 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
                           </span>
                         )}
                         <span className="text-xs font-mono text-stone-500 dark:text-stone-400">
-                          P. {savedPage} / 30
+                          P. {savedPage} / {novel.totalPages}
                         </span>
                       </div>
                     </div>
@@ -1516,6 +1582,15 @@ export const AudioNovelReaderView: React.FC<AudioNovelReaderViewProps> = ({
           </div>
         </div>
       )}
+
+      {/* Modale d'export PDF du roman */}
+      <PdfExportModal
+        isOpen={isPdfModalOpen}
+        onClose={() => setIsPdfModalOpen(false)}
+        novel={activeNovel}
+        currentChapterNumber={currentPage.chapterNumber}
+        currentPageNumber={currentPageNumber}
+      />
 
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
   X, 
@@ -10,11 +10,13 @@ import {
   AlertCircle, 
   ExternalLink,
   Wand2,
-  Bookmark
+  Bookmark,
+  FileText
 } from 'lucide-react';
 import { AnkiWord, MaayotStory } from '../types/fluent';
 import { 
   generateStoryWithAi, 
+  importAndFormatChineseStory,
   getStoredAiApiKey, 
   setStoredAiApiKey, 
   hasAiApiKey 
@@ -25,6 +27,7 @@ interface GenerateStoryModalProps {
   onClose: () => void;
   syncedAnkiWords: AnkiWord[];
   onStoryGenerated: (story: MaayotStory) => void;
+  initialMode?: 'generate' | 'import';
 }
 
 const PRESET_THEMES = [
@@ -41,11 +44,18 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
   onClose,
   syncedAnkiWords,
   onStoryGenerated,
+  initialMode = 'generate',
 }) => {
+  const [activeMode, setActiveMode] = useState<'generate' | 'import'>(initialMode);
   const [themeInput, setThemeInput] = useState<string>('');
   const [selectedLevel, setSelectedLevel] = useState<'HSK 2' | 'HSK 3' | 'HSK 4' | 'HSK 5'>('HSK 3');
   const [includeAnkiWords, setIncludeAnkiWords] = useState<boolean>(syncedAnkiWords.length > 0);
-  
+
+  // Champs pour l'importation d'une histoire chinoise existante
+  const [rawChineseInput, setRawChineseInput] = useState<string>('');
+  const [customTitleInput, setCustomTitleInput] = useState<string>('');
+  const [customTranslationInput, setCustomTranslationInput] = useState<string>('');
+
   // Gestion de la clé API
   const [apiKeyInput, setApiKeyInput] = useState<string>(() => getStoredAiApiKey());
   const [isKeyConfigOpen, setIsKeyConfigOpen] = useState<boolean>(!hasAiApiKey());
@@ -54,6 +64,13 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
   // État de chargement et erreurs
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setActiveMode(initialMode);
+      setErrorMessage(null);
+    }
+  }, [isOpen, initialMode]);
 
   if (!isOpen) return null;
 
@@ -75,18 +92,29 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
     setErrorMessage(null);
 
     try {
-      const story = await generateStoryWithAi({
-        theme: themeInput.trim() || undefined,
-        level: selectedLevel,
-        ankiWords: includeAnkiWords ? syncedAnkiWords : undefined,
-        apiKeyOverride: apiKeyInput.trim() || undefined,
-      });
-
-      onStoryGenerated(story);
-      onClose();
+      if (activeMode === 'import') {
+        const story = await importAndFormatChineseStory({
+          rawChineseText: rawChineseInput,
+          customTitle: customTitleInput.trim() || undefined,
+          customTranslation: customTranslationInput.trim() || undefined,
+          level: selectedLevel,
+          apiKeyOverride: apiKeyInput.trim() || undefined,
+        });
+        onStoryGenerated(story);
+        onClose();
+      } else {
+        const story = await generateStoryWithAi({
+          theme: themeInput.trim() || undefined,
+          level: selectedLevel,
+          ankiWords: includeAnkiWords ? syncedAnkiWords : undefined,
+          apiKeyOverride: apiKeyInput.trim() || undefined,
+        });
+        onStoryGenerated(story);
+        onClose();
+      }
     } catch (err: any) {
-      console.error('Erreur génération histoire IA :', err);
-      setErrorMessage(err?.message || "Une erreur est survenue lors de la génération.");
+      console.error('Erreur génération / import histoire :', err);
+      setErrorMessage(err?.message || "Une erreur est survenue lors du traitement de l'histoire.");
     } finally {
       setIsLoading(false);
     }
@@ -104,13 +132,17 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
           <div className="space-y-1">
             <div className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[11px] font-bold">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Générateur Illimité & Sauvegardé Cloud</span>
+              <span>Atelier d'Histoires Interactives & Sauvegardées</span>
             </div>
             <h3 className="font-serif font-black text-xl text-stone-900 dark:text-stone-100">
-              Générer une Histoire IA sur-mesure
+              {activeMode === 'import'
+                ? 'Importer & Adapter une Histoire en Chinois'
+                : 'Générer une Histoire IA sur-mesure'}
             </h3>
             <p className="text-xs text-stone-600 dark:text-stone-400">
-              Chaque histoire est unique, interactive, synchronisée sur ton compte et dotée d'audio et de quiz.
+              {activeMode === 'import'
+                ? 'Colle n’importe quelle vraie histoire en chinois : elle sera découpée phrase par phrase et mot par mot comme sur le site.'
+                : 'Chaque histoire est unique, interactive, synchronisée sur ton compte et dotée d’audio et de quiz.'}
             </p>
           </div>
 
@@ -123,12 +155,45 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
           </button>
         </div>
 
+        {/* Sélecteur d'Onglet : Générer vs Importer son texte */}
+        <div className="grid grid-cols-2 p-1 rounded-2xl bg-stone-200/70 dark:bg-stone-800 text-xs font-bold">
+          <button
+            type="button"
+            onClick={() => { setActiveMode('generate'); setErrorMessage(null); }}
+            className={`py-2 px-3 rounded-xl flex items-center justify-center space-x-1.5 transition-all ${
+              activeMode === 'generate'
+                ? 'bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 shadow-xs font-black'
+                : 'text-stone-600 dark:text-stone-400 hover:text-stone-900'
+            }`}
+          >
+            <Wand2 className="w-3.5 h-3.5 text-[#c23b22]" />
+            <span>✨ Générer un sujet</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => { setActiveMode('import'); setErrorMessage(null); }}
+            className={`py-2 px-3 rounded-xl flex items-center justify-center space-x-1.5 transition-all ${
+              activeMode === 'import'
+                ? 'bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 shadow-xs font-black'
+                : 'text-stone-600 dark:text-stone-400 hover:text-stone-900'
+            }`}
+          >
+            <FileText className="w-3.5 h-3.5 text-amber-600" />
+            <span>📥 Importer mon texte chinois</span>
+          </button>
+        </div>
+
         {/* 1. Clé API IA (BYOK) */}
         <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white/70 dark:bg-stone-800/50 p-3.5 space-y-2.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 text-xs font-bold text-stone-800 dark:text-stone-200">
               <Key className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-              <span>Compte IA & Clé API (Google Gemini)</span>
+              <span>
+                {activeMode === 'import'
+                  ? 'Clé API Gemini (Optionnelle — enrichit Pinyin & Traduction)'
+                  : 'Compte IA & Clé API (Google Gemini)'}
+              </span>
             </div>
             
             <button
@@ -143,7 +208,7 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
             <div className="flex items-center justify-between text-xs text-stone-600 dark:text-stone-400 bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-300 dark:border-emerald-800 px-3 py-1.5 rounded-xl">
               <span className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 font-semibold">
                 <Check className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Clé API connectée (générations actives)</span>
+                <span>Clé API connectée (traduction et pinyin IA actifs)</span>
               </span>
               <span className="font-mono text-[10px] text-stone-400">••••••••</span>
             </div>
@@ -152,7 +217,9 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
           {isKeyConfigOpen && (
             <div className="space-y-2.5 pt-1 animate-fadeIn">
               <p className="text-[11px] text-stone-600 dark:text-stone-400 leading-relaxed">
-                Connecte ta propre clé API <strong>Google Gemini</strong>. Elle est <strong>100% gratuite</strong> et s'obtient en 30 secondes sans carte bancaire :
+                {activeMode === 'import'
+                  ? "L'import fonctionne même sans clé API grâce au dictionnaire local ! Avec une clé Gemini gratuite, chaque phrase et chaque mot sont traduits sur-mesure :"
+                  : "Connecte ta propre clé API Google Gemini. Elle est 100% gratuite et s'obtient en 30 secondes sans carte bancaire :"}
               </p>
 
               <div className="flex gap-2">
@@ -188,48 +255,94 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
           )}
         </div>
 
-        {/* 2. Thème / Contexte de l'histoire */}
-        <div className="space-y-2">
-          <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
-            1. Choisis un thème ou une situation
-          </label>
+        {/* CONTENU SELON LE MODE : IMPORT OU GÉNÉRATION */}
+        {activeMode === 'import' ? (
+          <div className="space-y-3 animate-fadeIn">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1">
+                  Titre en chinois (optionnel)
+                </label>
+                <input
+                  type="text"
+                  value={customTitleInput}
+                  onChange={(e) => setCustomTitleInput(e.target.value)}
+                  placeholder="Ex: 愚公移山 / 成语故事..."
+                  className="w-full px-3 py-2 bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 rounded-xl text-xs text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-[#c23b22]"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1">
+                  Titre ou résumé en français (optionnel)
+                </label>
+                <input
+                  type="text"
+                  value={customTranslationInput}
+                  onChange={(e) => setCustomTranslationInput(e.target.value)}
+                  placeholder="Ex: Yu Gong déplace les montagnes"
+                  className="w-full px-3 py-2 bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 rounded-xl text-xs text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-[#c23b22]"
+                />
+              </div>
+            </div>
 
-          {/* Suggestions en 1 clic */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
-            {PRESET_THEMES.map((preset, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => handleSelectPreset(preset.prompt)}
-                className={`p-2 rounded-xl text-left border text-[11px] font-medium transition-all flex items-center space-x-1.5 ${
-                  themeInput === preset.prompt
-                    ? 'bg-amber-100/80 dark:bg-amber-950/60 border-amber-400 dark:border-amber-600 text-stone-900 dark:text-amber-200 shadow-2xs font-bold'
-                    : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 hover:border-stone-400'
-                }`}
-              >
-                <span>{preset.icon}</span>
-                <span className="truncate">{preset.label}</span>
-              </button>
-            ))}
+            <div>
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block mb-1">
+                Texte de l'histoire en chinois (Sinogrammes) *
+              </label>
+              <textarea
+                value={rawChineseInput}
+                onChange={(e) => setRawChineseInput(e.target.value)}
+                rows={5}
+                placeholder="Colle ici ton histoire ou tes paragraphes en chinois (ex: 从前有一位老人，名叫愚公，他家门前有两座大山...)"
+                className="w-full px-3.5 py-2.5 bg-white dark:bg-stone-800/80 border border-stone-300 dark:border-stone-700 rounded-2xl text-sm text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#c23b22] leading-relaxed"
+              />
+              <p className="text-[11px] text-stone-500 mt-1">
+                💡 Astuce : Tu peux aussi donner n'importe quelle histoire en chinois directement dans le chat à l'assistant pour l'intégrer aux romans complets de 12 pages !
+              </p>
+            </div>
           </div>
+        ) : (
+          /* Mode Générer par thème */
+          <div className="space-y-2 animate-fadeIn">
+            <label className="text-xs font-bold text-stone-700 dark:text-stone-300 block">
+              1. Choisis un thème ou une situation
+            </label>
 
-          <textarea
-            value={themeInput}
-            onChange={(e) => setThemeInput(e.target.value)}
-            rows={2}
-            placeholder="Ou décris librement ton idée (ex: Deux amis découvrent un marché d'antiquités à Xi'an et négocient un bol en porcelaine...)"
-            className="w-full px-3.5 py-2.5 bg-white dark:bg-stone-800/80 border border-stone-300 dark:border-stone-700 rounded-2xl text-xs text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#c23b22]"
-          />
-        </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+              {PRESET_THEMES.map((preset, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleSelectPreset(preset.prompt)}
+                  className={`p-2 rounded-xl text-left border text-[11px] font-medium transition-all flex items-center space-x-1.5 ${
+                    themeInput === preset.prompt
+                      ? 'bg-amber-100/80 dark:bg-amber-950/60 border-amber-400 dark:border-amber-600 text-stone-900 dark:text-amber-200 shadow-2xs font-bold'
+                      : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 hover:border-stone-400'
+                  }`}
+                >
+                  <span>{preset.icon}</span>
+                  <span className="truncate">{preset.label}</span>
+                </button>
+              ))}
+            </div>
+
+            <textarea
+              value={themeInput}
+              onChange={(e) => setThemeInput(e.target.value)}
+              rows={2}
+              placeholder="Ou décris librement ton idée (ex: Deux amis découvrent un marché d'antiquités à Xi'an et négocient un bol en porcelaine...)"
+              className="w-full px-3.5 py-2.5 bg-white dark:bg-stone-800/80 border border-stone-300 dark:border-stone-700 rounded-2xl text-xs text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#c23b22]"
+            />
+          </div>
+        )}
 
         {/* 3. Niveau HSK & Option Anki */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          
           {/* Niveau HSK */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-stone-700 dark:text-stone-300 flex items-center space-x-1.5">
               <Layers className="w-3.5 h-3.5 text-stone-500" />
-              <span>Niveau de difficulté</span>
+              <span>Niveau cible</span>
             </label>
             <div className="grid grid-cols-4 gap-1">
               {(['HSK 2', 'HSK 3', 'HSK 4', 'HSK 5'] as const).map(lvl => (
@@ -250,42 +363,43 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
           </div>
 
           {/* Intégration Mots Anki */}
-          <div className="space-y-1.5">
-            <label className="text-xs font-bold text-stone-700 dark:text-stone-300 flex items-center space-x-1.5">
-              <Bookmark className="w-3.5 h-3.5 text-amber-500" />
-              <span>Vocabulaire personnel</span>
-            </label>
+          {activeMode === 'generate' && (
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-stone-700 dark:text-stone-300 flex items-center space-x-1.5">
+                <Bookmark className="w-3.5 h-3.5 text-amber-500" />
+                <span>Vocabulaire personnel</span>
+              </label>
 
-            <button
-              type="button"
-              onClick={() => setIncludeAnkiWords(!includeAnkiWords)}
-              disabled={syncedAnkiWords.length === 0}
-              className={`w-full p-2.5 rounded-2xl border text-left flex items-center justify-between text-xs transition-all ${
-                syncedAnkiWords.length === 0
-                  ? 'opacity-40 cursor-not-allowed bg-stone-100 dark:bg-stone-800/50 border-stone-200'
-                  : includeAnkiWords
-                  ? 'bg-amber-50/80 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700 text-amber-950 dark:text-amber-200 font-bold'
-                  : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300'
-              }`}
-            >
-              <div className="truncate pr-1">
-                <span className="block truncate">Tisser mes cartes Anki</span>
-                <span className="text-[10px] text-stone-500 dark:text-stone-400 font-normal">
-                  {syncedAnkiWords.length > 0 
-                    ? `${syncedAnkiWords.length} mots disponibles` 
-                    : 'Aucun mot Anki enregistré'}
-                </span>
-              </div>
-              <input
-                type="checkbox"
-                checked={includeAnkiWords}
-                onChange={() => {}}
+              <button
+                type="button"
+                onClick={() => setIncludeAnkiWords(!includeAnkiWords)}
                 disabled={syncedAnkiWords.length === 0}
-                className="w-4 h-4 text-[#c23b22] rounded accent-[#c23b22]"
-              />
-            </button>
-          </div>
-
+                className={`w-full p-2.5 rounded-2xl border text-left flex items-center justify-between text-xs transition-all ${
+                  syncedAnkiWords.length === 0
+                    ? 'opacity-40 cursor-not-allowed bg-stone-100 dark:bg-stone-800/50 border-stone-200'
+                    : includeAnkiWords
+                    ? 'bg-amber-50/80 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700 text-amber-950 dark:text-amber-200 font-bold'
+                    : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300'
+                }`}
+              >
+                <div className="truncate pr-1">
+                  <span className="block truncate">Tisser mes cartes Anki</span>
+                  <span className="text-[10px] text-stone-500 dark:text-stone-400 font-normal">
+                    {syncedAnkiWords.length > 0 
+                      ? `${syncedAnkiWords.length} mots disponibles` 
+                      : 'Aucun mot Anki enregistré'}
+                  </span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={includeAnkiWords}
+                  onChange={() => {}}
+                  disabled={syncedAnkiWords.length === 0}
+                  className="w-4 h-4 text-[#c23b22] rounded accent-[#c23b22]"
+                />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Message d'erreur */}
@@ -293,7 +407,7 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
           <div className="p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-300 dark:border-rose-800 text-xs text-rose-900 dark:text-rose-200 flex items-start space-x-2 animate-fadeIn">
             <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <p className="font-bold">Échec de la génération :</p>
+              <p className="font-bold">Erreur :</p>
               <p>{errorMessage}</p>
             </div>
           </div>
@@ -313,13 +427,18 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
           <button
             type="button"
             onClick={handleGenerate}
-            disabled={isLoading}
+            disabled={isLoading || (activeMode === 'import' && !rawChineseInput.trim())}
             className="px-6 py-2.5 rounded-2xl bg-[#c23b22] hover:bg-[#a9301a] text-white font-black text-xs shadow-md border-2 border-stone-900 dark:border-stone-700 transition-all flex items-center space-x-2 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:hover:translate-y-0 cursor-pointer"
           >
             {isLoading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin text-white" />
-                <span>L'IA rédige ton histoire (~2s)...</span>
+                <span>{activeMode === 'import' ? 'Découpage & Analyse...' : "L'IA rédige ton histoire (~2s)..."}</span>
+              </>
+            ) : activeMode === 'import' ? (
+              <>
+                <FileText className="w-4 h-4 text-amber-300" />
+                <span>📥 Convertir au format du site</span>
               </>
             ) : (
               <>
@@ -334,4 +453,3 @@ export const GenerateStoryModal: React.FC<GenerateStoryModalProps> = ({
     </div>
   );
 };
-

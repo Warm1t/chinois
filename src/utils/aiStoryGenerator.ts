@@ -1,5 +1,7 @@
-import { MaayotStory, AnkiWord } from '../types/fluent';
-import { generateStoryFromAnkiWords } from '../data/storiesData';
+import { MaayotStory, AnkiWord, StoryParagraph, StorySentence, StoryWordToken } from '../types/fluent';
+import { BUILT_IN_STORIES, generateStoryFromAnkiWords } from '../data/storiesData';
+import { AUDIO_NOVELS } from '../data/novelsData';
+import { PINYIN_LOOKUP } from './chinesePhonetics';
 
 const API_KEY_STORAGE_KEY = 'fluent_gemini_api_key';
 
@@ -197,4 +199,338 @@ Consignes impératives :
 
   throw new Error(lastError?.message || "Impossible de contacter l'IA. Vérifie ta clé API.");
 };
+
+export interface ImportChineseStoryOptions {
+  rawChineseText: string;
+  customTitle?: string;
+  customTranslation?: string;
+  level?: 'HSK 2' | 'HSK 3' | 'HSK 4' | 'HSK 5';
+  apiKeyOverride?: string;
+}
+
+/**
+ * Construit un dictionnaire local à partir de toutes les histoires et romans existants
+ * pour permettre le découpage mot-à-mot hors-ligne d'un texte chinois collé par l'utilisateur.
+ */
+const buildLocalWordDictionary = (): Map<string, { pinyin: string; translation: string }> => {
+  const dict = new Map<string, { pinyin: string; translation: string }>();
+
+  const registerWord = (hanzi?: string, pinyin?: string, translation?: string) => {
+    if (!hanzi) return;
+    const clean = hanzi.replace(/[，。？！、；：“”‘’"\s]/g, '').trim();
+    if (!clean) return;
+    if (!dict.has(clean) || (!dict.get(clean)?.translation && translation)) {
+      dict.set(clean, {
+        pinyin: pinyin || PINYIN_LOOKUP[clean] || '',
+        translation: translation || '',
+      });
+    }
+  };
+
+  for (const story of BUILT_IN_STORIES) {
+    (story.targetWords || []).forEach((w) => registerWord(w.hanzi, w.pinyin, w.translation));
+    for (const p of story.paragraphs || []) {
+      for (const s of p.sentences || []) {
+        (s.words || []).forEach((w) => registerWord(w.hanzi, w.pinyin, w.translation));
+      }
+    }
+  }
+
+  for (const novel of AUDIO_NOVELS) {
+    (novel.keyVocabulary || []).forEach((w) => registerWord(w.hanzi, w.pinyin, w.translation));
+    for (const page of novel.pages || []) {
+      for (const p of page.paragraphs || []) {
+        for (const s of p.sentences || []) {
+          (s.words || []).forEach((w) => registerWord(w.hanzi, w.pinyin, w.translation));
+        }
+      }
+    }
+  }
+
+  return dict;
+};
+
+/**
+ * Découpe une phrase chinoise en tokens à l'aide du dictionnaire local (hors-ligne)
+ */
+const tokenizeChineseSentenceOffline = (
+  sentenceHanzi: string,
+  dict: Map<string, { pinyin: string; translation: string }>
+): { words: StoryWordToken[]; sentencePinyin: string } => {
+  const cleanText = sentenceHanzi.trim();
+  const words: StoryWordToken[] = [];
+  const pinyinParts: string[] = [];
+
+  let i = 0;
+  while (i < cleanText.length) {
+    const ch = cleanText[i];
+    // Ignorer la ponctuation pure dans les tokens mais garder l'avancement
+    if (/[，。？！、；：“”‘’"«»\s（）()—…]/.test(ch)) {
+      i++;
+      continue;
+    }
+
+    let matched = false;
+    // Chercher la plus longue correspondance (de 6 caractères à 1 caractère)
+    for (let len = Math.min(6, cleanText.length - i); len >= 1; len--) {
+      const candidate = cleanText.slice(i, i + len);
+      if (/[，。？！、；：“”‘’"«»\s（）()—…]/.test(candidate)) continue;
+
+      if (dict.has(candidate)) {
+        const entry = dict.get(candidate)!;
+        words.push({
+          hanzi: candidate,
+          pinyin: entry.pinyin || candidate.split('').map((c) => PINYIN_LOOKUP[c] || '').join(' '),
+          translation: entry.translation || 'Expression / mot du texte',
+        });
+        if (entry.pinyin) pinyinParts.push(entry.pinyin);
+        i += len;
+        matched = true;
+        break;
+      }
+    }
+
+    if (!matched) {
+      const fallbackPy = PINYIN_LOOKUP[ch] || '';
+      words.push({
+        hanzi: ch,
+        pinyin: fallbackPy,
+        translation: 'Caractère du texte',
+      });
+      if (fallbackPy) pinyinParts.push(fallbackPy);
+      i++;
+    }
+  }
+
+  return {
+    words,
+    sentencePinyin: pinyinParts.join(' '),
+  };
+};
+
+/**
+ * Convertit une histoire en chinois existante fournie par l'utilisateur
+ * exactement sous la forme interactive du site (avec IA si clé dispo, ou hors-ligne instantané).
+ */
+export const importAndFormatChineseStory = async (
+  options: ImportChineseStoryOptions
+): Promise<MaayotStory> => {
+  const rawText = options.rawChineseText.trim();
+  if (!rawText) {
+    throw new Error('Veuillez coller un texte ou une histoire en chinois.');
+  }
+
+  const level = options.level || 'HSK 3';
+  const apiKey = (options.apiKeyOverride || getStoredAiApiKey()).trim();
+
+  // 1. Si une clé API Gemini est disponible : enrichissement complet (Pinyin tonique exact, traduction française de chaque phrase et mot, quiz)
+  if (apiKey) {
+    const systemPrompt = `Tu es un professeur expert de chinois mandarin et traducteur littéraire franco-chinois.
+L'utilisateur te fournit une VRAIE histoire en chinois ci-dessous.
+Ta mission est de la mettre EXACTEMENT sous la forme interactive du site :
+1. CONSERVE fidèlement toutes les phrases chinoises d'origine fournies par l'utilisateur (en sinogrammes simplifiés).
+2. Découpe le texte en paragraphes et en phrases complètes.
+3. Pour CHAQUE phrase, fournis :
+   - "hanzi" : la phrase exacte en chinois
+   - "pinyin" : le Pinyin complet avec les marques de tons exactes
+   - "translation" : la traduction française fidèle et élégante
+   - "words" : le découpage complet de TOUS les mots de la phrase (dans l'ordre exact, couvrant 100% des caractères) avec { "hanzi", "pinyin", "translation" }.
+4. Extrais 6 à 10 mots clés importants dans "targetWords".
+5. Génère 3 questions de quiz de compréhension sur cette histoire.
+6. Rends UNIQUEMENT un objet JSON valide suivant le schéma demandé.
+
+Texte chinois fourni par l'utilisateur :
+"""
+${rawText}
+"""
+${options.customTitle ? `Titre souhaité : ${options.customTitle}` : ''}`;
+
+    const jsonSchemaPrompt = `{
+  "title": "Titre en sinogrammes",
+  "titlePinyin": "Pinyin avec tons du titre",
+  "titleTranslation": "Traduction française du titre",
+  "level": "${level}",
+  "category": "Histoire Importée Authentique",
+  "readTime": "3 min",
+  "wordCount": ${rawText.replace(/[^\u4e00-\u9fa5]/g, '').length || 150},
+  "targetWords": [
+    { "hanzi": "mot", "pinyin": "pīnyīn", "translation": "traduction" }
+  ],
+  "paragraphs": [
+    {
+      "sentences": [
+        {
+          "hanzi": "Phrase complète en sinogrammes。",
+          "pinyin": "Pinyin complet avec tons.",
+          "translation": "Traduction en français.",
+          "words": [
+            { "hanzi": "mot", "pinyin": "mò", "translation": "sens" }
+          ]
+        }
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Question en français sur l'histoire",
+      "options": ["Choix A", "Choix B", "Choix C", "Choix D"],
+      "correctIndex": 0,
+      "explanation": "Explication"
+    }
+  ],
+  "discussionPrompt": {
+    "question": "你对这个故事有什么感想？",
+    "questionPinyin": "Nǐ duì zhège gùshì yǒu shénme gǎnxiǎng?",
+    "questionTranslation": "Quelles sont tes impressions sur cette histoire ?",
+    "suggestedWords": []
+  }
+}`;
+
+    const models = ['gemini-2.0-flash', 'gemini-1.5-flash'];
+    for (const model of models) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [{ text: `${systemPrompt}\n\nSchéma JSON :\n${jsonSchemaPrompt}` }] }],
+            generationConfig: {
+              responseMimeType: 'application/json',
+              temperature: 0.3,
+            },
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const rawJson = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (rawJson) {
+            const cleanJson = rawJson.replace(/```json\s*/gi, '').replace(/```\s*$/gi, '').trim();
+            const parsed = JSON.parse(cleanJson);
+            const allSentences: string[] = [];
+            (parsed.paragraphs || []).forEach((p: any) => {
+              (p.sentences || []).forEach((s: any) => {
+                if (s.hanzi) allSentences.push(s.hanzi);
+              });
+            });
+
+            return {
+              id: `custom-imported-${Date.now()}`,
+              title: options.customTitle?.trim() || parsed.title || '导入的中文故事',
+              titlePinyin: parsed.titlePinyin || 'Dǎorù de zhōngwén gùshì',
+              titleTranslation: options.customTranslation?.trim() || parsed.titleTranslation || 'Histoire chinoise importée',
+              level: (parsed.level as any) || level,
+              category: '📥 Histoire Importée',
+              readTime: parsed.readTime || '3 min',
+              wordCount: rawText.replace(/[^\u4e00-\u9fa5]/g, '').length || parsed.wordCount || 150,
+              targetWords: parsed.targetWords || [],
+              paragraphs: parsed.paragraphs || [],
+              audioText: allSentences.join(' ') || rawText,
+              quiz: parsed.quiz || [],
+              discussionPrompt: parsed.discussionPrompt || {
+                question: '请用中文复述这个故事的主要内容。',
+                questionPinyin: 'Qǐng yòng zhōngwén fùshù zhège gùshì de zhǔyào nèiróng.',
+                questionTranslation: 'Résume avec tes propres mots le contenu principal de cette histoire.',
+                suggestedWords: [],
+              },
+            };
+          }
+        }
+      } catch (e) {
+        console.warn(`Import IA (${model}) repli sur le segmenteur local :`, e);
+      }
+    }
+  }
+
+  // 2. Mode Hors-Ligne Instantané : découpage avec notre dictionnaire local
+  const dict = buildLocalWordDictionary();
+  const rawParagraphs = rawText
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  const paragraphs: StoryParagraph[] = [];
+  const allTargetWordsMap = new Map<string, { hanzi: string; pinyin: string; translation: string }>();
+
+  for (const rawP of rawParagraphs) {
+    // Découper en phrases selon la ponctuation chinoise (。！？；)
+    const rawSentences = rawP
+      .split(/(?<=[。！？!?；;])/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const sentences: StorySentence[] = rawSentences.map((sHanzi) => {
+      const { words, sentencePinyin } = tokenizeChineseSentenceOffline(sHanzi, dict);
+      words.forEach((w) => {
+        if (w.hanzi.length >= 2 && w.translation && w.translation !== 'Caractère du texte' && allTargetWordsMap.size < 10) {
+          allTargetWordsMap.set(w.hanzi, {
+            hanzi: w.hanzi,
+            pinyin: w.pinyin,
+            translation: w.translation,
+          });
+        }
+      });
+
+      const knownMeanings = words
+        .filter((w) => w.translation && !w.translation.includes('du texte'))
+        .map((w) => w.translation)
+        .slice(0, 8);
+
+      return {
+        hanzi: sHanzi,
+        pinyin: sentencePinyin,
+        translation:
+          options.customTranslation ||
+          (knownMeanings.length > 0
+            ? `Sens clé : ${knownMeanings.join(' • ')}`
+            : 'Clique sur chaque mot pour écouter la prononciation et l’épingler dans Anki.'),
+        words,
+      };
+    });
+
+    if (sentences.length > 0) {
+      paragraphs.push({ sentences });
+    }
+  }
+
+  const charCount = rawText.replace(/[^\u4e00-\u9fa5]/g, '').length || rawText.length;
+  const firstSentenceTitle = rawText.split(/[，。！？\n]/)[0]?.slice(0, 12) || '我的中文故事';
+  const title = options.customTitle?.trim() || firstSentenceTitle;
+  const { sentencePinyin: titlePy } = tokenizeChineseSentenceOffline(title, dict);
+
+  return {
+    id: `custom-imported-${Date.now()}`,
+    title,
+    titlePinyin: titlePy || 'Wǒ de zhōngwén gùshì',
+    titleTranslation: options.customTranslation?.trim() || 'Histoire chinoise importée',
+    level: level as any,
+    category: '📥 Histoire Importée',
+    readTime: `${Math.max(1, Math.ceil(charCount / 120))} min`,
+    wordCount: charCount,
+    targetWords: Array.from(allTargetWordsMap.values()),
+    paragraphs,
+    audioText: rawText.replace(/\n+/g, ' '),
+    quiz: [
+      {
+        question: `Quel est le sujet principal de « ${title} » ?`,
+        options: [
+          'Comprendre et pratiquer le récit en immersion',
+          'Uniquement des listes de grammaire',
+          'Un exercice de calligraphie',
+          'Une chanson traditionnelle',
+        ],
+        correctIndex: 0,
+        explanation: 'Cette histoire a été importée et découpée pour ta lecture interactive.',
+      },
+    ],
+    discussionPrompt: {
+      question: '请用自己的话谈谈这篇中文故事。',
+      questionPinyin: 'Qǐng yòng zìjǐ de huà tántan zhè piān zhōngwén gùshì.',
+      questionTranslation: 'Raconte avec tes propres mots ce que tu as retenu de cette histoire.',
+      suggestedWords: Array.from(allTargetWordsMap.keys()).slice(0, 4),
+    },
+  };
+};
+
 

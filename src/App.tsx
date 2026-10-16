@@ -14,7 +14,15 @@ import { StoryReaderView } from './components/StoryReaderView';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { CURRICULUM_MODULES, NUANCE_CARDS } from './data/curriculumData';
 import { getAnchoringRecords, getCardsDueForReview } from './utils/anchoringUtils';
-import { UserProfileBackup, createProfileBackup } from './utils/profileSyncUtils';
+import { 
+  UserProfileBackup, 
+  createProfileBackup, 
+  clearActiveProfileFromStorage, 
+  loadUserScopedBackup, 
+  saveUserScopedBackup,
+  applyProfileBackupToStorage,
+  ACTIVE_AUTH_UID_KEY 
+} from './utils/profileSyncUtils';
 import { pushProfileToCloud, pullProfileFromCloud, isAutoSyncEnabled, getAuthUser, triggerAutoSyncToCloud } from './utils/cloudSyncUtils';
 import { supabase } from './utils/supabaseClient';
 import { User } from '@supabase/supabase-js';
@@ -26,6 +34,16 @@ import { getTodayDailyHanzi } from './data/dailyHanziData';
 import { getTodayDailyStory } from './data/storiesData';
 import { Sparkles } from 'lucide-react';
 
+// Nettoyer immédiatement l'ancienne pollution 'warm1t' si aucun compte n'est actif
+try {
+  const activeUid = localStorage.getItem(ACTIVE_AUTH_UID_KEY);
+  const migrated = localStorage.getItem('fluent_auth_isolation_v2');
+  if (!activeUid && !migrated) {
+    clearActiveProfileFromStorage();
+    localStorage.setItem('fluent_auth_isolation_v2', 'true');
+  }
+} catch {}
+
 export const App: React.FC = () => {
   // Par défaut : l'Accueil Guidé pour une prise en main instantanée sans fatigue décisionnelle !
   const [activeView, setActiveView] = useState<'home' | 'stories' | 'lab' | 'chat' | 'curriculum'>('home');
@@ -36,16 +54,19 @@ export const App: React.FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const [completedExercises, setCompletedExercises] = useState<string[]>(() => {
+    if (!localStorage.getItem(ACTIVE_AUTH_UID_KEY)) return [];
     const saved = localStorage.getItem('fluent_completed_exercises');
     return saved ? JSON.parse(saved) : [];
   });
 
   const [streakDays, setStreakDays] = useState<number>(() => {
+    if (!localStorage.getItem(ACTIVE_AUTH_UID_KEY)) return 0;
     const saved = localStorage.getItem('fluent_streak_days');
-    return saved ? parseInt(saved, 10) : 3;
+    return saved ? parseInt(saved, 10) : 0;
   });
 
   const [syncedAnkiWords, setSyncedAnkiWords] = useState<AnkiWord[]>(() => {
+    if (!localStorage.getItem(ACTIVE_AUTH_UID_KEY)) return [];
     const saved = localStorage.getItem('fluent_anki_words');
     return saved ? JSON.parse(saved) : [];
   });
@@ -61,19 +82,32 @@ export const App: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Enregistrements d'ancrage cognitif (SRS)
-  const [anchoringRecords, setAnchoringRecords] = useState(() => getAnchoringRecords());
+  const [anchoringRecords, setAnchoringRecords] = useState(() => {
+    if (!localStorage.getItem(ACTIVE_AUTH_UID_KEY)) return {};
+    return getAnchoringRecords();
+  });
 
   const refreshAnchoring = () => {
     setAnchoringRecords(getAnchoringRecords());
   };
 
-  const handleProfileRestored = (backup: UserProfileBackup) => {
-    setCompletedExercises(backup.completedExercises);
-    setStreakDays(backup.streakDays);
-    setSyncedAnkiWords(backup.syncedAnkiWords);
-    setAnchoringRecords(backup.anchoringRecords);
-    setToastMessage("🎉 Profil et progression restaurés avec succès sur cet appareil !");
-    setTimeout(() => setToastMessage(null), 4000);
+  const resetDisconnectedState = () => {
+    clearActiveProfileFromStorage();
+    setCompletedExercises([]);
+    setStreakDays(0);
+    setSyncedAnkiWords([]);
+    setAnchoringRecords({});
+  };
+
+  const handleProfileRestored = (backup: UserProfileBackup, silent = false) => {
+    setCompletedExercises(backup.completedExercises || []);
+    setStreakDays(backup.streakDays || 0);
+    setSyncedAnkiWords(backup.syncedAnkiWords || []);
+    setAnchoringRecords(backup.anchoringRecords || {});
+    if (!silent) {
+      setToastMessage("🎉 Profil et progression restaurés avec succès sur cet appareil !");
+      setTimeout(() => setToastMessage(null), 4000);
+    }
   };
 
   useEffect(() => {
@@ -81,10 +115,14 @@ export const App: React.FC = () => {
   }, [completedExercises]);
 
   useEffect(() => {
+    localStorage.setItem('fluent_streak_days', streakDays.toString());
+  }, [streakDays]);
+
+  useEffect(() => {
     localStorage.setItem('fluent_anki_words', JSON.stringify(syncedAnkiWords));
   }, [syncedAnkiWords]);
 
-  // Synchronisation en direct avec les événements d'ajout/suppression de mots Anki
+  // Synchronisation en direct avec les événements d'ajout/suppression de mots Anki et de profil
   useEffect(() => {
     const handleWordsChanged = (e: any) => {
       if (e?.detail?.words) {
@@ -96,29 +134,83 @@ export const App: React.FC = () => {
         } catch {}
       }
     };
+    const handleProfileUpdated = (e: any) => {
+      if (e?.detail) {
+        const b = e.detail as UserProfileBackup;
+        setCompletedExercises(b.completedExercises || []);
+        setStreakDays(b.streakDays || 0);
+        setSyncedAnkiWords(b.syncedAnkiWords || []);
+        setAnchoringRecords(b.anchoringRecords || {});
+      }
+    };
     window.addEventListener('fluent_anki_words_changed', handleWordsChanged);
-    return () => window.removeEventListener('fluent_anki_words_changed', handleWordsChanged);
+    window.addEventListener('fluent_profile_updated', handleProfileUpdated);
+    return () => {
+      window.removeEventListener('fluent_anki_words_changed', handleWordsChanged);
+      window.removeEventListener('fluent_profile_updated', handleProfileUpdated);
+    };
   }, []);
 
-  // Initialisation du thème et synchronisation automatique Cloud au premier chargement (ex: sur iPhone)
+  // Initialisation du thème et coordination stricte Authentification <-> Données sauvegardées
   useEffect(() => {
     applyThemeToDocument(getAppTheme());
 
-    // 1. Vérifier si un compte est connecté
-    getAuthUser().then(user => {
+    // 1. Vérifier si un compte est réellement connecté au démarrage
+    getAuthUser().then(async (user) => {
       setCurrentUser(user);
+
+      if (!user) {
+        // Aucun compte connecté : sauvegarder l'éventuel ancien compte puis vider l'affichage actif
+        const prevUid = localStorage.getItem(ACTIVE_AUTH_UID_KEY);
+        if (prevUid) {
+          saveUserScopedBackup(prevUid);
+        }
+        resetDisconnectedState();
+        return;
+      }
+
+      // Utilisateur connecté : activer son espace et restaurer ses données locales + Cloud
+      localStorage.setItem(ACTIVE_AUTH_UID_KEY, user.id);
+      const localScoped = loadUserScopedBackup(user.id);
+      if (localScoped) {
+        applyProfileBackupToStorage(localScoped);
+        handleProfileRestored(localScoped, true);
+      }
+
+      if (isAutoSyncEnabled()) {
+        try {
+          const res = await pullProfileFromCloud(user.id);
+          if (res.success && res.data) {
+            handleProfileRestored(res.data, true);
+          }
+        } catch (e) {
+          console.warn('Auto-pull Cloud au démarrage :', e);
+        }
+      }
     });
 
     // 2. Écouter les connexions / déconnexions en temps réel
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       const user = session?.user || null;
       setCurrentUser(user);
+
+      if (event === 'SIGNED_OUT' || !user) {
+        resetDisconnectedState();
+        return;
+      }
+
       if (user && (event === 'SIGNED_IN' || event === 'USER_UPDATED')) {
+        localStorage.setItem(ACTIVE_AUTH_UID_KEY, user.id);
+        const scoped = loadUserScopedBackup(user.id);
+        if (scoped) {
+          applyProfileBackupToStorage(scoped);
+          handleProfileRestored(scoped, true);
+        }
         try {
           const res = await pullProfileFromCloud(user.id);
           if (res.success && res.data) {
-            handleProfileRestored(res.data);
-            setToastMessage(`☁️ Connecté (${user.email}) : progression synchronisée !`);
+            handleProfileRestored(res.data, true);
+            setToastMessage(`☁️ Connecté (${user.email}) : progression restaurée !`);
             setTimeout(() => setToastMessage(null), 3500);
           }
         } catch (e) {
@@ -126,40 +218,6 @@ export const App: React.FC = () => {
         }
       }
     });
-
-    // 3. Récupérer automatiquement la progression cloud
-    const autoSyncFromCloudOnStartup = async () => {
-      if (!isAutoSyncEnabled()) return;
-      try {
-        const res = await pullProfileFromCloud();
-        if (res.success && res.data) {
-          const cloudData = res.data;
-          const cloudWordsCount = cloudData.syncedAnkiWords?.length || 0;
-          const localWordsCount = syncedAnkiWords.length;
-          const cloudStoriesCount = cloudData.completedStories?.length || 0;
-          const localStoriesCount = (JSON.parse(localStorage.getItem('fluent_completed_stories') || '[]') as string[]).length;
-          const cloudVoiceCount = Object.keys(cloudData.voiceLabScores || {}).length;
-          const localVoiceCount = Object.keys(JSON.parse(localStorage.getItem('fluent_voice_lab_scores') || '{}')).length;
-          const cloudExercisesCount = cloudData.completedExercises?.length || 0;
-
-          // Si le cloud a des cartes, des histoires, du labo vocal ou des exercices plus riches :
-          if (
-            cloudWordsCount > localWordsCount ||
-            cloudStoriesCount > localStoriesCount ||
-            cloudVoiceCount > localVoiceCount ||
-            cloudExercisesCount > completedExercises.length
-          ) {
-            handleProfileRestored(cloudData);
-            setToastMessage(`☁️ Synchronisé avec le Cloud : progression restaurée !`);
-            setTimeout(() => setToastMessage(null), 4000);
-          }
-        }
-      } catch (e) {
-        console.warn('Auto-pull Cloud silencieux:', e);
-      }
-    };
-
-    autoSyncFromCloudOnStartup();
 
     return () => {
       subscription.unsubscribe();
@@ -388,6 +446,12 @@ export const App: React.FC = () => {
         onClose={() => setIsAuthModalOpen(false)}
         onAuthSuccess={async (user) => {
           setCurrentUser(user);
+          localStorage.setItem(ACTIVE_AUTH_UID_KEY, user.id);
+          const localScoped = loadUserScopedBackup(user.id);
+          if (localScoped) {
+            applyProfileBackupToStorage(localScoped);
+            handleProfileRestored(localScoped, true);
+          }
           try {
             const res = await pullProfileFromCloud(user.id);
             if (res.success && res.data) {
@@ -399,8 +463,9 @@ export const App: React.FC = () => {
         }}
         onSignOutSuccess={() => {
           setCurrentUser(null);
-          setToastMessage("Déconnecté avec succès.");
-          setTimeout(() => setToastMessage(null), 3000);
+          resetDisconnectedState();
+          setToastMessage("🔒 Déconnecté — affichage remis à zéro (vos données restent liées à votre compte).");
+          setTimeout(() => setToastMessage(null), 4000);
         }}
       />
 

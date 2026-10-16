@@ -75,9 +75,62 @@ export const analyzeSentenceRhythm = (sentence: StorySentence): SentenceRhythmAn
     };
   }
 
+/**
+ * Garantit qu'aucun caractère de sentence.hanzi n'est omis, même si sentence.words est partiel.
+ */
+function ensureAllCharactersCovered(sentence: StorySentence): StoryWordToken[] {
+  const cleanHanzi = sentence.hanzi.replace(/[，。？！、；：\s\u3000«»""''“”‘’]/g, '');
+  const inputWords = sentence.words || [];
+  const wordsCovered = inputWords.map(w => w.hanzi.replace(/[，。？！、；：\s\u3000«»""''“”‘’]/g, '')).join('');
+
+  if (wordsCovered === cleanHanzi && inputWords.length > 0) {
+    return inputWords;
+  }
+
+  // Reconstitution ordonnée des tokens pour couvrir 100% du texte sans coupure
+  const result: StoryWordToken[] = [];
+  let hanziIdx = 0;
+
+  for (const w of inputWords) {
+    const cleanW = w.hanzi.replace(/[，。？！、；：\s\u3000«»""''“”‘’]/g, '');
+    if (!cleanW) continue;
+
+    const foundAt = sentence.hanzi.indexOf(cleanW, hanziIdx);
+    if (foundAt > hanziIdx) {
+      const gapHanzi = sentence.hanzi.slice(hanziIdx, foundAt).replace(/[，。？！、；：\s\u3000«»""''“”‘’]/g, '');
+      if (gapHanzi.length > 0) {
+        result.push({
+          hanzi: gapHanzi,
+          pinyin: '',
+          translation: ''
+        });
+      }
+    }
+
+    if (foundAt !== -1) {
+      result.push(w);
+      hanziIdx = foundAt + cleanW.length;
+    }
+  }
+
+  if (hanziIdx < sentence.hanzi.length) {
+    const endHanzi = sentence.hanzi.slice(hanziIdx).replace(/[，。？！、；：\s\u3000«»""''“”‘’]/g, '');
+    if (endHanzi.length > 0) {
+      result.push({
+        hanzi: endHanzi,
+        pinyin: '',
+        translation: ''
+      });
+    }
+  }
+
+  return result.length > 0 ? result : (cleanHanzi ? [{ hanzi: cleanHanzi, pinyin: sentence.pinyin, translation: sentence.translation }] : inputWords);
+}
+
   // 2. Découpage dynamique basé sur la ponctuation réelle et les unités prosodiques chinoises
-  const rawWords = sentence.words.filter(w => {
-    const clean = w.hanzi.replace(/[，。？！、；：\s]/g, '');
+  const coveredWords = ensureAllCharactersCovered(sentence);
+  const rawWords = coveredWords.filter(w => {
+    const clean = w.hanzi.replace(/[，。？！、；：\s\u3000«»""''“”‘’]/g, '');
     return clean.length > 0;
   });
 
